@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascendra — Premium Business Growth Consultancy</title>
+<meta name="description" content="Ascendra engineers premium digital growth systems — websites, AI, automation, CRM — for ambitious businesses that refuse to be ordinary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        void: '#030303', obsidian: '#060606', charcoal: '#0d0d0d',
+        iron: '#141414', graphite: '#1e1e1e', smoke: '#2e2e2e',
+        platinum: '#e8e6e4', silver: '#b4b2b0', pewter: '#767472', glow: '#adc6ff',
+      },
+      fontFamily: {
+        editorial: ['Bodoni Moda', 'Georgia', 'serif'],
+        body: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        mono: ['Geist', 'ui-monospace', 'monospace'],
+      },
+    }
+  }
+};
+</script>
+<style>
+/* ROI input styles carried from original */
+.roi-input {
+  width:100%; background:transparent; border:none;
+  border-bottom:1px solid rgba(255,255,255,0.1); color:#e8e6e4;
+  font-family:'Geist',monospace; font-size:1rem; padding:12px 0; outline:none;
+  transition:border-color 0.3s ease;
+}
+.roi-input:focus { border-bottom-color:rgba(255,255,255,0.4); }
+.roi-input::placeholder { color:rgba(232,230,228,0.3); }
+.roi-select {
+  width:100%; background:#111111; border:1px solid rgba(255,255,255,0.08);
+  color:#e8e6e4; font-family:'Geist',monospace; font-size:0.75rem;
+  letter-spacing:0.1em; padding:14px 16px; outline:none; appearance:none;
+  cursor:pointer; transition:border-color 0.3s ease;
+}
+.roi-select:focus { border-color:rgba(255,255,255,0.25); }
+.roi-select option { background:#111111; }
+.value-arrow { display:flex; align-items:center; justify-content:center; height:28px; color:rgba(255,255,255,0.12); }
+@keyframes archFloat { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-8px)} }
+@keyframes archShimmer { 0%,100%{opacity:0.7} 50%{opacity:1} }
+.arch-container { animation:archFloat 8s ease-in-out infinite; }
+.arch-specular { animation:archShimmer 4s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- FLOATING CTA — Desktop -->
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1); text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-sm text-silver group-hover:text-platinum group-hover:translate-x-0.5 transition-transform duration-300" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu" aria-label="Close menu">
+      <span class="material-symbols-outlined" style="font-size:24px;">close</span>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5 hover:text-white transition-colors">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5 hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5 hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5 hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5 hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5 hover:text-platinum transition-colors">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6">
+    <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass" id="mainNav">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">
+    Start My Project
+    <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+  </a>
+  <button class="lg:hidden p-2 text-silver hover:text-platinum transition-colors duration-300" id="openMenu" aria-label="Open menu">
+    <span class="material-symbols-outlined" style="font-size:24px;">menu</span>
+  </button>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="relative min-h-screen flex flex-col justify-center pt-20 pb-32 md:pb-28 px-6 md:px-16 overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-[70%] h-full opacity-[0.06]" style="background:radial-gradient(ellipse at 80% 20%,#adc6ff 0%,transparent 65%);"></div>
+    <svg class="absolute inset-0 w-full h-full opacity-[0.018]" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+      <defs><pattern id="archgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs>
+      <rect width="1440" height="900" fill="url(#archgrid)"/>
+    </svg>
+    <div class="arch-container absolute right-0 top-0 h-full w-[50%] hidden lg:block" style="max-width:720px;">
+      <svg class="absolute right-0 top-0 w-full h-full" viewBox="0 0 600 900" fill="none" preserveAspectRatio="xMaxYMid slice">
+        <defs>
+          <linearGradient id="glassMain" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.07)"/><stop offset="50%" stop-color="rgba(173,198,255,0.025)"/><stop offset="100%" stop-color="rgba(255,255,255,0.01)"/></linearGradient>
+          <linearGradient id="glassSecond" x1="1" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.05)"/><stop offset="100%" stop-color="rgba(255,255,255,0.008)"/></linearGradient>
+          <linearGradient id="edgePrimary" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.45)"/><stop offset="20%" stop-color="rgba(255,255,255,0.18)"/><stop offset="55%" stop-color="rgba(255,255,255,0.07)"/><stop offset="100%" stop-color="rgba(255,255,255,0.01)"/></linearGradient>
+          <linearGradient id="edgeSecond" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.2)"/><stop offset="100%" stop-color="rgba(255,255,255,0.02)"/></linearGradient>
+          <linearGradient id="edgeFar" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0.01)"/></linearGradient>
+          <linearGradient id="groundReflect" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="rgba(255,255,255,0.05)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></linearGradient>
+          <radialGradient id="topAtmo" cx="55%" cy="0%" r="60%"><stop offset="0%" stop-color="rgba(173,198,255,0.18)"/><stop offset="100%" stop-color="rgba(173,198,255,0)"/></radialGradient>
+          <filter id="specGlow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="310" cy="0" rx="220" ry="100" fill="url(#topAtmo)" opacity="0.9"/>
+        <polygon points="440,25 530,10 545,880 455,880" fill="url(#glassSecond)" opacity="0.5"/>
+        <line x1="440" y1="25" x2="455" y2="880" stroke="url(#edgeFar)" stroke-width="0.6"/>
+        <polygon points="300,12 490,0 510,870 320,880" fill="url(#glassMain)" opacity="0.55"/>
+        <line x1="300" y1="12" x2="320" y2="880" stroke="url(#edgeSecond)" stroke-width="1"/>
+        <line x1="300" y1="12" x2="490" y2="0" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+        <polygon points="160,35 420,5 445,860 185,870" fill="url(#glassMain)" opacity="0.65"/>
+        <line x1="160" y1="35" x2="185" y2="870" stroke="url(#edgePrimary)" stroke-width="1.8" class="arch-specular" filter="url(#specGlow)"/>
+        <line x1="160" y1="35" x2="420" y2="5" stroke="rgba(255,255,255,0.28)" stroke-width="1.2" filter="url(#specGlow)"/>
+        <line x1="160" y1="170" x2="445" y2="158" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <line x1="160" y1="305" x2="445" y2="293" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <line x1="160" y1="440" x2="445" y2="428" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <line x1="160" y1="575" x2="445" y2="563" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <line x1="160" y1="710" x2="445" y2="698" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+        <line x1="120" y1="870" x2="570" y2="870" stroke="rgba(255,255,255,0.07)" stroke-width="0.8"/>
+        <circle cx="292" cy="20" r="1.5" fill="rgba(173,198,255,0.8)" filter="url(#specGlow)"/>
+        <circle cx="292" cy="20" r="8" fill="rgba(173,198,255,0.08)" filter="url(#specGlow)"/>
+      </svg>
+      <div class="absolute inset-y-0 left-0 w-40" style="background:linear-gradient(90deg,#060606,transparent);"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-32" style="background:linear-gradient(180deg,transparent,#060606);"></div>
+    </div>
+    <div class="lg:hidden absolute right-0 top-0 w-[60%] h-full opacity-40">
+      <svg class="w-full h-full" viewBox="0 0 300 800" fill="none" preserveAspectRatio="xMaxYMid slice">
+        <defs><linearGradient id="mEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.2)"/><stop offset="100%" stop-color="rgba(255,255,255,0.01)"/></linearGradient></defs>
+        <polygon points="80,20 220,0 240,800 100,800" fill="rgba(255,255,255,0.025)"/>
+        <line x1="80" y1="20" x2="100" y2="800" stroke="url(#mEdge)" stroke-width="1.2"/>
+        <line x1="80" y1="20" x2="220" y2="0" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+      </svg>
+      <div class="absolute inset-0" style="background:linear-gradient(90deg,#060606 0%,rgba(6,6,6,0.5) 40%,rgba(6,6,6,0) 100%);"></div>
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-[1200px] mx-auto w-full">
+    <div class="reveal">
+      <span class="eyebrow block mb-8 md:mb-10">Premium Business Growth Consultancy</span>
+    </div>
+    <h1 class="reveal font-editorial font-bold leading-none mb-8 md:mb-10" style="font-size:clamp(3.2rem,8.5vw,8.5rem);letter-spacing:-0.03em;transition-delay:80ms;">
+      <span class="platinum-text block">YOUR BUSINESS.</span>
+      <span class="text-platinum block italic font-normal">Engineered</span>
+      <span class="platinum-text block">TO GROW.</span>
+    </h1>
+    <p class="reveal text-silver text-lg md:text-xl leading-relaxed max-w-xl mb-12 md:mb-14 font-body font-light" style="transition-delay:160ms;">
+      We design and engineer premium digital ecosystems — websites, AI systems, automations, and CRM integrations — that convert your business into a lead-generating, revenue-building machine.
+    </p>
+    <div class="reveal flex flex-col sm:flex-row gap-4 sm:gap-5" style="transition-delay:240ms;">
+      <a href="quote.html" class="btn-primary">
+        Get My Project Quote
+        <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+      </a>
+      <a href="services.html" class="btn-ghost">See How It Works</a>
+    </div>
+    <div class="reveal hidden md:flex items-center gap-3 mt-16" style="transition-delay:400ms;">
+      <div class="w-px h-10 bg-white/10"></div>
+      <span class="eyebrow text-pewter/60">Scroll to explore</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ SERVICES TICKER ══════════════════════ -->
+<div class="border-y border-white/5 py-4 overflow-hidden bg-charcoal">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Premium Websites</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">AI Systems</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Business Automation</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">CRM Integration</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Booking Systems</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Lead Generation</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Analytics Dashboards</span></span>
+    <span class="inline-flex items-center gap-4 px-8"><span class="w-1 h-1 bg-silver/40 rounded-full inline-block"></span><span class="eyebrow text-pewter">Mobile Apps</span></span>
+  </div>
+</div>
+
+<!-- ══════════════════════ AUTHORITY METRICS ══════════════════════ -->
+<section class="py-20 md:py-28 px-6 md:px-16 bg-charcoal border-y border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-0">
+      <div class="reveal text-center lg:text-left lg:px-8 lg:border-r border-white/5">
+        <div class="font-editorial font-bold platinum-text counter mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;" data-target="100" data-suffix="+">0+</div>
+        <div class="eyebrow text-pewter/70">Projects Delivered</div>
+      </div>
+      <div class="reveal text-center lg:text-left lg:px-8 lg:border-r border-white/5" style="transition-delay:60ms;">
+        <div class="font-editorial font-bold platinum-text counter mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;" data-target="95" data-suffix="%">0%</div>
+        <div class="eyebrow text-pewter/70">Client Satisfaction</div>
+      </div>
+      <div class="reveal text-center lg:text-left lg:px-8 lg:border-r border-white/5" style="transition-delay:120ms;">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">24/7</div>
+        <div class="eyebrow text-pewter/70">Automation Availability</div>
+      </div>
+      <div class="reveal text-center lg:text-left lg:px-8 lg:border-r border-white/5" style="transition-delay:180ms;">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">5★</div>
+        <div class="eyebrow text-pewter/70">Client Experience</div>
+      </div>
+      <div class="reveal text-center lg:text-left lg:px-8 lg:border-r border-white/5" style="transition-delay:240ms;">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">3×</div>
+        <div class="eyebrow text-pewter/70">Average Revenue Growth</div>
+      </div>
+      <div class="reveal text-center lg:text-left lg:px-8" style="transition-delay:300ms;">
+        <div class="font-editorial font-bold platinum-text counter mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;" data-target="48" data-suffix="h">0h</div>
+        <div class="eyebrow text-pewter/70">Avg. Response Time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ SERVICES PREVIEW ══════════════════════ -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-24 reveal">
+      <span class="eyebrow block mb-5">What We Build</span>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;max-width:600px;">
+          Complete Growth<br><em class="italic font-normal text-platinum">Systems, Not Websites.</em>
+        </h2>
+        <a href="services.html" class="btn-ghost flex-shrink-0" style="padding:12px 24px;font-size:0.62rem;">
+          View All Services <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal" style="transition-delay:100ms;">
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">language</span>
+        <h3 class="font-body font-medium text-platinum text-base">Premium Websites</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Bespoke digital presences engineered to convert visitors into clients from the first impression.</p>
+        <a href="services.html#websites" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">smart_toy</span>
+        <h3 class="font-body font-medium text-platinum text-base">AI Assistants</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Intelligent concierges that qualify leads, answer questions, and book appointments 24/7.</p>
+        <a href="services.html#ai" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">bolt</span>
+        <h3 class="font-body font-medium text-platinum text-base">Business Automation</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Automated workflows that run your business even when you're focused on delivering great work.</p>
+        <a href="services.html#automation" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">dns</span>
+        <h3 class="font-body font-medium text-platinum text-base">CRM Integration</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Connect every touchpoint into one unified system for leads, clients, and revenue tracking.</p>
+        <a href="services.html#crm" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">phone_iphone</span>
+        <h3 class="font-body font-medium text-platinum text-base">Mobile Apps</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Native mobile experiences that put your brand in customers' hands and keep them engaged.</p>
+        <a href="services.html#mobile" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
+      </div>
+      <div class="service-card hover-lift" style="background:rgba(232,230,228,0.03);border-color:rgba(232,230,228,0.1);">
+        <span class="material-symbols-outlined text-silver" style="font-size:28px;">arrow_forward</span>
+        <h3 class="font-body font-medium text-platinum text-base">See Full Service List</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">E-commerce, booking systems, admin dashboards, web apps, SEO, analytics, and more.</p>
+        <a href="services.html" class="btn-primary mt-auto" style="font-size:0.6rem;padding:12px 20px;">All Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FEATURED CASE STUDY ══════════════════════ -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-20 reveal">
+      <span class="eyebrow block mb-5">Transformation Stories</span>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;">
+          From Digital Ghost<br>to <em class="italic font-normal text-platinum">Market Authority.</em>
+        </h2>
+        <a href="projects.html" class="btn-ghost flex-shrink-0" style="padding:12px 24px;font-size:0.62rem;">
+          View All Projects <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card p-8 hover-lift glass-shimmer flex flex-col reveal">
+        <div class="flex items-center justify-between mb-6">
+          <span class="outcome-pill">Law Firm</span>
+          <span class="material-symbols-outlined text-pewter/40" style="font-size:18px;">gavel</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Low-quality intake leads and manual scheduling consuming 3+ attorney hours daily.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Business Outcome</p>
+            <div class="flex gap-4 mt-1">
+              <div><div class="font-editorial font-bold platinum-text text-xl">+42%</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">Qualified Inquiries</div></div>
+              <div><div class="font-editorial font-bold platinum-text text-xl">–3h</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">Daily Admin</div></div>
+            </div>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-sm border-t border-white/5 pt-6">"Ascendra built us a business development machine. We've tripled our consultation bookings."</blockquote>
+      </div>
+
+      <div class="card p-8 hover-lift glass-shimmer flex flex-col reveal" style="transition-delay:80ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="outcome-pill">Medical Practice</span>
+          <span class="material-symbols-outlined text-pewter/40" style="font-size:18px;">medical_services</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">22% no-show rate and fragmented patient communication across 4 platforms.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Business Outcome</p>
+            <div class="flex gap-4 mt-1">
+              <div><div class="font-editorial font-bold platinum-text text-xl">–60%</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">No-Show Rate</div></div>
+              <div><div class="font-editorial font-bold platinum-text text-xl">+38%</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">New Patients</div></div>
+            </div>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-sm border-t border-white/5 pt-6">"The automation system saves my team 20+ hours a week. Our close rate has never been higher."</blockquote>
+      </div>
+
+      <div class="card p-8 hover-lift glass-shimmer flex flex-col reveal" style="transition-delay:160ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="outcome-pill">Restaurant Group</span>
+          <span class="material-symbols-outlined text-pewter/40" style="font-size:18px;">restaurant</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">$18,000+ annually lost to third-party platform commissions.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Business Outcome</p>
+            <div class="flex gap-4 mt-1">
+              <div><div class="font-editorial font-bold platinum-text text-xl">+65%</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">Direct Bookings</div></div>
+              <div><div class="font-editorial font-bold platinum-text text-xl">$0</div><div class="eyebrow text-pewter mt-0.5" style="font-size:0.55rem;">Commissions</div></div>
+            </div>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-sm border-t border-white/5 pt-6">"Direct bookings are up 65% and we've cut commission costs entirely."</blockquote>
+      </div>
+    </div>
+
+    <div class="mt-10 text-center reveal" style="transition-delay:200ms;">
+      <a href="projects.html" class="btn-ghost" style="padding:14px 36px;">
+        View All Case Studies <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ QUOTE CTA ══════════════════════ -->
+<section class="py-24 md:py-36 px-6 md:px-16 bg-charcoal relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 opacity-[0.03]" style="background:radial-gradient(ellipse at 50% 50%,#adc6ff,transparent 65%);"></div>
+  </div>
+  <div class="max-w-[800px] mx-auto text-center relative z-10">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-6">Project Investment Estimator</span>
+      <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">
+        How Much Will<br><em class="italic font-normal text-platinum">Your Project Cost?</em>
+      </h2>
+      <p class="text-silver font-body text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-light">Use our intelligent quote calculator to estimate your project investment in under 3 minutes — no sales call required.</p>
+    </div>
+    <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay:100ms;">
+      <a href="quote.html" class="btn-primary">
+        Calculate My Project Quote
+        <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+      </a>
+      <a href="contact.html" class="btn-ghost">Request Private Consultation</a>
+    </div>
+    <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-8 text-center" style="transition-delay:180ms;">
+      <div><div class="font-editorial font-bold platinum-text text-2xl">$2,500</div><div class="eyebrow text-pewter mt-1">Starting Investment</div></div>
+      <div class="w-px h-8 bg-white/10 hidden sm:block"></div>
+      <div><div class="font-editorial font-bold platinum-text text-2xl">$50,000+</div><div class="eyebrow text-pewter mt-1">Enterprise Systems</div></div>
+      <div class="w-px h-8 bg-white/10 hidden sm:block"></div>
+      <div><div class="font-editorial font-bold platinum-text text-2xl">3 Min</div><div class="eyebrow text-pewter mt-1">To Get Your Estimate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ PACKAGES PREVIEW ══════════════════════ -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-20 reveal">
+      <span class="eyebrow block mb-5">Growth Solutions</span>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;">
+          Engineered for<br><em class="italic font-normal text-platinum">Where You're Going.</em>
+        </h2>
+        <a href="quote.html" class="btn-ghost flex-shrink-0" style="padding:12px 24px;font-size:0.62rem;">
+          Get My Quote <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 reveal" style="transition-delay:80ms;">
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+        <span class="eyebrow text-pewter block mb-6">Foundation</span>
+        <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Premium Website Experience</h3>
+        <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">A world-class digital presence that positions your brand as the authority in your market. Crafted to convert visitors into clients from the first interaction.</p>
+        <a href="quote.html" class="btn-ghost w-full justify-center">Start With Foundation</a>
+      </div>
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+        <span class="eyebrow text-pewter block mb-6">Growth</span>
+        <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Website + Automation</h3>
+        <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">Your website becomes the front door to a fully automated business system. Lead capture, CRM sync, and automated follow-up — running 24/7.</p>
+        <a href="quote.html" class="btn-ghost w-full justify-center">Start With Growth</a>
+      </div>
+      <div class="card pkg-featured p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+        <div class="flex items-center justify-between mb-6">
+          <span class="eyebrow text-pewter">Authority</span>
+          <span class="eyebrow text-platinum/80 border border-platinum/20 px-3 py-1">Most Popular</span>
+        </div>
+        <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Website + Automation + AI</h3>
+        <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">Deploy an AI-powered concierge that qualifies leads, answers questions, and books appointments around the clock.</p>
+        <a href="quote.html" class="btn-primary w-full justify-center">
+          Start With Authority <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+        </a>
+      </div>
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+        <span class="eyebrow text-pewter block mb-6">Enterprise</span>
+        <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Custom Growth Ecosystem</h3>
+        <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">For established businesses ready for complete digital transformation. Custom scope, bespoke architecture, dedicated partnership.</p>
+        <a href="contact.html" class="btn-ghost w-full justify-center">Request Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOUNDER PREVIEW ══════════════════════ -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+      <div class="lg:col-span-4 reveal">
+        <div class="relative" style="aspect-ratio:4/5;max-width:380px;margin:0 auto;">
+          <img src="stitch-screens/portrait.png" alt="Ascendra Founder" class="w-full h-full object-cover" style="filter:grayscale(100%) contrast(1.05);" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div style="display:none;width:100%;height:100%;background:#111;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+            <span class="material-symbols-outlined text-smoke" style="font-size:48px;">person</span>
+            <span class="eyebrow text-pewter">Founder Portrait</span>
+          </div>
+          <div class="absolute inset-0" style="background:linear-gradient(180deg,transparent 60%,#0d0d0d 100%);"></div>
+        </div>
+      </div>
+      <div class="lg:col-span-8 flex flex-col gap-8 reveal" style="transition-delay:120ms;">
+        <span class="eyebrow text-pewter">Meet the Founder</span>
+        <blockquote class="font-editorial italic text-platinum font-normal leading-snug" style="font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:-0.01em;border-left:2px solid rgba(255,255,255,0.1);padding-left:24px;">
+          "I believe a business's digital presence should be its hardest-working asset — generating leads, building trust, and closing deals even at 2am."
+        </blockquote>
+        <p class="text-silver font-body text-sm leading-relaxed font-light max-w-xl">Ascendra was founded on the belief that most businesses deserve better than templates and agencies that disappear after launch. We build long-term growth partnerships, not one-time projects.</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="about.html" class="btn-ghost" style="padding:14px 28px;">
+            Meet The Founder <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </a>
+          <a href="process.html" class="btn-ghost" style="padding:14px 28px;">
+            See Our Process <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FINAL CTA ══════════════════════ -->
+<section class="py-28 md:py-48 px-6 md:px-16 bg-void relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <svg class="absolute left-0 bottom-0 opacity-[0.04] w-full" viewBox="0 0 1440 400" fill="none" preserveAspectRatio="xMidYMax slice">
+      <line x1="0" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="180" y1="400" x2="900" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="360" y1="400" x2="1080" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="1440" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="1260" y1="400" x2="540" y2="0" stroke="white" stroke-width="0.5"/>
+    </svg>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-[0.025]" style="background:radial-gradient(ellipse,#adc6ff,transparent 70%);"></div>
+  </div>
+  <div class="max-w-[1000px] mx-auto text-center relative z-10">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-8">Ready to Ascend?</span>
+      <h2 class="font-editorial font-bold platinum-text mb-8 md:mb-10" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Let's Build Your<br><em class="italic font-normal text-platinum">Digital Legacy.</em>
+      </h2>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12 md:mb-14 font-light">Every ambitious business deserves a digital presence that works as hard as you do. Let's engineer yours.</p>
+    </div>
+    <div class="reveal flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center" style="transition-delay:120ms;">
+      <a href="quote.html" class="btn-primary text-center justify-center">
+        Get My Project Quote
+        <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+      </a>
+      <a href="contact.html" class="btn-ghost">Request Private Consultation</a>
+    </div>
+    <div class="reveal mt-14 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12" style="transition-delay:200ms;">
+      <a href="mailto:doriscacarlm40@gmail.com" class="flex items-center gap-3 text-silver hover:text-platinum transition-colors duration-300 text-sm font-body group">
+        <span class="material-symbols-outlined text-pewter group-hover:text-silver" style="font-size:18px;">mail</span>
+        doriscacarlm40@gmail.com
+      </a>
+      <div class="w-px h-4 bg-white/10 hidden sm:block"></div>
+      <span class="flex items-center gap-3 text-silver text-sm font-body">
+        <span class="material-symbols-outlined text-pewter" style="font-size:18px;">schedule</span>
+        Response within 24 hours
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-12 md:py-14">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 mb-12">
+        <div class="sm:col-span-2 md:col-span-4">
+          <a href="index.html" class="font-editorial text-2xl tracking-tight text-platinum font-bold block mb-4">ASCENDRA</a>
+          <p class="text-pewter text-sm leading-relaxed font-body max-w-xs font-light">Premium digital growth consultancy. We build the systems that help ambitious businesses grow, scale, and lead their markets.</p>
+        </div>
+        <div class="md:col-span-2">
+          <h5 class="eyebrow text-platinum/50 mb-5">Navigate</h5>
+          <ul class="flex flex-col gap-3.5">
+            <li><a href="index.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Home</a></li>
+            <li><a href="services.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Services</a></li>
+            <li><a href="projects.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Projects</a></li>
+            <li><a href="process.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Process</a></li>
+            <li><a href="about.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">About</a></li>
+            <li><a href="insights.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Insights</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-3">
+          <h5 class="eyebrow text-platinum/50 mb-5">Solutions</h5>
+          <ul class="flex flex-col gap-3.5">
+            <li><a href="services.html#websites" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Premium Websites</a></li>
+            <li><a href="services.html#ai" class="text-pewter text-sm hover:text-platinum transition-colors font-body">AI Systems</a></li>
+            <li><a href="services.html#automation" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Business Automation</a></li>
+            <li><a href="services.html#crm" class="text-pewter text-sm hover:text-platinum transition-colors font-body">CRM Integration</a></li>
+            <li><a href="services.html#mobile" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Mobile Apps</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-3">
+          <h5 class="eyebrow text-platinum/50 mb-5">Ready to Begin?</h5>
+          <p class="text-pewter text-sm font-body leading-relaxed mb-5 font-light">Every great business started with a single conversation. Let's have yours.</p>
+          <a href="quote.html" class="btn-primary w-full justify-center block text-center" style="font-size:0.62rem;">
+            Start My Project <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </a>
+          <a href="contact.html" class="btn-ghost w-full justify-center mt-3 block text-center" style="font-size:0.62rem;padding:12px;">
+            Request Private Consultation
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <p class="text-pewter/50 text-xs font-mono tracking-wider">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+        <p class="text-pewter/40 text-xs font-body italic">Building growth systems for businesses that refuse to be ordinary.</p>
+        <div class="flex gap-6">
+          <a href="#" class="text-pewter/40 text-xs hover:text-silver transition-colors font-mono tracking-wider">Privacy</a>
+          <a href="#" class="text-pewter/40 text-xs hover:text-silver transition-colors font-mono tracking-wider">Terms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Ticker duplication
+(function(){
+  const track = document.getElementById('tickerTrack');
+  if (!track) return;
+  track.innerHTML = track.innerHTML + track.innerHTML;
+})();
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
+  if (isNaN(target)) return;
+  let startTime = null;
+  const duration = 1400;
+  function update(now) {
+    if (!startTime) startTime = now;
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(target * ease) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(update);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter[data-target]').forEach(el => counterObserver.observe(el));
+
+// Mobile nav
+const drawer = document.getElementById('mobileDrawer');
+const openBtn = document.getElementById('openMenu');
+const closeBtn = document.getElementById('closeMenu');
+function closeDrawer() { drawer.classList.remove('open'); document.body.style.overflow = ''; }
+openBtn?.addEventListener('click', () => { drawer.classList.add('open'); document.body.style.overflow = 'hidden'; });
+closeBtn?.addEventListener('click', closeDrawer);
+drawer?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeDrawer));
+
+// Floating CTAs
+const floatingCta = document.getElementById('floatingCta');
+const mobileCta = document.getElementById('mobileCta');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY > 600;
+  floatingCta?.classList.toggle('show', s);
+  mobileCta?.classList.toggle('show', s);
+}, { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASCENDRA | Cinematic Excellence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(32px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .platinum-glow {
+            box-shadow: 0 0 50px rgba(173, 198, 255, 0.15);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .before-after-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 4px;
+            height: 100vh;
+            background: #adc6ff;
+            cursor: ew-resize;
+            box-shadow: 0 0 20px rgba(173, 198, 255, 0.8);
+        }
+
+        @keyframes reveal-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            animation: reveal-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .sticky-cta-shadow {
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#474646",
+                        "primary": "#adc6ff",
+                        "surface": "#131313",
+                        "inverse-primary": "#005ac2",
+                        "surface-variant": "#353534",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-container": "#282930",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "outline-variant": "#424754",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#45464e",
+                        "on-secondary-container": "#bab8b7",
+                        "secondary-container": "#4a4949",
+                        "primary-container": "#4d8eff",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-container": "#00285d",
+                        "tertiary-fixed-dim": "#c6c6cf",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "secondary": "#c8c6c5",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#001a42",
+                        "surface-bright": "#3a3939",
+                        "tertiary": "#c6c6cf",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-container": "#909099",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary": "#313030",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "on-background": "#e5e2e1",
+                        "on-primary": "#002e6a",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed": "#1a1b22",
+                        "tertiary-fixed": "#e2e1eb",
+                        "on-tertiary": "#2f3037",
+                        "surface-tint": "#adc6ff",
+                        "background": "#050505",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "outline": "#8c909f"
+                    },
+                    "spacing": {
+                        "gutter": "32px",
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "section-gap-md": "80px",
+                        "section-gap-lg": "160px",
+                        "margin-mobile": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "mono-technical": ["Geist"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "headline-xl-mobile": ["Bodoni Moda"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["56px", {"lineHeight": "110%", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg": ["120px", {"lineHeight": "110%", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-lg": ["20px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "mono-technical": ["12px", {"lineHeight": "150%", "fontWeight": "400"}],
+                        "headline-xl": ["72px", {"lineHeight": "120%", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["48px", {"lineHeight": "110%", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "140%", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "100%", "letterSpacing": "0.3em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary selection:text-on-primary overflow-x-hidden font-body-md">
+<!-- TopNavBar (Minimal) -->
+<header class="fixed top-0 w-full z-50 h-24 px-margin-mobile flex justify-between items-center bg-gradient-to-b from-background to-transparent">
+<div class="font-display-lg text-2xl tracking-[-0.05em] text-on-surface">ASCENDRA</div>
+<button class="group flex items-center gap-3" id="menu-toggle">
+<span class="font-label-caps text-on-surface-variant group-hover:text-primary transition-colors">MENU</span>
+<div class="w-10 h-10 flex flex-col items-end justify-center space-y-1.5">
+<div class="w-8 h-[1px] bg-on-surface"></div>
+<div class="w-5 h-[1px] bg-on-surface"></div>
+</div>
+</button>
+</header>
+<!-- Mobile Menu Overlay (Cinematic) -->
+<div class="fixed inset-0 z-[100] bg-surface flex flex-col p-margin-mobile opacity-0 pointer-events-none transition-all duration-700 ease-in-out translate-y-10" id="mobile-menu">
+<div class="flex justify-between items-center h-24">
+<div class="font-display-lg text-2xl tracking-tighter">ASCENDRA</div>
+<button class="w-12 h-12 flex items-center justify-center" id="menu-close">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<nav class="flex-1 flex flex-col justify-center space-y-8">
+<a class="font-display-lg text-6xl italic hover:text-primary transition-colors" href="#">Work</a>
+<a class="font-display-lg text-6xl hover:text-primary transition-colors" href="#">Service</a>
+<a class="font-display-lg text-6xl hover:text-primary transition-colors" href="#">Studio</a>
+<a class="font-display-lg text-6xl italic hover:text-primary transition-colors" href="#">Journal</a>
+</nav>
+<div class="pb-10 border-t border-white/10 pt-10 flex flex-col space-y-6">
+<div class="flex justify-between text-on-surface-variant font-label-caps">
+<span>OFFICES</span>
+<span>LONDON / NEW YORK</span>
+</div>
+<button class="w-full py-6 bg-primary text-on-primary font-label-caps tracking-[0.3em] uppercase">Start Project</button>
+</div>
+</div>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative h-[90dvh] pt-32 px-margin-mobile flex flex-col overflow-hidden">
+<div class="absolute inset-0 -z-10 opacity-30">
+
+</div>
+<div class="reveal">
+<span class="font-label-caps text-primary mb-6 block">ESTABLISHED 2024</span>
+<h1 class="font-headline-xl-mobile text-on-surface leading-[1.05] tracking-tight mb-8">
+                ARCHITECTING <span class="italic font-light">DIGITAL</span> DOMINANCE.
+            </h1>
+</div>
+<div class="mt-auto pb-12 reveal" style="animation-delay: 0.2s">
+<p class="font-body-lg text-on-surface-variant max-w-[280px] mb-8 leading-relaxed">
+                We craft high-performance digital environments for world-class brands.
+            </p>
+<div class="w-full aspect-[4/3] relative grayscale hover:grayscale-0 transition-all duration-1000 overflow-hidden rounded-sm">
+<img alt="Atmospheric Architecture" class="w-full h-full object-cover scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB40PqRVzBvcs1SDL3HJC5CgJJOy6SHHOCcZc5t41y63fdrRYy-V8BVi0kNCPI3ffLcN2lxkUy95NdJRXmq5Yix7aoAKx2TTTTWYEaVajfJ9KTq86Rl7Buu0STcrnYyzDt6Ubb2l7sKZDkFvQ7_J50jGHraZI7bJ6MRQBQCwdh1fQdaiJw5mK2TcRAnKzM7oUTBeJ2GCSXbhiXuFf0T3XEP26nC2S2RpI2_pp-2NWyZcHOoHbFQEtOcjW_0o4aBMtWDcaOaGM80Jv-J"/>
+</div>
+</div>
+</section>
+<!-- Luxury Configurator -->
+<section class="py-section-gap-md px-margin-mobile bg-surface-container-lowest" id="configurator">
+<div class="mb-12">
+<h2 class="font-label-caps text-primary mb-4">PROJECT CONFIGURATOR</h2>
+<h3 class="font-display-lg text-4xl">Design Your Vision</h3>
+</div>
+<div class="glass-panel p-6 border border-white/5 relative">
+<!-- Progress Bar -->
+<div class="flex justify-between items-center mb-8">
+<div class="flex space-x-1">
+<div class="w-8 h-[2px] bg-primary"></div>
+<div class="w-8 h-[2px] bg-white/10"></div>
+<div class="w-8 h-[2px] bg-white/10"></div>
+</div>
+<span class="font-mono-technical text-primary">01 / 03</span>
+</div>
+<div class="space-y-4" id="step-content">
+<p class="font-body-md text-on-surface-variant mb-6 uppercase tracking-widest text-[10px]">Select Your Tier</p>
+<button class="w-full p-6 text-left border border-primary bg-primary/5 flex flex-col gap-2 transition-all">
+<span class="font-display-lg text-xl">The Vanguard</span>
+<span class="font-body-md text-on-surface-variant text-sm">Full digital ecosystem &amp; identity systems.</span>
+</button>
+<button class="w-full p-6 text-left border border-white/10 bg-white/5 flex flex-col gap-2 opacity-60">
+<span class="font-display-lg text-xl">The Bespoke</span>
+<span class="font-body-md text-on-surface-variant text-sm">Custom high-fidelity web experiences.</span>
+</button>
+</div>
+<div class="mt-12 flex justify-between items-center pt-8 border-t border-white/5">
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant">ESTIMATED VALUE</span>
+<span class="font-mono-technical text-xl text-primary">$45k - $60k</span>
+</div>
+<button class="bg-primary text-on-primary-fixed px-8 py-3 font-label-caps text-[12px]">CONTINUE</button>
+</div>
+</div>
+</section>
+<!-- ROI Calculator (Interactive) -->
+<section class="py-section-gap-md px-margin-mobile">
+<div class="p-8 border border-white/10 bg-surface">
+<h3 class="font-display-lg text-3xl mb-8">Predict Your Impact</h3>
+<div class="space-y-8">
+<div class="space-y-4">
+<div class="flex justify-between font-label-caps text-[10px]">
+<span>CURRENT TRAFFIC</span>
+<span id="traffic-val">50,000</span>
+</div>
+<input class="w-full accent-primary bg-white/10 h-[2px] appearance-none" max="200000" min="5000" step="5000" type="range" value="50000"/>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-8 border-t border-white/5">
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant mb-1">PROJECTED LIFT</span>
+<span class="font-display-lg text-2xl text-primary">+240%</span>
+</div>
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant mb-1">ROI INDEX</span>
+<span class="font-display-lg text-2xl text-on-surface">4.8x</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Before/After Slider -->
+<section class="relative h-[60vh] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzxMhaeVdzTr7uDUeQRrDo0kwz_IkEtgTxHgoz5R2iiH7KNtlxyRSpzOP0jFPnpEMcIAh5jtOMdqDYHnAYEeI-kEjVLsYzmblJWllDG2mSA6iSysKkpF9DDgrBd_Bt1dj-8BP_ey0wKWgvzXCcDHu0mwa8axC-UNkEoP-4Fr1PkUVsNpKAyyXMP99MdQQaFVxGLfnD1xFaMCKhQwqMESJPawaUipTFWLCeP2XrE_tXnfYKDzwHQcsyhXc5bD35GMqriYceipUmVxes');"></div>
+<div class="absolute inset-0 bg-cover bg-center grayscale brightness-50" id="before-img" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzxMhaeVdzTr7uDUeQRrDo0kwz_IkEtgTxHgoz5R2iiH7KNtlxyRSpzOP0jFPnpEMcIAh5jtOMdqDYHnAYEeI-kEjVLsYzmblJWllDG2mSA6iSysKkpF9DDgrBd_Bt1dj-8BP_ey0wKWgvzXCcDHu0mwa8axC-UNkEoP-4Fr1PkUVsNpKAyyXMP99MdQQaFVxGLfnD1xFaMCKhQwqMESJPawaUipTFWLCeP2XrE_tXnfYKDzwHQcsyhXc5bD35GMqriYceipUmVxes'); clip-path: inset(0 50% 0 0);"></div>
+<input class="absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer before-after-slider z-10" id="slider-input" max="100" min="0" type="range" value="50"/>
+<div class="absolute bottom-6 left-6 z-20 font-label-caps text-[10px] bg-black/40 backdrop-blur px-3 py-1 border border-white/10 uppercase">Transformation Engine</div>
+</section>
+<!-- Services (Stacked Premium) -->
+<section class="py-section-gap-lg px-margin-mobile space-y-24">
+<div>
+<span class="font-label-caps text-primary block mb-6">CAPABILITIES</span>
+<div class="space-y-16">
+<div class="group">
+<span class="font-mono-technical text-on-surface-variant block mb-4">01.</span>
+<h3 class="font-display-lg text-5xl mb-6">Immersive Experience</h3>
+<p class="font-body-lg text-on-surface-variant leading-relaxed">Spatial design for the browser. We create environments that people don't just visit—they inhabit.</p>
+</div>
+<div class="group">
+<span class="font-mono-technical text-on-surface-variant block mb-4">02.</span>
+<h3 class="font-display-lg text-5xl mb-6 italic">Brand Architecture</h3>
+<p class="font-body-lg text-on-surface-variant leading-relaxed">Developing the visual language and structural systems that define market leaders for decades.</p>
+</div>
+<div class="group">
+<span class="font-mono-technical text-on-surface-variant block mb-4">03.</span>
+<h3 class="font-display-lg text-5xl mb-6">Custom Engineering</h3>
+<p class="font-body-lg text-on-surface-variant leading-relaxed">Performance without compromise. High-fidelity code that scales with your ambition.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio (Full Screen Previews) -->
+<section class="bg-black">
+<div class="px-margin-mobile pt-20 mb-10">
+<h2 class="font-display-lg text-4xl">Selected Artifacts</h2>
+</div>
+<div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar">
+<!-- Project 1 -->
+<div class="snap-start min-w-full h-[70vh] relative p-margin-mobile flex flex-col justify-end">
+<img class="absolute inset-0 w-full h-full object-cover brightness-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKGBZ69mTXaR5Z1e3o5mzpCzhJpwIx6C52Wfn14OLSHJCrhgtMQWKA0leN4ccsD7cY4Jv6GvfN-wn9JMDrT0rZGdofMFwCg47EseZliQCXNfpXesxmQbpoFD7VRJvWi5WRVDhmHB4Xa-buDoNALP3ZWoKkjNh8ccC3u_d3fmKf4H77dWIdralrGzRvdOP5aMp-crbMlVUQfxpSll-ZD20MiClwrf5TPeP128DE6HhBz4zKXEF8L6EQW0XBVHcEmY6rY53ZPsfLv3b_"/>
+<div class="relative z-10">
+<span class="font-label-caps text-primary text-[10px] uppercase mb-2 block">Architecture / 2024</span>
+<h4 class="font-display-lg text-5xl mb-8">NEXUS VILLA</h4>
+<button class="flex items-center gap-4 text-on-surface font-label-caps border-b border-white/20 pb-2">
+                        VIEW CASE <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="snap-start min-w-full h-[70vh] relative p-margin-mobile flex flex-col justify-end">
+<img class="absolute inset-0 w-full h-full object-cover brightness-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzxMhaeVdzTr7uDUeQRrDo0kwz_IkEtgTxHgoz5R2iiH7KNtlxyRSpzOP0jFPnpEMcIAh5jtOMdqDYHnAYEeI-kEjVLsYzmblJWllDG2mSA6iSysKkpF9DDgrBd_Bt1dj-8BP_ey0wKWgvzXCcDHu0mwa8axC-UNkEoP-4Fr1PkUVsNpKAyyXMP99MdQQaFVxGLfnD1xFaMCKhQwqMESJPawaUipTFWLCeP2XrE_tXnfYKDzwHQcsyhXc5bD35GMqriYceipUmVxes"/>
+<div class="relative z-10">
+<span class="font-label-caps text-primary text-[10px] uppercase mb-2 block">Digital Identity / 2023</span>
+<h4 class="font-display-lg text-5xl mb-8 italic">AURUM</h4>
+<button class="flex items-center gap-4 text-on-surface font-label-caps border-b border-white/20 pb-2">
+                        VIEW CASE <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Client Dashboard Preview -->
+<section class="py-section-gap-lg px-margin-mobile bg-surface-container-low">
+<div class="mb-12">
+<h2 class="font-label-caps text-primary mb-4">CLIENT EXPERIENCE</h2>
+<h3 class="font-display-lg text-4xl mb-6">Total Visibility.</h3>
+<p class="font-body-md text-on-surface-variant">Our bespoke dashboard provides real-time project metrics, asset management, and direct communication lines.</p>
+</div>
+<div class="glass-panel p-4 border border-white/10 rounded-lg overflow-hidden platinum-glow">
+<div class="flex items-center justify-between mb-4 border-b border-white/5 pb-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+<span class="font-mono-technical text-[10px]">PROJECT ACTIVE: PHASE 2</span>
+</div>
+<span class="material-symbols-outlined text-xl">account_circle</span>
+</div>
+<div class="space-y-4">
+<div class="h-32 bg-white/5 border border-white/5 flex items-center justify-center">
+<span class="font-label-caps text-[10px] opacity-30">LATEST RENDERS_V4.MP4</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-white/5 border border-white/5">
+<span class="block text-[10px] font-mono-technical opacity-50 mb-1">MILESTONE</span>
+<span class="text-xs font-label-caps">92% COMPLETE</span>
+</div>
+<div class="p-3 bg-white/5 border border-white/5">
+<span class="block text-[10px] font-mono-technical opacity-50 mb-1">NEXT SYNC</span>
+<span class="text-xs font-label-caps">OCT 14, 10AM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="py-section-gap-lg px-margin-mobile text-center">
+<h2 class="font-display-lg text-4xl mb-12 italic">
+            "We partner with ambitious businesses that <span class="not-italic text-primary">refuse to blend in.</span>"
+        </h2>
+<div class="flex flex-wrap justify-center gap-8 opacity-40 grayscale">
+<span class="font-label-caps text-lg tracking-tighter">FORBES</span>
+<span class="font-label-caps text-lg tracking-tighter">ADWEEK</span>
+<span class="font-label-caps text-lg tracking-tighter">VOGUE</span>
+<span class="font-label-caps text-lg tracking-tighter">WIRED</span>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full pt-section-gap-md pb-40 border-t border-white/5 px-margin-mobile bg-background">
+<div class="flex flex-col space-y-12">
+<div class="font-display-lg text-4xl tracking-tighter text-on-surface">ASCENDRA</div>
+<div class="grid grid-cols-2 gap-8 font-label-caps text-[10px] text-on-surface-variant">
+<div class="space-y-4">
+<p class="text-white">FOLLOW</p>
+<a class="block hover:text-primary transition-colors" href="#">INSTAGRAM</a>
+<a class="block hover:text-primary transition-colors" href="#">LINKEDIN</a>
+<a class="block hover:text-primary transition-colors" href="#">TWITTER</a>
+</div>
+<div class="space-y-4">
+<p class="text-white">ENQUIRIES</p>
+<a class="block hover:text-primary transition-colors" href="mailto:hello@ascendra.digital">HELLO@ASCENDRA.DIGITAL</a>
+<span>+44 20 7946 0958</span>
+</div>
+</div>
+<p class="font-mono-technical text-[10px] text-on-surface-variant opacity-40">
+                © 2024 ASCENDRA STUDIO. ALL RIGHTS RESERVED. CINEMATIC EXCELLENCE BY DEFAULT.
+            </p>
+</div>
+</footer>
+</main>
+<!-- Sticky Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full z-[80] p-6 bg-gradient-to-t from-background via-background/90 to-transparent sticky-cta-shadow">
+<button class="w-full py-5 bg-primary text-on-primary-fixed font-label-caps tracking-[0.4em] uppercase text-[12px] platinum-glow active:scale-95 transition-all" onclick="scrollToConfig()">
+        Get My Quote
+    </button>
+</div>
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const sliderInput = document.getElementById('slider-input');
+    const beforeImg = document.getElementById('before-img');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+    });
+
+    menuClose.addEventListener('click', () => {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+    });
+
+    sliderInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        beforeImg.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+    });
+
+    function scrollToConfig() {
+        document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Reveal on scroll logic
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section > div, h3, p').forEach(el => {
+        if(!el.classList.contains('reveal')) {
+            el.classList.add('opacity-0');
+            observer.observe(el);
+        }
+    });
+</script>
+</body></html>

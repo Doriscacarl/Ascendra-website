@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASCENDRA | Cinematic Excellence in Digital Craft</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary-fixed-variant": "#474646",
+                    "primary": "#adc6ff",
+                    "surface": "#131313",
+                    "inverse-primary": "#005ac2",
+                    "surface-variant": "#353534",
+                    "surface-container": "#201f1f",
+                    "on-tertiary-container": "#282930",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "outline-variant": "#424754",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed-variant": "#45464e",
+                    "on-secondary-container": "#bab8b7",
+                    "secondary-container": "#4a4949",
+                    "primary-container": "#4d8eff",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-primary-container": "#00285d",
+                    "tertiary-fixed-dim": "#c6c6cf",
+                    "inverse-surface": "#e5e2e1",
+                    "surface-dim": "#131313",
+                    "secondary": "#c8c6c5",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#001a42",
+                    "surface-bright": "#3a3939",
+                    "tertiary": "#c6c6cf",
+                    "inverse-on-surface": "#313030",
+                    "tertiary-container": "#909099",
+                    "surface-container-high": "#2a2a2a",
+                    "on-secondary": "#313030",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container-low": "#1c1b1b",
+                    "on-surface": "#e5e2e1",
+                    "surface-container-highest": "#353534",
+                    "on-background": "#e5e2e1",
+                    "on-primary": "#002e6a",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#1a1b22",
+                    "tertiary-fixed": "#e2e1eb",
+                    "on-tertiary": "#2f3037",
+                    "surface-tint": "#adc6ff",
+                    "background": "#050505",
+                    "primary-fixed": "#d8e2ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "outline": "#8c909f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "32px",
+                    "container-max": "1440px",
+                    "margin-desktop": "64px",
+                    "section-gap-md": "80px",
+                    "section-gap-lg": "160px",
+                    "margin-mobile": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Bodoni Moda", "serif"],
+                    "display-lg-mobile": ["Bodoni Moda", "serif"],
+                    "body-lg": ["Hanken Grotesk", "sans-serif"],
+                    "mono-technical": ["Geist", "monospace"],
+                    "headline-xl": ["Bodoni Moda", "serif"],
+                    "headline-xl-mobile": ["Bodoni Moda", "serif"],
+                    "headline-md": ["Hanken Grotesk", "sans-serif"],
+                    "body-md": ["Hanken Grotesk", "sans-serif"],
+                    "label-caps": ["Geist", "sans-serif"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["56px", {"lineHeight": "110%", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg": ["120px", {"lineHeight": "110%", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "160%", "fontWeight": "400"}],
+                    "mono-technical": ["14px", {"lineHeight": "150%", "fontWeight": "400"}],
+                    "headline-xl": ["72px", {"lineHeight": "120%", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["40px", {"lineHeight": "120%", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "140%", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "160%", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "100%", "letterSpacing": "0.2em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #050505; color: #e5e2e1; overflow-x: hidden; }
+        .glass-panel {
+            background: rgba(16, 16, 16, 0.6);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 40px rgba(173, 198, 255, 0.4);
+            transform: scale(1.02);
+        }
+        .hero-headline {
+            text-wrap: balance;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Slider Styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            cursor: ew-resize;
+        }
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .before-image {
+            z-index: 10;
+            clip-path: inset(0 50% 0 0);
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: #adc6ff;
+            z-index: 20;
+            transform: translateX(-50%);
+        }
+        .handle-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background: #adc6ff;
+            color: #002e6a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(173, 198, 255, 0.5);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 100vh;
+            width: 100px;
+            background: transparent;
+            cursor: ew-resize;
+        }
+
+        .platinum-silver {
+            background: linear-gradient(135deg, #e5e2e1 0%, #8c909f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-2xl border-b border-white/10 shadow-2xl flex justify-between items-center px-margin-desktop h-24">
+<div class="font-display-lg text-headline-md tracking-tighter text-on-surface">ASCENDRA</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary pb-1" href="#">Work</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" href="#">Services</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" href="#">Methodology</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" href="#">Contact</a>
+</div>
+<button class="font-label-caps text-label-caps bg-primary text-on-primary-fixed px-8 py-3 rounded-full hover:scale-105 hover:bg-white/5 hover:text-primary border border-primary transition-all duration-300 active:scale-95">
+        Request Quote
+    </button>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-24 overflow-hidden px-margin-desktop">
+
+<div class="grid grid-cols-12 gap-gutter w-full max-w-container-max mx-auto relative z-10">
+<div class="col-span-12 lg:col-span-7 flex flex-col justify-center gap-8 reveal">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.4em]">FUTURE-PROOF DIGITAL CRAFT</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight hero-headline">
+                    WE BUILD DIGITAL EXPERIENCES THAT MAKE BUSINESSES <span class="italic font-normal">IMPOSSIBLE</span> TO IGNORE
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    A world-class digital agency specializing in hyper-personalized web platforms, sophisticated AI integrations, and high-performance business automations.
+                </p>
+<div class="flex flex-wrap gap-6 mt-4">
+<button class="glow-button font-label-caps text-label-caps bg-primary text-on-primary-fixed px-10 py-5 rounded-full transition-all duration-500 shadow-xl">
+                        Get My Free Quote
+                    </button>
+<button class="glass-panel font-label-caps text-label-caps text-on-surface px-10 py-5 rounded-full transition-all duration-300 hover:bg-white/10">
+                        View Our Work
+                    </button>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 relative flex items-center justify-center pt-12 lg:pt-0">
+<div class="floating relative w-full aspect-square max-w-lg">
+<img alt="Luxury Digital Interface Showcase" class="w-full h-full object-contain drop-shadow-[0_0_80px_rgba(173,198,255,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB40PqRVzBvcs1SDL3HJC5CgJJOy6SHHOCcZc5t41y63fdrRYy-V8BVi0kNCPI3ffLcN2lxkUy95NdJRXmq5Yix7aoAKx2TTTTWYEaVajfJ9KTq86Rl7Buu0STcrnYyzDt6Ubb2l7sKZDkFvQ7_J50jGHraZI7bJ6MRQBQCwdh1fQdaiJw5mK2TcRAnKzM7oUTBeJ2GCSXbhiXuFf0T3XEP26nC2S2RpI2_pp-2NWyZcHOoHbFQEtOcjW_0o4aBMtWDcaOaGM80Jv-J"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="py-12 bg-surface border-y border-white/5">
+<div class="px-margin-desktop overflow-hidden">
+<div class="flex whitespace-nowrap gap-16 animate-infinite-scroll py-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> WEBSITES
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> AI SYSTEMS
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> AUTOMATIONS
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> ADMIN DASHBOARDS
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> BOOKING PLATFORMS
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> MOBILE APPS
+                </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/40 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary scale-75">star</span> BUSINESS GROWTH
+                </span>
+</div>
+</div>
+</section>
+<!-- ROI Impact Calculator -->
+<section class="py-section-gap-lg px-margin-desktop relative overflow-hidden bg-background">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+
+</div>
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-12 lg:col-span-5 reveal">
+<span class="font-label-caps text-label-caps text-primary mb-6 block tracking-[0.4em]">ROI IMPACT CALCULATOR</span>
+<h2 class="font-display-lg text-headline-xl-mobile md:text-headline-md mb-8">What is your current website <span class="italic text-primary">costing</span> your business?</h2>
+<p class="font-body-lg text-on-surface-variant mb-12">Stop treating your digital presence as an expense. Discover the untapped revenue potential of a cinematic growth system.</p>
+<div class="space-y-6">
+<div>
+<label class="font-label-caps text-[10px] text-on-surface-variant mb-3 block">SELECT YOUR INDUSTRY</label>
+<select class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 font-body-md text-on-surface focus:border-primary outline-none transition-all appearance-none" id="industry-selector">
+<option value="professional">Professional Services</option>
+<option value="restaurant">Luxury Dining &amp; Restaurants</option>
+<option value="medical">Medical Practice</option>
+<option value="legal">Law Firm</option>
+<option value="real-estate">Real Estate</option>
+<option value="ecommerce">E-Commerce</option>
+<option value="beauty">Beauty &amp; Wellness</option>
+<option value="contractor">High-End Contracting</option>
+</select>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="dynamic-inputs">
+<!-- Injected by JS -->
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-7 reveal">
+<div class="glass-panel p-10 md:p-16 rounded-[2.5rem] border-primary/20 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+<div class="md:col-span-2 text-center mb-4">
+<p class="font-label-caps text-label-caps text-on-surface-variant/60 mb-2">INTELLIGENT GROWTH ESTIMATE</p>
+<h3 class="font-display-lg text-headline-xl md:text-[80px] text-primary platinum-silver leading-none" id="roi-revenue">$0</h3>
+<p class="font-body-md text-on-surface-variant mt-4">Estimated Potential Annual Revenue Increase</p>
+</div>
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+<span class="font-label-caps text-label-caps">LEAD GROWTH</span>
+</div>
+<div class="text-headline-md font-display-lg text-on-surface" id="roi-leads">+0%</div>
+<p class="text-sm text-on-surface-variant mt-2">Conversion optimization potential</p>
+</div>
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-primary">bolt</span>
+<span class="font-label-caps text-label-caps">EFFICIENCY</span>
+</div>
+<div class="text-headline-md font-display-lg text-on-surface" id="roi-eff">+0%</div>
+<p class="text-sm text-on-surface-variant mt-2">Reduction in manual operations</p>
+</div>
+</div>
+<div class="mt-12 text-center relative z-10">
+<button class="glow-button font-label-caps text-label-caps bg-primary text-on-primary-fixed px-12 py-6 rounded-full w-full md:w-auto">
+                                Unlock Your Custom Growth Strategy
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Before & After Transformation Showcase -->
+<section class="py-section-gap-lg px-margin-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 reveal">
+<div class="max-w-2xl">
+<span class="font-label-caps text-label-caps text-primary mb-4 block">TRANSFORMATION STORIES</span>
+<h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl">From Digital Ghost to Market Authority.</h2>
+</div>
+<p class="font-body-lg text-on-surface-variant max-w-sm">We don't just update aesthetics; we re-engineer the fundamental business impact of your brand.</p>
+</div>
+<!-- Immersive Slider Case Study -->
+<div class="grid grid-cols-12 gap-gutter reveal">
+<div class="col-span-12 lg:col-span-8">
+<div class="slider-container aspect-[16/9] shadow-2xl group border border-white/10" id="comparison-slider">
+<img alt="After" class="slider-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz3CBT2K89EC3aB3yw-YoHNWl39A1UFmEENF12pbJ6Z4RoulsffWGrjUSz_LZjCE5OBY_7zPOEyqNLOwWej9vVmmpiQgohTKcTz_Z2j2ar4kc5Trpzu6eDJs2kF5Gsi-vv0HEHvMVUHU8PfIwmXIdXRJf82YhtL_wo-AkZXNwqZoHdqYoLTtSqTjCyxOHqLbFfAqQp0rvNrBXAsPchvHM5FzC42BzioTcV2vfwETyVgnsvXS9c6S1TuPTL2x6DZX7i6HjOwy5yzuDD"/>
+<img alt="Before" class="slider-image before-image" id="before-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmAu-q0y1SwaDO_fnlx07OdFkCSXLLLUj9ffJiWgeHD5HQLFaWvZPW6iHnBWu0WKmzAS_7pY-BFy1IaisyLXwEn_8Wltf5MDcN4xArFXzTo6Px-whQYvHX7g0gb4U02UvpIAbiOoUp4qQYRVEgcWCdfgLbOgEquho0L41Ujj7FaMu7Bl3aRsGLJpKVUf_mVnmoYez46_UtykQIffNNf3KOkv0D0hQW9lVbzLGGJNGOV0_YpBYEUkh3NV6MxL5_Q2RczPK_dbgYSUBu"/>
+<div class="slider-handle" id="slider-handle">
+<div class="handle-circle">
+<span class="material-symbols-outlined">unfold_more</span>
+</div>
+</div>
+<input class="absolute inset-0 w-full h-full opacity-0 z-30 cursor-ew-resize" id="slider-input" max="100" min="0" type="range" value="50"/>
+<div class="absolute bottom-8 left-8 z-40 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+<span class="font-label-caps text-[10px] text-white">BEFORE: TEMPLATE CLUTTER</span>
+</div>
+<div class="absolute bottom-8 right-8 z-40 bg-primary/20 backdrop-blur-md px-4 py-2 rounded-full border border-primary/20">
+<span class="font-label-caps text-[10px] text-primary">AFTER: ASCENDRA SYSTEM</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 flex flex-col justify-center gap-10 lg:pl-12">
+<div>
+<div class="font-mono-technical text-primary text-sm mb-4">CASE STUDY: CELESTIAL ESTATES</div>
+<h3 class="font-display-lg text-headline-md mb-6 leading-tight">Hyper-Luxury Real Estate Portal</h3>
+<p class="font-body-lg text-on-surface-variant">A complete overhaul of the digital ecosystem for an ultra-luxury brokerage. We transformed a static brochure site into an immersive lead generation engine.</p>
+</div>
+<div class="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+<div>
+<div class="text-headline-md font-display-lg text-primary">+42%</div>
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">More Leads</div>
+</div>
+<div>
+<div class="text-headline-md font-display-lg text-primary">+31%</div>
+<div class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">More Bookings</div>
+</div>
+</div>
+<a class="font-label-caps text-label-caps text-primary flex items-center gap-4 hover:gap-6 transition-all" href="#">
+                        VIEW FULL TRANSFORMATION <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- The Ascendra Difference -->
+<section class="py-section-gap-lg px-margin-desktop bg-surface relative overflow-hidden">
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="text-center mb-32 reveal">
+<span class="font-label-caps text-label-caps text-primary mb-6 block tracking-[0.4em]">THE ASCENDRA STANDARD</span>
+<h2 class="font-display-lg text-headline-xl-mobile md:text-display-lg leading-none">Your Premium <span class="italic">Growth</span> Partner.</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10 rounded-3xl overflow-hidden reveal">
+<!-- Comparison Item 1 -->
+<div class="bg-surface p-12 md:p-20 group hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-on-surface-variant/40 mb-10">MOST AGENCIES DELIVER</div>
+<div class="space-y-12">
+<div>
+<h4 class="font-display-lg text-headline-md opacity-40 line-through mb-4">A Generic Website</h4>
+<p class="font-body-md text-on-surface-variant/60">Static pages based on templates that fail to capture the unique essence of your brand.</p>
+</div>
+<div>
+<h4 class="font-display-lg text-headline-md opacity-40 line-through mb-4">Standard Contact Forms</h4>
+<p class="font-body-md text-on-surface-variant/60">Simple inputs that sit dormant, waiting for customers who never arrive.</p>
+</div>
+</div>
+</div>
+<!-- Comparison Item 2 (Ascendra) -->
+<div class="bg-surface p-12 md:p-20 relative group overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="font-label-caps text-primary mb-10">ASCENDRA DELIVERS</div>
+<div class="space-y-12">
+<div>
+<h4 class="font-display-lg text-headline-md text-on-surface mb-4">A Digital Engine</h4>
+<p class="font-body-lg text-on-surface-variant">A high-performance system engineered specifically to convert luxury prospects into loyal clients.</p>
+</div>
+<div>
+<h4 class="font-display-lg text-headline-md text-on-surface mb-4">Lead Generation Systems</h4>
+<p class="font-body-lg text-on-surface-variant">AI-integrated workflows that qualify leads and automate your entire sales funnel 24/7.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-24 text-center reveal">
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">We don't sell hours. We sell outcomes. We don't build pages. We build customer journeys that fuel business growth.</p>
+<button class="glow-button font-label-caps text-label-caps bg-primary text-on-primary-fixed px-12 py-6 rounded-full">
+                    Experience The Difference
+                </button>
+</div>
+</div>
+</section>
+<!-- Services Grid -->
+<section class="py-section-gap-lg px-margin-desktop bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+<div class="max-w-2xl">
+<span class="font-label-caps text-label-caps text-primary mb-4 block">OUR EXPERTISE</span>
+<h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl">Precision Digital Instruments</h2>
+</div>
+<p class="font-body-lg text-on-surface-variant max-w-xs">Crafting bespoke tools for visionary market leaders.</p>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 md:col-span-6 lg:col-span-4 glass-panel p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-500 reveal">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">web</span>
+</div>
+<h4 class="font-headline-md mb-4">Custom Website Design</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Ultra-fast, responsive, and cinematically designed platforms that convert visitors into lifelong clients.</p>
+<div class="h-[1px] w-full bg-white/5 group-hover:bg-primary/30 transition-colors mb-6"></div>
+<a class="font-label-caps text-label-caps text-primary flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                        EXPLORE SERVICE <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 glass-panel p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-500 reveal" style="transition-delay: 100ms;">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">hub</span>
+</div>
+<h4 class="font-headline-md mb-4">Business Automation</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Seamlessly connecting your tech stack to eliminate manual entry and skyrocket operational efficiency.</p>
+<div class="h-[1px] w-full bg-white/5 group-hover:bg-primary/30 transition-colors mb-6"></div>
+<a class="font-label-caps text-label-caps text-primary flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                        EXPLORE SERVICE <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 glass-panel p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-500 reveal" style="transition-delay: 200ms;">
+<div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">auto_awesome</span>
+</div>
+<h4 class="font-headline-md mb-4">AI Assistants</h4>
+<p class="font-body-md text-on-surface-variant mb-6">Integrating advanced Large Language Models to handle customer support, sales, and complex data analysis.</p>
+<div class="h-[1px] w-full bg-white/5 group-hover:bg-primary/30 transition-colors mb-6"></div>
+<a class="font-label-caps text-label-caps text-primary flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                        EXPLORE SERVICE <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="relative py-section-gap-lg min-h-[80vh] flex items-center justify-center text-center px-margin-desktop overflow-hidden">
+
+<div class="relative z-10 max-w-4xl reveal">
+<span class="font-label-caps text-label-caps text-primary mb-8 block tracking-[0.6em]">READY TO ASCEND?</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-none mb-12">Let's build your digital legacy.</h2>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="glow-button font-label-caps text-label-caps bg-primary text-on-primary-fixed px-12 py-6 rounded-full text-lg shadow-2xl">
+                    Schedule Your Strategy Call
+                </button>
+<button class="glass-panel font-label-caps text-label-caps text-on-surface px-12 py-6 rounded-full text-lg hover:bg-white/10">
+                    Our Portfolio
+                </button>
+</div>
+</div>
+<div class="absolute inset-0 pointer-events-none overflow-hidden" id="particle-container"></div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="bg-surface border-t border-white/5 py-section-gap-md w-full">
+<div class="grid grid-cols-12 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<div class="col-span-12 md:col-span-4 mb-12 md:mb-0">
+<div class="font-display-lg text-headline-md text-on-surface mb-6">ASCENDRA</div>
+<p class="font-body-md text-on-surface-variant max-w-xs">
+                Building the future of business through cinematic digital experiences.
+            </p>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h5 class="font-label-caps text-label-caps text-primary mb-6">NAVIGATE</h5>
+<ul class="space-y-4 font-body-md text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Work</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Process</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">About</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h5 class="font-label-caps text-label-caps text-primary mb-6">CONNECT</h5>
+<ul class="space-y-4 font-body-md text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Instagram</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">LinkedIn</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Twitter</a></li>
+<li><a class="hover:text-primary transition-colors duration-300" href="#">Dribbble</a></li>
+</ul>
+</div>
+<div class="col-span-12 md:col-span-4 mt-12 md:mt-0">
+<h5 class="font-label-caps text-label-caps text-primary mb-6">LEGAL</h5>
+<div class="flex flex-wrap gap-6 mb-8 font-body-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors duration-300" href="#">Terms of Service</a>
+</div>
+<p class="font-body-md text-on-surface-variant/40">
+                © 2024 ASCENDRA. Cinematic Excellence in Digital Craft.
+            </p>
+</div>
+</div>
+</footer>
+<script>
+    // Reveal logic
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Particle Effect
+    function createParticles() {
+        const container = document.getElementById('particle-container');
+        if (!container) return;
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'absolute bg-primary/20 rounded-full blur-xl';
+            const size = Math.random() * 60 + 20;
+            p.style.width = `${size}px`; p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}%`; p.style.top = `${Math.random() * 100}%`;
+            p.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+            p.style.opacity = Math.random() * 0.5;
+            container.appendChild(p);
+        }
+    }
+    createParticles();
+
+    // Slider Logic
+    const sliderInput = document.getElementById('slider-input');
+    const beforeImg = document.getElementById('before-img');
+    const sliderHandle = document.getElementById('slider-handle');
+    if (sliderInput) {
+        sliderInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            beforeImg.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+            sliderHandle.style.left = `${val}%`;
+        });
+    }
+
+    // ROI Calculator Logic
+    const industrySelector = document.getElementById('industry-selector');
+    const dynamicInputs = document.getElementById('dynamic-inputs');
+    const roiRevenue = document.getElementById('roi-revenue');
+    const roiLeads = document.getElementById('roi-leads');
+    const roiEff = document.getElementById('roi-eff');
+
+    const industryData = {
+        restaurant: { label1: "Avg Monthly Covers", label2: "Avg Ticket Value", baseRoi: 120, leads: 45, eff: 35 },
+        medical: { label1: "Monthly New Patients", label2: "Avg Treatment Value", baseRoi: 450, leads: 38, eff: 60 },
+        legal: { label1: "Monthly Consults", label2: "Avg Case Value", baseRoi: 800, leads: 25, eff: 55 },
+        'real-estate': { label1: "Annual Transactions", label2: "Avg Commission", baseRoi: 1200, leads: 50, eff: 20 },
+        ecommerce: { label1: "Monthly Visitors", label2: "Avg Order Value", baseRoi: 95, leads: 150, eff: 80 },
+        professional: { label1: "Annual Projects", label2: "Avg Project Value", baseRoi: 250, leads: 35, eff: 40 },
+        beauty: { label1: "Monthly Appointments", label2: "Avg Spend", baseRoi: 85, leads: 60, eff: 70 },
+        contractor: { label1: "Leads/Month", label2: "Avg Contract Size", baseRoi: 1500, leads: 40, eff: 30 }
+    };
+
+    function updateInputs() {
+        const selected = industrySelector.value;
+        const data = industryData[selected];
+        dynamicInputs.innerHTML = `
+            <div>
+                <label class="font-label-caps text-[10px] text-on-surface-variant mb-2 block">${data.label1}</label>
+                <input type="number" value="100" class="roi-calc-input w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary">
+            </div>
+            <div>
+                <label class="font-label-caps text-[10px] text-on-surface-variant mb-2 block">${data.label2} ($)</label>
+                <input type="number" value="500" class="roi-calc-input w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary">
+            </div>
+        `;
+        
+        document.querySelectorAll('.roi-calc-input').forEach(input => {
+            input.addEventListener('input', calculateRoi);
+        });
+        calculateRoi();
+    }
+
+    function calculateRoi() {
+        const inputs = document.querySelectorAll('.roi-calc-input');
+        const val1 = parseFloat(inputs[0].value) || 0;
+        const val2 = parseFloat(inputs[1].value) || 0;
+        const data = industryData[industrySelector.value];
+        
+        const total = val1 * val2 * (data.baseRoi / 100) * 12;
+        
+        animateValue(roiRevenue, total, "$");
+        animateValue(roiLeads, data.leads, "", "%");
+        animateValue(roiEff, data.eff, "", "%");
+    }
+
+    function animateValue(el, target, prefix = "", suffix = "") {
+        let current = parseInt(el.innerText.replace(/[^0-9]/g, '')) || 0;
+        const duration = 1000;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            const val = Math.floor(current + (target - current) * easeProgress);
+            el.innerText = `${prefix}${val.toLocaleString()}${suffix}`;
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    industrySelector.addEventListener('change', updateInputs);
+    updateInputs();
+</script>
+</body></html>

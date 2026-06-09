@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — Ascendra</title>
+<meta name="description" content="Business growth insights, digital strategy, AI automation, and website strategy for ambitious business owners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};</script>
+<style>
+.article-card {
+  background:#0d0d0d; border:1px solid rgba(255,255,255,0.06);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.06);
+  display:flex; flex-direction:column; overflow:hidden;
+  transition:border-color 0.35s ease, background-color 0.35s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.article-card:hover { border-color:rgba(255,255,255,0.14); background-color:#111; transform:translateY(-3px); }
+.tag-pill {
+  display:inline-flex; align-items:center;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  padding:4px 10px; font-family:'Geist',monospace;
+  font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(232,230,228,0.5);
+}
+</style>
+</head>
+<body>
+
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1);text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-silver group-hover:text-platinum" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow nav-active text-platinum">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-5">Growth Intelligence</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Insights for<br><em class="italic font-normal text-platinum">Ambitious Leaders.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl font-light">Strategic thinking on digital growth, AI automation, website strategy, and the business of building systems that scale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Article -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="reveal mb-16">
+      <span class="eyebrow block mb-4">Featured</span>
+    </div>
+    <div class="article-card reveal" style="transition-delay:80ms;">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div class="lg:col-span-5 bg-charcoal" style="min-height:280px;display:flex;align-items:center;justify-content:center;padding:48px;">
+          <div class="text-center">
+            <div style="font-family:'Bodoni Moda',serif;font-size:6rem;line-height:1;color:rgba(232,230,228,0.08);font-style:italic;user-select:none;">#1</div>
+            <p class="eyebrow text-pewter/50 mt-2">Featured Article</p>
+          </div>
+        </div>
+        <div class="lg:col-span-7 p-8 md:p-10 flex flex-col gap-5">
+          <div class="flex gap-2 flex-wrap">
+            <span class="tag-pill">Website Strategy</span>
+            <span class="tag-pill">Business Growth</span>
+          </div>
+          <h2 class="font-editorial font-bold text-platinum" style="font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.1;letter-spacing:-0.02em;">Why Your Website Is Costing You $50,000 a Year Without You Knowing It</h2>
+          <p class="text-silver text-sm font-body leading-relaxed">Most business owners think a bad website costs them nothing. In reality, every unqualified lead, every missed booking, and every visitor who leaves without converting is a direct revenue loss. Here's how to calculate the true cost of an underperforming digital presence.</p>
+          <div class="flex items-center gap-4 mt-auto pt-4 border-t border-white/5">
+            <span class="eyebrow text-pewter/60">June 2026 · 8 min read</span>
+            <a href="contact.html" class="ml-auto eyebrow text-platinum hover:text-silver transition-colors">Read More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Article Grid -->
+<section class="py-16 pb-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-12 reveal">
+      <span class="eyebrow block mb-3">All Articles</span>
+      <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;letter-spacing:-0.03em;">Growth Intelligence</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="article-card reveal hover-lift">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">AI Automation</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">How AI Concierges Are Replacing the 9-to-5 Sales Team</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">Businesses using AI assistants are capturing leads at 2am, qualifying prospects before a human ever speaks with them, and booking consultations while their competitors sleep.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">May 2026 · 6 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-card reveal hover-lift" style="transition-delay:60ms;">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">Lead Generation</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">The 5 Lead Generation Mistakes That Are Killing Your Conversion Rate</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">Most businesses make the same five mistakes on their websites that silently kill their conversion rate. Here's how to identify and fix each one in under a week.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">May 2026 · 7 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-card reveal hover-lift" style="transition-delay:120ms;">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">Digital Transformation</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">What a $15,000 Business Growth System Actually Includes</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">The moment you understand what a premium digital system actually includes — and what it does for your revenue — the investment conversation changes completely.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">April 2026 · 9 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-card reveal hover-lift">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">SEO</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">Why Most Local Business SEO Fails — And What Actually Works in 2026</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">The SEO landscape has shifted fundamentally. Businesses still using 2019 tactics are getting buried. Here's the modern framework that produces consistent, compounding results.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">April 2026 · 8 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-card reveal hover-lift" style="transition-delay:60ms;">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">Customer Experience</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">The Premium Client Experience Framework: How Elite Businesses Build Loyalty</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">Premium clients don't just buy a service. They buy a feeling of certainty, quality, and trust. Here's how to engineer that experience digitally — from first click to loyal repeat client.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">March 2026 · 6 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-card reveal hover-lift" style="transition-delay:120ms;">
+        <div class="p-6 md:p-8 flex flex-col gap-4 flex-1">
+          <div class="flex gap-2 flex-wrap"><span class="tag-pill">Business Growth</span></div>
+          <h3 class="font-editorial font-bold text-platinum text-lg leading-tight">From $0 to $100K in Monthly Revenue: The Digital Infrastructure That Makes It Possible</h3>
+          <p class="text-silver text-xs font-body leading-relaxed flex-1">The businesses hitting $100K+ months aren't working harder. They've built infrastructure that scales. Here's what that actually looks like from a digital systems perspective.</p>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="eyebrow text-pewter/60" style="font-size:0.55rem;">March 2026 · 10 min</span>
+            <a href="contact.html" class="eyebrow text-platinum hover:text-silver transition-colors" style="font-size:0.6rem;">Read →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section class="py-24 px-6 md:px-16 bg-charcoal border-t border-white/5">
+  <div class="max-w-[700px] mx-auto text-center reveal">
+    <span class="eyebrow text-pewter block mb-5">Stay Ahead</span>
+    <h2 class="font-editorial font-bold platinum-text mb-5" style="font-size:clamp(2rem,4.5vw,4rem);line-height:1.05;letter-spacing:-0.03em;">Growth Intelligence,<br><em class="italic font-normal text-platinum">Monthly.</em></h2>
+    <p class="text-silver font-body text-base leading-relaxed max-w-md mx-auto mb-8 font-light">Strategic insights for ambitious business owners delivered once a month. No fluff, no generic advice — only what moves the needle.</p>
+    <div class="flex flex-col sm:flex-row gap-0 max-w-md mx-auto">
+      <input type="email" placeholder="your@email.com" class="form-input flex-1" style="border-bottom:none;border:1px solid rgba(255,255,255,0.1);padding:16px 20px;font-size:0.875rem;" onclick="window.location.href='mailto:doriscacarlm40@gmail.com?subject=Newsletter%20Subscription'">
+      <button onclick="window.location.href='mailto:doriscacarlm40@gmail.com?subject=Newsletter%20Subscription'" class="btn-primary flex-shrink-0" style="font-size:0.62rem;padding:16px 24px;min-height:auto;">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="quote.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Get My Quote →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const d=document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click',()=>{d.classList.add('open');document.body.style.overflow='hidden';});
+document.getElementById('closeMenu')?.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';});
+d?.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';}));
+const fc=document.getElementById('floatingCta'),mc=document.getElementById('mobileCta');
+window.addEventListener('scroll',()=>{const s=window.scrollY>600;fc?.classList.toggle('show',s);mc?.classList.toggle('show',s);},{passive:true});
+</script>
+</body>
+</html>

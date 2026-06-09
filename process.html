@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Process — Ascendra</title>
+<meta name="description" content="From discovery to launch to growth — see exactly how Ascendra works with clients to build premium digital growth systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};</script>
+</head>
+<body>
+
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1);text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-silver group-hover:text-platinum" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow nav-active text-platinum">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden" style="min-height:clamp(600px,88vh,860px);padding-top:clamp(100px,10vw,160px);padding-bottom:clamp(64px,6vw,96px);">
+
+  <!-- Atmospheric gradients -->
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 18% 60%,rgba(173,198,255,0.055) 0%,transparent 52%),radial-gradient(ellipse at 82% 12%,rgba(200,196,190,0.035) 0%,transparent 45%);"></div>
+
+  <!-- Grain texture -->
+  <div class="absolute inset-0 pointer-events-none" style="opacity:0.018;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22pgn%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23pgn)%22/></svg>');background-size:200px 200px;"></div>
+
+  <!-- ══ ARCHITECTURAL TOWER (desktop only) ══ -->
+  <div id="towerWrap" class="absolute hidden lg:block pointer-events-none" style="right:-40px;top:0;height:100%;width:500px;z-index:1;will-change:transform;">
+    <!-- Left-edge fade: blends tower into section background -->
+    <div style="position:absolute;left:0;top:0;bottom:0;width:210px;background:linear-gradient(to right,#0d0d0d 22%,transparent 100%);z-index:3;pointer-events:none;"></div>
+    <!-- Top-edge fade -->
+    <div style="position:absolute;left:0;right:0;top:0;height:80px;background:linear-gradient(to bottom,#0d0d0d,transparent);z-index:3;pointer-events:none;"></div>
+    <!-- Luxury Architectural Tower SVG -->
+    <svg viewBox="0 0 420 920" fill="none" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+      <defs>
+        <!-- Platinum metallic sheen (horizontal) -->
+        <linearGradient id="pg-plat-h" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1e1e1e"/>
+          <stop offset="25%" stop-color="#767472"/>
+          <stop offset="50%" stop-color="#e8e6e4"/>
+          <stop offset="75%" stop-color="#767472"/>
+          <stop offset="100%" stop-color="#1e1e1e"/>
+        </linearGradient>
+        <!-- Glass reflection (lit from upper-left) -->
+        <linearGradient id="pg-glass-l" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="white" stop-opacity="0.07"/>
+          <stop offset="40%" stop-color="white" stop-opacity="0.02"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Shadow on right face of tower -->
+        <linearGradient id="pg-shadow-r" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="60%" stop-color="black" stop-opacity="0"/>
+          <stop offset="100%" stop-color="black" stop-opacity="0.35"/>
+        </linearGradient>
+        <!-- Atmospheric fog: fades tower into darkness below -->
+        <linearGradient id="pg-fog" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0d0d0d" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#0d0d0d" stop-opacity="1"/>
+        </linearGradient>
+        <!-- Crown glow: brand blue halo at summit -->
+        <radialGradient id="pg-crown-glow" cx="50%" cy="8%" r="55%">
+          <stop offset="0%" stop-color="#adc6ff" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#adc6ff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Editorial warm light from upper-left -->
+        <radialGradient id="pg-editorial" cx="15%" cy="15%" r="60%">
+          <stop offset="0%" stop-color="#d4c8b0" stop-opacity="0.05"/>
+          <stop offset="100%" stop-color="#d4c8b0" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Atmosphere overlays -->
+      <rect x="0" y="0" width="420" height="920" fill="url(#pg-editorial)"/>
+      <rect x="0" y="0" width="420" height="920" fill="url(#pg-crown-glow)"/>
+
+      <!-- ─── FINIAL: platinum needle spire ─── -->
+      <line x1="210" y1="2" x2="210" y2="72" stroke="#c8c4be" stroke-width="0.7" opacity="0.85"/>
+      <polygon points="207,70 213,70 211,56 209,56" fill="#c8c4be" opacity="0.9"/>
+      <circle cx="210" cy="73" r="4" fill="#111" stroke="#b4b2b0" stroke-width="0.6"/>
+      <circle cx="210" cy="73" r="2" fill="#e8e6e4" opacity="0.5"/>
+
+      <!-- ─── CROWN: angled faceted glass form ─── -->
+      <polygon points="192,75 210,75 210,140 185,140 183,100" fill="#111"/>
+      <polygon points="210,75 228,75 237,100 235,140 210,140" fill="#090909"/>
+      <polyline points="192,75 228,75" stroke="#c8c4be" stroke-width="0.9" opacity="0.85"/>
+      <line x1="192" y1="75" x2="183" y2="100" stroke="#b4b2b0" stroke-width="0.5" opacity="0.5"/>
+      <line x1="228" y1="75" x2="237" y2="100" stroke="#767472" stroke-width="0.5" opacity="0.4"/>
+      <line x1="210" y1="75" x2="210" y2="140" stroke="#b4b2b0" stroke-width="0.5" opacity="0.6"/>
+      <line x1="184" y1="98" x2="236" y2="98" stroke="#2e2e2e" stroke-width="0.5"/>
+      <line x1="184" y1="118" x2="236" y2="118" stroke="#2e2e2e" stroke-width="0.5"/>
+      <polygon points="192,75 210,75 210,140 185,140 183,100" fill="url(#pg-glass-l)" opacity="0.7"/>
+      <rect x="181" y="138" width="58" height="3" fill="url(#pg-plat-h)"/>
+
+      <!-- ─── UPPER SHAFT: Level 1 (narrowest) ─── -->
+      <rect x="171" y="141" width="10" height="10" fill="#181818" stroke="#767472" stroke-width="0.3"/>
+      <rect x="239" y="141" width="10" height="10" fill="#0f0f0f" stroke="#4a4a4a" stroke-width="0.3"/>
+      <rect x="168" y="151" width="84" height="179" fill="#0d0d0d"/>
+      <rect x="168" y="151" width="38" height="179" fill="#0f0f0f"/>
+      <rect x="226" y="151" width="26" height="179" fill="#080808"/>
+      <!-- Curtain wall mullions -->
+      <line x1="183" y1="151" x2="183" y2="330" stroke="#161616" stroke-width="0.5"/>
+      <line x1="197" y1="151" x2="197" y2="330" stroke="#161616" stroke-width="0.5"/>
+      <line x1="210" y1="151" x2="210" y2="330" stroke="#181818" stroke-width="0.7"/>
+      <line x1="224" y1="151" x2="224" y2="330" stroke="#161616" stroke-width="0.5"/>
+      <line x1="238" y1="151" x2="238" y2="330" stroke="#141414" stroke-width="0.5"/>
+      <!-- Floor plates -->
+      <line x1="168" y1="167" x2="252" y2="167" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="183" x2="252" y2="183" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="199" x2="252" y2="199" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="215" x2="252" y2="215" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="231" x2="252" y2="231" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="247" x2="252" y2="247" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="263" x2="252" y2="263" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="279" x2="252" y2="279" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="295" x2="252" y2="295" stroke="#131313" stroke-width="0.5"/>
+      <line x1="168" y1="311" x2="252" y2="311" stroke="#131313" stroke-width="0.5"/>
+      <!-- Scattered lit windows (brand glow) -->
+      <rect x="169" y="184" width="12" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="198" y="216" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="184" y="248" width="12" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="212" y="264" width="12" height="14" fill="#adc6ff" opacity="0.03"/>
+      <rect x="169" y="296" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <!-- Edge lighting & shadow -->
+      <rect x="168" y="151" width="2" height="179" fill="white" opacity="0.07"/>
+      <rect x="250" y="151" width="2" height="179" fill="black" opacity="0.2"/>
+      <rect x="170" y="151" width="28" height="179" fill="url(#pg-glass-l)" opacity="0.6"/>
+      <rect x="168" y="151" width="84" height="179" fill="url(#pg-shadow-r)" opacity="0.7"/>
+      <rect x="164" y="328" width="92" height="3.5" fill="url(#pg-plat-h)"/>
+
+      <!-- ─── MECHANICAL BAND ─── -->
+      <rect x="160" y="331" width="100" height="18" fill="#090909" stroke="#141414" stroke-width="0.4"/>
+      <line x1="165" y1="340" x2="255" y2="340" stroke="#1a1a1a" stroke-width="0.6"/>
+      <rect x="175" y="333" width="8" height="5" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="0.3"/>
+      <rect x="195" y="333" width="8" height="5" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="0.3"/>
+      <rect x="215" y="333" width="8" height="5" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="0.3"/>
+      <rect x="235" y="333" width="8" height="5" fill="#0a0a0a" stroke="#1e1e1e" stroke-width="0.3"/>
+      <rect x="155" y="347" width="110" height="3" fill="url(#pg-plat-h)" opacity="0.85"/>
+
+      <!-- ─── MID SHAFT: Level 2 ─── -->
+      <rect x="143" y="350" width="12" height="16" fill="#181818" stroke="#767472" stroke-width="0.35"/>
+      <rect x="265" y="350" width="12" height="16" fill="#101010" stroke="#4a4a4a" stroke-width="0.35"/>
+      <rect x="140" y="366" width="140" height="204" fill="#0c0c0c"/>
+      <rect x="140" y="366" width="65" height="204" fill="#0d0d0d"/>
+      <rect x="240" y="366" width="40" height="204" fill="#070707"/>
+      <line x1="156" y1="366" x2="156" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="172" y1="366" x2="172" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="188" y1="366" x2="188" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="203" y1="366" x2="203" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="210" y1="366" x2="210" y2="570" stroke="#161616" stroke-width="0.8"/>
+      <line x1="218" y1="366" x2="218" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="234" y1="366" x2="234" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="249" y1="366" x2="249" y2="570" stroke="#131313" stroke-width="0.5"/>
+      <line x1="265" y1="366" x2="265" y2="570" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="382" x2="280" y2="382" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="398" x2="280" y2="398" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="414" x2="280" y2="414" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="430" x2="280" y2="430" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="446" x2="280" y2="446" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="462" x2="280" y2="462" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="478" x2="280" y2="478" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="494" x2="280" y2="494" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="510" x2="280" y2="510" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="526" x2="280" y2="526" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="542" x2="280" y2="542" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="558" x2="280" y2="558" stroke="#111" stroke-width="0.5"/>
+      <!-- Active tenant column (cluster of lit floors) -->
+      <rect x="141" y="383" width="13" height="14" fill="#adc6ff" opacity="0.055"/>
+      <rect x="157" y="399" width="13" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="173" y="415" width="13" height="14" fill="#adc6ff" opacity="0.06"/>
+      <rect x="141" y="415" width="13" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="189" y="383" width="13" height="14" fill="#adc6ff" opacity="0.07"/>
+      <rect x="189" y="399" width="13" height="14" fill="#adc6ff" opacity="0.08"/>
+      <rect x="189" y="415" width="13" height="14" fill="#adc6ff" opacity="0.07"/>
+      <rect x="189" y="431" width="13" height="14" fill="#adc6ff" opacity="0.06"/>
+      <rect x="189" y="447" width="13" height="14" fill="#adc6ff" opacity="0.07"/>
+      <rect x="219" y="431" width="13" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="235" y="463" width="13" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="157" y="495" width="13" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="173" y="527" width="13" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="204" y="511" width="13" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="141" y="543" width="13" height="14" fill="#adc6ff" opacity="0.03"/>
+      <rect x="140" y="366" width="2" height="204" fill="white" opacity="0.07"/>
+      <rect x="278" y="366" width="2" height="204" fill="black" opacity="0.2"/>
+      <rect x="142" y="366" width="42" height="204" fill="url(#pg-glass-l)" opacity="0.55"/>
+      <rect x="140" y="366" width="140" height="204" fill="url(#pg-shadow-r)" opacity="0.65"/>
+      <rect x="136" y="568" width="148" height="3.5" fill="url(#pg-plat-h)"/>
+
+      <!-- ─── LOWER SHAFT: Level 3 ─── -->
+      <rect x="112" y="571" width="14" height="18" fill="#181818" stroke="#767472" stroke-width="0.35"/>
+      <rect x="294" y="571" width="14" height="18" fill="#101010" stroke="#4a4a4a" stroke-width="0.35"/>
+      <rect x="100" y="589" width="220" height="176" fill="#0b0b0b"/>
+      <rect x="100" y="589" width="100" height="176" fill="#0c0c0c"/>
+      <rect x="280" y="589" width="40" height="176" fill="#060606"/>
+      <line x1="114" y1="589" x2="114" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="127" y1="589" x2="127" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="140" y1="589" x2="140" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="153" y1="589" x2="153" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="166" y1="589" x2="166" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="179" y1="589" x2="179" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="192" y1="589" x2="192" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="204" y1="589" x2="204" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="210" y1="589" x2="210" y2="765" stroke="#131313" stroke-width="0.7"/>
+      <line x1="217" y1="589" x2="217" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="230" y1="589" x2="230" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="243" y1="589" x2="243" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="256" y1="589" x2="256" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="269" y1="589" x2="269" y2="765" stroke="#111" stroke-width="0.5"/>
+      <line x1="282" y1="589" x2="282" y2="765" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="295" y1="589" x2="295" y2="765" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="605" x2="320" y2="605" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="621" x2="320" y2="621" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="637" x2="320" y2="637" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="653" x2="320" y2="653" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="669" x2="320" y2="669" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="685" x2="320" y2="685" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="701" x2="320" y2="701" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="717" x2="320" y2="717" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="733" x2="320" y2="733" stroke="#0f0f0f" stroke-width="0.5"/>
+      <line x1="100" y1="749" x2="320" y2="749" stroke="#0f0f0f" stroke-width="0.5"/>
+      <rect x="101" y="606" width="12" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="115" y="622" width="12" height="14" fill="#adc6ff" opacity="0.06"/>
+      <rect x="128" y="606" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="154" y="638" width="12" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="141" y="654" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="180" y="622" width="12" height="14" fill="#adc6ff" opacity="0.06"/>
+      <rect x="193" y="638" width="12" height="14" fill="#adc6ff" opacity="0.05"/>
+      <rect x="167" y="670" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="218" y="654" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="231" y="686" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="244" y="670" width="12" height="14" fill="#adc6ff" opacity="0.03"/>
+      <rect x="101" y="702" width="12" height="14" fill="#adc6ff" opacity="0.04"/>
+      <rect x="115" y="718" width="12" height="14" fill="#adc6ff" opacity="0.03"/>
+      <rect x="257" y="702" width="12" height="14" fill="#adc6ff" opacity="0.03"/>
+      <rect x="100" y="589" width="2" height="176" fill="white" opacity="0.06"/>
+      <rect x="318" y="589" width="2" height="176" fill="black" opacity="0.2"/>
+      <rect x="102" y="589" width="55" height="176" fill="url(#pg-glass-l)" opacity="0.5"/>
+      <rect x="100" y="589" width="220" height="176" fill="url(#pg-shadow-r)" opacity="0.6"/>
+      <rect x="96" y="763" width="228" height="3.5" fill="url(#pg-plat-h)"/>
+
+      <!-- ─── PODIUM: grand base with colonnade ─── -->
+      <rect x="70" y="766" width="16" height="22" fill="#181818" stroke="#767472" stroke-width="0.4"/>
+      <rect x="334" y="766" width="16" height="22" fill="#101010" stroke="#4a4a4a" stroke-width="0.4"/>
+      <rect x="65" y="788" width="290" height="117" fill="#0a0a0a"/>
+      <rect x="65" y="788" width="130" height="117" fill="#0c0c0c"/>
+      <rect x="280" y="788" width="75" height="117" fill="#060606"/>
+      <rect x="65" y="788" width="290" height="3.5" fill="url(#pg-plat-h)"/>
+      <line x1="65" y1="820" x2="355" y2="820" stroke="#131313" stroke-width="0.7"/>
+      <line x1="65" y1="852" x2="355" y2="852" stroke="#131313" stroke-width="0.7"/>
+      <line x1="65" y1="882" x2="355" y2="882" stroke="#131313" stroke-width="0.7"/>
+      <!-- Colonnade pilasters -->
+      <rect x="78" y="791" width="7" height="114" fill="#101010"/>
+      <rect x="124" y="791" width="5" height="114" fill="#0e0e0e"/>
+      <rect x="170" y="791" width="5" height="114" fill="#0e0e0e"/>
+      <rect x="210" y="791" width="5" height="114" fill="#0f0f0f"/>
+      <rect x="250" y="791" width="5" height="114" fill="#0e0e0e"/>
+      <rect x="296" y="791" width="5" height="114" fill="#0e0e0e"/>
+      <rect x="335" y="791" width="7" height="114" fill="#0a0a0a"/>
+      <!-- Grand entrance portal with arch -->
+      <rect x="172" y="852" width="76" height="53" fill="#040404"/>
+      <path d="M172,878 Q210,852 248,878" fill="none" stroke="#767472" stroke-width="0.6" opacity="0.7"/>
+      <rect x="170" y="852" width="8" height="53" fill="#0c0c0c"/>
+      <rect x="242" y="852" width="8" height="53" fill="#0a0a0a"/>
+      <rect x="173" y="879" width="74" height="26" fill="#adc6ff" opacity="0.04"/>
+      <!-- Ground-floor windows -->
+      <rect x="85" y="826" width="22" height="20" fill="#070707" stroke="#111" stroke-width="0.3"/>
+      <rect x="113" y="826" width="22" height="20" fill="#080808" stroke="#111" stroke-width="0.3"/>
+      <rect x="141" y="826" width="22" height="20" fill="#adc6ff" opacity="0.06" stroke="#111" stroke-width="0.3"/>
+      <rect x="257" y="826" width="22" height="20" fill="#adc6ff" opacity="0.05" stroke="#111" stroke-width="0.3"/>
+      <rect x="285" y="826" width="22" height="20" fill="#070707" stroke="#111" stroke-width="0.3"/>
+      <rect x="313" y="826" width="22" height="20" fill="#060606" stroke="#111" stroke-width="0.3"/>
+      <rect x="65" y="788" width="2" height="117" fill="white" opacity="0.06"/>
+      <rect x="353" y="788" width="2" height="117" fill="black" opacity="0.15"/>
+      <rect x="67" y="788" width="65" height="117" fill="url(#pg-glass-l)" opacity="0.35"/>
+      <rect x="65" y="788" width="290" height="117" fill="url(#pg-shadow-r)" opacity="0.55"/>
+      <rect x="65" y="902" width="290" height="3" fill="url(#pg-plat-h)" opacity="0.5"/>
+
+      <!-- ─── GROUND PLANE ─── -->
+      <rect x="0" y="905" width="420" height="15" fill="#060606"/>
+      <line x1="0" y1="905" x2="420" y2="905" stroke="#b4b2b0" stroke-width="0.3" opacity="0.2"/>
+      <rect x="65" y="906" width="290" height="8" fill="#0d0d0d" opacity="0.7"/>
+
+      <!-- ─── ATMOSPHERIC FOG: dissolves lower half into darkness ─── -->
+      <rect x="0" y="380" width="420" height="540" fill="url(#pg-fog)"/>
+
+      <!-- ─── OVERALL RIGHT-SIDE DEPTH SHADOW ─── -->
+      <rect x="0" y="0" width="420" height="920" fill="url(#pg-shadow-r)"/>
+
+    </svg>
+  </div>
+
+  <!-- Hero content: constrained to left side so tower shows through on right -->
+  <div class="max-w-[1200px] mx-auto relative z-10">
+    <div class="reveal lg:max-w-[55%]">
+      <span class="eyebrow text-pewter block mb-5">How We Work</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        No Guesswork.<br><em class="italic font-normal text-platinum">No Surprises.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl font-light">Many business owners hesitate to invest in digital systems because they don't know what to expect. Here is exactly what happens — from your first conversation with us to measurable business growth.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- Timeline stat -->
+<section class="py-16 px-6 md:px-16 bg-void border-b border-white/5">
+  <div class="max-w-[1200px] mx-auto reveal">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="card p-6 text-center">
+        <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">30 min</div>
+        <div class="eyebrow text-pewter/70">Free Discovery Call</div>
+      </div>
+      <div class="card p-6 text-center">
+        <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">2–4 wk</div>
+        <div class="eyebrow text-pewter/70">From Strategy to Launch</div>
+      </div>
+      <div class="card p-6 text-center">
+        <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">Ongoing</div>
+        <div class="eyebrow text-pewter/70">Growth & Optimization</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Steps -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-4 lg:sticky top-28 reveal">
+        <span class="eyebrow block mb-5">The Journey</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">What Happens<br><em class="italic font-normal text-platinum">After You Contact Us?</em></h2>
+        <p class="text-silver font-body text-sm leading-relaxed font-light mb-8">Every step is designed to remove uncertainty and build your confidence that you're investing in the right partner.</p>
+        <a href="contact.html" class="btn-primary">Begin Your Journey <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-8 reveal" style="transition-delay:120ms;">
+        <!-- Step 1 -->
+        <div class="journey-step">
+          <span class="journey-num">01</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Discovery Call</h4>
+              <span class="outcome-pill">Free · 30 Min</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body mb-3">We learn about your business, goals, current challenges, and growth opportunities. No pitch — just an honest conversation about where you are and where you want to be.</p>
+            <div class="card p-4">
+              <p class="eyebrow text-pewter mb-2" style="font-size:0.6rem;">What We Discuss</p>
+              <ul class="flex flex-col gap-1.5">
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Your business goals and current digital presence</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Key challenges and growth opportunities</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>What success looks like in 12 months</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="journey-step">
+          <span class="journey-num">02</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Strategy Session</h4>
+              <span class="outcome-pill">Growth Blueprint</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body mb-3">We map out a complete digital growth strategy — identifying gaps, opportunities, and the exact systems needed to move your business forward. You receive a Growth Blueprint regardless of whether you proceed.</p>
+            <div class="card p-4">
+              <p class="eyebrow text-pewter mb-2" style="font-size:0.6rem;">What You Receive</p>
+              <ul class="flex flex-col gap-1.5">
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Competitive landscape analysis</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Digital gap assessment</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Recommended systems and priorities</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="journey-step">
+          <span class="journey-num">03</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Custom Proposal</h4>
+              <span class="outcome-pill">Tailored Solution</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body">We present a precise proposal — scope, timeline, investment, and projected outcomes. Everything is transparent and built around your specific goals. No vague estimates, no hidden costs.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="journey-step">
+          <span class="journey-num">04</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Design & Development</h4>
+              <span class="outcome-pill">Bespoke Build</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body mb-3">Our team engineers your complete growth system — website, automations, AI, CRM, and every integration — built precisely for your business, not adapted from a template.</p>
+            <div class="card p-4">
+              <p class="eyebrow text-pewter mb-2" style="font-size:0.6rem;">During This Phase</p>
+              <ul class="flex flex-col gap-1.5">
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Weekly progress updates</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Review checkpoints at key milestones</li>
+                <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Your feedback integrated throughout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="journey-step">
+          <span class="journey-num">05</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Launch</h4>
+              <span class="outcome-pill">Go Live</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body">Full deployment, testing, and optimization. We don't hand off a static website — we launch a living, working system and monitor performance from day one. Training included.</p>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="journey-step">
+          <span class="journey-num">06</span>
+          <div class="journey-dot mt-1.5"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Optimization</h4>
+              <span class="outcome-pill">Ongoing</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body">We measure what matters — leads, conversions, revenue — and continuously refine your system. Your growth doesn't stop at launch. Neither do we.</p>
+          </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="journey-step" style="border-bottom:none;">
+          <span class="journey-num">07</span>
+          <div class="journey-dot mt-1.5" style="border-color:rgba(232,230,228,0.35);background:rgba(232,230,228,0.12);"></div>
+          <div class="flex-1 pl-2">
+            <div class="flex items-center gap-3 mb-2 flex-wrap">
+              <h4 class="font-body font-medium text-platinum text-base">Growth Partnership</h4>
+              <span class="outcome-pill" style="border-color:rgba(232,230,228,0.15);color:rgba(232,230,228,0.8);">Long-Term</span>
+            </div>
+            <p class="text-silver text-sm leading-relaxed font-body">Our best client relationships extend for years. As your business evolves, your digital system evolves with it. We stay invested in your outcomes — always.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What You Can Expect -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 reveal">
+      <span class="eyebrow block mb-5">What You Can Count On</span>
+      <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;">Our Commitments<br><em class="italic font-normal text-platinum">to Every Client.</em></h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal" style="transition-delay:80ms;">
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">schedule</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">On-Time Delivery</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">We commit to a timeline and we hit it. If anything changes, you'll know immediately — not after a missed deadline.</p>
+      </div>
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">forum</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">Weekly Communication</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Weekly progress reports and milestone reviews. You'll never have to chase us for an update or wonder what's happening.</p>
+      </div>
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">verified</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">Quality Guarantee</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">We don't launch until everything meets our standard. Not just functional — exceptional. Every detail inspected before go-live.</p>
+      </div>
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">school</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">Full Training</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Every client receives full training on their system. You'll know how to use every tool we build — and when to call us for more.</p>
+      </div>
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">support_agent</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">30-Day Post-Launch Support</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Every project includes 30 days of post-launch support. We monitor performance and make adjustments as your system settles in.</p>
+      </div>
+      <div class="card p-8 hover-lift">
+        <span class="material-symbols-outlined text-silver mb-5 block" style="font-size:24px;">handshake</span>
+        <h3 class="font-body font-medium text-platinum text-base mb-3">Honest Partnership</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">If we don't think a project is right for you, we'll tell you. We only take on projects we're confident we can deliver exceptional results for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 md:py-36 px-6 md:px-16 bg-void relative overflow-hidden">
+  <div class="max-w-[800px] mx-auto text-center relative z-10 reveal">
+    <span class="eyebrow text-pewter block mb-6">Begin Your Journey</span>
+    <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">Ready to Start<br><em class="italic font-normal text-platinum">Step One?</em></h2>
+    <p class="text-silver font-body text-lg leading-relaxed max-w-xl mx-auto mb-10 font-light">Your 30-minute discovery call is free, no-obligation, and could be the conversation that changes your business.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="contact.html" class="btn-primary">Book Discovery Call <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      <a href="quote.html" class="btn-ghost">Estimate My Investment</a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact Us →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const d=document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click',()=>{d.classList.add('open');document.body.style.overflow='hidden';});
+document.getElementById('closeMenu')?.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';});
+d?.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';}));
+const fc=document.getElementById('floatingCta'),mc=document.getElementById('mobileCta');
+window.addEventListener('scroll',()=>{const s=window.scrollY>600;fc?.classList.toggle('show',s);mc?.classList.toggle('show',s);},{passive:true});
+// Architectural tower parallax
+(function(){var tw=document.getElementById('towerWrap');if(!tw)return;var lx=0,ly=0,tx=0,ty=0,sc=0;document.addEventListener('mousemove',function(e){tx=(e.clientX/window.innerWidth-0.5)*14;ty=(e.clientY/window.innerHeight-0.5)*9;},{passive:true});window.addEventListener('scroll',function(){sc=window.scrollY*0.04;},{passive:true});(function loop(){lx+=(tx-lx)*0.055;ly+=(ty+sc-ly)*0.055;tw.style.transform='translateX('+lx.toFixed(2)+'px) translateY('+ly.toFixed(2)+'px)';requestAnimationFrame(loop);})();})();
+</script>
+</body>
+</html>

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Quote Calculator — Ascendra</title>
+<meta name="description" content="Get an instant estimate for your digital project. Calculate your website, app, or automation investment in under 3 minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        void: '#030303', obsidian: '#060606', charcoal: '#0d0d0d',
+        iron: '#141414', graphite: '#1e1e1e', smoke: '#2e2e2e',
+        platinum: '#e8e6e4', silver: '#b4b2b0', pewter: '#767472', glow: '#adc6ff',
+      },
+      fontFamily: {
+        editorial: ['Bodoni Moda', 'Georgia', 'serif'],
+        body: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        mono: ['Geist', 'ui-monospace', 'monospace'],
+      },
+    }
+  }
+};
+</script>
+<style>
+/* Step fade animation */
+.step-enter { animation: stepIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+@keyframes stepIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Result reveal */
+.result-glow {
+  background: linear-gradient(140deg,#f4f2f0 0%,#d4d2d0 30%,#9a9896 65%,#c8c6c4 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+@keyframes countUp { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+.result-enter { animation: countUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+/* Feature grid */
+.feature-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media (min-width:640px) { .feature-grid { grid-template-columns:repeat(3,1fr); } }
+@media (min-width:1024px) { .feature-grid { grid-template-columns:repeat(4,1fr); } }
+
+/* Step connector */
+.step-dot {
+  width:32px; height:32px; border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'Geist',monospace; font-size:0.65rem; color:rgba(232,230,228,0.35);
+  flex-shrink:0; transition:all 0.3s ease;
+}
+.step-dot.active { border-color:rgba(232,230,228,0.5); color:#e8e6e4; background:rgba(232,230,228,0.06); }
+.step-dot.done { border-color:rgba(232,230,228,0.3); background:rgba(232,230,228,0.12); color:#e8e6e4; }
+
+/* Package badge */
+.pkg-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(232,230,228,0.06); border:1px solid rgba(232,230,228,0.15);
+  padding:8px 18px; font-family:'Geist',monospace; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:#e8e6e4;
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile sticky CTA placeholder for nav spacing -->
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="contact.html" class="btn-primary w-full justify-center">Request Private Consultation</a>
+</div>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass" id="mainNav">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary nav-active" style="font-size:0.6875rem;background:#1a1a1a;color:#e8e6e4;border:1px solid rgba(255,255,255,0.2);">
+    Get My Quote
+  </a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Page header -->
+<div class="pt-36 pb-16 px-6 md:px-16 bg-charcoal border-b border-white/5">
+  <div class="max-w-[760px] mx-auto text-center">
+    <span class="eyebrow text-pewter block mb-5">Project Investment Estimator</span>
+    <h1 class="font-editorial font-bold platinum-text mb-5" style="font-size:clamp(2.4rem,6vw,5rem);line-height:0.95;letter-spacing:-0.04em;">
+      Calculate Your<br><em class="italic font-normal text-platinum">Project Quote</em>
+    </h1>
+    <p class="text-silver font-body text-base md:text-lg leading-relaxed font-light max-w-xl mx-auto">Answer 7 simple questions about your project and get an instant estimated investment range — no sales call required.</p>
+  </div>
+</div>
+
+<!-- Calculator -->
+<div class="min-h-screen bg-void px-6 md:px-16 py-16">
+  <div class="max-w-[920px] mx-auto">
+
+    <!-- Progress bar -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-4">
+        <span class="font-mono text-pewter text-xs tracking-widest uppercase" id="stepLabel">Step 1 of 7</span>
+        <span class="font-mono text-pewter text-xs tracking-widest uppercase" id="stepPercent">14%</span>
+      </div>
+      <div class="q-progress-bar">
+        <div class="q-progress-fill" id="progressFill" style="width:14%;"></div>
+      </div>
+
+      <!-- Step dots - desktop -->
+      <div class="hidden md:flex items-center gap-4 mt-6">
+        <div class="step-dot active" id="dot-1">1</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-2">2</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-3">3</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-4">4</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-5">5</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-6">6</div>
+        <div class="flex-1 h-px bg-white/5"></div>
+        <div class="step-dot" id="dot-7">7</div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 1: Project Type ══ -->
+    <div class="quote-step active step-enter" id="step-1">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">What type of project do you need?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">Select the primary type of digital system you want built.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10" id="projectTypeGrid">
+        <button class="q-option" data-value="website" data-min="2500" data-max="8500" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Website</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Professional business website or landing page</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="ecommerce" data-min="6000" data-max="18000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">E-Commerce Store</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Online store with products, cart, and checkout</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="mobile" data-min="10000" data-max="35000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Mobile App</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">iOS and/or Android native application</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="webapp" data-min="12000" data-max="40000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Web App / Platform</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Custom web-based software or SaaS product</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="dashboard" data-min="5000" data-max="20000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Admin Dashboard</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Data management and business analytics panel</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="ai" data-min="3000" data-max="12000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">AI Assistant / Concierge</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Intelligent chatbot or AI-powered assistant</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="booking" data-min="4000" data-max="12000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Booking System</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Appointment and reservation management system</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="restaurant" data-min="5000" data-max="15000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Restaurant System</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Online ordering, reservations, and loyalty</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="automation" data-min="2500" data-max="15000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Automation System</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Workflow automation and business processes</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="fullsystem" data-min="15000" data-max="50000" onclick="selectSingle(this,'projectTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Full Business Growth System</p>
+            <p class="text-pewter text-xs font-body mt-0.5 leading-relaxed">Complete website + AI + CRM + automation ecosystem</p>
+          </div>
+        </button>
+      </div>
+      <div class="flex justify-end">
+        <button class="btn-primary" onclick="nextStep(2)">Continue <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 2: Business Type ══ -->
+    <div class="quote-step" id="step-2">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">What type of business do you own?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">This helps us tailor the solution and recommendation to your industry.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10" id="businessTypeGrid">
+        <button class="q-option" data-value="restaurant" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Restaurant</p></div>
+        </button>
+        <button class="q-option" data-value="beauty" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Beauty Brand</p></div>
+        </button>
+        <button class="q-option" data-value="legal" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Law Firm</p></div>
+        </button>
+        <button class="q-option" data-value="medical" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Medical Practice</p></div>
+        </button>
+        <button class="q-option" data-value="contractor" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Contractor</p></div>
+        </button>
+        <button class="q-option" data-value="realestate" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Real Estate</p></div>
+        </button>
+        <button class="q-option" data-value="ecommerce" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">E-Commerce</p></div>
+        </button>
+        <button class="q-option" data-value="professional" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Professional Services</p></div>
+        </button>
+        <button class="q-option" data-value="startup" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Startup</p></div>
+        </button>
+        <button class="q-option" data-value="other" onclick="selectSingle(this,'businessTypeGrid')">
+          <div class="q-radio mt-1"></div>
+          <div><p class="font-mono text-platinum text-sm tracking-wide">Other</p></div>
+        </button>
+      </div>
+      <div class="flex justify-between">
+        <button class="btn-ghost" onclick="prevStep(1)"><span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="nextStep(3)">Continue <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 3: Features ══ -->
+    <div class="quote-step" id="step-3">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">What features do you need?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">Select all features that apply. Each one refines your estimate.</p>
+      </div>
+      <div class="feature-grid mb-10" id="featuresGrid">
+        <button class="q-option" data-value="design" data-pct="0" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Custom Design</p></div>
+        </button>
+        <button class="q-option" data-value="mobile" data-pct="5" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Mobile Optimization</p></div>
+        </button>
+        <button class="q-option" data-value="booking" data-pct="10" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Online Booking</p></div>
+        </button>
+        <button class="q-option" data-value="ordering" data-pct="15" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Online Ordering</p></div>
+        </button>
+        <button class="q-option" data-value="payment" data-pct="12" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Payment Integration</p></div>
+        </button>
+        <button class="q-option" data-value="ai" data-pct="25" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">AI Assistant</p></div>
+        </button>
+        <button class="q-option" data-value="admindash" data-pct="20" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Admin Dashboard</p></div>
+        </button>
+        <button class="q-option" data-value="crm" data-pct="15" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">CRM Integration</p></div>
+        </button>
+        <button class="q-option" data-value="email" data-pct="10" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Email Automation</p></div>
+        </button>
+        <button class="q-option" data-value="sms" data-pct="8" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">SMS Automation</p></div>
+        </button>
+        <button class="q-option" data-value="seo" data-pct="8" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">SEO Setup</p></div>
+        </button>
+        <button class="q-option" data-value="analytics" data-pct="12" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Analytics Dashboard</p></div>
+        </button>
+        <button class="q-option" data-value="portal" data-pct="18" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Customer Portal</p></div>
+        </button>
+        <button class="q-option" data-value="inventory" data-pct="15" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Inventory Management</p></div>
+        </button>
+        <button class="q-option" data-value="accounts" data-pct="10" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">User Accounts</p></div>
+        </button>
+        <button class="q-option" data-value="blog" data-pct="5" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Blog / Insights</p></div>
+        </button>
+        <button class="q-option" data-value="multilang" data-pct="12" onclick="toggleMulti(this)">
+          <div class="q-check"></div>
+          <div><p class="font-mono text-platinum text-xs tracking-wide">Multi-language</p></div>
+        </button>
+      </div>
+      <div class="flex justify-between">
+        <button class="btn-ghost" onclick="prevStep(2)"><span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="nextStep(4)">Continue <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 4: Pages/Screens ══ -->
+    <div class="quote-step" id="step-4">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">How many pages or screens do you need?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">More pages and screens increase scope and investment.</p>
+      </div>
+      <div class="flex flex-col gap-3 mb-10" id="pagesGrid">
+        <button class="q-option" data-value="1-3" data-mult="1.0" onclick="selectSingle(this,'pagesGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">1–3 Pages / Screens</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Landing page, small brochure site, or minimal app</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="4-7" data-mult="1.2" onclick="selectSingle(this,'pagesGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">4–7 Pages / Screens</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Standard business website or basic app</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="8-12" data-mult="1.4" onclick="selectSingle(this,'pagesGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">8–12 Pages / Screens</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Full business website or feature-rich app</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="13-20" data-mult="1.6" onclick="selectSingle(this,'pagesGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">13–20 Pages / Screens</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Large website or complex multi-feature application</p>
+          </div>
+        </button>
+        <button class="q-option" data-value="20+" data-mult="1.9" onclick="selectSingle(this,'pagesGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">20+ Pages / Screens</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Enterprise platform or very large digital ecosystem</p>
+          </div>
+        </button>
+      </div>
+      <div class="flex justify-between">
+        <button class="btn-ghost" onclick="prevStep(3)"><span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="nextStep(5)">Continue <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 5: Timeline ══ -->
+    <div class="quote-step" id="step-5">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">How soon do you need it?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">Accelerated timelines require priority resourcing and carry a rush premium.</p>
+      </div>
+      <div class="flex flex-col gap-3 mb-10" id="timelineGrid">
+        <button class="q-option" data-value="standard" data-mult="1.0" onclick="selectSingle(this,'timelineGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Standard Timeline — 4–8 Weeks</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Full discovery, design, development, and testing cycle</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">Standard</span></div>
+        </button>
+        <button class="q-option" data-value="priority" data-mult="1.25" onclick="selectSingle(this,'timelineGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Priority Timeline — 2–4 Weeks</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Accelerated build with dedicated team focus</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+25%</span></div>
+        </button>
+        <button class="q-option" data-value="rush" data-mult="1.5" onclick="selectSingle(this,'timelineGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Rush Timeline — 1–2 Weeks</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Maximum priority, all hands on deck</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+50%</span></div>
+        </button>
+      </div>
+      <div class="flex justify-between">
+        <button class="btn-ghost" onclick="prevStep(4)"><span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="nextStep(6)">Continue <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 6: Support Level ══ -->
+    <div class="quote-step" id="step-6">
+      <div class="mb-8">
+        <h2 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.6rem,3.5vw,2.4rem);letter-spacing:-0.02em;">What level of support do you need after launch?</h2>
+        <p class="text-silver font-body text-sm leading-relaxed">Ongoing support ensures your investment keeps performing and growing.</p>
+      </div>
+      <div class="flex flex-col gap-3 mb-10" id="supportGrid">
+        <button class="q-option" data-value="launch" data-monthly="0" onclick="selectSingle(this,'supportGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Launch Only</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Project handoff with training and documentation</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">One-time</span></div>
+        </button>
+        <button class="q-option" data-value="maintenance" data-monthly="500" onclick="selectSingle(this,'supportGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Monthly Maintenance</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Updates, security patches, and uptime monitoring</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+$500/mo</span></div>
+        </button>
+        <button class="q-option" data-value="growth" data-monthly="1500" onclick="selectSingle(this,'supportGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Growth Support</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Maintenance + CRO testing + content updates + reporting</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+$1,500/mo</span></div>
+        </button>
+        <button class="q-option" data-value="automation" data-monthly="2000" onclick="selectSingle(this,'supportGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Automation Support</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Growth + automation optimization + CRM management</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+$2,000/mo</span></div>
+        </button>
+        <button class="q-option" data-value="partnership" data-monthly="3500" onclick="selectSingle(this,'supportGrid')">
+          <div class="q-radio mt-1"></div>
+          <div>
+            <p class="font-mono text-platinum text-sm tracking-wide">Full Partnership</p>
+            <p class="text-pewter text-xs font-body mt-0.5">Dedicated strategist + all support + active growth management</p>
+          </div>
+          <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+$3,500/mo</span></div>
+        </button>
+      </div>
+      <div class="flex justify-between">
+        <button class="btn-ghost" onclick="prevStep(5)"><span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="calculateQuote()">
+          Calculate My Quote
+          <span class="material-symbols-outlined" style="font-size:16px;">calculate</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 7: Results ══ -->
+    <div class="quote-step" id="step-7">
+      <div class="result-glass rounded-none p-8 md:p-12 mb-8 text-center">
+        <span class="eyebrow text-pewter block mb-4">Your Estimated Investment</span>
+        <h2 class="font-editorial font-bold platinum-text mb-3 result-enter" style="font-size:clamp(2.8rem,8vw,7rem);line-height:0.9;letter-spacing:-0.04em;" id="resultRange">—</h2>
+        <p class="text-silver font-body text-base" id="resultMonthly"></p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+        <!-- Package -->
+        <div class="card glass-shimmer p-6 md:p-8 text-center">
+          <p class="eyebrow text-pewter mb-3">Recommended Package</p>
+          <div class="pkg-badge justify-center mb-2" id="resultPackage">—</div>
+          <p class="text-silver text-xs font-body leading-relaxed mt-3" id="resultPackageDesc">—</p>
+        </div>
+        <!-- Timeline -->
+        <div class="card glass-shimmer p-6 md:p-8 text-center">
+          <p class="eyebrow text-pewter mb-3">Estimated Timeline</p>
+          <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2rem;letter-spacing:-0.02em;" id="resultTimeline">—</div>
+          <p class="text-silver text-xs font-body leading-relaxed" id="resultTimelineDesc">—</p>
+        </div>
+        <!-- Why this fits -->
+        <div class="card glass-shimmer p-6 md:p-8 text-center">
+          <p class="eyebrow text-pewter mb-3">Why This Package Fits</p>
+          <p class="text-silver text-sm font-body leading-relaxed" id="resultWhy">—</p>
+        </div>
+      </div>
+
+      <!-- Included features summary -->
+      <div class="card glass-shimmer p-6 md:p-8 mb-10">
+        <p class="eyebrow text-pewter mb-5">What's Included</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="resultFeatures">—</div>
+      </div>
+
+      <!-- Next steps -->
+      <div class="card-elevated p-8 md:p-12 mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <span class="eyebrow text-pewter block mb-4">Next Step</span>
+            <h3 class="font-editorial font-bold text-platinum mb-4" style="font-size:1.8rem;letter-spacing:-0.02em;">Request a Private Consultation</h3>
+            <p class="text-silver font-body text-sm leading-relaxed mb-6">Your estimate is a starting point. Let's have a 30-minute strategy call to discuss your vision, refine the scope, and present you with a precise proposal.</p>
+            <div class="flex gap-4 flex-wrap">
+              <a href="contact.html" class="btn-primary">
+                Book Strategy Call
+                <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+              </a>
+              <button onclick="emailEstimate()" class="btn-ghost">Email Me This Estimate</button>
+            </div>
+          </div>
+          <div>
+            <form id="estimateForm" class="flex flex-col gap-4">
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Your Name</label>
+                <input type="text" placeholder="John Smith" class="form-input" id="formName">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Email Address</label>
+                <input type="email" placeholder="john@company.com" class="form-input" id="formEmail">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Phone (Optional)</label>
+                <input type="tel" placeholder="+1 555 000 0000" class="form-input" id="formPhone">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Business Name</label>
+                <input type="text" placeholder="Company Name" class="form-input" id="formBusiness">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Project Notes (Optional)</label>
+                <textarea placeholder="Any additional context about your project..." class="form-input" rows="3" id="formNotes" style="border-bottom:1px solid rgba(255,255,255,0.1);resize:vertical;background:transparent;outline:none;width:100%;font-family:'Geist',monospace;font-size:0.875rem;padding:14px 0;color:#e8e6e4;"></textarea>
+              </div>
+              <button type="submit" class="btn-primary w-full justify-center">
+                Submit & Request Consultation
+                <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retake -->
+      <div class="text-center">
+        <button onclick="resetQuote()" class="btn-ghost" style="padding:12px 28px;font-size:0.62rem;">
+          <span class="material-symbols-outlined" style="font-size:14px;">refresh</span>
+          Start Over
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono tracking-wider">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact Us →</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ─── STATE ────────────────────────────────────
+const state = {
+  projectType: null, projectMin: 0, projectMax: 0,
+  businessType: null,
+  features: [],
+  pagesMultiplier: 1.0,
+  timelineMultiplier: 1.0,
+  supportMonthly: 0,
+  currentStep: 1
+};
+
+// ─── STEP NAVIGATION ──────────────────────────
+function nextStep(n) {
+  if (n === 2 && !state.projectType) { showError('Please select a project type.'); return; }
+  if (n === 3 && !state.businessType) { showError('Please select your business type.'); return; }
+  if (n === 5 && !state.pagesSet) { showError('Please select a page range.'); return; }
+  if (n === 6 && !state.timelineSet) { showError('Please select a timeline.'); return; }
+  goToStep(n);
+}
+function prevStep(n) { goToStep(n); }
+
+function goToStep(n) {
+  document.querySelectorAll('.quote-step').forEach(s => s.classList.remove('active'));
+  const step = document.getElementById('step-' + n);
+  step.classList.add('active');
+  step.classList.remove('step-enter');
+  void step.offsetWidth;
+  step.classList.add('step-enter');
+  state.currentStep = n;
+  updateProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(n) {
+  const totalSteps = 7;
+  const pct = Math.round((n / totalSteps) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('stepLabel').textContent = 'Step ' + n + ' of ' + totalSteps;
+  document.getElementById('stepPercent').textContent = pct + '%';
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    if (i < n) dot.classList.add('done');
+    else if (i === n) dot.classList.add('active');
+  }
+}
+
+// ─── SELECTION HELPERS ────────────────────────
+function selectSingle(btn, gridId) {
+  document.querySelectorAll('#' + gridId + ' .q-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const v = btn.dataset.value;
+  if (gridId === 'projectTypeGrid') {
+    state.projectType = v;
+    state.projectMin = parseInt(btn.dataset.min);
+    state.projectMax = parseInt(btn.dataset.max);
+  } else if (gridId === 'businessTypeGrid') {
+    state.businessType = v;
+  } else if (gridId === 'pagesGrid') {
+    state.pagesMultiplier = parseFloat(btn.dataset.mult);
+    state.pagesSet = true;
+  } else if (gridId === 'timelineGrid') {
+    state.timelineMultiplier = parseFloat(btn.dataset.mult);
+    state.timelineSet = true;
+  } else if (gridId === 'supportGrid') {
+    state.supportMonthly = parseInt(btn.dataset.monthly);
+  }
+}
+
+function toggleMulti(btn) {
+  btn.classList.toggle('selected');
+  const v = btn.dataset.value;
+  const pct = parseInt(btn.dataset.pct);
+  if (btn.classList.contains('selected')) {
+    state.features.push({ value: v, pct: pct });
+  } else {
+    state.features = state.features.filter(f => f.value !== v);
+  }
+}
+
+function showError(msg) {
+  const existing = document.getElementById('stepError');
+  if (existing) existing.remove();
+  const err = document.createElement('div');
+  err.id = 'stepError';
+  err.style.cssText = 'position:fixed;top:88px;left:50%;transform:translateX(-50%);background:#111;border:1px solid rgba(255,255,255,0.15);padding:12px 24px;font-family:Geist,monospace;font-size:0.7rem;letter-spacing:0.1em;color:#e8e6e4;z-index:100;white-space:nowrap;';
+  err.textContent = msg;
+  document.body.appendChild(err);
+  setTimeout(() => err.remove(), 2500);
+}
+
+// ─── QUOTE CALCULATION ────────────────────────
+function calculateQuote() {
+  if (!state.supportMonthly && state.supportMonthly !== 0) {
+    showError('Please select a support level.'); return;
+  }
+
+  // Feature add-on %
+  const featurePct = state.features.reduce((sum, f) => sum + f.pct, 0) / 100;
+
+  // Compute range
+  let minVal = state.projectMin * (1 + featurePct) * state.pagesMultiplier * state.timelineMultiplier;
+  let maxVal = state.projectMax * (1 + featurePct) * state.pagesMultiplier * state.timelineMultiplier;
+  minVal = Math.round(minVal / 500) * 500;
+  maxVal = Math.round(maxVal / 500) * 500;
+
+  // Package recommendation
+  const avgVal = (minVal + maxVal) / 2;
+  let pkg, pkgDesc, why;
+  if (avgVal < 7000) {
+    pkg = 'FOUNDATION';
+    pkgDesc = 'Premium online presence and core lead generation';
+    why = 'Your project scope is a strong fit for the Foundation package — focused, effective, and built for conversion.';
+  } else if (avgVal < 14000) {
+    pkg = 'GROWTH';
+    pkgDesc = 'Website + automation + CRM integration';
+    why = 'The Growth package adds automation and CRM to your website, creating a lead-nurturing machine that works 24/7.';
+  } else if (avgVal < 28000) {
+    pkg = 'AUTHORITY';
+    pkgDesc = 'Website + AI + automation + full ecosystem';
+    why = 'With your feature requirements and scope, the Authority package delivers the full AI-powered growth infrastructure.';
+  } else {
+    pkg = 'ENTERPRISE';
+    pkgDesc = 'Custom architecture + dedicated partnership';
+    why = 'Your project demands enterprise-grade architecture with a dedicated team and long-term growth partnership.';
+  }
+
+  // Timeline
+  let timeline, timelineDesc;
+  if (state.timelineMultiplier === 1.0) { timeline = '4–8 Weeks'; timelineDesc = 'Standard build cycle with full discovery and testing'; }
+  else if (state.timelineMultiplier === 1.25) { timeline = '2–4 Weeks'; timelineDesc = 'Priority build with accelerated delivery'; }
+  else { timeline = '1–2 Weeks'; timelineDesc = 'Rush build — maximum priority resourcing'; }
+
+  // Features list
+  const coreFeatures = [
+    'Bespoke design tailored to your brand',
+    'Mobile-first, performance-optimized build',
+    'Lead capture and inquiry system',
+    'SEO foundation',
+    'Analytics setup',
+    '30-day post-launch support'
+  ];
+  const selectedFeatureNames = state.features.map(f => {
+    const btn = document.querySelector(`[data-value="${f.value}"].selected`);
+    return btn ? btn.querySelector('p')?.textContent : null;
+  }).filter(Boolean);
+  const allFeatures = [...coreFeatures, ...selectedFeatureNames.slice(0, 6)];
+
+  // Populate step 7
+  document.getElementById('resultRange').textContent = '$' + minVal.toLocaleString() + ' – $' + maxVal.toLocaleString();
+  document.getElementById('resultMonthly').textContent = state.supportMonthly > 0
+    ? '+ $' + state.supportMonthly.toLocaleString() + '/month for ongoing support'
+    : 'One-time project investment';
+  document.getElementById('resultPackage').textContent = pkg;
+  document.getElementById('resultPackageDesc').textContent = pkgDesc;
+  document.getElementById('resultTimeline').textContent = timeline;
+  document.getElementById('resultTimelineDesc').textContent = timelineDesc;
+  document.getElementById('resultWhy').textContent = why;
+  document.getElementById('resultFeatures').innerHTML = allFeatures.map(f =>
+    `<div class="flex items-start gap-3"><span class="text-platinum mt-0.5 flex-shrink-0" style="font-family:'Geist',monospace;font-size:0.75rem;">—</span><span class="text-silver text-sm font-body">${f}</span></div>`
+  ).join('');
+
+  goToStep(7);
+}
+
+// ─── SUPABASE ─────────────────────────────────
+const _supabase = window.supabase.createClient(
+  'https://nfowsobglotbjrdqsiid.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+);
+
+// ─── FORM SUBMIT ──────────────────────────────
+document.getElementById('estimateForm')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('formName').value.trim();
+  const email = document.getElementById('formEmail').value.trim();
+  if (!name || !email) { showError('Please enter your name and email.'); return; }
+
+  const btn = this.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="animation:spin 0.8s linear infinite;width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Submitting…</span>';
+
+  const rangeText = document.getElementById('resultRange').textContent;
+  const rangeParts = rangeText.replace(/\$/g, '').split('–').map(s => parseInt(s.replace(/,/g, '').trim()));
+
+  const data = {
+    name,
+    email,
+    phone: document.getElementById('formPhone').value.trim() || null,
+    business: document.getElementById('formBusiness').value.trim() || null,
+    notes: document.getElementById('formNotes').value.trim() || null,
+    industry: state.businessType,
+    package_selected: document.getElementById('resultPackage').textContent || null,
+    estimated_min: rangeParts[0] || null,
+    estimated_max: rangeParts[1] || null,
+  };
+
+  const { error } = await _supabase.from('quote_leads').insert([data]);
+
+  if (error) {
+    btn.disabled = false;
+    btn.innerHTML = 'Submit & Request Consultation <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>';
+    showError('Something went wrong. Please try again.');
+  } else {
+    const form = document.getElementById('estimateForm');
+    form.innerHTML = `
+      <div style="text-align:center;padding:40px 16px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#adc6ff;">check</span>
+        </div>
+        <p class="font-editorial font-bold text-platinum mb-2" style="font-size:1.1rem;">We'll be in touch.</p>
+        <p class="text-silver font-body text-sm leading-relaxed">Thank you, ${name}. We've received your quote and will follow up within 24 hours.</p>
+      </div>`;
+  }
+});
+
+function emailEstimate() {
+  const range = document.getElementById('resultRange').textContent;
+  const pkg = document.getElementById('resultPackage').textContent;
+  const subject = encodeURIComponent('My Ascendra Project Estimate — ' + range);
+  const body = encodeURIComponent('Hi,\n\nI just completed the Ascendra quote calculator.\n\nEstimated Range: ' + range + '\nRecommended Package: ' + pkg + '\n\nI\'d love to discuss next steps.\n\nBest regards');
+  window.location.href = `mailto:doriscacarlm40@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function resetQuote() {
+  state.projectType = null; state.projectMin = 0; state.projectMax = 0;
+  state.businessType = null; state.features = [];
+  state.pagesMultiplier = 1.0; state.pagesSet = false;
+  state.timelineMultiplier = 1.0; state.timelineSet = false;
+  state.supportMonthly = 0;
+  document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
+  goToStep(1);
+}
+
+// ─── MOBILE NAV ───────────────────────────────
+const drawer = document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click', () => { drawer.classList.add('open'); document.body.style.overflow = 'hidden'; });
+document.getElementById('closeMenu')?.addEventListener('click', () => { drawer.classList.remove('open'); document.body.style.overflow = ''; });
+drawer?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { drawer.classList.remove('open'); document.body.style.overflow = ''; }));
+
+// ─── MOBILE CTA ───────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('mobileCta')?.classList.toggle('show', window.scrollY > 300);
+}, { passive: true });
+</script>
+</body>
+</html>

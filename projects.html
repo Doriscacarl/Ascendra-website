@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects & Case Studies — Ascendra</title>
+<meta name="description" content="Real results for real businesses. Explore Ascendra's case studies and transformations across law firms, restaurants, medical practices, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};</script>
+</head>
+<body>
+
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1);text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-silver group-hover:text-platinum" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow nav-active text-platinum">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-5">Case Studies</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Real Businesses.<br><em class="italic font-normal text-platinum">Real Results.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl font-light">These are not hypothetical case studies. These are real businesses that faced real challenges — and how Ascendra engineered digital systems that produced measurable growth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Summary metrics -->
+<section class="py-16 px-6 md:px-16 bg-void border-b border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
+      <div class="text-center"><div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">100+</div><div class="eyebrow text-pewter/70">Projects Completed</div></div>
+      <div class="text-center"><div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">8</div><div class="eyebrow text-pewter/70">Industries Served</div></div>
+      <div class="text-center"><div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">3×</div><div class="eyebrow text-pewter/70">Avg Revenue Growth</div></div>
+      <div class="text-center"><div class="font-editorial font-bold platinum-text mb-2" style="font-size:2.5rem;line-height:1;letter-spacing:-0.03em;">95%</div><div class="eyebrow text-pewter/70">Client Satisfaction</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Study 1: Law Firm -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start reveal">
+      <div class="lg:col-span-5">
+        <span class="outcome-pill mb-6 block" style="width:fit-content;">Law Firm</span>
+        <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;">Boutique Law Firm<br><em class="italic font-normal">Digital Authority Rebuild</em></h2>
+        <div class="flex flex-col gap-5 mt-6">
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">A boutique personal injury firm was receiving 40+ weekly inquiry calls — but 70% were unqualified leads. 3+ attorney hours daily lost to manual screening and scheduling.</p>
+          </div>
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Strategy</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Reposition the firm as a premium authority, not a commodity service. Implement intelligent intake that qualifies before the first human conversation happens.</p>
+          </div>
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Solution</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Authority-positioned website + AI qualification chatbot + automated intake form + direct consultation booking system + CRM integration for pipeline visibility.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-6">
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+42%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Qualified Inquiries</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">–3h</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Daily Admin</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">3×</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Consultation Bookings</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+28%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Avg Case Value</div></div>
+        </div>
+        <div class="card p-8">
+          <div style="font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1;color:rgba(255,255,255,0.06);font-style:italic;margin-bottom:12px;">&#8220;</div>
+          <blockquote class="text-platinum font-body font-light leading-relaxed text-sm mb-4">"Ascendra didn't just build us a website — they built us a business development machine. We've tripled our consultation bookings in four months and our team finally has time to focus on actual legal work."</blockquote>
+          <p class="font-mono text-platinum text-xs tracking-wider uppercase">Marcus T. — Managing Partner</p>
+        </div>
+        <div class="mt-5">
+          <a href="quote.html" class="btn-ghost" style="font-size:0.62rem;">Start a Similar Project <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- Case Study 2: Medical Practice -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start reveal">
+      <div class="lg:col-span-5">
+        <span class="outcome-pill mb-6 block" style="width:fit-content;">Medical Practice</span>
+        <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;">Multi-Location Medical<br><em class="italic font-normal">Patient Experience System</em></h2>
+        <div class="flex flex-col gap-5 mt-6">
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Patient communication fragmented across 4 different platforms. 22% no-show rate costing the practice thousands monthly. Staff spending hours on manual reminders and rebooking.</p>
+          </div>
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Solution</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Unified patient portal with HIPAA-compliant messaging, automated appointment reminders, insurance pre-screening, and integrated review generation system.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-6">
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">–60%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">No-Show Rate</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+38%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">New Patients</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">20h</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Staff Hours Saved/Week</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">4.9★</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Google Rating</div></div>
+        </div>
+        <div class="card p-8">
+          <div style="font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1;color:rgba(255,255,255,0.06);font-style:italic;margin-bottom:12px;">&#8220;</div>
+          <blockquote class="text-platinum font-body font-light leading-relaxed text-sm mb-4">"The automation system alone saves my team 20+ hours a week. Our clients get immediate responses at any hour, and our close rate has never been higher. The ROI was clear within 60 days."</blockquote>
+          <p class="font-mono text-platinum text-xs tracking-wider uppercase">Dr. Sarah K. — Practice Owner</p>
+        </div>
+        <div class="mt-5">
+          <a href="quote.html" class="btn-ghost" style="font-size:0.62rem;">Start a Similar Project <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- Case Study 3: Restaurant Group -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start reveal">
+      <div class="lg:col-span-5">
+        <span class="outcome-pill mb-6 block" style="width:fit-content;">Restaurant Group</span>
+        <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;">Restaurant Group<br><em class="italic font-normal">Direct Booking Platform</em></h2>
+        <div class="flex flex-col gap-5 mt-6">
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">30% of all reservations flowing through third-party platforms, costing the group $18,000+ annually in commissions. No direct guest relationship or loyalty data.</p>
+          </div>
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Solution</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Direct reservation platform with automated loyalty sequences, email and SMS campaigns, guest experience portal, and proprietary data ownership.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-6">
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+65%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Direct Bookings</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">$0</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Commissions Paid</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+40%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Repeat Guests</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">12mo</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">ROI Payback</div></div>
+        </div>
+        <div class="card p-8">
+          <div style="font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1;color:rgba(255,255,255,0.06);font-style:italic;margin-bottom:12px;">&#8220;</div>
+          <blockquote class="text-platinum font-body font-light leading-relaxed text-sm mb-4">"We went from losing reservations to third-party apps to a fully owned guest experience. Direct bookings are up 65% and we've cut commission costs entirely. The system paid for itself in under a year."</blockquote>
+          <p class="font-mono text-platinum text-xs tracking-wider uppercase">Elena V. — Restaurant Group Owner</p>
+        </div>
+        <div class="mt-5">
+          <a href="quote.html" class="btn-ghost" style="font-size:0.62rem;">Start a Similar Project <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- Case Study 4: Real Estate -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start reveal">
+      <div class="lg:col-span-5">
+        <span class="outcome-pill mb-6 block" style="width:fit-content;">Real Estate</span>
+        <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;">Hyper-Luxury Real Estate<br><em class="italic font-normal">Lead Generation Portal</em></h2>
+        <div class="flex flex-col gap-5 mt-6">
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">A top-tier real estate brokerage with premium listings that had a generic website incapable of communicating their authority. Leads were cold, unqualified, and low-value.</p>
+          </div>
+          <div>
+            <p class="eyebrow text-pewter mb-2">The Solution</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Immersive luxury property portal + AI-powered buyer/seller matching + automated showing scheduler + CRM pipeline management + market report automation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-6">
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+42%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Qualified Leads</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">+31%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Showing Bookings</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">3×</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Revenue Pipeline</div></div>
+          <div class="card p-5 text-center"><div class="font-editorial font-bold platinum-text text-2xl">–60%</div><div class="eyebrow text-pewter mt-1" style="font-size:0.55rem;">Admin Time</div></div>
+        </div>
+        <div class="card p-8">
+          <div style="font-family:'Bodoni Moda',serif;font-size:3rem;line-height:1;color:rgba(255,255,255,0.06);font-style:italic;margin-bottom:12px;">&#8220;</div>
+          <blockquote class="text-platinum font-body font-light leading-relaxed text-sm mb-4">"Our website used to be an embarrassment relative to the properties we represent. Ascendra transformed it into a portal that actually commands the trust and attention our listings deserve."</blockquote>
+          <p class="font-mono text-platinum text-xs tracking-wider uppercase">James R. — Brokerage Principal</p>
+        </div>
+        <div class="mt-5">
+          <a href="quote.html" class="btn-ghost" style="font-size:0.62rem;">Start a Similar Project <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 md:py-36 px-6 md:px-16 bg-charcoal relative overflow-hidden">
+  <div class="max-w-[800px] mx-auto text-center relative z-10 reveal">
+    <span class="eyebrow text-pewter block mb-6">Your Turn</span>
+    <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">Start Your<br><em class="italic font-normal text-platinum">Transformation.</em></h2>
+    <p class="text-silver font-body text-lg leading-relaxed max-w-xl mx-auto mb-10 font-light">Every case study above started with a single conversation. Let's see what we can build for your business.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="quote.html" class="btn-primary">Calculate My Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      <a href="contact.html" class="btn-ghost">Book Strategy Call</a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="quote.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Get My Quote →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const d=document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click',()=>{d.classList.add('open');document.body.style.overflow='hidden';});
+document.getElementById('closeMenu')?.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';});
+d?.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';}));
+const fc=document.getElementById('floatingCta'),mc=document.getElementById('mobileCta');
+window.addEventListener('scroll',()=>{const s=window.scrollY>600;fc?.classList.toggle('show',s);mc?.classList.toggle('show',s);},{passive:true});
+</script>
+</body>
+</html>

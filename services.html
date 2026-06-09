@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Ascendra</title>
+<meta name="description" content="Premium digital growth services — websites, AI assistants, automation systems, CRM integrations, mobile apps, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        void: '#030303', obsidian: '#060606', charcoal: '#0d0d0d',
+        iron: '#141414', graphite: '#1e1e1e', smoke: '#2e2e2e',
+        platinum: '#e8e6e4', silver: '#b4b2b0', pewter: '#767472', glow: '#adc6ff',
+      },
+      fontFamily: {
+        editorial: ['Bodoni Moda', 'Georgia', 'serif'],
+        body: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        mono: ['Geist', 'ui-monospace', 'monospace'],
+      },
+    }
+  }
+};
+</script>
+</head>
+<body>
+
+<!-- Floating CTA -->
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1);text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-silver group-hover:text-platinum group-hover:translate-x-0.5 transition-transform duration-300" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow nav-active text-platinum">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">
+    Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+  </a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Page Hero -->
+<section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none opacity-[0.04]" style="background:radial-gradient(ellipse at 70% 30%,#adc6ff,transparent 60%);"></div>
+  <div class="max-w-[1200px] mx-auto relative z-10">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-5">What We Build</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Complete Growth<br><em class="italic font-normal text-platinum">Systems.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl font-light">Not websites. Not templates. We build interconnected digital ecosystems — every service engineered to work as one unified growth machine for your business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WEBSITES ══ -->
+<section id="websites" class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 lg:sticky top-28 reveal">
+        <div style="width:56px;height:56px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <span class="material-symbols-outlined text-silver" style="font-size:26px;">language</span>
+        </div>
+        <span class="eyebrow text-pewter block mb-4">01 — Core Service</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">Premium Website Design</h2>
+        <p class="text-silver font-body text-sm leading-relaxed mb-6 font-light">Bespoke digital presences engineered from the ground up. No templates. No page builders. Every pixel crafted to position your business as the obvious premium choice in your market.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Mobile-first, high-performance architecture</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Conversion-optimized user experience</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>SEO foundation and Core Web Vitals optimization</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Lead capture and inquiry systems</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Analytics and performance tracking</li>
+        </ul>
+        <div class="card p-6 mb-8">
+          <p class="eyebrow text-pewter mb-2">Investment Range</p>
+          <p class="font-editorial font-bold platinum-text text-2xl">$2,500 – $15,000+</p>
+          <p class="text-pewter text-xs font-body mt-1">Depends on scope, features, and timeline</p>
+        </div>
+        <a href="quote.html" class="btn-primary">Get Website Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-7 reveal" style="transition-delay:100ms;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Ideal For</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Restaurants, law firms, medical practices, contractors, real estate, professional services — any business that needs to command premium pricing online.</p>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Business Benefits</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Attract higher-quality leads, command premium pricing, build trust before the first conversation, and convert more visitors to clients.</p>
+          </div>
+          <div class="card p-6 hover-lift sm:col-span-2">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-3">Typical Results</p>
+            <div class="grid grid-cols-3 gap-6">
+              <div><div class="font-editorial font-bold platinum-text text-2xl">+42%</div><div class="eyebrow text-pewter mt-1">More Qualified Leads</div></div>
+              <div><div class="font-editorial font-bold platinum-text text-2xl">+31%</div><div class="eyebrow text-pewter mt-1">Higher Conversion</div></div>
+              <div><div class="font-editorial font-bold platinum-text text-2xl">3×</div><div class="eyebrow text-pewter mt-1">Revenue Pipeline</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ══ AI ASSISTANTS ══ -->
+<section id="ai" class="py-24 md:py-32 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 lg:sticky top-28 reveal">
+        <div style="width:56px;height:56px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <span class="material-symbols-outlined text-silver" style="font-size:26px;">smart_toy</span>
+        </div>
+        <span class="eyebrow text-pewter block mb-4">02 — AI Systems</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">AI Assistants & Concierge</h2>
+        <p class="text-silver font-body text-sm leading-relaxed mb-6 font-light">Intelligent AI concierges trained on your business that engage visitors, qualify prospects, answer questions, and book appointments — without any human involvement.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>24/7 intelligent lead qualification</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Automated appointment booking</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Custom trained on your services and FAQs</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>CRM integration and lead routing</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Escalation to human when needed</li>
+        </ul>
+        <div class="card p-6 mb-8">
+          <p class="eyebrow text-pewter mb-2">Investment Range</p>
+          <p class="font-editorial font-bold platinum-text text-2xl">$3,000 – $12,000+</p>
+        </div>
+        <a href="quote.html" class="btn-primary">Get AI Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-7 reveal" style="transition-delay:100ms;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Ideal For</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Any business receiving inbound inquiries — law firms, medical practices, restaurants, real estate, e-commerce, professional services.</p>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Business Benefits</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Never miss a lead at 2am, qualify prospects before they reach you, eliminate low-quality inquiries, and book more consultations automatically.</p>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">What It Handles</p>
+            <ul class="flex flex-col gap-2 mt-1">
+              <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>FAQs, pricing, service descriptions</li>
+              <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Appointment and consultation booking</li>
+              <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>Lead capture and qualification forms</li>
+              <li class="text-silver text-xs font-body flex items-start gap-2"><span class="text-platinum">—</span>After-hours and weekend engagement</li>
+            </ul>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Typical ROI</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Most clients see the AI assistant pay for itself within 60–90 days through increased conversions and time saved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ══ AUTOMATION ══ -->
+<section id="automation" class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 lg:sticky top-28 reveal">
+        <div style="width:56px;height:56px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <span class="material-symbols-outlined text-silver" style="font-size:26px;">bolt</span>
+        </div>
+        <span class="eyebrow text-pewter block mb-4">03 — Automation</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">Business Automation Systems</h2>
+        <p class="text-silver font-body text-sm leading-relaxed mb-6 font-light">Automated workflows that run your business around the clock. From lead follow-up to appointment reminders to client onboarding — built to eliminate manual work.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Email and SMS follow-up sequences</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Appointment reminder workflows</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Lead nurture and re-engagement</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Review generation automation</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Client onboarding workflows</li>
+        </ul>
+        <div class="card p-6 mb-8">
+          <p class="eyebrow text-pewter mb-2">Investment Range</p>
+          <p class="font-editorial font-bold platinum-text text-2xl">$2,500 – $15,000+</p>
+        </div>
+        <a href="quote.html" class="btn-primary">Get Automation Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-7 reveal" style="transition-delay:100ms;">
+        <div class="card p-8 md:p-10">
+          <p class="eyebrow text-pewter mb-6">How Automation Works in Your Business</p>
+          <div class="flex flex-col gap-0">
+            <div class="journey-step">
+              <span class="journey-num">01</span>
+              <div class="journey-dot mt-1.5"></div>
+              <div class="flex-1 pl-2">
+                <h4 class="font-body font-medium text-platinum text-sm mb-1">New Lead Enters</h4>
+                <p class="text-silver text-xs font-body leading-relaxed">Via website form, AI chat, or landing page</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <span class="journey-num">02</span>
+              <div class="journey-dot mt-1.5"></div>
+              <div class="flex-1 pl-2">
+                <h4 class="font-body font-medium text-platinum text-sm mb-1">Instant Acknowledgment</h4>
+                <p class="text-silver text-xs font-body leading-relaxed">Automated email + SMS within seconds</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <span class="journey-num">03</span>
+              <div class="journey-dot mt-1.5"></div>
+              <div class="flex-1 pl-2">
+                <h4 class="font-body font-medium text-platinum text-sm mb-1">Lead Qualification</h4>
+                <p class="text-silver text-xs font-body leading-relaxed">AI scores and routes based on your criteria</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <span class="journey-num">04</span>
+              <div class="journey-dot mt-1.5"></div>
+              <div class="flex-1 pl-2">
+                <h4 class="font-body font-medium text-platinum text-sm mb-1">Nurture Sequence</h4>
+                <p class="text-silver text-xs font-body leading-relaxed">Targeted follow-up over days/weeks automatically</p>
+              </div>
+            </div>
+            <div class="journey-step" style="border-bottom:none;">
+              <span class="journey-num">05</span>
+              <div class="journey-dot mt-1.5"></div>
+              <div class="flex-1 pl-2">
+                <h4 class="font-body font-medium text-platinum text-sm mb-1">Conversion & Review</h4>
+                <p class="text-silver text-xs font-body leading-relaxed">Booking confirmed, review requested, loyalty started</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ══ CRM ══ -->
+<section id="crm" class="py-24 md:py-32 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 lg:sticky top-28 reveal">
+        <div style="width:56px;height:56px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <span class="material-symbols-outlined text-silver" style="font-size:26px;">dns</span>
+        </div>
+        <span class="eyebrow text-pewter block mb-4">04 — CRM</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">CRM Integration</h2>
+        <p class="text-silver font-body text-sm leading-relaxed mb-6 font-light">Connect every touchpoint — website, AI, phone, email — into one unified CRM that tracks leads, clients, revenue, and pipeline with complete visibility.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Multi-source lead aggregation</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Pipeline and revenue tracking</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Client lifecycle management</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Team collaboration tools</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Custom reporting dashboards</li>
+        </ul>
+        <div class="card p-6 mb-8">
+          <p class="eyebrow text-pewter mb-2">Investment Range</p>
+          <p class="font-editorial font-bold platinum-text text-2xl">$3,500 – $12,000+</p>
+        </div>
+        <a href="quote.html" class="btn-primary">Get CRM Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-7 reveal" style="transition-delay:100ms;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Business Benefits</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Never lose a lead, understand your pipeline at a glance, forecast revenue, and identify your highest-value client segments.</p>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Integrations</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Connects with your website, AI assistant, booking system, email, SMS, calendar, and payment systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ══ MOBILE ══ -->
+<section id="mobile" class="py-24 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 lg:sticky top-28 reveal">
+        <div style="width:56px;height:56px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+          <span class="material-symbols-outlined text-silver" style="font-size:26px;">phone_iphone</span>
+        </div>
+        <span class="eyebrow text-pewter block mb-4">05 — Mobile</span>
+        <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">Mobile Apps</h2>
+        <p class="text-silver font-body text-sm leading-relaxed mb-6 font-light">Native iOS and Android applications that put your brand in customers' hands. Loyalty programs, ordering systems, booking apps, and custom client portals.</p>
+        <ul class="flex flex-col gap-3 mb-8">
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>iOS and Android native builds</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Push notifications and re-engagement</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>In-app payments and ordering</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>Loyalty and rewards programs</li>
+          <li class="flex items-start gap-3 text-silver text-sm font-body"><span class="text-platinum mt-0.5">—</span>App Store and Play Store submission</li>
+        </ul>
+        <div class="card p-6 mb-8">
+          <p class="eyebrow text-pewter mb-2">Investment Range</p>
+          <p class="font-editorial font-bold platinum-text text-2xl">$10,000 – $35,000+</p>
+        </div>
+        <a href="quote.html" class="btn-primary">Get Mobile Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      </div>
+      <div class="lg:col-span-7 reveal" style="transition-delay:100ms;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Ideal For</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Restaurants with loyalty programs, retail brands, service businesses with repeat clientele, or any business wanting a direct channel to customers.</p>
+          </div>
+          <div class="card p-6 hover-lift">
+            <p class="font-mono text-platinum text-xs tracking-wider uppercase mb-2">Business Benefits</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Increase repeat purchases, build customer loyalty, enable direct ordering and booking, and create a premium branded experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ══ Additional Services Grid ══ -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-20 reveal">
+      <span class="eyebrow block mb-5">Additional Services</span>
+      <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2rem,4.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;">Every Service Your<br><em class="italic font-normal text-platinum">Business Needs.</em></h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal" style="transition-delay:80ms;">
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">shopping_cart</span>
+        <h3 class="font-body font-medium text-platinum text-base">E-Commerce Development</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Premium online stores with seamless checkout, inventory management, and automated order workflows.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$6,000 – $18,000+</p></div>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">calendar_month</span>
+        <h3 class="font-body font-medium text-platinum text-base">Booking Systems</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Direct booking platforms that cut third-party commissions and create premium client experiences.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$4,000 – $12,000+</p></div>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">web</span>
+        <h3 class="font-body font-medium text-platinum text-base">Web Apps & Platforms</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Custom web-based software, client portals, SaaS products, and internal business tools.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$12,000 – $40,000+</p></div>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">query_stats</span>
+        <h3 class="font-body font-medium text-platinum text-base">Analytics & Reporting</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Real-time dashboards that give you complete visibility into leads, conversions, and revenue.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$2,000 – $8,000+</p></div>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">search</span>
+        <h3 class="font-body font-medium text-platinum text-base">SEO & Lead Generation</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Technical SEO foundations, content strategy, and inbound lead generation systems that work long-term.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$2,500 – $8,000+</p></div>
+      </div>
+      <div class="service-card hover-lift">
+        <span class="material-symbols-outlined text-silver" style="font-size:24px;">restaurant</span>
+        <h3 class="font-body font-medium text-platinum text-base">Restaurant Systems</h3>
+        <p class="text-silver text-sm leading-relaxed font-body">Direct ordering, reservation management, loyalty programs, and guest experience systems.</p>
+        <div class="mt-auto pt-4 border-t border-white/5"><p class="eyebrow text-pewter">$5,000 – $15,000+</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUOTE CTA ══ -->
+<section class="py-24 md:py-36 px-6 md:px-16 bg-void relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <svg class="absolute left-0 bottom-0 opacity-[0.04] w-full" viewBox="0 0 1440 400" fill="none" preserveAspectRatio="xMidYMax slice">
+      <line x1="0" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="180" y1="400" x2="900" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="1440" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div class="max-w-[800px] mx-auto text-center relative z-10 reveal">
+    <span class="eyebrow text-pewter block mb-6">Start Your Project</span>
+    <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">
+      Ready to Build<br><em class="italic font-normal text-platinum">Your Growth System?</em>
+    </h2>
+    <p class="text-silver font-body text-lg leading-relaxed max-w-xl mx-auto mb-10 font-light">Use our quote calculator to estimate your investment, or contact us directly for a private consultation.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="quote.html" class="btn-primary">
+        Calculate My Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+      </a>
+      <a href="contact.html" class="btn-ghost">Request Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-12 md:py-14">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div class="col-span-2 md:col-span-1">
+          <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold block mb-3">ASCENDRA</a>
+          <p class="text-pewter text-xs leading-relaxed font-body font-light">Premium digital growth consultancy.</p>
+        </div>
+        <div>
+          <h5 class="eyebrow text-platinum/50 mb-4">Navigate</h5>
+          <ul class="flex flex-col gap-3">
+            <li><a href="index.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Home</a></li>
+            <li><a href="services.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Services</a></li>
+            <li><a href="projects.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Projects</a></li>
+            <li><a href="about.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">About</a></li>
+            <li><a href="contact.html" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="eyebrow text-platinum/50 mb-4">Services</h5>
+          <ul class="flex flex-col gap-3">
+            <li><a href="#websites" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Websites</a></li>
+            <li><a href="#ai" class="text-pewter text-sm hover:text-platinum transition-colors font-body">AI Assistants</a></li>
+            <li><a href="#automation" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Automation</a></li>
+            <li><a href="#crm" class="text-pewter text-sm hover:text-platinum transition-colors font-body">CRM</a></li>
+            <li><a href="#mobile" class="text-pewter text-sm hover:text-platinum transition-colors font-body">Mobile Apps</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="eyebrow text-platinum/50 mb-4">Start Now</h5>
+          <a href="quote.html" class="btn-primary w-full justify-center block text-center mb-3" style="font-size:0.62rem;">Get My Quote</a>
+          <a href="contact.html" class="btn-ghost w-full justify-center block text-center" style="font-size:0.62rem;padding:12px;">Contact Us</a>
+        </div>
+      </div>
+      <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between gap-3">
+        <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+        <p class="text-pewter/40 text-xs font-body italic">Building growth systems for businesses that refuse to be ordinary.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(e => e.forEach(i => { if(i.isIntersecting) i.target.classList.add('visible'); }), {threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const drawer = document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click', () => { drawer.classList.add('open'); document.body.style.overflow='hidden'; });
+document.getElementById('closeMenu')?.addEventListener('click', () => { drawer.classList.remove('open'); document.body.style.overflow=''; });
+drawer?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { drawer.classList.remove('open'); document.body.style.overflow=''; }));
+const fc = document.getElementById('floatingCta'), mc = document.getElementById('mobileCta');
+window.addEventListener('scroll', () => { const s=window.scrollY>600; fc?.classList.toggle('show',s); mc?.classList.toggle('show',s); }, {passive:true});
+</script>
+</body>
+</html>

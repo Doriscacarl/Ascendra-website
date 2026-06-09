@@ -1,0 +1,222 @@
+{
+  "designSystems": [
+    {
+      "designSystem": {
+        "displayName": "Ascendra Cinematic Luxury",
+        "styleGuidelines": "## Brand & Style\n\nThis design system embodies the \"Cinematic Luxury\" aesthetic, specifically tailored for a world-class digital agency. The brand personality is confident and innovative, prioritizing high-impact visuals over information density. \n\nThe style is a sophisticated evolution of **Glassmorphism**, characterized by ultra-thin borders, deep background blurs, and subtle reflections that suggest high-end physical materials like polished obsidian and precision-cut glass. The emotional response should be one of exclusivity and awe, achieved through expansive whitespace, high-contrast typography, and a \"dark mode by default\" interface that feels both premium and futuristic.\n\n## Layout & Spacing\n\nThe layout philosophy is built on **Expansive Fluidity**. Content is rarely cramped; instead, it is given room to breathe through massive vertical gaps (80px to 160px) between sections.\n\n- **Grid:** Use a 12-column grid for desktop with 32px gutters. \n- **Margins:** Desktop layouts should maintain a minimum of 64px side margins to push content toward the center, creating a \"widescreen\" cinematic focus.\n- **Reflow:** On mobile, section gaps should compress to 60px, and margins to 24px, ensuring the typography remains the hero.\n- **Alignment:** Use asymmetrical layouts to create visual interest, but ensure all elements snap to the underlying grid to maintain a sense of structured intentionality.\n\n## Elevation & Depth\n\nHierarchy is established through **Refractive Layering** rather than traditional drop shadows.\n\n1.  **Base Layer:** The Midnight Black (#050505) background.\n2.  **Glass Layer:** Elements appear to float using a `backdrop-filter: blur(20px)` and a semi-transparent Obsidian fill. \n3.  **Border Illumination:** Surfaces are defined by a 1px top-down gradient border (from white at 15% opacity to white at 5% opacity).\n4.  **Shadows:** When elements need to feel \"highly elevated,\" use deep, ultra-diffused shadows (`box-shadow: 0 40px 80px rgba(0,0,0,0.8)`). \n5.  **Interactive Glow:** The primary blue accent should emit a soft, localized glow (`blur(40px)`) when an element is active or hovered.\n\n## Components\n\n### Buttons\nPrimary buttons are high-gloss. Use a subtle linear gradient for the background and a `1px` inner border. On hover, the button should trigger a subtle Electric Blue outer glow and a slight scale increase (1.02x).\n\n### Glass Cards\nCards must feature `backdrop-filter: blur(24px)` and a background color of `rgba(16, 16, 16, 0.6)`. Use parallax hover effects where the internal content shifts slightly slower than the card container.\n\n### Quote Calculator\nDesigned as a \"Configurator.\" Use a multi-step vertical or horizontal layout with large, selectable tiles. Pricing updates should be animated using a \"rolling number\" effect. Each selection should be confirmed with a micro-glow interaction.\n\n### Input Fields\nInputs should be \"ghost\" style: no background fill, only a 1px bottom border (#ffffff20). On focus, the bottom border transitions to Electric Blue with a soft 4px glow beneath it.\n\n### Progress Indicators\nFor multi-step processes, use thin, horizontal lines. The \"active\" segment should be Electric Blue with a trailing gradient effect to imply motion and forward momentum.",
+        "theme": {
+          "bodyFont": "HANKEN_GROTESK",
+          "bodyFontFamily": "Hanken Grotesk",
+          "colorMode": "DARK",
+          "colorVariant": "FIDELITY",
+          "customColor": "#3b82f6",
+          "designMd": "---\nname: Ascendra Cinematic Luxury\ncolors:\n  surface: '#131313'\n  surface-dim: '#131313'\n  surface-bright: '#3a3939'\n  surface-container-lowest: '#0e0e0e'\n  surface-container-low: '#1c1b1b'\n  surface-container: '#201f1f'\n  surface-container-high: '#2a2a2a'\n  surface-container-highest: '#353534'\n  on-surface: '#e5e2e1'\n  on-surface-variant: '#c2c6d6'\n  inverse-surface: '#e5e2e1'\n  inverse-on-surface: '#313030'\n  outline: '#8c909f'\n  outline-variant: '#424754'\n  surface-tint: '#adc6ff'\n  primary: '#adc6ff'\n  on-primary: '#002e6a'\n  primary-container: '#4d8eff'\n  on-primary-container: '#00285d'\n  inverse-primary: '#005ac2'\n  secondary: '#c8c6c5'\n  on-secondary: '#313030'\n  secondary-container: '#4a4949'\n  on-secondary-container: '#bab8b7'\n  tertiary: '#c6c6cf'\n  on-tertiary: '#2f3037'\n  tertiary-container: '#909099'\n  on-tertiary-container: '#282930'\n  error: '#ffb4ab'\n  on-error: '#690005'\n  error-container: '#93000a'\n  on-error-container: '#ffdad6'\n  primary-fixed: '#d8e2ff'\n  primary-fixed-dim: '#adc6ff'\n  on-primary-fixed: '#001a42'\n  on-primary-fixed-variant: '#004395'\n  secondary-fixed: '#e5e2e1'\n  secondary-fixed-dim: '#c8c6c5'\n  on-secondary-fixed: '#1c1b1b'\n  on-secondary-fixed-variant: '#474646'\n  tertiary-fixed: '#e2e1eb'\n  tertiary-fixed-dim: '#c6c6cf'\n  on-tertiary-fixed: '#1a1b22'\n  on-tertiary-fixed-variant: '#45464e'\n  background: '#131313'\n  on-background: '#e5e2e1'\n  surface-variant: '#353534'\ntypography:\n  display-lg:\n    fontFamily: Bodoni Moda\n    fontSize: 120px\n    fontWeight: '700'\n    lineHeight: 110%\n    letterSpacing: -0.04em\n  display-lg-mobile:\n    fontFamily: Bodoni Moda\n    fontSize: 56px\n    fontWeight: '700'\n    lineHeight: 110%\n    letterSpacing: -0.02em\n  headline-xl:\n    fontFamily: Bodoni Moda\n    fontSize: 72px\n    fontWeight: '600'\n    lineHeight: 120%\n  headline-xl-mobile:\n    fontFamily: Bodoni Moda\n    fontSize: 40px\n    fontWeight: '600'\n    lineHeight: 120%\n  headline-md:\n    fontFamily: Hanken Grotesk\n    fontSize: 32px\n    fontWeight: '500'\n    lineHeight: 140%\n    letterSpacing: 0.02em\n  body-lg:\n    fontFamily: Hanken Grotesk\n    fontSize: 20px\n    fontWeight: '400'\n    lineHeight: 160%\n  body-md:\n    fontFamily: Hanken Grotesk\n    fontSize: 16px\n    fontWeight: '400'\n    lineHeight: 160%\n  label-caps:\n    fontFamily: Geist\n    fontSize: 12px\n    fontWeight: '600'\n    lineHeight: 100%\n    letterSpacing: 0.2em\n  mono-technical:\n    fontFamily: Geist\n    fontSize: 14px\n    fontWeight: '400'\n    lineHeight: 150%\nrounded:\n  sm: 0.25rem\n  DEFAULT: 0.5rem\n  md: 0.75rem\n  lg: 1rem\n  xl: 1.5rem\n  full: 9999px\nspacing:\n  section-gap-lg: 160px\n  section-gap-md: 80px\n  container-max: 1440px\n  gutter: 32px\n  margin-desktop: 64px\n  margin-mobile: 24px\n---\n\n## Brand & Style\n\nThis design system embodies the \"Cinematic Luxury\" aesthetic, specifically tailored for a world-class digital agency. The brand personality is confident and innovative, prioritizing high-impact visuals over information density. \n\nThe style is a sophisticated evolution of **Glassmorphism**, characterized by ultra-thin borders, deep background blurs, and subtle reflections that suggest high-end physical materials like polished obsidian and precision-cut glass. The emotional response should be one of exclusivity and awe, achieved through expansive whitespace, high-contrast typography, and a \"dark mode by default\" interface that feels both premium and futuristic.\n\n## Colors\n\nThe palette is rooted in a deep, monochromatic base to allow the Electric Blue accent to pulse with energy. \n\n- **Midnight Black (#050505):** The primary canvas. It should feel infinite and void-like.\n- **Obsidian (#101010):** Used for elevated surfaces and containers to create subtle depth.\n- **Electric Blue (#3B82F6):** A high-vibrancy accent used sparingly for calls to action, active states, and focal points.\n- **Accent Glow:** A functional glow effect derived from the primary blue, used to simulate light emission from interactive elements.\n- **Typography:** Pure White is reserved for primary headings to ensure maximum legibility against the dark void, while Soft Silver Gray handles metadata and secondary information to maintain visual hierarchy.\n\n## Typography\n\nThe typography system utilizes a high-contrast pairing of **Bodoni Moda** for an editorial, luxurious feel and **Hanken Grotesk** for modern, technical clarity. \n\n- **Editorial Headlines:** Use Bodoni Moda for large display text. It should feel dramatic and cinematic. Tighten letter spacing on larger sizes to maintain a \"lockup\" feel.\n- **Functional UI:** Hanken Grotesk provides a sharp, contemporary counterpoint for body copy and navigation.\n- **Technical/Labels:** **Geist** is used for micro-copy and labels to evoke a sense of precision and innovation. \n\nAlways prioritize generous leading (line height) to reinforce the premium, \"unrushed\" nature of the brand.\n\n## Layout & Spacing\n\nThe layout philosophy is built on **Expansive Fluidity**. Content is rarely cramped; instead, it is given room to breathe through massive vertical gaps (80px to 160px) between sections.\n\n- **Grid:** Use a 12-column grid for desktop with 32px gutters. \n- **Margins:** Desktop layouts should maintain a minimum of 64px side margins to push content toward the center, creating a \"widescreen\" cinematic focus.\n- **Reflow:** On mobile, section gaps should compress to 60px, and margins to 24px, ensuring the typography remains the hero.\n- **Alignment:** Use asymmetrical layouts to create visual interest, but ensure all elements snap to the underlying grid to maintain a sense of structured intentionality.\n\n## Elevation & Depth\n\nHierarchy is established through **Refractive Layering** rather than traditional drop shadows.\n\n1.  **Base Layer:** The Midnight Black (#050505) background.\n2.  **Glass Layer:** Elements appear to float using a `backdrop-filter: blur(20px)` and a semi-transparent Obsidian fill. \n3.  **Border Illumination:** Surfaces are defined by a 1px top-down gradient border (from white at 15% opacity to white at 5% opacity).\n4.  **Shadows:** When elements need to feel \"highly elevated,\" use deep, ultra-diffused shadows (`box-shadow: 0 40px 80px rgba(0,0,0,0.8)`). \n5.  **Interactive Glow:** The primary blue accent should emit a soft, localized glow (`blur(40px)`) when an element is active or hovered.\n\n## Shapes\n\nThe design system uses a **Refined Rounded** language. \n\n- **Containers & Cards:** Use a 1rem (16px) radius to soften the high-contrast visuals, making the \"glass\" feel like a manufactured tech product.\n- **Small Elements:** Buttons and tags follow the 0.5rem (8px) standard for a precise, \"machined\" look.\n- **Exceptions:** Quote calculator steps and large immersive sections may use 1.5rem (24px) for a more \"encapsulated\" feel.\n\n## Components\n\n### Buttons\nPrimary buttons are high-gloss. Use a subtle linear gradient for the background and a `1px` inner border. On hover, the button should trigger a subtle Electric Blue outer glow and a slight scale increase (1.02x).\n\n### Glass Cards\nCards must feature `backdrop-filter: blur(24px)` and a background color of `rgba(16, 16, 16, 0.6)`. Use parallax hover effects where the internal content shifts slightly slower than the card container.\n\n### Quote Calculator\nDesigned as a \"Configurator.\" Use a multi-step vertical or horizontal layout with large, selectable tiles. Pricing updates should be animated using a \"rolling number\" effect. Each selection should be confirmed with a micro-glow interaction.\n\n### Input Fields\nInputs should be \"ghost\" style: no background fill, only a 1px bottom border (#ffffff20). On focus, the bottom border transitions to Electric Blue with a soft 4px glow beneath it.\n\n### Progress Indicators\nFor multi-step processes, use thin, horizontal lines. The \"active\" segment should be Electric Blue with a trailing gradient effect to imply motion and forward momentum.",
+          "font": "BODONI_MODA",
+          "headlineFont": "BODONI_MODA",
+          "headlineFontFamily": "Bodoni Moda",
+          "labelFont": "GEIST",
+          "labelFontFamily": "Geist",
+          "namedColors": {
+            "background": "#131313",
+            "error": "#ffb4ab",
+            "error_container": "#93000a",
+            "inverse_on_surface": "#313030",
+            "inverse_primary": "#005ac2",
+            "inverse_surface": "#e5e2e1",
+            "on_background": "#e5e2e1",
+            "on_error": "#690005",
+            "on_error_container": "#ffdad6",
+            "on_primary": "#002e6a",
+            "on_primary_container": "#00285d",
+            "on_primary_fixed": "#001a42",
+            "on_primary_fixed_variant": "#004395",
+            "on_secondary": "#313030",
+            "on_secondary_container": "#bab8b7",
+            "on_secondary_fixed": "#1c1b1b",
+            "on_secondary_fixed_variant": "#474646",
+            "on_surface": "#e5e2e1",
+            "on_surface_variant": "#c2c6d6",
+            "on_tertiary": "#2f3037",
+            "on_tertiary_container": "#282930",
+            "on_tertiary_fixed": "#1a1b22",
+            "on_tertiary_fixed_variant": "#45464e",
+            "outline": "#8c909f",
+            "outline_variant": "#424754",
+            "primary": "#adc6ff",
+            "primary_container": "#4d8eff",
+            "primary_fixed": "#d8e2ff",
+            "primary_fixed_dim": "#adc6ff",
+            "secondary": "#c8c6c5",
+            "secondary_container": "#4a4949",
+            "secondary_fixed": "#e5e2e1",
+            "secondary_fixed_dim": "#c8c6c5",
+            "surface": "#131313",
+            "surface_bright": "#3a3939",
+            "surface_container": "#201f1f",
+            "surface_container_high": "#2a2a2a",
+            "surface_container_highest": "#353534",
+            "surface_container_low": "#1c1b1b",
+            "surface_container_lowest": "#0e0e0e",
+            "surface_dim": "#131313",
+            "surface_tint": "#adc6ff",
+            "surface_variant": "#353534",
+            "tertiary": "#c6c6cf",
+            "tertiary_container": "#909099",
+            "tertiary_fixed": "#e2e1eb",
+            "tertiary_fixed_dim": "#c6c6cf"
+          },
+          "overrideNeutralColor": "#050505",
+          "overridePrimaryColor": "#3b82f6",
+          "overrideSecondaryColor": "#101010",
+          "overrideTertiaryColor": "#a1a1aa",
+          "roundness": "ROUND_EIGHT",
+          "spacing": {
+            "container-max": "1440px",
+            "gutter": "32px",
+            "margin-desktop": "64px",
+            "margin-mobile": "24px",
+            "section-gap-lg": "160px",
+            "section-gap-md": "80px"
+          },
+          "spacingScale": 2,
+          "typography": {
+            "body-lg": {
+              "fontFamily": "Hanken Grotesk",
+              "fontSize": "20px",
+              "fontWeight": "400",
+              "lineHeight": "160%"
+            },
+            "body-md": {
+              "fontFamily": "Hanken Grotesk",
+              "fontSize": "16px",
+              "fontWeight": "400",
+              "lineHeight": "160%"
+            },
+            "display-lg": {
+              "fontFamily": "Bodoni Moda",
+              "fontSize": "120px",
+              "fontWeight": "700",
+              "letterSpacing": "-0.04em",
+              "lineHeight": "110%"
+            },
+            "display-lg-mobile": {
+              "fontFamily": "Bodoni Moda",
+              "fontSize": "56px",
+              "fontWeight": "700",
+              "letterSpacing": "-0.02em",
+              "lineHeight": "110%"
+            },
+            "headline-md": {
+              "fontFamily": "Hanken Grotesk",
+              "fontSize": "32px",
+              "fontWeight": "500",
+              "letterSpacing": "0.02em",
+              "lineHeight": "140%"
+            },
+            "headline-xl": {
+              "fontFamily": "Bodoni Moda",
+              "fontSize": "72px",
+              "fontWeight": "600",
+              "lineHeight": "120%"
+            },
+            "headline-xl-mobile": {
+              "fontFamily": "Bodoni Moda",
+              "fontSize": "40px",
+              "fontWeight": "600",
+              "lineHeight": "120%"
+            },
+            "label-caps": {
+              "fontFamily": "Geist",
+              "fontSize": "12px",
+              "fontWeight": "600",
+              "letterSpacing": "0.2em",
+              "lineHeight": "100%"
+            },
+            "mono-technical": {
+              "fontFamily": "Geist",
+              "fontSize": "14px",
+              "fontWeight": "400",
+              "lineHeight": "150%"
+            }
+          }
+        }
+      },
+      "name": "assets/53bede92981d4d6482c337d11395118c",
+      "version": "1"
+    },
+    {
+      "designSystem": {
+        "displayName": "Ascendra Cinematic Luxury",
+        "theme": {
+          "bodyFont": "GEIST",
+          "bodyFontFamily": "Geist",
+          "colorMode": "DARK",
+          "colorVariant": "FIDELITY",
+          "customColor": "#e5e4e2",
+          "designMd": "---\nname: Ascendra Cinematic Luxury\ncolors:\n  surface: '#131313'\n  surface-dim: '#131313'\n  surface-bright: '#3a3939'\n  surface-container-lowest: '#0e0e0e'\n  surface-container-low: '#1c1b1b'\n  surface-container: '#201f1f'\n  surface-container-high: '#2a2a2a'\n  surface-container-highest: '#353534'\n  on-surface: '#e5e2e1'\n  on-surface-variant: '#c4c7c4'\n  inverse-surface: '#e5e2e1'\n  inverse-on-surface: '#313030'\n  outline: '#8e918e'\n  outline-variant: '#444845'\n  surface-tint: '#c7c6c4'\n  primary: '#ffffff'\n  on-primary: '#303130'\n  primary-container: '#e3e2e0'\n  on-primary-container: '#646463'\n  inverse-primary: '#5e5e5d'\n  secondary: '#c5c6ca'\n  on-secondary: '#2e3034'\n  secondary-container: '#47494d'\n  on-secondary-container: '#b7b8bc'\n  tertiary: '#ffffff'\n  on-tertiary: '#313030'\n  tertiary-container: '#e5e2e1'\n  on-tertiary-container: '#656464'\n  error: '#ffb4ab'\n  on-error: '#690005'\n  error-container: '#93000a'\n  on-error-container: '#ffdad6'\n  primary-fixed: '#e3e2e0'\n  primary-fixed-dim: '#c7c6c4'\n  on-primary-fixed: '#1b1c1b'\n  on-primary-fixed-variant: '#464746'\n  secondary-fixed: '#e2e2e6'\n  secondary-fixed-dim: '#c5c6ca'\n  on-secondary-fixed: '#1a1c1f'\n  on-secondary-fixed-variant: '#45474a'\n  tertiary-fixed: '#e5e2e1'\n  tertiary-fixed-dim: '#c8c6c5'\n  on-tertiary-fixed: '#1c1b1b'\n  on-tertiary-fixed-variant: '#474646'\n  background: '#131313'\n  on-background: '#e5e2e1'\n  surface-variant: '#353534'\ntypography:\n  display-lg:\n    fontFamily: Bodoni Moda\n    fontSize: 72px\n    fontWeight: '600'\n    lineHeight: 80px\n    letterSpacing: 0.05em\n  headline-lg:\n    fontFamily: Bodoni Moda\n    fontSize: 48px\n    fontWeight: '500'\n    lineHeight: 56px\n    letterSpacing: 0.03em\n  headline-md:\n    fontFamily: Bodoni Moda\n    fontSize: 32px\n    fontWeight: '500'\n    lineHeight: 40px\n    letterSpacing: 0.02em\n  headline-sm:\n    fontFamily: Bodoni Moda\n    fontSize: 24px\n    fontWeight: '500'\n    lineHeight: 32px\n    letterSpacing: 0.02em\n  body-lg:\n    fontFamily: Geist\n    fontSize: 18px\n    fontWeight: '400'\n    lineHeight: 28px\n    letterSpacing: 0.01em\n  body-md:\n    fontFamily: Geist\n    fontSize: 16px\n    fontWeight: '400'\n    lineHeight: 24px\n    letterSpacing: 0.01em\n  technical-data:\n    fontFamily: Geist\n    fontSize: 14px\n    fontWeight: '500'\n    lineHeight: 20px\n    letterSpacing: 0.05em\n  label-secondary:\n    fontFamily: Geist\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 16px\nspacing:\n  unit: 8px\n  container-max: 1440px\n  gutter: 32px\n  margin-desktop: 80px\n  margin-mobile: 24px\n---\n\n## Brand & Style\nThe brand personality is **Elite Consultancy**. This design system evokes an atmosphere of exclusive authority, precision, and architectural permanence. It is tailored for high-stakes decision-makers who value discretion, heritage, and structural integrity over fleeting trends.\n\nThe visual direction is a fusion of **Architectural Minimalism** and **Cinematic Luxury**. The interface should feel like a high-end physical space—think polished obsidian, brushed metals, and controlled lighting. \n\n**Visual Tokens:**\n*   **Architectural:** Precision-engineered layouts with intentional use of negative space to convey scale.\n*   **Metallic:** Use of Platinum and Brushed Silver to denote value and industrial strength.\n*   **Glass:** Sophisticated use of backdrop filters to create depth without clutter.\n*   **Cinematic Lighting:** Directional light sources and specular highlights that mimic high-end photography.\n\n## Colors\nThe palette is strictly monochromatic and high-contrast, designed to mimic a luxury automotive or high-jewelry editorial.\n\n*   **Primary (Platinum Silver - #E5E4E2):** Used for primary typography, icons, and high-importance UI elements.\n*   **Secondary (Brushed Metal Silver - #A8A9AD):** Used for borders, inactive states, and structural lines.\n*   **Background (Deep Matte Black - #050505):** The primary canvas. It must remain dark to allow specular highlights to pop.\n*   **Surface (Charcoal Black - #111111):** Used for elevated containers, cards, and navigation bars to provide subtle depth against the matte background.\n\n**Lighting Note:** Avoid all neon or electric glows. Instead, use thin 1px gradients and \"rim lighting\" effects on the edges of components to simulate light reflecting off metal.\n\n## Typography\nThe typographic hierarchy creates a tension between the classical elegance of **Bodoni Moda** and the technical precision of **Geist**.\n\n*   **Headlines (Bodoni Moda):** Set with increased letter spacing to achieve an \"Elite Editorial\" look. The contrast between thick and thin strokes should be celebrated. Use for narrative titles and prestigious callouts.\n*   **Technical Details & Body (Geist):** Provides a modern, engineered feel. \n*   **Secondary Text Hierarchy:** All secondary labels or metadata must utilize Geist at **60% opacity** to ensure the primary silver content remains the focal point.\n\n## Layout & Spacing\nThe layout follows a **Fixed Grid** philosophy on desktop to maintain a composed, gallery-like feel. \n\n*   **Rhythm:** An 8px base unit drives all spacing.\n*   **Desktop:** Use a 12-column grid with wide 32px gutters to prevent elements from feeling crowded. High-status layouts should utilize generous \"Safe Areas\" (80px+) to frame content.\n*   **Mobile:** Transition to a 4-column grid with 24px margins. Typography scales down, but letter spacing remains wide to preserve the editorial character.\n*   **Alignment:** Strict adherence to vertical and horizontal axes. Elements should feel \"anchored\" to the grid, echoing architectural blueprints.\n\n## Elevation & Depth\nDepth is not communicated through shadows, but through **light and material layering**.\n\n*   **Specular Highlights:** Instead of drop shadows, use 1px \"inner borders\" on the top and left edges of cards with a linear gradient (Platinum Silver to Transparent) to simulate light hitting a sharp metallic edge.\n*   **Glassmorphism:** Use high-quality backdrop blurs (20px+) on overlays and navigation bars with a very low opacity (10-15%) Charcoal Black fill.\n*   **Tonal Tiers:** Level 0 is Deep Matte Black. Level 1 (Cards/Modals) is Charcoal Black. Level 2 (Active elements) is a subtle gradient of Brushed Metal Silver.\n\n## Shapes\nThe shape language is **Sharp (0px)**. \n\nTo maintain the architectural and elite consultancy feel, all UI elements—buttons, cards, input fields, and images—must have hard 90-degree corners. Rounded corners are perceived as too \"approachable\" or \"consumer-grade\" for this system. The precision of a sharp corner reflects the precision of the consultancy.\n\n## Components\nConsistent application of metallic materials and sharp geometry.\n\n*   **Buttons:** Primary buttons use a Brushed Metal Silver background with Deep Matte Black text. Hover states trigger a subtle specular \"sheen\" gradient across the surface.\n*   **Input Fields:** Ghost-style inputs with a 1px Brushed Metal bottom border only. Technical Geist labels sit above at 60% opacity.\n*   **Cards:** Charcoal Black backgrounds with no visible borders, except for a 1px Platinum Silver specular highlight on the top edge.\n*   **Lists:** Separated by thin 0.5px Brushed Metal horizontal rules with significant padding (24px+) between items.\n*   **Data Visualization:** Use thin lines and monochrome gradients. No vibrant colors; use varying opacities of Platinum Silver to differentiate data sets.\n*   **Navigation:** Top-tier navigation should be minimal, utilizing Bodoni Moda in small caps for a prestigious, boutique feel.",
+          "font": "BODONI_MODA",
+          "headlineFont": "BODONI_MODA",
+          "headlineFontFamily": "Bodoni Moda",
+          "labelFont": "GEIST",
+          "labelFontFamily": "Geist",
+          "namedColors": {
+            "background": "#131313",
+            "error": "#ffb4ab",
+            "error_container": "#93000a",
+            "inverse_on_surface": "#313030",
+            "inverse_primary": "#5e5e5d",
+            "inverse_surface": "#e5e2e1",
+            "on_background": "#e5e2e1",
+            "on_error": "#690005",
+            "on_error_container": "#ffdad6",
+            "on_primary": "#303130",
+            "on_primary_container": "#646463",
+            "on_primary_fixed": "#1b1c1b",
+            "on_primary_fixed_variant": "#464746",
+            "on_secondary": "#2e3034",
+            "on_secondary_container": "#b7b8bc",
+            "on_secondary_fixed": "#1a1c1f",
+            "on_secondary_fixed_variant": "#45474a",
+            "on_surface": "#e5e2e1",
+            "on_surface_variant": "#c4c7c4",
+            "on_tertiary": "#313030",
+            "on_tertiary_container": "#656464",
+            "on_tertiary_fixed": "#1c1b1b",
+            "on_tertiary_fixed_variant": "#474646",
+            "outline": "#8e918e",
+            "outline_variant": "#444845",
+            "primary": "#ffffff",
+            "primary_container": "#e3e2e0",
+            "primary_fixed": "#e3e2e0",
+            "primary_fixed_dim": "#c7c6c4",
+            "secondary": "#c5c6ca",
+            "secondary_container": "#47494d",
+            "secondary_fixed": "#e2e2e6",
+            "secondary_fixed_dim": "#c5c6ca",
+            "surface": "#131313",
+            "surface_bright": "#3a3939",
+            "surface_container": "#201f1f",
+            "surface_container_high": "#2a2a2a",
+            "surface_container_highest": "#353534",
+            "surface_container_low": "#1c1b1b",
+            "surface_container_lowest": "#0e0e0e",
+            "surface_dim": "#131313",
+            "surface_tint": "#c7c6c4",
+            "surface_variant": "#353534",
+            "tertiary": "#ffffff",
+            "tertiary_container": "#e5e2e1",
+            "tertiary_fixed": "#e5e2e1",
+            "tertiary_fixed_dim": "#c8c6c5"
+          },
+          "overrideNeutralColor": "#050505",
+          "overridePrimaryColor": "#e5e4e2",
+          "overrideSecondaryColor": "#a8a9ad",
+          "overrideTertiaryColor": "#111111",
+          "spacingScale": 2
+        }
+      },
+      "name": "assets/ecd4f0d076e34ef0ae0c0db298941c62",
+      "version": "2"
+    }
+  ]
+}

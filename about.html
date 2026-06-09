@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Ascendra — Premium Business Growth Consultancy</title>
+<meta name="description" content="Learn about Ascendra — our story, mission, values, and the founder's philosophy behind building premium digital growth systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};
+</script>
+</head>
+<body>
+
+<div class="floating-cta hidden md:flex" id="floatingCta">
+  <a href="quote.html" class="glass flex items-center gap-3 px-6 py-4 group" style="border:1px solid rgba(255,255,255,0.1);text-decoration:none;">
+    <span class="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-platinum">Start My Project</span>
+    <span class="material-symbols-outlined text-silver group-hover:text-platinum group-hover:translate-x-0.5 transition-transform duration-300" style="font-size:16px;">arrow_forward</span>
+  </a>
+</div>
+<div class="mobile-cta md:hidden" id="mobileCta">
+  <a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a>
+</div>
+
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Start My Project</a></div>
+</div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow nav-active text-platinum">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background:radial-gradient(ellipse at 30% 50%,#adc6ff,transparent 60%);"></div>
+  <div class="max-w-[1200px] mx-auto relative z-10">
+    <div class="reveal">
+      <span class="eyebrow text-pewter block mb-5">Our Story</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Built to Help<br><em class="italic font-normal text-platinum">Businesses Ascend.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed max-w-2xl font-light">Ascendra was founded on a single belief: ambitious businesses deserve better than templates, disappearing agencies, and digital systems that look good but do nothing for growth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Founder Section -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+      <div class="lg:col-span-4 reveal">
+        <div class="relative" style="aspect-ratio:4/5;max-width:380px;margin:0 auto;">
+          <img src="stitch-screens/portrait.png" alt="Ascendra Founder" class="w-full h-full object-cover" style="filter:grayscale(100%) contrast(1.05);" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div style="display:none;width:100%;height:100%;background:#111;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+            <span class="material-symbols-outlined text-smoke" style="font-size:48px;">person</span>
+            <span class="eyebrow text-pewter">Founder Portrait</span>
+          </div>
+          <div class="absolute inset-0" style="background:linear-gradient(180deg,transparent 60%,#030303 100%);"></div>
+          <div class="absolute inset-0 pointer-events-none" style="box-shadow:inset 1px 1px 0 rgba(255,255,255,0.07);"></div>
+        </div>
+      </div>
+      <div class="lg:col-span-8 flex flex-col gap-8 reveal" style="transition-delay:120ms;">
+        <span class="eyebrow text-pewter">Meet the Founder</span>
+        <blockquote class="font-editorial italic text-platinum font-normal leading-snug" style="font-size:clamp(1.4rem,2.5vw,2.2rem);letter-spacing:-0.01em;border-left:2px solid rgba(255,255,255,0.1);padding-left:24px;">
+          "I believe a business's digital presence should be its hardest-working asset — generating leads, building trust, and closing deals even at 2am while the owner sleeps."
+        </blockquote>
+        <p class="text-silver font-body text-sm leading-relaxed font-light">After years of watching businesses struggle with generic templates and agencies that disappear after launch, Ascendra was built to be something different — a true growth partner that stays invested in client outcomes long after the project goes live.</p>
+        <p class="text-silver font-body text-sm leading-relaxed font-light">The philosophy is simple: <em class="text-platinum not-italic font-medium">we do not build websites just to look beautiful. We build systems that help businesses attract customers, automate operations, and grow revenue consistently.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission, Vision, Values -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-charcoal">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-20 reveal">
+      <span class="eyebrow block mb-5">What Drives Us</span>
+      <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;">Mission, Vision,<br><em class="italic font-normal text-platinum">& Values.</em></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal" style="transition-delay:80ms;">
+      <div class="card p-8 md:p-10 hover-lift flex flex-col gap-6">
+        <div style="width:48px;height:48px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined text-silver" style="font-size:22px;">flag</span>
+        </div>
+        <div>
+          <h3 class="font-body font-medium text-platinum text-lg mb-3">Our Mission</h3>
+          <p class="text-silver text-sm leading-relaxed font-body">To bridge the gap between creative excellence and measurable business results — building digital systems that don't just look premium, but perform at the highest level for every client.</p>
+        </div>
+      </div>
+      <div class="card p-8 md:p-10 hover-lift flex flex-col gap-6">
+        <div style="width:48px;height:48px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined text-silver" style="font-size:22px;">visibility</span>
+        </div>
+        <div>
+          <h3 class="font-body font-medium text-platinum text-lg mb-3">Our Vision</h3>
+          <p class="text-silver text-sm leading-relaxed font-body">To define the standard for digital excellence that the next generation of market-leading businesses are built upon — where premium design and business growth are inseparable.</p>
+        </div>
+      </div>
+      <div class="card p-8 md:p-10 hover-lift flex flex-col gap-6">
+        <div style="width:48px;height:48px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined text-silver" style="font-size:22px;">diamond</span>
+        </div>
+        <div>
+          <h3 class="font-body font-medium text-platinum text-lg mb-3">Why Ascendra Exists</h3>
+          <p class="text-silver text-sm leading-relaxed font-body">Founded on the belief that most businesses deserve better than templates, outdated tools, and agencies that disappear after launch. We build long-term growth partnerships.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="mb-16 md:mb-20 reveal">
+      <span class="eyebrow block mb-5">How We Work</span>
+      <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-0.03em;">The Principles That<br><em class="italic font-normal text-platinum">Guide Every Project.</em></h2>
+    </div>
+    <div class="border-t border-white/5 reveal" style="transition-delay:80ms;">
+      <div class="diff-row">
+        <div class="py-10 px-4 md:px-8">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Outcomes Over Outputs</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">We measure success in revenue generated, leads qualified, and time saved — not in pages delivered or hours billed. Every decision is tied to a business outcome.</p>
+        </div>
+        <div class="py-10 px-4 md:px-8 border-l border-white/5">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Bespoke, Not Template</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">Every project is engineered specifically for your business, your clients, and your market. No two Ascendra systems are alike — because no two businesses are alike.</p>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="py-10 px-4 md:px-8">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Long-Term Partnership</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">We don't hand off and disappear. Our best client relationships span years — because we stay invested in your growth, continuously optimizing as your business evolves.</p>
+        </div>
+        <div class="py-10 px-4 md:px-8 border-l border-white/5">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Radical Transparency</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">Clear timelines, honest scoping, transparent pricing. We don't oversell and underdeliver. You'll always know what you're getting, when you're getting it, and why.</p>
+        </div>
+      </div>
+      <div class="diff-row" style="border-bottom:none;">
+        <div class="py-10 px-4 md:px-8">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Premium Standard, Always</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">We take on fewer clients so we can give each one our full attention. Quality is non-negotiable at every stage — from strategy through launch and beyond.</p>
+        </div>
+        <div class="py-10 px-4 md:px-8 border-l border-white/5">
+          <h3 class="font-editorial font-bold text-platinum text-2xl mb-3">Clients First, Always</h3>
+          <p class="text-silver text-sm font-body leading-relaxed max-w-md">Our clients trust us with their business reputation, their investment, and their growth. We take that responsibility seriously — every project, every time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics -->
+<section class="py-20 md:py-28 px-6 md:px-16 bg-charcoal border-y border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 reveal">
+      <div class="text-center">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">100+</div>
+        <div class="eyebrow text-pewter/70">Projects Delivered</div>
+      </div>
+      <div class="text-center">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">95%</div>
+        <div class="eyebrow text-pewter/70">Client Satisfaction</div>
+      </div>
+      <div class="text-center">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">8+</div>
+        <div class="eyebrow text-pewter/70">Industries Served</div>
+      </div>
+      <div class="text-center">
+        <div class="font-editorial font-bold platinum-text mb-3" style="font-size:clamp(2.5rem,4.5vw,4rem);line-height:1;letter-spacing:-0.03em;">3×</div>
+        <div class="eyebrow text-pewter/70">Avg Revenue Growth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 md:py-36 px-6 md:px-16 bg-void relative overflow-hidden">
+  <div class="max-w-[800px] mx-auto text-center relative z-10 reveal">
+    <span class="eyebrow text-pewter block mb-6">Start a Conversation</span>
+    <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">Let's Build Something<br><em class="italic font-normal text-platinum">Extraordinary.</em></h2>
+    <p class="text-silver font-body text-lg leading-relaxed max-w-xl mx-auto mb-10 font-light">Every project begins with a conversation. Tell us about your business, your goals, and where you want to be in 12 months.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="quote.html" class="btn-primary">Get My Project Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      <a href="contact.html" class="btn-ghost">Request Consultation</a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <div class="flex gap-6">
+        <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Our Process →</a>
+        <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const d=document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click',()=>{d.classList.add('open');document.body.style.overflow='hidden';});
+document.getElementById('closeMenu')?.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';});
+d?.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';}));
+const fc=document.getElementById('floatingCta'),mc=document.getElementById('mobileCta');
+window.addEventListener('scroll',()=>{const s=window.scrollY>600;fc?.classList.toggle('show',s);mc?.classList.toggle('show',s);},{passive:true});
+</script>
+</body>
+</html>
