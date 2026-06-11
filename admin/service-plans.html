@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Monthly Service Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#090909; --s0:#101010; --s1:#161515; --s2:#1c1b1b; --s3:#242323; --s4:#2e2d2d;
+  --primary:#adc6ff; --primary-b:#4d8eff; --primary-dim:rgba(173,198,255,0.09); --primary-glo:rgba(173,198,255,0.18);
+  --text:#e6e3e2; --text2:#b4b9c7; --muted:#72768a;
+  --border:rgba(255,255,255,0.040); --border2:rgba(255,255,255,0.072); --border3:rgba(255,255,255,0.110);
+  --glow:rgba(173,198,255,0.22); --green:#6ee7b7; --amber:#fcd34d; --red:#fca5a5; --purple:#c4b5fd;
+  --fw-d:'Bodoni Moda',Georgia,serif; --fw-b:'Hanken Grotesk',system-ui,sans-serif; --fw-m:'Geist',monospace;
+  --r:12px; --r-sm:8px; --r-lg:16px; --sidebar:256px; --topbar:62px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
+.ms-f{font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24}
+#app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh;position:relative}
+#sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sb-logo-text{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.sb-logo-chip{font-family:var(--fw-m);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.15);border-radius:4px;padding:2px 6px}
+.sb-tagline{font-family:var(--fw-m);font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
+.ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
+.ni .lbl{font-size:13px;font-weight:500}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);flex-shrink:0}
+.user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s}
+.user-pill:hover{background:rgba(255,255,255,0.045)}
+.u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
+.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+#topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
+.tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.tb-menu:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-crumb{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tb-sep{color:var(--border3);font-size:16px}
+.tb-cur{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap}
+.tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.tb-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer;flex-shrink:0}
+#main{grid-column:2;overflow-y:auto;overflow-x:hidden;background:var(--bg);position:relative}
+#main::-webkit-scrollbar{width:4px}
+#main::-webkit-scrollbar-track{background:transparent}
+#main::-webkit-scrollbar-thumb{background:var(--s4);border-radius:4px}
+.page-pad{padding:28px 32px 48px}
+.gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
+.btn-p{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12.5px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
+.btn-p:active{transform:translateY(0)}
+.btn-g{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12.5px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s,border-color 0.13s}
+.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border2)}
+.btn-danger{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:rgba(252,165,165,0.07);color:var(--red);font-size:12.5px;font-weight:500;border-radius:var(--r-sm);border:1px solid rgba(252,165,165,0.15);cursor:pointer;transition:background 0.13s,border-color 0.13s}
+.btn-danger:hover{background:rgba(252,165,165,0.14);border-color:rgba(252,165,165,0.28)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+.b-blue{background:rgba(173,198,255,0.09);color:var(--primary)}
+.b-green{background:rgba(110,231,183,0.09);color:var(--green)}
+.b-amber{background:rgba(252,211,77,0.09);color:var(--amber)}
+.b-red{background:rgba(252,165,165,0.09);color:var(--red)}
+.b-gray{background:rgba(255,255,255,0.05);color:var(--muted)}
+.b-purple{background:rgba(196,181,253,0.09);color:var(--purple)}
+.tog{width:34px;height:20px;border-radius:99px;background:var(--s4);border:1px solid var(--border2);cursor:pointer;transition:background 0.18s;position:relative;flex-shrink:0}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:var(--muted);transition:transform 0.18s,background 0.18s}
+.tog.on{background:rgba(173,198,255,0.15);border-color:rgba(173,198,255,0.25)}
+.tog.on::after{transform:translateX(14px);background:var(--primary)}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;flex-wrap:wrap}
+.ph-eye{font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.ph-title{font-family:var(--fw-d);font-size:28px;font-weight:700;letter-spacing:-0.025em;line-height:1.15;margin-bottom:4px}
+.ph-sub{font-size:13px;color:var(--muted)}
+.ph-acts{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:4px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.kpi-card{padding:20px 22px}
+.kpi-lbl{font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-val{font-family:var(--fw-d);font-size:30px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+.kpi-val.grad{background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi-val.green{color:var(--green)}
+.kpi-sub{font-size:11.5px;color:var(--muted);margin-top:5px}
+.kpi-trend{display:inline-flex;align-items:center;gap:3px;font-family:var(--fw-m);font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;margin-top:8px}
+.kpi-trend.up{background:rgba(110,231,183,0.09);color:var(--green)}
+.kpi-trend.nu{background:rgba(255,255,255,0.05);color:var(--muted)}
+/* Plans layout */
+.plans-outer{display:grid;grid-template-columns:1fr 272px;gap:16px;margin-bottom:28px;align-items:start}
+#plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.plan-card{padding:22px;position:relative;overflow:hidden}
+.plan-card.popular{border-color:rgba(173,198,255,0.22);box-shadow:0 0 48px rgba(173,198,255,0.06),0 24px 60px rgba(0,0,0,0.38)}
+.plan-card.popular::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(173,198,255,0.07),transparent 62%);pointer-events:none}
+.plan-card.inactive{opacity:0.5}
+.plan-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.plan-tier-lbl{font-family:var(--fw-m);font-size:9.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.plan-tier-lbl.blue{color:var(--primary)}
+.plan-tier-lbl.purple{color:var(--purple)}
+.plan-tier-lbl.green{color:var(--green)}
+.plan-tier-lbl.amber{color:var(--amber)}
+.plan-badges{display:flex;align-items:center;gap:7px}
+.plan-price{font-family:var(--fw-d);font-size:36px;font-weight:700;letter-spacing:-0.035em;line-height:1;margin-bottom:2px}
+.plan-price.grad{background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.plan-price sub{font-family:var(--fw-b);font-size:13px;font-weight:400;-webkit-text-fill-color:var(--muted);color:var(--muted)}
+.plan-period{font-size:11.5px;color:var(--muted);margin-bottom:16px}
+.plan-div{height:1px;background:var(--border);margin-bottom:14px}
+.plan-feats{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.plan-feat{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text2);line-height:1.4}
+.plan-feat .ms{font-size:14px;color:var(--green);margin-top:1px}
+.plan-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.plan-stat{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px}
+.plan-stat-val{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.plan-stat-lbl{font-family:var(--fw-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:1px}
+.plan-bar-wrap{height:3px;border-radius:99px;background:var(--s3);overflow:hidden;margin-bottom:16px}
+.plan-bar-fill{height:100%;border-radius:99px;transition:width 0.8s cubic-bezier(0.16,1,0.3,1)}
+.plan-acts{display:flex;gap:7px}
+.plan-acts .btn-g,.plan-acts .btn-p{flex:1;justify-content:center;font-size:11px;padding:7px 8px;min-width:0}
+.chart-card{padding:22px}
+.chart-lbl{font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.chart-main-val{font-family:var(--fw-d);font-size:24px;font-weight:700;letter-spacing:-0.025em;margin-bottom:3px}
+.chart-main-sub{font-size:11.5px;color:var(--muted);margin-bottom:16px}
+.chart-wrap{position:relative;width:100%;aspect-ratio:1;max-height:170px}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.chart-center-val{font-family:var(--fw-d);font-size:17px;font-weight:700;line-height:1}
+.chart-center-lbl{font-family:var(--fw-m);font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.chart-legend{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+.chart-leg{display:flex;align-items:center;gap:8px}
+.chart-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.chart-leg-name{font-size:12px;color:var(--text2);flex:1}
+.chart-leg-val{font-family:var(--fw-m);font-size:10.5px;color:var(--muted)}
+.sec-lbl{font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.tbl-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:180px}
+.search-wrap .ms{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.search-inp{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 12px 8px 34px;color:var(--text);font-size:13px;outline:none;transition:border-color 0.13s}
+.search-inp::placeholder{color:var(--muted)}
+.search-inp:focus{border-color:var(--border2);background:rgba(255,255,255,0.06)}
+.filter-pills{display:flex;gap:4px;flex-wrap:wrap}
+.fp{padding:6px 12px;border-radius:var(--r-sm);font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);cursor:pointer;border:1px solid transparent;transition:background 0.13s,color 0.13s,border-color 0.13s;white-space:nowrap}
+.fp:hover{color:var(--text2)}
+.fp.active{background:var(--primary-dim);color:var(--primary);border-color:rgba(173,198,255,0.15)}
+.tbl-count{font-family:var(--fw-m);font-size:10.5px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tbl-outer{border-radius:var(--r);border:1px solid var(--border);overflow-x:auto}
+.dt{width:100%;border-collapse:collapse;min-width:680px}
+.dt thead th{padding:10px 16px;font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-align:left;background:rgba(16,16,16,0.8);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+.dt thead th:hover{color:var(--text2)}
+.dt thead th.asc .si::after{content:'↑';color:var(--primary)}
+.dt thead th.desc .si::after{content:'↓';color:var(--primary)}
+.dt thead th .si{font-style:normal;margin-left:4px;font-size:11px;color:var(--muted)}
+.dt thead th:not(.asc):not(.desc) .si::after{content:'↕'}
+.dt tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s}
+.dt tbody tr:last-child{border-bottom:none}
+.dt tbody tr:hover{background:rgba(255,255,255,0.02)}
+.dt td{padding:12px 16px;font-size:13px;color:var(--text2);vertical-align:middle}
+.dt td.prim{color:var(--text);font-weight:500}
+.dt td.mono{font-family:var(--fw-m);font-size:12px}
+.c-cell{display:flex;align-items:center;gap:10px}
+.c-av{width:30px;height:30px;border-radius:var(--r-sm);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700}
+.c-name{font-weight:600;color:var(--text);font-size:13px;line-height:1.2}
+.c-industry{font-family:var(--fw-m);font-size:10px;letter-spacing:0.05em;color:var(--muted)}
+.row-acts{display:flex;align-items:center;gap:5px}
+.row-btn{width:28px;height:28px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.row-btn:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.row-btn.danger:hover{background:rgba(252,165,165,0.1);color:var(--red);border-color:rgba(252,165,165,0.2)}
+.row-btn .ms{font-size:14px}
+.drw-bg{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.22s}
+.drw-bg.open{opacity:1;pointer-events:all}
+.drw{position:fixed;right:0;top:0;bottom:0;width:480px;max-width:100vw;background:var(--s1);border-left:1px solid var(--border2);display:flex;flex-direction:column;z-index:201;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
+.drw.open{transform:translateX(0)}
+.drw-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.drw-title{font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.drw-close{width:30px;height:30px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s}
+.drw-close:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.drw-body{flex:1;overflow-y:auto;padding:22px 24px}
+.drw-body::-webkit-scrollbar{width:3px}
+.drw-body::-webkit-scrollbar-thumb{background:var(--s4)}
+.drw-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-shrink:0}
+.fg{margin-bottom:16px}
+.fl{display:block;font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.fi{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 13px;color:var(--text);font-size:13px;outline:none;transition:border-color 0.13s}
+.fi:focus{border-color:rgba(173,198,255,0.22);background:rgba(255,255,255,0.06)}
+.fi::placeholder{color:var(--muted)}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fhint{font-size:11.5px;color:var(--muted);margin-top:4px}
+.feat-list{display:flex;flex-direction:column;gap:7px}
+.feat-row{display:flex;align-items:center;gap:7px}
+.feat-row .fi{flex:1}
+.feat-del{width:30px;height:30px;border-radius:var(--r-sm);background:rgba(252,165,165,0.05);border:1px solid rgba(252,165,165,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(252,165,165,0.5);transition:all 0.13s;flex-shrink:0}
+.feat-del:hover{background:rgba(252,165,165,0.1);color:var(--red)}
+.feat-del .ms{font-size:14px}
+.feat-add-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border-radius:var(--r-sm);border:1px dashed var(--border2);color:var(--muted);font-size:12.5px;cursor:pointer;background:transparent;transition:border-color 0.13s,color 0.13s;margin-top:4px}
+.feat-add-btn:hover{border-color:var(--border3);color:var(--text2)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--s1);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:540px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;transform:translateY(12px) scale(0.98);transition:transform 0.22s}
+.modal-bg.open .modal{transform:none}
+.modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.modal-body{flex:1;overflow-y:auto;padding:20px 24px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
+.sub-info-row{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-bottom:1px solid var(--border)}
+.sub-info-row:last-child{border-bottom:none}
+.sub-info-lbl{font-size:12.5px;color:var(--muted)}
+.sub-info-val{font-size:12.5px;color:var(--text2)}
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:500;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r);padding:11px 16px;font-size:13px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,0.4);display:flex;align-items:center;gap:9px;animation:tin 0.22s ease;max-width:320px}
+.toast.out{animation:tout 0.2s ease forwards}
+.toast .ms{font-size:16px}
+.tgreen .ms{color:var(--green)}
+.tamber .ms{color:var(--amber)}
+.tred .ms{color:var(--red)}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes tout{to{opacity:0;transform:translateY(10px)}}
+#sb-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,0.5)}
+.confirm-box{background:var(--s2);border:1px solid rgba(252,165,165,0.2);border-radius:var(--r);padding:14px 16px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.confirm-box-msg{font-size:12.5px;color:var(--text2)}
+.confirm-box-acts{display:flex;gap:6px;flex-shrink:0}
+@media(max-width:1300px){.plans-outer{grid-template-columns:1fr}#plans-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.chart-card{display:none}}
+@media(max-width:960px){#app{grid-template-columns:1fr}#topbar{grid-column:1}#sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);width:var(--sidebar)}#sidebar.open{transform:translateX(0)}#main{grid-column:1}.tb-menu{display:flex}.kpi-row{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.page-pad{padding:16px 16px 40px}.kpi-row{grid-template-columns:1fr 1fr}.ph-title{font-size:22px}.ph-acts .btn-g{display:none}.kpi-val{font-size:24px}.drw{width:100vw}.tbl-bar{gap:6px}}
+@media(max-width:400px){.kpi-row{grid-template-columns:1fr}.fg2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="sb-overlay" onclick="closeSidebar()"></div>
+<div id="app">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row">
+      <span class="sb-logo-text">Ascendra</span>
+      <span class="sb-logo-chip">Plans</span>
+    </div>
+    <div class="sb-tagline">Revenue Architecture</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni active" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <div class="user-pill">
+      <div class="u-av">DA</div>
+      <div>
+        <div class="u-name">Doris Cacarl</div>
+        <div class="u-role">Principal Director</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <button class="tb-menu" onclick="toggleSidebar()"><span class="ms">menu</span></button>
+  <div class="tb-crumb">
+    <span class="tb-root">Ascendra</span>
+    <span class="tb-sep">/</span>
+    <span class="tb-cur">Monthly Service Plans</span>
+  </div>
+  <div class="tb-acts">
+    <div class="tb-icon" onclick="showToast('No new notifications','notifications','')"><span class="ms">notifications</span></div>
+    <a href="dashboard.html"><div class="tb-icon" title="Dashboard"><span class="ms">dashboard</span></div></a>
+    <div class="tb-av">DA</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main id="main">
+<div class="page-pad">
+
+  <!-- Page Header -->
+  <div class="ph">
+    <div>
+      <div class="ph-eye">Finance · Revenue Architecture</div>
+      <div class="ph-title">Monthly Service Plans</div>
+      <div class="ph-sub" id="ph-sub">Loading…</div>
+    </div>
+    <div class="ph-acts">
+      <button class="btn-g" onclick="openAddSubModal(null)"><span class="ms">person_add</span> Add Subscriber</button>
+      <button class="btn-p" onclick="openNewModal()"><span class="ms">add</span> New Plan</button>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card gc">
+      <div class="kpi-lbl">Total MRR</div>
+      <div class="kpi-val grad" id="kpi-mrr">$0</div>
+      <div class="kpi-sub">Across all active tiers</div>
+      <div class="kpi-trend nu" id="kpi-mrr-trend"><span class="ms" style="font-size:12px">remove</span>No subscribers yet</div>
+    </div>
+    <div class="kpi-card gc">
+      <div class="kpi-lbl">Active Subscribers</div>
+      <div class="kpi-val" id="kpi-subs">0</div>
+      <div class="kpi-sub" id="kpi-subs-sub">No active subscribers</div>
+      <div class="kpi-trend nu"><span class="ms" style="font-size:12px">person_add</span>Add clients to plans</div>
+    </div>
+    <div class="kpi-card gc">
+      <div class="kpi-lbl">Annual Run Rate</div>
+      <div class="kpi-val green" id="kpi-arr">$0</div>
+      <div class="kpi-sub">Based on current MRR</div>
+      <div class="kpi-trend nu" id="kpi-arr-trend"><span class="ms" style="font-size:12px">remove</span>No data yet</div>
+    </div>
+    <div class="kpi-card gc">
+      <div class="kpi-lbl">Avg Revenue / Client</div>
+      <div class="kpi-val" id="kpi-arpu">$0</div>
+      <div class="kpi-sub">Blended across all tiers</div>
+      <div class="kpi-trend nu"><span class="ms" style="font-size:12px">remove</span>No data yet</div>
+    </div>
+  </div>
+
+  <!-- Plans + Chart -->
+  <div class="plans-outer">
+    <div id="plans-grid"><!-- rendered by JS --></div>
+    <div class="chart-card gc">
+      <div class="chart-lbl">MRR Breakdown</div>
+      <div class="chart-main-val" id="chart-main-val">$0</div>
+      <div class="chart-main-sub">Monthly recurring revenue</div>
+      <div class="chart-wrap">
+        <canvas id="mrr-chart"></canvas>
+        <div class="chart-center">
+          <div class="chart-center-val" id="chart-center-val">0</div>
+          <div class="chart-center-lbl">Clients</div>
+        </div>
+      </div>
+      <div class="chart-legend" id="chart-legend"></div>
+    </div>
+  </div>
+
+  <!-- Subscribers Table -->
+  <div class="sec-lbl">Active Subscribers</div>
+  <div class="tbl-bar">
+    <div class="search-wrap">
+      <span class="ms">search</span>
+      <input class="search-inp" id="search-inp" type="text" placeholder="Search subscribers…" oninput="renderTable()">
+    </div>
+    <div class="filter-pills" id="filter-pills"><!-- rebuilt by JS --></div>
+    <span class="tbl-count" id="tbl-count">0 clients</span>
+  </div>
+  <div class="tbl-outer gc">
+    <table class="dt">
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')">Client<i class="si"></i></th>
+          <th onclick="sortBy('plan')">Plan<i class="si"></i></th>
+          <th onclick="sortBy('mrr')">Monthly Value<i class="si"></i></th>
+          <th onclick="sortBy('start')">Start Date<i class="si"></i></th>
+          <th onclick="sortBy('renewal')">Renewal<i class="si"></i></th>
+          <th onclick="sortBy('status')">Status<i class="si"></i></th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-body"></tbody>
+    </table>
+  </div>
+
+</div>
+</main>
+</div>
+
+<!-- EDIT PLAN DRAWER -->
+<div class="drw-bg" id="drw-bg" onclick="closeDrawer()"></div>
+<div class="drw" id="drw">
+  <div class="drw-head">
+    <div class="drw-title" id="drw-title">Edit Plan</div>
+    <button class="drw-close" onclick="closeDrawer()"><span class="ms">close</span></button>
+  </div>
+  <div class="drw-body">
+    <div class="fg2">
+      <div class="fg">
+        <label class="fl">Plan Name *</label>
+        <input class="fi" id="d-name" type="text" placeholder="e.g. Growth">
+      </div>
+      <div class="fg">
+        <label class="fl">Monthly Price ($) *</label>
+        <input class="fi" id="d-price" type="number" placeholder="6500" min="1">
+      </div>
+    </div>
+    <div class="fg2">
+      <div class="fg">
+        <label class="fl">Engagement Term</label>
+        <select class="fi" id="d-term">
+          <option>12-month engagement</option>
+          <option>6-month engagement</option>
+          <option>Month-to-month</option>
+          <option>Custom engagement</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Status</label>
+        <select class="fi" id="d-status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">Plan Description</label>
+      <textarea class="fi" id="d-desc" rows="2" placeholder="Short description for clients…"></textarea>
+    </div>
+    <div class="fg">
+      <label class="fl">Included Features</label>
+      <div class="feat-list" id="feat-list"></div>
+      <button class="feat-add-btn" onclick="addFeat()">
+        <span class="ms" style="font-size:16px">add</span> Add Feature
+      </button>
+    </div>
+    <div class="fg">
+      <label class="fl">Internal Notes</label>
+      <textarea class="fi" id="d-notes" rows="2" placeholder="Notes visible only to you…"></textarea>
+    </div>
+  </div>
+  <div class="drw-foot">
+    <button class="btn-danger" id="d-delete-btn" onclick="deletePlanPrompt()"><span class="ms">delete</span> Delete</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" onclick="closeDrawer()">Cancel</button>
+      <button class="btn-p" onclick="saveDrawer()"><span class="ms">check</span> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PLAN MODAL -->
+<div class="modal-bg" id="modal-new">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Create New Plan</div>
+      <button class="drw-close" onclick="closeNewModal()"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="fg2">
+        <div class="fg">
+          <label class="fl">Plan Name *</label>
+          <input class="fi" id="n-name" type="text" placeholder="e.g. Professional">
+        </div>
+        <div class="fg">
+          <label class="fl">Monthly Price ($) *</label>
+          <input class="fi" id="n-price" type="number" placeholder="4500" min="1">
+        </div>
+      </div>
+      <div class="fg2">
+        <div class="fg">
+          <label class="fl">Engagement Term</label>
+          <select class="fi" id="n-term">
+            <option>12-month engagement</option>
+            <option>6-month engagement</option>
+            <option>Month-to-month</option>
+            <option>Custom engagement</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">Badge Label</label>
+          <input class="fi" id="n-badge" type="text" placeholder="e.g. New, Best Value">
+          <div class="fhint">Optional — shown on the plan card</div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Description</label>
+        <textarea class="fi" id="n-desc" rows="2" placeholder="What's included at a high level…"></textarea>
+      </div>
+      <div class="fg">
+        <label class="fl">Key Features (one per line)</label>
+        <textarea class="fi" id="n-feats" rows="5" placeholder="Weekly strategy sessions&#10;Priority support&#10;Monthly ROI reporting"></textarea>
+        <div class="fhint">One feature per line</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeNewModal()">Cancel</button>
+      <button class="btn-p" onclick="createPlan()"><span class="ms">add</span> Create Plan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT SUBSCRIBER MODAL -->
+<div class="modal-bg" id="modal-sub-form">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-head">
+      <div class="modal-title" id="sub-form-title">Add Subscriber</div>
+      <button class="drw-close" onclick="closeSubFormModal()"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="fg2">
+        <div class="fg">
+          <label class="fl">Client Name *</label>
+          <input class="fi" id="sf-name" type="text" placeholder="e.g. Acme Corp">
+        </div>
+        <div class="fg">
+          <label class="fl">Industry</label>
+          <input class="fi" id="sf-industry" type="text" placeholder="e.g. Technology">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Service Plan *</label>
+        <select class="fi" id="sf-plan" onchange="updateMRRPlaceholder()"></select>
+      </div>
+      <div class="fg2">
+        <div class="fg">
+          <label class="fl">Start Date *</label>
+          <input class="fi" id="sf-start" type="date" onchange="autoRenewal()">
+        </div>
+        <div class="fg">
+          <label class="fl">Renewal Date *</label>
+          <input class="fi" id="sf-renewal" type="date">
+        </div>
+      </div>
+      <div class="fg2">
+        <div class="fg">
+          <label class="fl">Monthly Value ($)</label>
+          <input class="fi" id="sf-mrr" type="number" placeholder="Auto from plan">
+          <div class="fhint">Leave blank for plan default</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Status</label>
+          <select class="fi" id="sf-status">
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+            <option value="renewal">Renewal Soon</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeSubFormModal()">Cancel</button>
+      <button class="btn-p" id="sf-submit" onclick="saveSubscriber()"><span class="ms">person_add</span> Add Subscriber</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW SUBSCRIBER MODAL -->
+<div class="modal-bg" id="modal-sub-view">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-head">
+      <div class="modal-title" id="sv-title">Subscriber</div>
+      <button class="drw-close" onclick="closeSubViewModal()"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body" id="sv-body"></div>
+    <div class="modal-foot">
+      <button class="btn-danger" id="sv-remove-btn"><span class="ms">person_remove</span> Remove</button>
+      <button class="btn-g" onclick="closeSubViewModal()">Close</button>
+      <button class="btn-p" id="sv-edit-btn"><span class="ms">edit</span> Edit Subscription</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+/* ─────────────────────────────────────────────
+   STORAGE KEYS
+───────────────────────────────────────────── */
+const LS_PLANS = 'ascendra_plans_v2';
+const LS_SUBS  = 'ascendra_subs_v2';
+
+/* ─────────────────────────────────────────────
+   DEFAULT DATA
+───────────────────────────────────────────── */
+const DEFAULT_PLANS = [
+  {
+    key:'starter', name:'Starter', price:2500, term:'12-month engagement',
+    badgeLabel:'', isPopular:false, color:'muted', active:true, desc:'', notes:'',
+    features:['Monthly growth strategy session','Monthly performance reports','Email & Slack support','Quarterly business review','Website audit & optimization','Up to 2 active campaigns']
+  },
+  {
+    key:'growth', name:'Growth', price:6500, term:'12-month engagement',
+    badgeLabel:'Most Popular', isPopular:true, color:'blue', active:true, desc:'', notes:'',
+    features:['Everything in Starter','Dedicated growth consultant','Weekly strategy calls','Campaign execution support','CRM integration & setup','Priority support (24hr response)','Monthly ROI reporting']
+  },
+  {
+    key:'elite', name:'Elite', price:15000, term:'Custom engagement',
+    badgeLabel:'Flagship', isPopular:false, color:'purple', active:true, desc:'', notes:'',
+    features:['Everything in Growth','C-suite advisory access','Full-team integration','Priority 24/7 support','Custom automation builds','Quarterly innovation sessions','Executive performance dashboard']
+  }
+];
+
+const AVATAR_COLORS = [
+  {bg:'rgba(173,198,255,0.14)',c:'var(--primary)'},
+  {bg:'rgba(110,231,183,0.14)',c:'var(--green)'},
+  {bg:'rgba(252,211,77,0.12)', c:'var(--amber)'},
+  {bg:'rgba(196,181,253,0.14)',c:'var(--purple)'},
+  {bg:'rgba(252,165,165,0.12)',c:'var(--red)'},
+];
+
+const PLAN_COLORS = {
+  muted:  {bar:'var(--muted)',   badge:'b-gray',   tier:''},
+  blue:   {bar:'var(--primary)', badge:'b-blue',   tier:'blue'},
+  purple: {bar:'var(--purple)',  badge:'b-purple',  tier:'purple'},
+  green:  {bar:'var(--green)',   badge:'b-green',   tier:'green'},
+  amber:  {bar:'var(--amber)',   badge:'b-amber',   tier:'amber'},
+  red:    {bar:'var(--red)',     badge:'b-red',     tier:''},
+};
+
+const CHART_COLORS = {
+  muted:'rgba(180,185,199,0.55)', blue:'rgba(173,198,255,0.8)',
+  purple:'rgba(196,181,253,0.75)', green:'rgba(110,231,183,0.7)',
+  amber:'rgba(252,211,77,0.65)', red:'rgba(252,165,165,0.6)'
+};
+
+/* ─────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────── */
+let PLANS = loadPlans();
+let SUBS  = loadSubs();
+let activeFilter   = 'all';
+let sortField      = 'mrr';
+let sortDir        = 'desc';
+let editFeats      = [];
+let editingPlanKey = null;
+let editingSubId   = null;
+let chartInstance  = null;
+
+/* ─────────────────────────────────────────────
+   STORAGE
+───────────────────────────────────────────── */
+function loadPlans(){
+  try{ const d=JSON.parse(localStorage.getItem(LS_PLANS)); return(d&&d.length)?d:DEFAULT_PLANS; }catch{ return DEFAULT_PLANS; }
+}
+function savePlans(){ localStorage.setItem(LS_PLANS,JSON.stringify(PLANS)); }
+function loadSubs(){
+  try{ return JSON.parse(localStorage.getItem(LS_SUBS))||[]; }catch{ return []; }
+}
+function saveSubs(){ localStorage.setItem(LS_SUBS,JSON.stringify(SUBS)); }
+
+/* ─────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────── */
+function g(id){ return document.getElementById(id); }
+function fmtMRR(n){
+  if(!n) return '$0';
+  if(n>=1000000) return '$'+(n/1000000).toFixed(2)+'M';
+  if(n>=1000)    return '$'+(n/1000).toFixed(1)+'K';
+  return '$'+n.toLocaleString();
+}
+function initials(s){ return s.split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().slice(0,2)||'?'; }
+function avatarColor(s){ let h=0; for(const c of s) h=(h*31+c.charCodeAt(0))|0; return AVATAR_COLORS[Math.abs(h)%AVATAR_COLORS.length]; }
+function fmtDate(iso){ if(!iso) return '—'; return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function fmtDateShort(iso){ if(!iso) return '—'; return new Date(iso).toLocaleDateString('en-US',{month:'short',year:'numeric'}); }
+function daysUntil(iso){ if(!iso) return 9999; return Math.ceil((new Date(iso)-Date.now())/86400000); }
+function todayISO(){ return new Date().toISOString().split('T')[0]; }
+function genKey(n){ return n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+Date.now(); }
+
+function planBadgeHTML(pkey){
+  const plan=PLANS.find(p=>p.key===pkey);
+  if(!plan) return `<span class="badge b-gray">${pkey}</span>`;
+  const cls=(PLAN_COLORS[plan.color]||PLAN_COLORS.muted).badge;
+  return `<span class="badge ${cls}">${plan.name}</span>`;
+}
+
+function statusBadgeHTML(status,renewal){
+  const d=daysUntil(renewal);
+  if(d>=0&&d<=60) return `<span class="badge b-amber">Renewal Soon</span>`;
+  if(status==='paused') return `<span class="badge b-gray">Paused</span>`;
+  return `<span class="badge b-green">Active</span>`;
+}
+
+/* ─────────────────────────────────────────────
+   RENDER PLAN CARDS
+───────────────────────────────────────────── */
+function renderPlans(){
+  const totalMRR = SUBS.reduce((t,s)=>t+(s.mrr||0),0);
+
+  g('plans-grid').innerHTML = PLANS.map(plan=>{
+    const planSubs = SUBS.filter(s=>s.plan===plan.key);
+    const planMRR  = planSubs.reduce((t,s)=>t+(s.mrr||0),0);
+    const barPct   = totalMRR ? Math.round(planMRR/totalMRR*100) : 0;
+    const col      = PLAN_COLORS[plan.color] || PLAN_COLORS.muted;
+
+    const badgeHTML = plan.badgeLabel
+      ? `<span class="badge ${col.badge}">${plan.badgeLabel}</span>` : '';
+
+    const tierClass = `plan-tier-lbl${col.tier?' '+col.tier:''}`;
+    const priceClass = plan.isPopular ? 'plan-price grad' : 'plan-price';
+    const cardClass  = `plan-card gc${plan.isPopular?' popular':''}${!plan.active?' inactive':''}`;
+    const editBtnClass = plan.isPopular ? 'btn-p' : 'btn-g';
+
+    return `<div class="${cardClass}" data-plan-key="${plan.key}">
+      <div class="plan-head">
+        <div class="${tierClass}">${plan.name}</div>
+        <div class="plan-badges">
+          ${badgeHTML}
+          <div class="tog${plan.active?' on':''}" onclick="togglePlanActive('${plan.key}',this)" title="${plan.active?'Deactivate':'Activate'} plan"></div>
+        </div>
+      </div>
+      <div class="${priceClass}">$${plan.price.toLocaleString()}<sub>/mo</sub></div>
+      <div class="plan-period">${plan.term}</div>
+      <div class="plan-div"></div>
+      <div class="plan-feats">
+        ${plan.features.map(f=>`<div class="plan-feat"><span class="ms">check</span>${f}</div>`).join('')}
+      </div>
+      <div class="plan-stats">
+        <div class="plan-stat">
+          <div class="plan-stat-val">${planSubs.length}</div>
+          <div class="plan-stat-lbl">Subscribers</div>
+        </div>
+        <div class="plan-stat">
+          <div class="plan-stat-val">${fmtMRR(planMRR)}</div>
+          <div class="plan-stat-lbl">MRR</div>
+        </div>
+      </div>
+      <div class="plan-bar-wrap">
+        <div class="plan-bar-fill" style="width:${barPct}%;background:${col.bar}"></div>
+      </div>
+      <div class="plan-acts">
+        <button class="btn-g" onclick="filterToPlan('${plan.key}')">
+          <span class="ms">group</span>Subscribers
+        </button>
+        <button class="${editBtnClass}" onclick="openDrawer('${plan.key}')">
+          <span class="ms">edit</span>Edit
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────
+   FILTER PILLS
+───────────────────────────────────────────── */
+function rebuildFilterPills(){
+  g('filter-pills').innerHTML =
+    `<div class="fp${activeFilter==='all'?' active':''}" id="fp-all" onclick="setFilter('all')">All</div>` +
+    PLANS.map(p=>`<div class="fp${activeFilter===p.key?' active':''}" id="fp-${p.key}" onclick="setFilter('${p.key}')">${p.name}</div>`).join('');
+  updateFilterPillCounts();
+}
+
+function updateFilterPillCounts(){
+  const total = SUBS.length;
+  const allEl = g('fp-all');
+  if(allEl) allEl.textContent = total ? `All (${total})` : 'All';
+  PLANS.forEach(p=>{
+    const el = g('fp-'+p.key);
+    if(!el) return;
+    const n = SUBS.filter(s=>s.plan===p.key).length;
+    el.textContent = n ? `${p.name} (${n})` : p.name;
+  });
+}
+
+function setFilter(plan){
+  activeFilter = plan;
+  document.querySelectorAll('.fp').forEach(el=>el.classList.remove('active'));
+  const fp = g(plan==='all'?'fp-all':`fp-${plan}`);
+  if(fp) fp.classList.add('active');
+  renderTable();
+}
+
+function filterToPlan(key){
+  setFilter(key);
+  g('main').scrollTo({top:9999,behavior:'smooth'});
+}
+
+/* ─────────────────────────────────────────────
+   KPI + STATS
+───────────────────────────────────────────── */
+function updateStats(){
+  const total = SUBS.reduce((s,x)=>s+(x.mrr||0),0);
+  const count = SUBS.length;
+  const arr   = total*12;
+  const arpu  = count ? Math.round(total/count) : 0;
+  const soon  = SUBS.filter(s=>{ const d=daysUntil(s.renewal); return d>=0&&d<=60; }).length;
+
+  g('ph-sub').textContent = count
+    ? `${PLANS.length} tier${PLANS.length!==1?'s':''} · ${count} subscriber${count!==1?'s':''} · ${fmtMRR(total)} MRR`
+    : `${PLANS.length} service tier${PLANS.length!==1?'s':''} ready — no subscribers yet`;
+
+  g('kpi-mrr').textContent  = fmtMRR(total);
+  g('kpi-subs').textContent  = count;
+  g('kpi-subs-sub').textContent = soon ? `${soon} renewal${soon!==1?'s':''} within 60 days` : 'No upcoming renewals';
+  g('kpi-arr').textContent  = fmtMRR(arr);
+  g('kpi-arpu').textContent = arpu ? '$'+arpu.toLocaleString() : '$0';
+
+  updateFilterPillCounts();
+  renderPlans();
+  renderChart();
+}
+
+/* ─────────────────────────────────────────────
+   CHART
+───────────────────────────────────────────── */
+function renderChart(){
+  const ctx = g('mrr-chart');
+  if(!ctx||!window.Chart) return;
+  if(chartInstance){ chartInstance.destroy(); chartInstance=null; }
+
+  const planData = PLANS.map(p=>({
+    name:  p.name,
+    mrr:   SUBS.filter(s=>s.plan===p.key).reduce((t,s)=>t+(s.mrr||0),0),
+    color: CHART_COLORS[p.color]||CHART_COLORS.muted
+  }));
+  const totalMRR = planData.reduce((t,p)=>t+p.mrr,0);
+  const count    = SUBS.length;
+
+  g('chart-main-val').textContent  = fmtMRR(totalMRR);
+  g('chart-center-val').textContent = count;
+
+  g('chart-legend').innerHTML = planData.map(p=>`
+    <div class="chart-leg">
+      <div class="chart-leg-dot" style="background:${p.color}"></div>
+      <span class="chart-leg-name">${p.name}</span>
+      <span class="chart-leg-val">${fmtMRR(p.mrr)} · ${totalMRR?Math.round(p.mrr/totalMRR*100)+'%':'0%'}</span>
+    </div>`).join('');
+
+  chartInstance = new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels: planData.map(p=>p.name),
+      datasets:[{
+        data: totalMRR ? planData.map(p=>Math.max(p.mrr,0.001)) : planData.map(()=>1),
+        backgroundColor: totalMRR ? planData.map(p=>p.color) : planData.map(()=>'rgba(255,255,255,0.04)'),
+        borderColor: planData.map(p=>p.color.replace(/[\d.]+\)$/,'0.15)')),
+        borderWidth:1,
+        hoverBorderColor:'transparent',
+      }]
+    },
+    options:{
+      cutout:'70%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{ label: c=>totalMRR?`  ${fmtMRR(c.raw)} · ${Math.round(c.raw/totalMRR*100)}%`:'  No subscribers yet' },
+          backgroundColor:'rgba(14,14,14,0.95)',
+          titleColor:'#e6e3e2', bodyColor:'#72768a',
+          borderColor:'rgba(255,255,255,0.08)', borderWidth:1,
+          padding:10, cornerRadius:8
+        }
+      },
+      animation:{duration:800,easing:'easeInOutQuart'}
+    }
+  });
+}
+
+/* ─────────────────────────────────────────────
+   TABLE
+───────────────────────────────────────────── */
+function renderTable(){
+  const q = (g('search-inp').value||'').toLowerCase();
+  let data = SUBS.filter(s=>{
+    if(activeFilter!=='all'&&s.plan!==activeFilter) return false;
+    if(q) return s.name.toLowerCase().includes(q)||(s.industry||'').toLowerCase().includes(q);
+    return true;
+  });
+
+  data.sort((a,b)=>{
+    let av=a[sortField], bv=b[sortField];
+    if(typeof av==='string') return sortDir==='asc'?av.localeCompare(bv):bv.localeCompare(av);
+    return sortDir==='asc'?av-bv:bv-av;
+  });
+
+  g('tbl-count').textContent = data.length+' client'+(data.length!==1?'s':'');
+
+  if(!data.length){
+    const planName = activeFilter!=='all' ? (PLANS.find(p=>p.key===activeFilter)?.name||activeFilter) : null;
+    g('tbl-body').innerHTML = `<tr><td colspan="7">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center">
+        <span class="ms" style="font-size:36px;color:rgba(255,255,255,0.065);display:block;margin-bottom:14px">person_off</span>
+        <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px">
+          ${planName?`No subscribers on ${planName}`:'No subscribers yet'}
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-bottom:20px">
+          ${q?'No results match your search.':planName?`No clients are assigned to ${planName}.`:'Add your first subscriber to get started.'}
+        </div>
+        ${!q?`<button class="btn-p" onclick="openAddSubModal('${activeFilter==='all'?'':activeFilter}')"><span class="ms">person_add</span>Add Subscriber</button>`:''}
+      </div></td></tr>`;
+    return;
+  }
+
+  g('tbl-body').innerHTML = data.map(s=>{
+    const av   = avatarColor(s.name);
+    const days = daysUntil(s.renewal);
+    const rs   = days>=0&&days<=60 ? 'color:var(--amber)' : '';
+    return `<tr onclick="openSubView(${s.id})">
+      <td class="prim">
+        <div class="c-cell">
+          <div class="c-av" style="background:${av.bg};color:${av.c}">${initials(s.name)}</div>
+          <div><div class="c-name">${s.name}</div><div class="c-industry">${s.industry||'Business'}</div></div>
+        </div>
+      </td>
+      <td>${planBadgeHTML(s.plan)}</td>
+      <td class="mono prim">$${(s.mrr||0).toLocaleString()}</td>
+      <td>${fmtDateShort(s.start)}</td>
+      <td style="${rs}">${fmtDateShort(s.renewal)}${days>=0&&days<=60?` <span style="font-family:var(--fw-m);font-size:10px">(${days}d)</span>`:''}</td>
+      <td>${statusBadgeHTML(s.status,s.renewal)}</td>
+      <td><div class="row-acts" onclick="event.stopPropagation()">
+        <div class="row-btn" onclick="openSubView(${s.id})" title="View details"><span class="ms">visibility</span></div>
+        <div class="row-btn" onclick="openSubForm(${s.id})" title="Edit subscription"><span class="ms">edit</span></div>
+        <div class="row-btn danger" onclick="removeSub(${s.id})" title="Remove subscriber"><span class="ms">person_remove</span></div>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function sortBy(field){
+  if(sortField===field) sortDir=sortDir==='asc'?'desc':'asc';
+  else{ sortField=field; sortDir='desc'; }
+  const cols=['name','plan','mrr','start','renewal','status'];
+  document.querySelectorAll('.dt thead th').forEach((th,i)=>{
+    th.classList.remove('asc','desc');
+    if(cols[i]===field) th.classList.add(sortDir);
+  });
+  renderTable();
+}
+
+/* ─────────────────────────────────────────────
+   PLAN TOGGLE (ACTIVE / INACTIVE)
+───────────────────────────────────────────── */
+function togglePlanActive(key, el){
+  const plan = PLANS.find(p=>p.key===key);
+  if(!plan) return;
+  plan.active = !plan.active;
+  savePlans();
+  el.classList.toggle('on', plan.active);
+  el.closest('.plan-card').classList.toggle('inactive', !plan.active);
+  showToast(`${plan.name} ${plan.active?'activated':'deactivated'}`, plan.active?'check_circle':'block', plan.active?'tgreen':'tamber');
+}
+
+/* ─────────────────────────────────────────────
+   EDIT PLAN DRAWER
+───────────────────────────────────────────── */
+function openDrawer(key){
+  editingPlanKey = key;
+  const plan = PLANS.find(p=>p.key===key);
+  if(!plan) return;
+  editFeats = [...plan.features];
+
+  g('drw-title').textContent  = `Edit ${plan.name} Plan`;
+  g('d-name').value            = plan.name;
+  g('d-price').value           = plan.price;
+  g('d-term').value            = plan.term;
+  g('d-status').value          = plan.active ? 'active' : 'inactive';
+  g('d-desc').value            = plan.desc||'';
+  g('d-notes').value           = plan.notes||'';
+  g('d-delete-btn').style.display = PLANS.length>1 ? 'inline-flex' : 'none';
+
+  renderFeatList();
+  g('drw-bg').classList.add('open');
+  g('drw').classList.add('open');
+}
+
+function closeDrawer(){
+  g('drw-bg').classList.remove('open');
+  g('drw').classList.remove('open');
+  editingPlanKey = null;
+}
+
+function renderFeatList(){
+  g('feat-list').innerHTML = editFeats.map((f,i)=>`
+    <div class="feat-row">
+      <input class="fi" value="${f.replace(/"/g,'&quot;').replace(/</g,'&lt;')}" oninput="editFeats[${i}]=this.value" placeholder="Feature description">
+      <button class="feat-del" onclick="removeFeat(${i})"><span class="ms">close</span></button>
+    </div>`).join('');
+}
+
+function addFeat(){
+  editFeats.push('');
+  renderFeatList();
+  const ins = document.querySelectorAll('#feat-list .fi');
+  if(ins.length) ins[ins.length-1].focus();
+}
+
+function removeFeat(i){
+  editFeats.splice(i,1);
+  renderFeatList();
+}
+
+function saveDrawer(){
+  const name  = g('d-name').value.trim();
+  const price = parseFloat(g('d-price').value);
+  if(!name)     { showToast('Plan name is required','error_outline',''); return; }
+  if(!(price>0)){ showToast('A valid price is required','error_outline',''); return; }
+
+  const plan = PLANS.find(p=>p.key===editingPlanKey);
+  if(!plan) return;
+
+  plan.name     = name;
+  plan.price    = price;
+  plan.term     = g('d-term').value;
+  plan.active   = g('d-status').value === 'active';
+  plan.desc     = g('d-desc').value.trim();
+  plan.notes    = g('d-notes').value.trim();
+  plan.features = editFeats.filter(f=>f.trim());
+
+  savePlans();
+  closeDrawer();
+  rebuildFilterPills();
+  updateStats();
+  renderTable();
+  showToast(`${plan.name} plan updated`, 'check_circle', 'tgreen');
+}
+
+function deletePlanPrompt(){
+  const plan = PLANS.find(p=>p.key===editingPlanKey);
+  if(!plan) return;
+  const subCount = SUBS.filter(s=>s.plan===plan.key).length;
+  const msg = subCount
+    ? `Delete "${plan.name}"? ${subCount} subscriber${subCount!==1?'s are':' is'} on this plan.`
+    : `Delete "${plan.name}" plan?`;
+
+  const existing = g('drw-body').querySelector('.confirm-box');
+  if(existing){ existing.remove(); return; }
+
+  const box = document.createElement('div');
+  box.className = 'confirm-box';
+  box.innerHTML = `
+    <span class="confirm-box-msg">${msg} This cannot be undone.</span>
+    <div class="confirm-box-acts">
+      <button class="btn-g" style="font-size:11px;padding:6px 10px" onclick="this.closest('.confirm-box').remove()">Cancel</button>
+      <button class="btn-danger" style="font-size:11px;padding:6px 10px" onclick="confirmDeletePlan()">Delete</button>
+    </div>`;
+  g('drw-body').appendChild(box);
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function confirmDeletePlan(){
+  const key = editingPlanKey;
+  PLANS = PLANS.filter(p=>p.key!==key);
+  SUBS  = SUBS.filter(s=>s.plan!==key);
+  savePlans(); saveSubs();
+  closeDrawer();
+  rebuildFilterPills();
+  updateStats();
+  renderTable();
+  showToast('Plan deleted','delete','tamber');
+}
+
+/* ─────────────────────────────────────────────
+   CREATE NEW PLAN
+───────────────────────────────────────────── */
+function openNewModal(){
+  ['n-name','n-price','n-badge','n-desc','n-feats'].forEach(id=>{ const el=g(id); if(el) el.value=''; });
+  g('n-term').value = '12-month engagement';
+  g('modal-new').classList.add('open');
+  setTimeout(()=>g('n-name').focus(), 80);
+}
+
+function closeNewModal(){ g('modal-new').classList.remove('open'); }
+
+function createPlan(){
+  const name  = g('n-name').value.trim();
+  const price = parseFloat(g('n-price').value);
+  if(!name)     { showToast('Plan name is required','error_outline',''); return; }
+  if(!(price>0)){ showToast('A valid monthly price is required','error_outline',''); return; }
+
+  const badge    = g('n-badge').value.trim();
+  const featsRaw = g('n-feats').value.trim();
+  const features = featsRaw ? featsRaw.split('\n').map(f=>f.trim()).filter(Boolean) : ['Custom service package'];
+
+  const usedColors = new Set(PLANS.map(p=>p.color));
+  const colorOrder = ['blue','purple','green','amber','muted','red'];
+  const color = colorOrder.find(c=>!usedColors.has(c)) || 'muted';
+
+  const newPlan = {
+    key: genKey(name),
+    name, price,
+    term: g('n-term').value,
+    badgeLabel: badge,
+    isPopular: false,
+    color, active: true,
+    desc: g('n-desc').value.trim(),
+    notes: '',
+    features
+  };
+
+  PLANS.push(newPlan);
+  savePlans();
+  closeNewModal();
+  rebuildFilterPills();
+  updateStats();
+  showToast(`"${name}" plan created`, 'check_circle', 'tgreen');
+}
+
+/* ─────────────────────────────────────────────
+   ADD / EDIT SUBSCRIBER MODAL
+───────────────────────────────────────────── */
+function rebuildPlanSelect(){
+  g('sf-plan').innerHTML = PLANS.map(p=>`<option value="${p.key}">${p.name} — $${p.price.toLocaleString()}/mo</option>`).join('');
+}
+
+function updateMRRPlaceholder(){
+  const key  = g('sf-plan').value;
+  const plan = PLANS.find(p=>p.key===key);
+  g('sf-mrr').placeholder = plan ? plan.price.toLocaleString() : '';
+}
+
+function autoRenewal(){
+  const s = g('sf-start').value;
+  if(!s) return;
+  const d = new Date(s);
+  d.setFullYear(d.getFullYear()+1);
+  g('sf-renewal').value = d.toISOString().split('T')[0];
+}
+
+function openAddSubModal(planPreset){
+  editingSubId = null;
+  const today = todayISO();
+  const oneYear = new Date(); oneYear.setFullYear(oneYear.getFullYear()+1);
+
+  g('sub-form-title').textContent   = 'Add Subscriber';
+  g('sf-submit').innerHTML          = '<span class="ms">person_add</span> Add Subscriber';
+  g('sf-name').value       = '';
+  g('sf-industry').value   = '';
+  g('sf-mrr').value        = '';
+  g('sf-status').value     = 'active';
+  g('sf-start').value      = today;
+  g('sf-renewal').value    = oneYear.toISOString().split('T')[0];
+
+  rebuildPlanSelect();
+  if(planPreset && PLANS.find(p=>p.key===planPreset)) g('sf-plan').value = planPreset;
+  else if(PLANS.length) g('sf-plan').value = PLANS[0].key;
+  updateMRRPlaceholder();
+
+  g('modal-sub-form').classList.add('open');
+  setTimeout(()=>g('sf-name').focus(), 80);
+}
+
+function openSubForm(id){
+  const s = SUBS.find(x=>x.id===id);
+  if(!s) return;
+  editingSubId = id;
+
+  closeSubViewModal();
+  g('sub-form-title').textContent = 'Edit Subscription';
+  g('sf-submit').innerHTML        = '<span class="ms">check</span> Save Changes';
+  g('sf-name').value     = s.name;
+  g('sf-industry').value = s.industry||'';
+  g('sf-mrr').value      = s.mrr||'';
+  g('sf-status').value   = s.status||'active';
+  g('sf-start').value    = s.start;
+  g('sf-renewal').value  = s.renewal;
+
+  rebuildPlanSelect();
+  g('sf-plan').value = s.plan;
+  updateMRRPlaceholder();
+
+  g('modal-sub-form').classList.add('open');
+  setTimeout(()=>g('sf-name').focus(), 80);
+}
+
+function closeSubFormModal(){
+  g('modal-sub-form').classList.remove('open');
+  editingSubId = null;
+}
+
+function saveSubscriber(){
+  const name    = g('sf-name').value.trim();
+  const industry= g('sf-industry').value.trim()||'Business';
+  const plan    = g('sf-plan').value;
+  const start   = g('sf-start').value;
+  const renewal = g('sf-renewal').value;
+  const status  = g('sf-status').value;
+  const mrrRaw  = g('sf-mrr').value;
+
+  if(!name)         { showToast('Client name is required','error_outline',''); return; }
+  if(!plan)         { showToast('Select a service plan','error_outline',''); return; }
+  if(!start||!renewal){ showToast('Start and renewal dates required','error_outline',''); return; }
+
+  const planObj = PLANS.find(p=>p.key===plan);
+  const mrr     = mrrRaw ? Math.round(parseFloat(mrrRaw)) : (planObj?.price||0);
+
+  if(editingSubId !== null){
+    const idx = SUBS.findIndex(s=>s.id===editingSubId);
+    if(idx>=0) SUBS[idx] = {...SUBS[idx], name, industry, plan, mrr, start, renewal, status};
+    saveSubs();
+    closeSubFormModal();
+    updateStats();
+    renderTable();
+    showToast(`${name} updated`, 'check_circle', 'tgreen');
+  } else {
+    SUBS.push({id:Date.now(), name, industry, plan, mrr, start, renewal, status});
+    saveSubs();
+    closeSubFormModal();
+    updateStats();
+    renderTable();
+    showToast(`${name} added to ${planObj?.name||plan}`, 'person_add', 'tgreen');
+  }
+}
+
+/* ─────────────────────────────────────────────
+   VIEW SUBSCRIBER MODAL
+───────────────────────────────────────────── */
+function openSubView(id){
+  const s = SUBS.find(x=>x.id===id);
+  if(!s) return;
+  const av   = avatarColor(s.name);
+  const days = daysUntil(s.renewal);
+  const plan = PLANS.find(p=>p.key===s.plan);
+
+  g('sv-title').textContent = s.name;
+  g('sv-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div style="width:46px;height:46px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:16px;font-weight:700;background:${av.bg};color:${av.c}">${initials(s.name)}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:15px;font-weight:600;color:var(--text)">${s.name}</div>
+        <div style="font-family:var(--fw-m);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">${s.industry||'Business'}</div>
+      </div>
+      ${planBadgeHTML(s.plan)}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px">
+        <div style="font-family:var(--fw-d);font-size:22px;font-weight:700">$${(s.mrr||0).toLocaleString()}</div>
+        <div style="font-family:var(--fw-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:2px">Monthly Value</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px">
+        <div style="font-family:var(--fw-d);font-size:22px;font-weight:700">$${((s.mrr||0)*12).toLocaleString()}</div>
+        <div style="font-family:var(--fw-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:2px">Annual Value</div>
+      </div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+      <div class="sub-info-row"><span class="sub-info-lbl">Plan</span><span class="sub-info-val">${plan?.name||s.plan}</span></div>
+      <div class="sub-info-row"><span class="sub-info-lbl">Start Date</span><span class="sub-info-val">${fmtDate(s.start)}</span></div>
+      <div class="sub-info-row"><span class="sub-info-lbl">Renewal Date</span>
+        <span style="${days>=0&&days<=60?'color:var(--amber)':'color:var(--text2)'};font-size:12.5px">
+          ${fmtDate(s.renewal)}${days>=0&&days<=60?` <span style="font-family:var(--fw-m);font-size:10px">(${days}d)</span>`:''}
+        </span>
+      </div>
+      <div class="sub-info-row"><span class="sub-info-lbl">Status</span>${statusBadgeHTML(s.status,s.renewal)}</div>
+      <div class="sub-info-row" style="border:none">
+        <span class="sub-info-lbl">ARR Contribution</span>
+        <span class="sub-info-val" style="font-family:var(--fw-m);font-size:12px">$${((s.mrr||0)*12).toLocaleString()}</span>
+      </div>
+    </div>`;
+
+  g('sv-edit-btn').onclick   = ()=>openSubForm(s.id);
+  g('sv-remove-btn').onclick = ()=>{ closeSubViewModal(); removeSub(s.id); };
+  g('modal-sub-view').classList.add('open');
+}
+
+function closeSubViewModal(){ g('modal-sub-view').classList.remove('open'); }
+
+/* ─────────────────────────────────────────────
+   REMOVE SUBSCRIBER
+───────────────────────────────────────────── */
+function removeSub(id){
+  const s = SUBS.find(x=>x.id===id);
+  if(!s) return;
+  SUBS = SUBS.filter(x=>x.id!==id);
+  saveSubs();
+  updateStats();
+  renderTable();
+  showToast(`${s.name} removed`, 'person_remove', '');
+}
+
+/* ─────────────────────────────────────────────
+   SIDEBAR MOBILE
+───────────────────────────────────────────── */
+let sbOpen = false;
+function toggleSidebar(){
+  sbOpen = !sbOpen;
+  g('sidebar').classList.toggle('open', sbOpen);
+  g('sb-overlay').style.display = sbOpen ? 'block' : 'none';
+}
+function closeSidebar(){
+  sbOpen = false;
+  g('sidebar').classList.remove('open');
+  g('sb-overlay').style.display = 'none';
+}
+
+/* ─────────────────────────────────────────────
+   TOAST
+───────────────────────────────────────────── */
+function showToast(msg, icon, cls){
+  const tc = g('toast-container');
+  const t  = document.createElement('div');
+  t.className = `toast ${cls||''}`;
+  t.innerHTML = `<span class="ms ms-f">${icon||'info'}</span>${msg}`;
+  tc.appendChild(t);
+  setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(), 220); }, 3400);
+}
+
+/* ─────────────────────────────────────────────
+   BACKDROP CLOSES
+───────────────────────────────────────────── */
+['modal-new','modal-sub-form','modal-sub-view'].forEach(id=>{
+  g(id).addEventListener('click', e=>{
+    if(e.target!==e.currentTarget) return;
+    if(id==='modal-new')       closeNewModal();
+    else if(id==='modal-sub-form') closeSubFormModal();
+    else                       closeSubViewModal();
+  });
+});
+
+/* ─────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────── */
+rebuildFilterPills();
+updateStats();
+renderTable();
+</script>
+</body>
+</html>

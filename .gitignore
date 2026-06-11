@@ -1,5 +1,8 @@
 node_modules/
 temporary screenshots/
+admin/temporary screenshots/
 .env
 *.png
 stitch-screens/*.png
+
+.vercel

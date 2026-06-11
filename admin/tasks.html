@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--sidebar:256px;--topbar:62px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
+#app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh}
+#sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sb-logo-text{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.sb-logo-chip{font-family:var(--fw-m);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.15);border-radius:4px;padding:2px 6px}
+.sb-tagline{font-family:var(--fw-m);font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
+.ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
+.ni .lbl{font-size:13px;font-weight:500}
+.nb{margin-left:auto;background:var(--primary-dim);color:var(--primary);font-family:var(--fw-m);font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);flex-shrink:0}
+.user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s;text-decoration:none;color:inherit}
+.user-pill:hover{background:rgba(255,255,255,0.045)}
+.u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
+.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+.u-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(110,231,183,0.5);flex-shrink:0}
+#topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
+.tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.tb-crumb{flex:1;display:flex;align-items:center;gap:8px}
+.tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.tb-sep{color:var(--border3);font-size:16px}
+.tb-cur{font-size:13px;font-weight:600;color:var(--text)}
+.tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.tb-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer;flex-shrink:0}
+#main{grid-column:2;overflow-y:auto;background:var(--bg)}
+.gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
+.inner{padding:28px;max-width:900px}
+.pg-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+.pg-title{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em}
+.pg-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.btn-p{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
+.btn-g{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s}
+.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.sec-lbl{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:26px}
+.kpi{padding:18px 20px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(173,198,255,0.12),transparent)}
+.kpi-val{font-family:var(--fw-d);font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-bottom:2px}
+.kpi-lbl{font-size:11px;color:var(--muted)}
+.filters{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.fc{font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--muted);cursor:pointer;transition:all 0.13s}
+.fc.on{background:var(--primary-dim);border-color:rgba(173,198,255,0.25);color:var(--primary)}
+.task-list{display:flex;flex-direction:column;gap:3px;margin-bottom:26px}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-sm);background:rgba(20,19,19,0.55);border:1px solid var(--border);transition:border-color 0.13s,opacity 0.2s}
+.task-item.done{opacity:0.45}
+.task-check{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border2);background:transparent;cursor:pointer;transition:background 0.13s,border-color 0.13s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.task-check.checked{background:var(--green);border-color:var(--green)}
+.task-body{flex:1;min-width:0}
+.task-title{font-size:13.5px;font-weight:500;line-height:1.3;transition:text-decoration 0.1s}
+.task-item.done .task-title{text-decoration:line-through;color:var(--muted)}
+.task-meta{display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap}
+.task-meta-item{font-family:var(--fw-m);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:3px}
+.pr-badge{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid transparent}
+.task-actions{display:flex;gap:4px;flex-shrink:0}
+.ic-btn{width:26px;height:26px;border-radius:var(--r-sm);background:rgba(255,255,255,0.03);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.ic-btn:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 28px;text-align:center}
+.empty-icon{width:56px;height:56px;border-radius:var(--r);background:rgba(173,198,255,0.06);border:1px solid rgba(173,198,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.empty-title{font-family:var(--fw-d);font-size:18px;font-weight:700;margin-bottom:6px}
+.empty-sub{font-size:13px;color:var(--muted);max-width:320px;line-height:1.55;margin-bottom:20px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:400;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,0.8)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 0}
+.modal-title{font-family:var(--fw-d);font-size:17px;font-weight:700}
+.modal-close{width:30px;height:30px;border-radius:var(--r-sm);background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
+.modal-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:14px}
+.fld label{display:block;font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:var(--r-sm);padding:9px 12px;color:var(--text);font-size:13px;outline:none;transition:border-color 0.13s}
+.fld input:focus{border-color:rgba(173,198,255,0.3)}
+.fld select option{background:var(--s2)}
+.fld textarea{resize:vertical;min-height:70px}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:0 24px 22px}
+.toast{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
+#sb-ov.show{display:block}
+@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}}
+@media(max-width:640px){.inner{padding:18px 16px}}
+</style>
+</head>
+<body>
+<div id="app">
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row"><span class="sb-logo-text">Ascendra</span><span class="sb-logo-chip">PRO</span></div>
+    <div class="sb-tagline">Executive Command Center</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni active" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span><span class="nb" id="sb-count">0</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <a class="user-pill" href="settings.html"><div class="u-av">DC</div><div style="flex:1;min-width:0"><div class="u-name">Doris Cacarl</div><div class="u-role">Principal Director</div></div><div class="u-dot"></div></a>
+  </div>
+</aside>
+<div id="sb-ov" onclick="closeSidebar()"></div>
+<header id="topbar">
+  <button class="tb-menu" onclick="toggleSidebar()"><span class="ms">menu</span></button>
+  <div class="tb-crumb"><span class="tb-root">Clients</span><span class="tb-sep">›</span><span class="tb-cur">Tasks</span></div>
+  <div class="tb-acts">
+    <button class="btn-p" onclick="openAdd()"><span class="ms" style="font-size:15px">add</span> New Task</button>
+    <a href="dashboard.html" class="tb-icon"><span class="ms">space_dashboard</span></a>
+    <a href="settings.html" class="tb-av">DC</a>
+  </div>
+</header>
+<main id="main">
+  <div class="inner">
+    <div class="pg-head">
+      <div><div class="pg-title">Tasks</div><div class="pg-sub">Stay on top of every action item across all projects</div></div>
+      <button class="btn-p" onclick="openAdd()"><span class="ms" style="font-size:15px">add</span> New Task</button>
+    </div>
+    <div class="sec-lbl">Overview</div>
+    <div class="kpi-row">
+      <div class="gc kpi"><div class="kpi-val" id="k-total">0</div><div class="kpi-lbl">Total Tasks</div></div>
+      <div class="gc kpi"><div class="kpi-val" id="k-open" style="color:var(--primary)">0</div><div class="kpi-lbl">Open</div></div>
+      <div class="gc kpi"><div class="kpi-val" id="k-high" style="color:var(--red)">0</div><div class="kpi-lbl">High Priority</div></div>
+      <div class="gc kpi"><div class="kpi-val" id="k-done" style="color:var(--green)">0</div><div class="kpi-lbl">Completed</div></div>
+    </div>
+    <div class="sec-lbl" style="margin-bottom:8px">Tasks</div>
+    <div class="filters">
+      <button class="fc on" onclick="setFilter('all',this)">All</button>
+      <button class="fc" onclick="setFilter('open',this)">Open</button>
+      <button class="fc" onclick="setFilter('done',this)">Completed</button>
+      <button class="fc" onclick="setFilter('high',this)">High Priority</button>
+      <button class="fc" onclick="setFilter('medium',this)">Medium</button>
+      <button class="fc" onclick="setFilter('low',this)">Low</button>
+    </div>
+    <div class="task-list" id="list"></div>
+  </div>
+</main>
+</div>
+
+<div class="modal-bg" id="addModal">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title">New Task</span><button class="modal-close" onclick="closeModal('addModal')"><span class="ms">close</span></button></div>
+    <div class="modal-body">
+      <div class="fld"><label>Task Title *</label><input id="f-title" placeholder="What needs to be done?"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="fld"><label>Priority</label><select id="f-pri"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>
+        <div class="fld"><label>Due Date</label><input id="f-due" type="date"></div>
+      </div>
+      <div class="fld"><label>Linked Project</label><input id="f-proj" placeholder="Optional project name"></div>
+      <div class="fld"><label>Notes</label><textarea id="f-notes" placeholder="Additional context..."></textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn-g" onclick="closeModal('addModal')">Cancel</button><button class="btn-p" onclick="saveTask()">Add Task</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title">Edit Task</span><button class="modal-close" onclick="closeModal('editModal')"><span class="ms">close</span></button></div>
+    <div class="modal-body">
+      <div class="fld"><label>Task Title *</label><input id="ef-title"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="fld"><label>Priority</label><select id="ef-pri"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div>
+        <div class="fld"><label>Due Date</label><input id="ef-due" type="date"></div>
+      </div>
+      <div class="fld"><label>Linked Project</label><input id="ef-proj"></div>
+      <div class="fld"><label>Notes</label><textarea id="ef-notes"></textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn-g" onclick="closeModal('editModal')">Cancel</button><button class="btn-p" onclick="updateTask()">Save</button></div>
+  </div>
+</div>
+
+<script>
+const KEY='ascendra_tasks_v1';
+let data=[],filter='all',editId=null;
+const PRI={high:{lbl:'High',color:'var(--red)',bg:'rgba(252,165,165,0.1)'},medium:{lbl:'Medium',color:'var(--amber)',bg:'rgba(252,211,77,0.1)'},low:{lbl:'Low',color:'var(--muted)',bg:'rgba(114,118,138,0.1)'}};
+function load(){try{data=JSON.parse(localStorage.getItem(KEY))||[];}catch{data=[]}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function genId(){return 't_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fmtDate(d){if(!d)return'';const p=d.split('-');if(p.length<3)return d;return p[1]+'/'+p[2]+'/'+p[0]}
+function setFilter(f,el){filter=f;document.querySelectorAll('.fc').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
+function openAdd(){document.getElementById('addModal').classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='<span class="ms" style="color:var(--green)">check_circle</span>'+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3000)}
+function toggleDone(id){const idx=data.findIndex(x=>x.id===id);if(idx<0)return;data[idx].done=!data[idx].done;save()}
+function saveTask(){
+  const t=document.getElementById('f-title').value.trim();
+  if(!t){alert('Task title is required');return}
+  data.unshift({id:genId(),title:t,priority:document.getElementById('f-pri').value,due:document.getElementById('f-due').value,project:document.getElementById('f-proj').value.trim(),notes:document.getElementById('f-notes').value.trim(),done:false,created:new Date().toISOString()});
+  save();closeModal('addModal');
+  ['f-title','f-due','f-proj','f-notes'].forEach(id=>{document.getElementById(id).value=''});
+  document.getElementById('f-pri').value='medium';
+  toast('Task added');
+}
+function editTask(id){
+  editId=id;const t=data.find(x=>x.id===id);if(!t)return;
+  document.getElementById('ef-title').value=t.title;document.getElementById('ef-pri').value=t.priority;document.getElementById('ef-due').value=t.due||'';document.getElementById('ef-proj').value=t.project||'';document.getElementById('ef-notes').value=t.notes||'';
+  document.getElementById('editModal').classList.add('open');
+}
+function updateTask(){
+  const idx=data.findIndex(x=>x.id===editId);if(idx<0)return;
+  data[idx]={...data[idx],title:document.getElementById('ef-title').value.trim(),priority:document.getElementById('ef-pri').value,due:document.getElementById('ef-due').value,project:document.getElementById('ef-proj').value.trim(),notes:document.getElementById('ef-notes').value.trim()};
+  save();closeModal('editModal');toast('Task updated');
+}
+function deleteTask(id){if(!confirm('Delete this task?'))return;data=data.filter(x=>x.id!==id);save();toast('Task deleted')}
+function render(){
+  let filtered=data;
+  if(filter==='open')filtered=data.filter(t=>!t.done);
+  else if(filter==='done')filtered=data.filter(t=>t.done);
+  else if(filter==='high')filtered=data.filter(t=>t.priority==='high'&&!t.done);
+  else if(filter==='medium')filtered=data.filter(t=>t.priority==='medium'&&!t.done);
+  else if(filter==='low')filtered=data.filter(t=>t.priority==='low'&&!t.done);
+  document.getElementById('k-total').textContent=data.length;
+  document.getElementById('k-open').textContent=data.filter(t=>!t.done).length;
+  document.getElementById('k-high').textContent=data.filter(t=>t.priority==='high'&&!t.done).length;
+  document.getElementById('k-done').textContent=data.filter(t=>t.done).length;
+  document.getElementById('sb-count').textContent=data.filter(t=>!t.done).length;
+  const list=document.getElementById('list');
+  if(filtered.length===0){
+    list.innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--primary)">task_alt</span></div><div class="empty-title">No Tasks Yet</div><div class="empty-sub">Add your first task to start tracking action items across all your projects and clients.</div><button class="btn-p" onclick="openAdd()"><span class="ms" style="font-size:15px">add</span> Add First Task</button></div>`;
+    return;
+  }
+  list.innerHTML=filtered.map(t=>{
+    const pr=PRI[t.priority]||PRI.medium;
+    return`<div class="task-item ${t.done?'done':''}">
+      <div class="task-check ${t.done?'checked':''}" onclick="toggleDone('${t.id}')">${t.done?'<span class="ms" style="font-size:13px;color:#090909;font-variation-settings:\'FILL\' 1">check</span>':''}</div>
+      <div class="task-body">
+        <div class="task-title">${esc(t.title)}</div>
+        <div class="task-meta">
+          <span class="pr-badge" style="background:${pr.bg};color:${pr.color};border-color:${pr.color}20">${pr.lbl}</span>
+          ${t.project?`<span class="task-meta-item"><span class="ms" style="font-size:12px">folder_open</span>${esc(t.project)}</span>`:''}
+          ${t.due?`<span class="task-meta-item"><span class="ms" style="font-size:12px">event</span>${fmtDate(t.due)}</span>`:''}
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="ic-btn" title="Edit" onclick="editTask('${t.id}')"><span class="ms" style="font-size:13px">edit</span></button>
+        <button class="ic-btn" title="Delete" onclick="deleteTask('${t.id}')" style="color:rgba(252,165,165,0.4)"><span class="ms" style="font-size:13px">delete</span></button>
+      </div>
+    </div>`}).join('');
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('addModal');closeModal('editModal');closeSidebar()}});
+window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+load();render();
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--sidebar:256px;--topbar:62px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
+a{color:inherit;text-decoration:none}
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
+#app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh}
+#sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sb-logo-text{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.sb-logo-chip{font-family:var(--fw-m);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.15);border-radius:4px;padding:2px 6px}
+.sb-tagline{font-family:var(--fw-m);font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
+.ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
+.ni .lbl{font-size:13px;font-weight:500}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);flex-shrink:0}
+.user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s;text-decoration:none;color:inherit}
+.user-pill:hover{background:rgba(255,255,255,0.045)}
+.u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
+.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+.u-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(110,231,183,0.5);flex-shrink:0}
+#topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
+.tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);flex-shrink:0}
+.tb-crumb{flex:1;display:flex;align-items:center;gap:8px}
+.tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.tb-sep{color:var(--border3);font-size:16px}
+.tb-cur{font-size:13px;font-weight:600;color:var(--text)}
+.tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
+.tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer}
+#main{grid-column:2;overflow-y:auto;background:var(--bg)}
+.gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
+.inner{padding:28px;max-width:1000px}
+.pg-title{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em}
+.pg-sub{font-size:12px;color:var(--muted);margin-top:1px;margin-bottom:28px}
+.sec-lbl{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.bs-section{margin-bottom:28px}
+.colors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.color-swatch{border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--border)}
+.swatch-block{height:52px}
+.swatch-info{padding:8px 10px;background:rgba(20,19,19,0.55)}
+.swatch-name{font-family:var(--fw-m);font-size:10px;font-weight:600;margin-bottom:1px}
+.swatch-hex{font-family:var(--fw-m);font-size:10px;color:var(--muted)}
+.fonts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.font-card{padding:20px}
+.font-sample{margin-bottom:10px}
+.font-info{font-family:var(--fw-m);font-size:10px;color:var(--muted)}
+.tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.token-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm)}
+.token-name{font-family:var(--fw-m);font-size:10px;color:var(--muted)}
+.token-val{font-family:var(--fw-m);font-size:10px;color:var(--primary)}
+#sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
+#sb-ov.show{display:block}
+@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}}
+@media(max-width:640px){.inner{padding:18px 16px}.colors-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
+</style>
+</head>
+<body>
+<div id="app">
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row"><span class="sb-logo-text">Ascendra</span><span class="sb-logo-chip">PRO</span></div>
+    <div class="sb-tagline">Executive Command Center</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni active" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <a class="user-pill" href="settings.html"><div class="u-av">DC</div><div style="flex:1;min-width:0"><div class="u-name">Doris Cacarl</div><div class="u-role">Principal Director</div></div><div class="u-dot"></div></a>
+  </div>
+</aside>
+<div id="sb-ov" onclick="closeSidebar()"></div>
+<header id="topbar">
+  <button class="tb-menu" onclick="toggleSidebar()"><span class="ms">menu</span></button>
+  <div class="tb-crumb"><span class="tb-root">System</span><span class="tb-sep">›</span><span class="tb-cur">Brand System</span></div>
+  <div class="tb-acts">
+    <a href="dashboard.html" class="tb-icon"><span class="ms">space_dashboard</span></a>
+    <a href="settings.html" class="tb-av">DC</a>
+  </div>
+</header>
+<main id="main">
+  <div class="inner">
+    <div class="pg-title">Brand System</div>
+    <div class="pg-sub">Ascendra's visual identity — colors, typography, and design tokens</div>
+
+    <!-- Color Palette -->
+    <div class="bs-section">
+      <div class="sec-lbl">Color Palette</div>
+      <div class="colors-grid">
+        <div class="color-swatch"><div class="swatch-block" style="background:#090909"></div><div class="swatch-info"><div class="swatch-name">Void Black</div><div class="swatch-hex">#090909</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#101010"></div><div class="swatch-info"><div class="swatch-name">Obsidian</div><div class="swatch-hex">#101010</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#1c1b1b"></div><div class="swatch-info"><div class="swatch-name">Charcoal</div><div class="swatch-hex">#1c1b1b</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#242323"></div><div class="swatch-info"><div class="swatch-name">Iron</div><div class="swatch-hex">#242323</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#adc6ff"></div><div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-hex">#adc6ff</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#4d8eff"></div><div class="swatch-info"><div class="swatch-name">Primary Bold</div><div class="swatch-hex">#4d8eff</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#e6e3e2"></div><div class="swatch-info"><div class="swatch-name">Platinum</div><div class="swatch-hex">#e6e3e2</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#b4b9c7"></div><div class="swatch-info"><div class="swatch-name">Silver</div><div class="swatch-hex">#b4b9c7</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#6ee7b7"></div><div class="swatch-info"><div class="swatch-name">Emerald</div><div class="swatch-hex">#6ee7b7</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#fcd34d"></div><div class="swatch-info"><div class="swatch-name">Amber</div><div class="swatch-hex">#fcd34d</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#fca5a5"></div><div class="swatch-info"><div class="swatch-name">Rose</div><div class="swatch-hex">#fca5a5</div></div></div>
+        <div class="color-swatch"><div class="swatch-block" style="background:#c4b5fd"></div><div class="swatch-info"><div class="swatch-name">Lavender</div><div class="swatch-hex">#c4b5fd</div></div></div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="bs-section">
+      <div class="sec-lbl">Typography</div>
+      <div class="fonts-grid">
+        <div class="gc font-card">
+          <div class="font-sample"><div style="font-family:'Bodoni Moda',serif;font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1.2">Bodoni Moda</div><div style="font-family:'Bodoni Moda',serif;font-size:14px;font-style:italic;color:var(--muted)">Executive Command Center</div></div>
+          <div class="font-info">Display / Headings — Weight 400–900<br>Used for logos, page titles, and KPI values</div>
+        </div>
+        <div class="gc font-card">
+          <div class="font-sample"><div style="font-family:'Hanken Grotesk',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.01em">Hanken Grotesk</div><div style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--muted)">Premium business growth partner</div></div>
+          <div class="font-info">Body / UI — Weight 100–900<br>Used for paragraphs, labels, and UI elements</div>
+        </div>
+        <div class="gc font-card">
+          <div class="font-sample"><div style="font-family:'Geist',monospace;font-size:16px;font-weight:600;letter-spacing:0.06em">GEIST MONO</div><div style="font-family:'Geist',monospace;font-size:11px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase">DESIGN TOKENS · LABELS</div></div>
+          <div class="font-info">Monospace / Labels — Weight 100–900<br>Used for tags, badges, section labels, code</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Tokens -->
+    <div class="bs-section">
+      <div class="sec-lbl">Design Tokens</div>
+      <div class="tokens-grid">
+        <div class="token-row"><span class="token-name">--bg</span><span class="token-val">#090909</span></div>
+        <div class="token-row"><span class="token-name">--primary</span><span class="token-val">#adc6ff</span></div>
+        <div class="token-row"><span class="token-name">--primary-b</span><span class="token-val">#4d8eff</span></div>
+        <div class="token-row"><span class="token-name">--text</span><span class="token-val">#e6e3e2</span></div>
+        <div class="token-row"><span class="token-name">--muted</span><span class="token-val">#72768a</span></div>
+        <div class="token-row"><span class="token-name">--border</span><span class="token-val">rgba(255,255,255,0.04)</span></div>
+        <div class="token-row"><span class="token-name">--r</span><span class="token-val">12px</span></div>
+        <div class="token-row"><span class="token-name">--r-sm</span><span class="token-val">8px</span></div>
+        <div class="token-row"><span class="token-name">--r-lg</span><span class="token-val">16px</span></div>
+        <div class="token-row"><span class="token-name">--sidebar</span><span class="token-val">256px</span></div>
+        <div class="token-row"><span class="token-name">--topbar</span><span class="token-val">62px</span></div>
+        <div class="token-row"><span class="token-name">--green</span><span class="token-val">#6ee7b7</span></div>
+        <div class="token-row"><span class="token-name">--amber</span><span class="token-val">#fcd34d</span></div>
+        <div class="token-row"><span class="token-name">--red</span><span class="token-val">#fca5a5</span></div>
+        <div class="token-row"><span class="token-name">--purple</span><span class="token-val">#c4b5fd</span></div>
+      </div>
+    </div>
+
+    <!-- Liquid Glass Component -->
+    <div class="bs-section">
+      <div class="sec-lbl">Signature Component — Liquid Glass</div>
+      <div class="gc" style="padding:22px 26px">
+        <div style="font-size:13px;font-weight:500;margin-bottom:6px">Glass Card (.gc)</div>
+        <div style="font-family:var(--fw-m);font-size:10px;color:var(--muted);line-height:1.8">background: rgba(20,19,19,0.55)<br>backdrop-filter: blur(20px)<br>border: 1px solid var(--border)<br>border-top-color: var(--border2)<br>border-radius: var(--r)</div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
+window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
+</script>
+</body>
+</html>

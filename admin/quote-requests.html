@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Quote Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--s4:#2e2d2d;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--indigo:#818cf8;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--r-xl:20px;--sidebar:256px;--topbar:62px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
+#app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh;position:relative}
+#sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sb-logo-text{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.sb-logo-chip{font-family:var(--fw-m);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.15);border-radius:4px;padding:2px 6px}
+.sb-tagline{font-family:var(--fw-m);font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
+.ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
+.ni .lbl{font-size:13px;font-weight:500}
+.nb{margin-left:auto;background:var(--primary-dim);color:var(--primary);font-family:var(--fw-m);font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);flex-shrink:0}
+.user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s;text-decoration:none;color:inherit}
+.user-pill:hover{background:rgba(255,255,255,0.045)}
+.u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
+.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+.u-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(110,231,183,0.5);flex-shrink:0}
+#topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
+.tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.tb-menu:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-crumb{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tb-sep{color:var(--border3);font-size:16px}
+.tb-cur{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap}
+.tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.tb-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer;flex-shrink:0}
+#main{grid-column:2;overflow:hidden;background:var(--bg);position:relative;display:flex;flex-direction:column}
+.gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
+.btn-p{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12.5px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18);min-height:44px}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
+.btn-p:active{transform:translateY(0)}
+.btn-g{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12.5px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s,border-color 0.13s;min-height:44px}
+.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border2)}
+.btn-icon{width:32px;height:32px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.btn-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+.b-blue{background:rgba(173,198,255,0.09);color:var(--primary)}
+.b-green{background:rgba(110,231,183,0.09);color:var(--green)}
+.b-amber{background:rgba(252,211,77,0.09);color:var(--amber)}
+.b-red{background:rgba(252,165,165,0.09);color:var(--red)}
+.b-gray{background:rgba(255,255,255,0.05);color:var(--muted)}
+.b-purple{background:rgba(196,181,253,0.09);color:var(--purple)}
+#kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 28px 0;flex-shrink:0}
+.kpi{padding:16px 18px 12px;cursor:default;transition:border-color 0.18s,transform 0.18s}
+.kpi:hover{border-color:rgba(173,198,255,0.10);transform:translateY(-1px)}
+.kpi-lbl{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-val{font-family:var(--fw-d);font-size:26px;font-weight:700;letter-spacing:-0.03em;color:var(--text);line-height:1}
+.kpi-ghost{font-family:var(--fw-d);font-size:26px;font-weight:700;letter-spacing:-0.03em;color:rgba(255,255,255,0.08);line-height:1}
+.kpi-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+#toolbar{flex-shrink:0;padding:16px 28px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 13px;flex:1;max-width:300px;transition:border-color 0.2s}
+.search-box:focus-within{border-color:rgba(173,198,255,0.22);background:rgba(255,255,255,0.04)}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:var(--fw-b);font-size:13px;width:100%}
+.search-box input::placeholder{color:var(--muted)}
+.fchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;font-family:var(--fw-m);font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text2);transition:all 0.13s;user-select:none}
+.fchip:hover{background:rgba(255,255,255,0.06);border-color:var(--border2)}
+.fchip.on{background:var(--primary-dim);border-color:rgba(173,198,255,0.2);color:var(--primary)}
+#content{flex:1;overflow:hidden;display:flex;padding:14px 28px 0;gap:0}
+.tbl-area{flex:1;overflow-y:auto;border-radius:var(--r);border:1px solid var(--border);background:rgba(14,14,14,0.7)}
+.tbl-area::-webkit-scrollbar{width:4px}
+.tbl-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.05);border-radius:2px}
+table.dt{width:100%;border-collapse:collapse}
+table.dt th{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);background:rgba(10,10,10,0.9);position:sticky;top:0;white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.13s}
+table.dt th:hover{color:var(--text2)}
+table.dt td{padding:11px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.025);color:var(--text2);vertical-align:middle}
+table.dt tbody tr{cursor:pointer;transition:background 0.1s}
+table.dt tbody tr:hover td{background:rgba(255,255,255,0.022)}
+table.dt td.p{color:var(--text);font-weight:500}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px}
+.es-icon-wrap{position:relative;margin-bottom:22px}
+.es-glow{position:absolute;inset:-28px;border-radius:50%;background:radial-gradient(ellipse,rgba(173,198,255,0.055) 0%,transparent 70%);pointer-events:none}
+.es-icon{width:68px;height:68px;border-radius:var(--r-xl);background:rgba(255,255,255,0.02);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;position:relative}
+.es-icon .ms{font-size:28px;color:var(--muted)}
+.es-ring{position:absolute;inset:-8px;border-radius:calc(var(--r-xl) + 8px);border:1px solid rgba(173,198,255,0.05);pointer-events:none}
+.es-eyebrow{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--primary);margin-bottom:8px;opacity:0.65}
+.es-title{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.es-desc{font-size:13px;color:var(--muted);max-width:340px;line-height:1.75;margin-bottom:22px}
+#detail-panel{width:0;flex-shrink:0;overflow:hidden;transition:width 0.28s cubic-bezier(0.16,1,0.3,1);background:var(--s0);border-left:1px solid var(--border);display:flex;flex-direction:column}
+#detail-panel.open{width:400px}
+.dp-head{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.dp-close{width:30px;height:30px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;margin-left:auto}
+.dp-close:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.dp-body{flex:1;overflow-y:auto;padding:18px 20px}
+.dp-body::-webkit-scrollbar{width:3px}
+.dp-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.05)}
+.dp-sec-lbl{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px}
+.dp-field{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.dp-field:last-child{border:none}
+.dp-fl{font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);width:90px;flex-shrink:0;padding-top:1px}
+.dp-fv{font-size:12.5px;color:var(--text2);flex:1}
+.dp-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,0.7);animation:ma 0.22s cubic-bezier(0.16,1,0.3,1)}
+.modal::-webkit-scrollbar{display:none}
+@keyframes ma{from{opacity:0;transform:scale(0.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 16px;border-bottom:1px solid var(--border)}
+.modal-title{font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em}
+.modal-close{width:30px;height:30px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.modal-close:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.modal-body{padding:22px 24px}
+.f-row{margin-bottom:16px}
+.f-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.f-lbl{font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.f-inp{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:var(--fw-b);font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s;resize:none}
+.f-inp:focus{border-color:rgba(173,198,255,0.25);background:rgba(255,255,255,0.04)}
+.f-inp::placeholder{color:var(--muted)}
+select.f-inp{cursor:pointer}
+select.f-inp option{background:var(--s2)}
+.modal-foot{padding:16px 24px 22px;display:flex;align-items:center;justify-content:flex-end;gap:8px;border-top:1px solid var(--border)}
+#toast-container{position:fixed;bottom:28px;right:28px;z-index:900;display:flex;flex-direction:column;gap:8px}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r);background:var(--s2);border:1px solid var(--border2);box-shadow:0 12px 40px rgba(0,0,0,0.5);animation:ta 0.22s cubic-bezier(0.16,1,0.3,1);min-width:240px}
+@keyframes ta{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.toast.out{opacity:0;transition:opacity 0.3s}
+.t-text{font-size:13px;color:var(--text2);flex:1}
+#sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
+#sb-ov.show{display:block}
+@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}#kpi-row{grid-template-columns:repeat(2,1fr)}#detail-panel.open{width:100%;position:fixed;right:0;top:0;height:100vh;z-index:300}}
+@media(max-width:600px){#kpi-row{grid-template-columns:1fr 1fr;padding:14px 16px 0}#toolbar{padding:12px 16px 0}#content{padding:12px 16px 0}.f-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row"><span class="sb-logo-text">Ascendra</span><span class="sb-logo-chip">PRO</span></div>
+    <div class="sb-tagline">Executive Command Center</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni active" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span><span class="nb" id="sb-count">0</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <a class="user-pill" href="settings.html">
+      <div class="u-av">DC</div>
+      <div style="flex:1;min-width:0"><div class="u-name">Doris Cacarl</div><div class="u-role">Principal Director</div></div>
+      <div class="u-dot"></div>
+    </a>
+  </div>
+</aside>
+
+<div id="sb-ov" onclick="closeSidebar()"></div>
+
+<header id="topbar">
+  <button class="tb-menu" onclick="toggleSidebar()"><span class="ms">menu</span></button>
+  <div class="tb-crumb">
+    <span class="tb-root">Ascendra</span>
+    <span class="tb-sep">›</span>
+    <span class="tb-cur">Quote Requests</span>
+  </div>
+  <div class="tb-acts">
+    <a href="dashboard.html" class="tb-icon" title="Dashboard"><span class="ms">space_dashboard</span></a>
+    <a href="settings.html" class="tb-av" title="Doris Cacarl">DC</a>
+  </div>
+</header>
+
+<main id="main">
+  <div id="kpi-row">
+    <div class="kpi gc"><div class="kpi-lbl">Total Requests</div><div id="k-total" class="kpi-ghost">—</div><div class="kpi-sub" id="k-total-s">No requests yet</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">New</div><div id="k-new" class="kpi-ghost">—</div><div class="kpi-sub" id="k-new-s">Awaiting review</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">In Pipeline</div><div id="k-pipe" class="kpi-ghost">—</div><div class="kpi-sub" id="k-pipe-s">Active conversations</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">Accepted</div><div id="k-won" class="kpi-ghost">—</div><div class="kpi-sub" id="k-won-s">Converted to clients</div></div>
+  </div>
+
+  <div id="toolbar">
+    <div class="search-box">
+      <span class="ms" style="font-size:15px;color:var(--muted)">search</span>
+      <input type="text" id="search-inp" placeholder="Search requests, clients, projects…" oninput="render()">
+    </div>
+    <span class="fchip" data-s="new" onclick="toggleChip(this)">New</span>
+    <span class="fchip" data-s="reviewed" onclick="toggleChip(this)">Reviewed</span>
+    <span class="fchip" data-s="contacted" onclick="toggleChip(this)">Contacted</span>
+    <span class="fchip" data-s="proposal" onclick="toggleChip(this)">Proposal Sent</span>
+    <span class="fchip" data-s="accepted" onclick="toggleChip(this)">Accepted</span>
+    <span class="fchip" data-s="declined" onclick="toggleChip(this)">Declined</span>
+    <button class="btn-p" style="margin-left:auto" onclick="openAdd()"><span class="ms">add</span> New Request</button>
+  </div>
+
+  <div id="content">
+    <div class="tbl-area" id="tbl-area">
+      <table class="dt" id="main-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Business</th>
+            <th>Project Type</th>
+            <th>Budget</th>
+            <th>Package</th>
+            <th>Status</th>
+            <th>Submitted</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty" class="empty-state" style="display:none">
+        <div class="es-icon-wrap"><div class="es-glow"></div><div class="es-icon"><span class="ms">request_quote</span><div class="es-ring"></div></div></div>
+        <div class="es-eyebrow">Quote Requests</div>
+        <div class="es-title">No requests yet</div>
+        <div class="es-desc">Website quote requests submitted through your public site will appear here. You can also add them manually.</div>
+        <button class="btn-p" onclick="openAdd()"><span class="ms">add</span> Add First Request</button>
+      </div>
+      <div id="no-results" class="empty-state" style="display:none">
+        <div class="es-icon-wrap"><div class="es-glow"></div><div class="es-icon"><span class="ms">search_off</span><div class="es-ring"></div></div></div>
+        <div class="es-title">No matches found</div>
+        <div class="es-desc">Try adjusting your search or filters.</div>
+        <button class="btn-g" onclick="clearFilters()"><span class="ms">filter_alt_off</span> Clear filters</button>
+      </div>
+    </div>
+
+    <div id="detail-panel">
+      <div class="dp-head">
+        <div>
+          <div style="font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em" id="dp-name">—</div>
+          <div style="font-size:12px;color:var(--muted)" id="dp-biz">—</div>
+        </div>
+        <div class="dp-close" onclick="closeDetail()"><span class="ms" style="font-size:16px">close</span></div>
+      </div>
+      <div class="dp-body" id="dp-body"></div>
+      <div class="dp-foot" id="dp-foot"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ADD MODAL -->
+<div class="modal-bg" id="modal-add">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">New Quote Request</div><div class="modal-close" onclick="closeModal('modal-add')"><span class="ms">close</span></div></div>
+    <div class="modal-body">
+      <div class="f-2">
+        <div><div class="f-lbl">Client Name *</div><input class="f-inp" id="a-name" type="text" placeholder="Jane Smith"></div>
+        <div><div class="f-lbl">Business Name</div><input class="f-inp" id="a-biz" type="text" placeholder="Acme Corp"></div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Email *</div><input class="f-inp" id="a-email" type="email" placeholder="jane@acme.com"></div>
+        <div><div class="f-lbl">Phone</div><input class="f-inp" id="a-phone" type="tel" placeholder="+1 555 000 0000"></div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Project Type</div>
+          <select class="f-inp" id="a-type">
+            <option>New Website</option><option>Website Redesign</option><option>E-Commerce Store</option><option>Landing Page</option><option>Web App</option><option>Other</option>
+          </select>
+        </div>
+        <div><div class="f-lbl">Estimated Budget</div>
+          <select class="f-inp" id="a-budget">
+            <option>Under $2,000</option><option>$2,000 – $5,000</option><option>$5,000 – $10,000</option><option>$10,000 – $25,000</option><option>$25,000+</option><option>Not Sure</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Timeline</div>
+          <select class="f-inp" id="a-timeline">
+            <option>ASAP</option><option>1 Month</option><option>2–3 Months</option><option>3–6 Months</option><option>Flexible</option>
+          </select>
+        </div>
+        <div><div class="f-lbl">Recommended Package</div>
+          <select class="f-inp" id="a-package">
+            <option value="">— Not Selected —</option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option>
+          </select>
+        </div>
+      </div>
+      <div class="f-row"><div class="f-lbl">Selected Features</div><input class="f-inp" id="a-features" type="text" placeholder="CRM Integration, Booking System, AI Chatbot…"></div>
+      <div class="f-row"><div class="f-lbl">Status</div>
+        <select class="f-inp" id="a-status">
+          <option value="new">New</option><option value="reviewed">Reviewed</option><option value="contacted">Contacted</option><option value="proposal">Proposal Sent</option><option value="accepted">Accepted</option><option value="declined">Declined</option>
+        </select>
+      </div>
+      <div class="f-row"><div class="f-lbl">Notes / Requirements</div><textarea class="f-inp" id="a-notes" rows="3" placeholder="Additional context, specific needs, pain points…"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('modal-add')">Cancel</button>
+      <button class="btn-p" onclick="saveNew()"><span class="ms">check</span> Save Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-bg" id="modal-edit">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Edit Request</div><div class="modal-close" onclick="closeModal('modal-edit')"><span class="ms">close</span></div></div>
+    <div class="modal-body">
+      <input type="hidden" id="e-id">
+      <div class="f-2">
+        <div><div class="f-lbl">Client Name *</div><input class="f-inp" id="e-name" type="text"></div>
+        <div><div class="f-lbl">Business Name</div><input class="f-inp" id="e-biz" type="text"></div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Email</div><input class="f-inp" id="e-email" type="email"></div>
+        <div><div class="f-lbl">Phone</div><input class="f-inp" id="e-phone" type="tel"></div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Project Type</div><select class="f-inp" id="e-type"><option>New Website</option><option>Website Redesign</option><option>E-Commerce Store</option><option>Landing Page</option><option>Web App</option><option>Other</option></select></div>
+        <div><div class="f-lbl">Budget</div><select class="f-inp" id="e-budget"><option>Under $2,000</option><option>$2,000 – $5,000</option><option>$5,000 – $10,000</option><option>$10,000 – $25,000</option><option>$25,000+</option><option>Not Sure</option></select></div>
+      </div>
+      <div class="f-2">
+        <div><div class="f-lbl">Timeline</div><select class="f-inp" id="e-timeline"><option>ASAP</option><option>1 Month</option><option>2–3 Months</option><option>3–6 Months</option><option>Flexible</option></select></div>
+        <div><div class="f-lbl">Package</div><select class="f-inp" id="e-package"><option value="">— Not Selected —</option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option></select></div>
+      </div>
+      <div class="f-row"><div class="f-lbl">Features</div><input class="f-inp" id="e-features" type="text"></div>
+      <div class="f-row"><div class="f-lbl">Status</div><select class="f-inp" id="e-status"><option value="new">New</option><option value="reviewed">Reviewed</option><option value="contacted">Contacted</option><option value="proposal">Proposal Sent</option><option value="accepted">Accepted</option><option value="declined">Declined</option></select></div>
+      <div class="f-row"><div class="f-lbl">Notes</div><textarea class="f-inp" id="e-notes" rows="3"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="deleteQ()" style="color:var(--red);border-color:rgba(252,165,165,0.15)"><span class="ms" style="font-size:15px">delete</span> Delete</button>
+      <button class="btn-g" onclick="closeModal('modal-edit')">Cancel</button>
+      <button class="btn-p" onclick="saveEdit()"><span class="ms">check</span> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _sb = window.supabase.createClient(
+  'https://nfowsobglotbjrdqsiid.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+);
+
+let data = [];
+let activeStatus = [];
+let selId = null;
+
+const SL = {new:'New',reviewed:'Reviewed',contacted:'Contacted',proposal:'Proposal Sent',accepted:'Accepted',declined:'Declined'};
+const SB = {new:'b-gray',reviewed:'b-blue',contacted:'b-purple',proposal:'b-amber',accepted:'b-green',declined:'b-red'};
+
+async function load(){
+  const {data:rows,error}=await _sb.from('quote_leads').select('*').order('created_at',{ascending:false});
+  if(error){console.error('Load error:',error);data=[];}
+  else{
+    data=rows.map(r=>({
+      id:r.id,
+      name:r.name||'',
+      email:r.email||'',
+      phone:r.phone||'',
+      biz:r.business||'',
+      type:r.project_type||r.industry||'Quote Calculator',
+      budget:r.estimated_min&&r.estimated_max?`$${Number(r.estimated_min).toLocaleString()} – $${Number(r.estimated_max).toLocaleString()}`:(r.budget||'—'),
+      package:r.package_selected||'',
+      features:r.features||'',
+      notes:r.notes||'',
+      timeline:r.timeline||'',
+      status:r.status||'new',
+      createdAt:r.created_at,
+    }));
+  }
+  render();
+}
+async function saveStatus(id,status){
+  await _sb.from('quote_leads').update({status}).eq('id',id);
+}
+async function saveEdit_sb(id,fields){
+  await _sb.from('quote_leads').update(fields).eq('id',id);
+}
+async function deleteRecord(id){
+  await _sb.from('quote_leads').delete().eq('id',id);
+}
+async function insertNew(q){
+  const {data:row,error}=await _sb.from('quote_leads').insert([{
+    name:q.name,email:q.email,phone:q.phone,business:q.biz,
+    project_type:q.type,budget:null,timeline:q.timeline,
+    package_selected:q.package,features:q.features,notes:q.notes,status:q.status
+  }]).select().single();
+  if(error){console.error(error);return null;}
+  return row;
+}
+
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6) }
+function fmtDate(d){ const dt=new Date(d); return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) }
+function daysAgo(d){ return Math.floor((Date.now()-new Date(d).getTime())/86400000) }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+function updateKPIs(){
+  const total=data.length, nw=data.filter(q=>q.status==='new').length;
+  const pipe=data.filter(q=>['reviewed','contacted','proposal'].includes(q.status)).length;
+  const won=data.filter(q=>q.status==='accepted').length;
+  document.getElementById('sb-count').textContent=total||'0';
+  if(!total){
+    ['k-total','k-new','k-pipe','k-won'].forEach(id=>{ document.getElementById(id).className='kpi-ghost'; document.getElementById(id).textContent='—' });
+    document.getElementById('k-total-s').textContent='No requests yet';
+    document.getElementById('k-new-s').textContent='Awaiting review';
+    document.getElementById('k-pipe-s').textContent='Active conversations';
+    document.getElementById('k-won-s').textContent='Converted to clients';
+  } else {
+    document.getElementById('k-total').className='kpi-val'; document.getElementById('k-total').textContent=total;
+    document.getElementById('k-new').className='kpi-val'; document.getElementById('k-new').textContent=nw;
+    document.getElementById('k-pipe').className='kpi-val'; document.getElementById('k-pipe').textContent=pipe;
+    document.getElementById('k-won').className='kpi-val'; document.getElementById('k-won').textContent=won;
+    document.getElementById('k-total-s').textContent=total+' total';
+    document.getElementById('k-new-s').textContent=nw+' new';
+    document.getElementById('k-pipe-s').textContent=pipe+' active';
+    document.getElementById('k-won-s').textContent=won+' accepted';
+  }
+}
+
+function render(){
+  const q=document.getElementById('search-inp').value.trim().toLowerCase();
+  let filtered=data.filter(item=>{
+    if(activeStatus.length&&!activeStatus.includes(item.status)) return false;
+    if(q){
+      const hay=[item.name,item.biz,item.email,item.type,item.package,item.features,item.notes].join(' ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const tbody=document.getElementById('tbody');
+  const tbl=document.getElementById('main-table');
+  const empty=document.getElementById('empty');
+  const noRes=document.getElementById('no-results');
+  tbody.innerHTML='';
+  if(!data.length){ tbl.style.display='none'; empty.style.display='flex'; noRes.style.display='none'; updateKPIs(); return; }
+  if(!filtered.length){ tbl.style.display='none'; empty.style.display='none'; noRes.style.display='flex'; updateKPIs(); return; }
+  tbl.style.display='table'; empty.style.display='none'; noRes.style.display='none';
+  filtered.forEach(q=>{
+    const d=daysAgo(q.createdAt);
+    const tr=document.createElement('tr');
+    tr.onclick=()=>openDetail(q.id);
+    tr.innerHTML=`<td class="p">${esc(q.name)}</td>
+      <td>${esc(q.biz||'—')}</td>
+      <td>${esc(q.type)}</td>
+      <td>${esc(q.budget)}</td>
+      <td>${q.package?`<span class="badge b-blue">${esc(q.package)}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td><span class="badge ${SB[q.status]||'b-gray'}">${SL[q.status]||q.status}</span></td>
+      <td style="white-space:nowrap">${d===0?'Today':d===1?'Yesterday':d+' days ago'}</td>
+      <td><div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
+        <div class="btn-icon" title="Edit" onclick="openEdit('${q.id}')"><span class="ms" style="font-size:14px">edit</span></div>
+        <div class="btn-icon" title="Convert to Lead" onclick="toLeadConvert('${q.id}')"><span class="ms" style="font-size:14px">person_add</span></div>
+      </div></td>`;
+    tbody.appendChild(tr);
+  });
+  updateKPIs();
+}
+
+function toggleChip(el){
+  el.classList.toggle('on');
+  const s=el.dataset.s;
+  if(el.classList.contains('on')) activeStatus.push(s);
+  else activeStatus=activeStatus.filter(v=>v!==s);
+  render();
+}
+function clearFilters(){
+  activeStatus=[];
+  document.querySelectorAll('.fchip.on').forEach(c=>c.classList.remove('on'));
+  document.getElementById('search-inp').value='';
+  render();
+}
+
+function openDetail(id){
+  selId=id;
+  const q=data.find(x=>x.id===id); if(!q) return;
+  document.getElementById('dp-name').textContent=q.name||'—';
+  document.getElementById('dp-biz').textContent=q.biz||'No business name';
+  const body=document.getElementById('dp-body');
+  body.innerHTML=`
+    <div style="margin-bottom:4px"><span class="badge ${SB[q.status]||'b-gray'}">${SL[q.status]||q.status}</span></div>
+    <div class="dp-sec-lbl" style="margin-top:14px">Contact</div>
+    <div class="dp-field"><span class="dp-fl">Email</span><span class="dp-fv">${esc(q.email||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(q.phone||'—')}</span></div>
+    <div class="dp-sec-lbl">Project Details</div>
+    <div class="dp-field"><span class="dp-fl">Type</span><span class="dp-fv">${esc(q.type||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(q.budget||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(q.timeline||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Package</span><span class="dp-fv">${esc(q.package||'Not selected')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(q.features||'—')}</span></div>
+    <div class="dp-sec-lbl">Notes</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px">${esc(q.notes||'No notes added.')}</div>
+    <div class="dp-sec-lbl">Submission</div>
+    <div class="dp-field"><span class="dp-fl">Date</span><span class="dp-fv">${fmtDate(q.createdAt)}</span></div>
+  `;
+  const foot=document.getElementById('dp-foot');
+  foot.innerHTML=`
+    <button class="btn-p" style="width:100%" onclick="toLeadConvert('${q.id}')"><span class="ms">person_add</span> Convert to Lead</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="flex:1" onclick="openEdit('${q.id}')"><span class="ms">edit</span> Edit</button>
+      <button class="btn-g" style="flex:1;color:var(--green);border-color:rgba(110,231,183,0.14)" onclick="setStatus('${q.id}','accepted')"><span class="ms">check_circle</span> Accept</button>
+    </div>
+  `;
+  document.getElementById('detail-panel').classList.add('open');
+}
+function closeDetail(){ document.getElementById('detail-panel').classList.remove('open'); selId=null; }
+
+function setStatus(id,status){
+  const q=data.find(x=>x.id===id); if(!q) return;
+  q.status=status; render();
+  if(selId===id) openDetail(id);
+  saveStatus(id,status);
+  toast('Status updated to '+SL[status]);
+}
+
+function openAdd(){ clearModal('add'); document.getElementById('modal-add').classList.add('open') }
+function clearModal(p){
+  ['name','biz','email','phone','features','notes'].forEach(f=>{ const el=document.getElementById(p+'-'+f); if(el) el.value='' });
+  const t=document.getElementById(p+'-type'); if(t) t.selectedIndex=0;
+  const b=document.getElementById(p+'-budget'); if(b) b.selectedIndex=0;
+  const tl=document.getElementById(p+'-timeline'); if(tl) tl.selectedIndex=0;
+  const pk=document.getElementById(p+'-package'); if(pk) pk.selectedIndex=0;
+  const st=document.getElementById(p+'-status'); if(st) st.selectedIndex=0;
+}
+async function saveNew(){
+  const name=document.getElementById('a-name').value.trim();
+  const email=document.getElementById('a-email').value.trim();
+  if(!name){ toast('Client name is required','warn'); return; }
+  if(!email){ toast('Email is required','warn'); return; }
+  const q={
+    id:uid(), name, email,
+    biz:document.getElementById('a-biz').value.trim(),
+    phone:document.getElementById('a-phone').value.trim(),
+    type:document.getElementById('a-type').value,
+    budget:document.getElementById('a-budget').value,
+    timeline:document.getElementById('a-timeline').value,
+    package:document.getElementById('a-package').value,
+    features:document.getElementById('a-features').value.trim(),
+    status:document.getElementById('a-status').value,
+    notes:document.getElementById('a-notes').value.trim(),
+    createdAt:new Date().toISOString()
+  };
+  const row=await insertNew(q);
+  if(row) q.id=row.id;
+  data.unshift(q); render();
+  closeModal('modal-add'); toast('Quote request saved');
+}
+
+function openEdit(id){
+  const q=data.find(x=>x.id===id); if(!q) return;
+  document.getElementById('e-id').value=id;
+  document.getElementById('e-name').value=q.name||'';
+  document.getElementById('e-biz').value=q.biz||'';
+  document.getElementById('e-email').value=q.email||'';
+  document.getElementById('e-phone').value=q.phone||'';
+  document.getElementById('e-type').value=q.type||'New Website';
+  document.getElementById('e-budget').value=q.budget||'Under $2,000';
+  document.getElementById('e-timeline').value=q.timeline||'ASAP';
+  document.getElementById('e-package').value=q.package||'';
+  document.getElementById('e-features').value=q.features||'';
+  document.getElementById('e-status').value=q.status||'new';
+  document.getElementById('e-notes').value=q.notes||'';
+  document.getElementById('modal-edit').classList.add('open');
+}
+function saveEdit(){
+  const id=document.getElementById('e-id').value;
+  const name=document.getElementById('e-name').value.trim();
+  if(!name){ toast('Client name is required','warn'); return; }
+  const q=data.find(x=>x.id===id); if(!q) return;
+  const updates={
+    name, biz:document.getElementById('e-biz').value.trim(),
+    email:document.getElementById('e-email').value.trim(),
+    phone:document.getElementById('e-phone').value.trim(),
+    type:document.getElementById('e-type').value,
+    budget:document.getElementById('e-budget').value,
+    timeline:document.getElementById('e-timeline').value,
+    package:document.getElementById('e-package').value,
+    features:document.getElementById('e-features').value.trim(),
+    status:document.getElementById('e-status').value,
+    notes:document.getElementById('e-notes').value.trim()
+  };
+  Object.assign(q,updates);
+  saveEdit_sb(id,{name,email:q.email,phone:q.phone,business:q.biz,project_type:q.type,timeline:q.timeline,package_selected:q.package,features:q.features,status:q.status,notes:q.notes});
+  render(); closeModal('modal-edit');
+  if(selId===id) openDetail(id);
+  toast('Request updated');
+}
+async function deleteQ(){
+  const id=document.getElementById('e-id').value;
+  if(!confirm('Delete this quote request?')) return;
+  await deleteRecord(id);
+  data=data.filter(x=>x.id!==id);
+  render(); closeModal('modal-edit'); closeDetail(); toast('Request deleted');
+}
+
+async function toLeadConvert(id){
+  const q=data.find(x=>x.id===id); if(!q) return;
+  try{
+    await _sb.from('contact_submissions').insert([{
+      name:q.name, email:q.email, phone:q.phone||null,
+      business:q.biz||null, project_type:q.type,
+      source:'Quote Request', goals:`Budget: ${q.budget}. Notes: ${q.notes||''}`,
+      status:'new'
+    }]);
+    q.status='contacted'; saveStatus(id,'contacted'); render();
+    if(selId===id) openDetail(id);
+    toast('Converted to lead — view in Leads');
+  } catch(e){ toast('Could not convert — try again','warn') }
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('open') }
+
+function toast(msg,type){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div'); t.className='toast';
+  const icon=type==='warn'?'warning':'check_circle';
+  const color=type==='warn'?'var(--amber)':'var(--green)';
+  t.innerHTML=`<span class="ms" style="font-size:16px;color:${color}">${icon}</span><span class="t-text">${msg}</span>`;
+  c.appendChild(t); setTimeout(()=>{t.classList.add('out'); setTimeout(()=>t.remove(),350)},3000);
+}
+
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-ov').classList.toggle('show') }
+function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-ov').classList.remove('show') }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal('modal-add'); closeModal('modal-edit'); closeDetail(); closeSidebar(); } });
+window.addEventListener('resize',()=>{ if(window.innerWidth>960) closeSidebar() });
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open') }));
+
+load();
+</script>
+</body>
+</html>

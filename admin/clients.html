@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Clients</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────── */
+:root {
+  --bg:          #090909;
+  --s0:          #101010;
+  --s1:          #161515;
+  --s2:          #1c1b1b;
+  --s3:          #242323;
+  --s4:          #2e2d2d;
+  --primary:     #adc6ff;
+  --primary-b:   #4d8eff;
+  --primary-dim: rgba(173,198,255,0.09);
+  --primary-glo: rgba(173,198,255,0.18);
+  --text:        #e6e3e2;
+  --text2:       #b4b9c7;
+  --muted:       #72768a;
+  --border:      rgba(255,255,255,0.040);
+  --border2:     rgba(255,255,255,0.072);
+  --border3:     rgba(255,255,255,0.110);
+  --glow:        rgba(173,198,255,0.22);
+  --green:       #6ee7b7;
+  --amber:       #fcd34d;
+  --red:         #fca5a5;
+  --purple:      #c4b5fd;
+  --fw-d:        'Bodoni Moda', Georgia, serif;
+  --fw-b:        'Hanken Grotesk', system-ui, sans-serif;
+  --fw-m:        'Geist', monospace;
+  --r:           12px;
+  --r-sm:        8px;
+  --r-lg:        16px;
+  --r-xl:        20px;
+  --sidebar:     256px;
+  --topbar:      62px;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--fw-b); font-size:14px; line-height:1.6; overflow:hidden }
+button,input,select,textarea { font-family:inherit }
+a { color:inherit; text-decoration:none }
+.ms { font-family:'Material Symbols Outlined'; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24; font-size:18px; vertical-align:middle; flex-shrink:0; font-style:normal }
+
+/* ── SHELL ──────────────────────────────────────── */
+#app { display:grid; grid-template-columns:var(--sidebar) 1fr; grid-template-rows:var(--topbar) 1fr; height:100vh; position:relative }
+
+/* ── SIDEBAR ────────────────────────────────────── */
+#sidebar {
+  grid-row:1/3; background:var(--s0); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; overflow:hidden; z-index:100;
+  transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)
+}
+.sb-logo { padding:22px 20px 18px; border-bottom:1px solid var(--border); flex-shrink:0 }
+.sb-logo-row { display:flex; align-items:center; gap:8px; margin-bottom:4px }
+.sb-logo-text { font-family:var(--fw-d); font-size:19px; font-weight:700; letter-spacing:-0.02em }
+.sb-logo-chip { font-family:var(--fw-m); font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--primary); background:var(--primary-dim); border:1px solid rgba(173,198,255,0.15); border-radius:4px; padding:2px 6px }
+.sb-tagline { font-family:var(--fw-m); font-size:9px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted) }
+.sb-nav { flex:1; padding:10px 8px; display:flex; flex-direction:column; gap:1px; overflow-y:auto; overflow-x:hidden }
+.sb-nav::-webkit-scrollbar { display:none }
+.sb-sec { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); padding:14px 12px 5px; opacity:0.45 }
+.ni { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-sm); cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; user-select:none; position:relative; min-height:40px }
+.ni:hover { background:rgba(255,255,255,0.03); color:var(--text2) }
+.ni.active { background:rgba(173,198,255,0.065); color:var(--primary) }
+.ni.active::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:2px; height:54%; background:var(--primary); border-radius:2px; box-shadow:0 0 10px var(--glow) }
+.ni .lbl { font-size:13px; font-weight:500 }
+.nb { margin-left:auto; background:var(--primary-dim); color:var(--primary); font-family:var(--fw-m); font-size:9px; font-weight:700; padding:2px 7px; border-radius:99px }
+.sb-foot { padding:10px 8px; border-top:1px solid var(--border); flex-shrink:0 }
+.user-pill { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--r-sm); background:rgba(255,255,255,0.02); border:1px solid var(--border); cursor:pointer; transition:background 0.13s }
+.user-pill:hover { background:rgba(255,255,255,0.045) }
+.u-av { width:30px; height:30px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:11px; font-weight:700; color:#001a42 }
+.u-name { font-size:12.5px; font-weight:600; color:var(--text) }
+.u-role { font-family:var(--fw-m); font-size:9px; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted) }
+
+/* ── TOPBAR ─────────────────────────────────────── */
+#topbar {
+  grid-column:2; background:rgba(16,16,16,0.9); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 28px; gap:10px; z-index:50
+}
+.tb-menu { display:none; width:36px; height:36px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; flex-shrink:0 }
+.tb-menu:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.tb-crumb { flex:1; display:flex; align-items:center; gap:8px; min-width:0 }
+.tb-root { font-family:var(--fw-m); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap }
+.tb-sep { color:var(--border3); font-size:16px }
+.tb-cur { font-size:13px; font-weight:600; color:var(--text); white-space:nowrap }
+.tb-acts { display:flex; align-items:center; gap:6px; flex-shrink:0 }
+.tb-icon { width:36px; height:36px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s }
+.tb-icon:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.tb-av { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:11px; font-weight:700; color:#001a42; cursor:pointer; flex-shrink:0 }
+
+/* ── MAIN ───────────────────────────────────────── */
+#main { grid-column:2; overflow:hidden; background:var(--bg); position:relative; display:flex; flex-direction:column }
+
+/* ── GLASS CARDS ────────────────────────────────── */
+.gc { background:rgba(20,19,19,0.55); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--border); border-top-color:var(--border2); border-radius:var(--r) }
+.gc-hi { background:rgba(24,23,23,0.72); backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px); border:1px solid var(--border2); border-top-color:var(--border3); border-radius:var(--r); box-shadow:0 20px 60px rgba(0,0,0,0.38) }
+
+/* ── BUTTONS ────────────────────────────────────── */
+.btn-p { display:inline-flex; align-items:center; gap:5px; padding:9px 18px; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); color:#001a42; font-weight:700; font-size:12.5px; border-radius:var(--r-sm); border:none; cursor:pointer; transition:transform 0.13s,box-shadow 0.13s; box-shadow:0 4px 20px rgba(173,198,255,0.18) }
+.btn-p:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(173,198,255,0.32) }
+.btn-p:active { transform:translateY(0) }
+.btn-g { display:inline-flex; align-items:center; gap:5px; padding:8px 14px; background:rgba(255,255,255,0.04); color:var(--text2); font-size:12.5px; font-weight:500; border-radius:var(--r-sm); border:1px solid var(--border); cursor:pointer; transition:background 0.13s,color 0.13s,border-color 0.13s }
+.btn-g:hover { background:rgba(255,255,255,0.08); color:var(--text); border-color:var(--border2) }
+.btn-g.active { background:var(--primary-dim); color:var(--primary); border-color:rgba(173,198,255,0.18) }
+.btn-icon { width:34px; height:34px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; flex-shrink:0 }
+.btn-icon:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+
+/* ── BADGES ─────────────────────────────────────── */
+.badge { display:inline-flex; align-items:center; padding:3px 8px; border-radius:99px; font-family:var(--fw-m); font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase }
+.b-blue   { background:rgba(173,198,255,0.09); color:var(--primary) }
+.b-green  { background:rgba(110,231,183,0.09); color:var(--green) }
+.b-amber  { background:rgba(252,211,77,0.09);  color:var(--amber) }
+.b-red    { background:rgba(252,165,165,0.09); color:var(--red) }
+.b-gray   { background:rgba(255,255,255,0.05); color:var(--muted) }
+.b-purple { background:rgba(196,181,253,0.09); color:var(--purple) }
+
+/* ── TOOLBAR ────────────────────────────────────── */
+#clients-toolbar { flex-shrink:0; padding:20px 28px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+.search-box { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--r-sm); padding:8px 13px; flex:1; max-width:320px; transition:border-color 0.2s,background 0.2s }
+.search-box:focus-within { border-color:rgba(173,198,255,0.22); background:rgba(255,255,255,0.04) }
+.search-box input { background:none; border:none; outline:none; color:var(--text); font-family:var(--fw-b); font-size:13px; width:100% }
+.search-box input::placeholder { color:var(--muted) }
+.view-toggle { display:flex; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden }
+.vt-btn { display:flex; align-items:center; gap:5px; padding:7px 12px; cursor:pointer; color:var(--muted); font-size:12px; font-weight:500; transition:background 0.13s,color 0.13s; border:none; background:none; white-space:nowrap }
+.vt-btn:hover { background:rgba(255,255,255,0.04); color:var(--text2) }
+.vt-btn.active { background:rgba(173,198,255,0.08); color:var(--primary) }
+
+/* ── KPI ROW ────────────────────────────────────── */
+#kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:16px 28px 0; flex-shrink:0 }
+.kpi { padding:18px 18px 14px; cursor:default; transition:border-color 0.18s,transform 0.18s; position:relative; overflow:hidden }
+.kpi:hover { border-color:rgba(173,198,255,0.10); transform:translateY(-1px) }
+.kpi-lbl { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:10px }
+.kpi-val { font-family:var(--fw-d); font-size:26px; font-weight:700; letter-spacing:-0.03em; color:var(--text); line-height:1 }
+.kpi-ghost { font-family:var(--fw-d); font-size:26px; font-weight:700; letter-spacing:-0.03em; color:rgba(255,255,255,0.08); line-height:1 }
+.kpi-sub { font-size:11.5px; color:var(--muted); margin-top:5px }
+
+/* ── FILTER BAR ─────────────────────────────────── */
+#filter-bar { display:none; flex-shrink:0; padding:12px 28px 0; gap:8px; flex-wrap:wrap; align-items:center }
+#filter-bar.open { display:flex }
+.filter-label { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-right:4px }
+.filter-chip { display:inline-flex; align-items:center; gap:5px; padding:5px 11px; border-radius:99px; font-family:var(--fw-m); font-size:10.5px; font-weight:600; letter-spacing:0.04em; cursor:pointer; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--text2); transition:background 0.13s,border-color 0.13s,color 0.13s; user-select:none }
+.filter-chip:hover { background:rgba(255,255,255,0.06); border-color:var(--border2) }
+.filter-chip.on { background:var(--primary-dim); border-color:rgba(173,198,255,0.2); color:var(--primary) }
+.filter-sep { width:1px; height:20px; background:var(--border2); margin:0 4px }
+select.filter-sel { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--r-sm); color:var(--text2); font-family:var(--fw-m); font-size:10.5px; padding:5px 10px; outline:none; letter-spacing:0.04em; cursor:pointer; transition:border-color 0.13s }
+select.filter-sel:focus { border-color:rgba(173,198,255,0.22) }
+.filter-clear { font-family:var(--fw-m); font-size:10px; color:var(--muted); cursor:pointer; padding:5px 8px; border-radius:var(--r-sm); transition:color 0.13s; text-decoration:underline; text-underline-offset:2px }
+.filter-clear:hover { color:var(--text2) }
+
+/* ── CONTENT ────────────────────────────────────── */
+#content { flex:1; overflow:hidden; padding:16px 28px 0; position:relative; display:flex; gap:0 }
+.view { display:none; flex:1; overflow:hidden; flex-direction:column }
+.view.active { display:flex }
+
+/* ── TABLE VIEW ─────────────────────────────────── */
+.tbl-wrap { flex:1; overflow-y:auto; border-radius:var(--r); border:1px solid var(--border); background:rgba(20,19,19,0.55) }
+.tbl-wrap::-webkit-scrollbar { width:4px }
+.tbl-wrap::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.05); border-radius:2px }
+table.dt { width:100%; border-collapse:collapse }
+table.dt th { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); position:sticky; top:0; background:rgba(16,16,16,0.95); backdrop-filter:blur(12px); white-space:nowrap; cursor:pointer; user-select:none; transition:color 0.13s }
+table.dt th:hover { color:var(--text2) }
+table.dt th.sort-asc::after { content:' ▲'; font-size:8px }
+table.dt th.sort-desc::after { content:' ▼'; font-size:8px }
+table.dt td { padding:12px 16px; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.025); color:var(--text2); transition:background 0.1s; vertical-align:middle; white-space:nowrap }
+table.dt tbody tr { cursor:pointer }
+table.dt tbody tr:hover td { background:rgba(255,255,255,0.025) }
+table.dt td.p { color:var(--text); font-weight:500 }
+.av { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:11px; font-weight:700; flex-shrink:0 }
+.av-blue   { background:linear-gradient(135deg,rgba(173,198,255,0.25),rgba(77,142,255,0.25)); color:var(--primary) }
+.av-green  { background:linear-gradient(135deg,rgba(110,231,183,0.20),rgba(52,211,153,0.20)); color:var(--green) }
+.av-amber  { background:linear-gradient(135deg,rgba(252,211,77,0.20),rgba(245,158,11,0.20)); color:var(--amber) }
+.av-purple { background:linear-gradient(135deg,rgba(196,181,253,0.20),rgba(139,92,246,0.20)); color:var(--purple) }
+.av-red    { background:linear-gradient(135deg,rgba(252,165,165,0.20),rgba(239,68,68,0.20)); color:var(--red) }
+
+/* ── GRID VIEW ──────────────────────────────────── */
+#view-grid { overflow-y:auto }
+#view-grid::-webkit-scrollbar { width:4px }
+#view-grid::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.05); border-radius:2px }
+.grid-board { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; align-content:start; padding-bottom:24px }
+.client-card { padding:18px; cursor:pointer; transition:transform 0.15s cubic-bezier(0.16,1,0.3,1),border-color 0.15s; position:relative; overflow:hidden }
+.client-card:hover { transform:translateY(-2px); border-color:rgba(173,198,255,0.14) }
+.client-card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(173,198,255,0.025) 0%,transparent 55%); opacity:0; transition:opacity 0.2s; pointer-events:none }
+.client-card:hover::after { opacity:1 }
+.cc-head { display:flex; align-items:flex-start; gap:12px; margin-bottom:13px }
+.cc-av-lg { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:16px; font-weight:700; flex-shrink:0 }
+.cc-name { font-size:13.5px; font-weight:600; color:var(--text); line-height:1.25; margin-bottom:2px }
+.cc-sub { font-size:11.5px; color:var(--muted); line-height:1.4 }
+.cc-badges { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:12px }
+.cc-mrr-row { display:flex; align-items:baseline; gap:4px; margin-bottom:12px }
+.cc-mrr-val { font-family:var(--fw-d); font-size:21px; font-weight:700; letter-spacing:-0.025em; color:var(--text); line-height:1 }
+.cc-mrr-unit { font-family:var(--fw-m); font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted) }
+.cc-foot { display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid rgba(255,255,255,0.038) }
+.cc-since { font-family:var(--fw-m); font-size:10px; color:var(--muted); display:flex; align-items:center; gap:4px }
+.cc-actions { display:flex; gap:4px; opacity:0; transition:opacity 0.15s }
+.client-card:hover .cc-actions { opacity:1 }
+@media (hover:none) { .cc-actions { opacity:1 } }
+
+/* ── DETAIL PANEL ───────────────────────────────── */
+#detail-panel {
+  width:0; flex-shrink:0; overflow:hidden;
+  transition:width 0.28s cubic-bezier(0.16,1,0.3,1);
+  background:var(--s0); border-left:1px solid var(--border);
+  display:flex; flex-direction:column
+}
+#detail-panel.open { width:380px }
+.dp-head { padding:18px 20px 14px; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px; flex-shrink:0 }
+.dp-close { width:30px; height:30px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; flex-shrink:0; margin-left:auto }
+.dp-close:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.dp-body { flex:1; overflow-y:auto; padding:18px 20px 28px }
+.dp-body::-webkit-scrollbar { width:3px }
+.dp-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.05); border-radius:2px }
+.dp-company { font-family:var(--fw-d); font-size:21px; font-weight:700; letter-spacing:-0.02em; margin-bottom:2px; line-height:1.2 }
+.dp-sub { font-size:12.5px; color:var(--text2) }
+.dp-section { margin-top:22px }
+.dp-sec-lbl { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; opacity:0.7 }
+.dp-field { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.028) }
+.dp-field:last-child { border:none }
+.dp-field-lbl { font-family:var(--fw-m); font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); width:80px; flex-shrink:0; padding-top:1px }
+.dp-field-val { font-size:12.5px; color:var(--text2); flex:1; word-break:break-word }
+.dp-val-strong { color:var(--text); font-weight:500 }
+.plan-pill { display:inline-block; background:rgba(255,255,255,0.03); border:1px solid var(--border2); border-radius:var(--r); padding:14px 16px; margin-top:10px; width:100% }
+.plan-pill-name { font-family:var(--fw-d); font-size:18px; font-weight:700; letter-spacing:-0.02em; margin-bottom:3px }
+.plan-pill-mrr { font-family:var(--fw-m); font-size:11px; font-weight:600; letter-spacing:0.06em; color:var(--muted) }
+.plan-pill-mrr span { font-size:15px; color:var(--green) }
+.tl-item { display:flex; gap:11px; padding:7px 0 }
+.tl-dot { width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0 }
+.tl-dot.blue  { background:var(--primary); box-shadow:0 0 6px var(--glow) }
+.tl-dot.green { background:var(--green) }
+.tl-dot.amber { background:var(--amber) }
+.tl-dot.red   { background:var(--red) }
+.tl-dot.gray  { background:rgba(255,255,255,0.15) }
+.tl-body { flex:1 }
+.tl-text { font-size:12.5px; color:var(--text2) }
+.tl-text strong { color:var(--text); font-weight:600 }
+.tl-time { font-family:var(--fw-m); font-size:10px; color:var(--muted) }
+
+/* ── EMPTY STATE ────────────────────────────────── */
+.empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:72px 32px; flex:1 }
+.es-icon-wrap { position:relative; margin-bottom:26px }
+.es-glow { position:absolute; inset:-24px; border-radius:50%; background:radial-gradient(ellipse,rgba(173,198,255,0.06) 0%,transparent 70%); pointer-events:none }
+.es-icon { width:68px; height:68px; border-radius:var(--r-xl); background:rgba(255,255,255,0.02); border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; position:relative }
+.es-icon .ms { font-size:28px; color:var(--muted) }
+.es-ring { position:absolute; inset:-8px; border-radius:calc(var(--r-xl) + 8px); border:1px solid rgba(173,198,255,0.05); pointer-events:none }
+.es-eyebrow { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--primary); margin-bottom:9px; opacity:0.65 }
+.es-title { font-family:var(--fw-d); font-size:24px; font-weight:700; letter-spacing:-0.02em; color:var(--text); margin-bottom:9px; line-height:1.2 }
+.es-desc { font-size:13px; color:var(--muted); max-width:340px; line-height:1.75; margin-bottom:24px }
+.es-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center }
+
+/* ── MODCL ──────────────────────────────────────── */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); z-index:500; display:none; align-items:center; justify-content:center; padding:20px }
+.modal-bg.open { display:flex }
+.modal { background:var(--s1); border:1px solid var(--border2); border-radius:var(--r-lg); width:100%; max-width:520px; max-height:90vh; overflow-y:auto; box-shadow:0 40px 100px rgba(0,0,0,0.7); animation:ma 0.22s cubic-bezier(0.16,1,0.3,1) }
+.modal::-webkit-scrollbar { display:none }
+@keyframes ma { from { opacity:0; transform:scale(0.96) translateY(8px) } to { opacity:1; transform:none } }
+.modal-head { display:flex; align-items:center; justify-content:space-between; padding:22px 24px 16px; border-bottom:1px solid var(--border) }
+.modal-title { font-family:var(--fw-d); font-size:20px; font-weight:700; letter-spacing:-0.02em }
+.modal-close { width:30px; height:30px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s }
+.modal-close:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.modal-body { padding:22px 24px }
+.form-row { margin-bottom:16px }
+.form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px }
+.form-lbl { font-family:var(--fw-m); font-size:9.5px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:7px }
+.form-inp { width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--r-sm); color:var(--text); font-family:var(--fw-b); font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s,background 0.2s; resize:none }
+.form-inp:focus { border-color:rgba(173,198,255,0.25); background:rgba(255,255,255,0.04) }
+.form-inp::placeholder { color:var(--muted) }
+select.form-inp { cursor:pointer }
+select.form-inp option { background:var(--s2) }
+.modal-foot { padding:16px 24px 22px; display:flex; align-items:center; justify-content:flex-end; gap:8px; border-top:1px solid var(--border) }
+
+/* ── TOAST ──────────────────────────────────────── */
+#toast-container { position:fixed; bottom:28px; right:28px; z-index:900; display:flex; flex-direction:column; gap:8px; pointer-events:none }
+.toast { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:var(--r); background:var(--s2); border:1px solid var(--border2); box-shadow:0 12px 40px rgba(0,0,0,0.5); animation:ta 0.22s cubic-bezier(0.16,1,0.3,1); min-width:240px; max-width:340px }
+@keyframes ta { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
+.toast.fadeout { opacity:0; transition:opacity 0.3s }
+.toast-icon { font-size:16px }
+.toast-msg { font-size:13px; color:var(--text2); flex:1 }
+.toast-msg strong { color:var(--text) }
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:960px) {
+  :root { --sidebar:0px }
+  #sidebar { position:fixed; left:0; top:0; height:100vh; width:256px; transform:translateX(-100%); z-index:200 }
+  #sidebar.open { transform:translateX(0) }
+  #app { grid-template-columns:1fr; grid-template-rows:var(--topbar) 1fr }
+  #main,#topbar { grid-column:1 }
+  .tb-menu { display:flex !important }
+  #kpi-row { grid-template-columns:repeat(2,1fr) }
+  #detail-panel.open { width:100%; position:fixed; right:0; top:0; height:100vh; z-index:300 }
+  .grid-board { grid-template-columns:repeat(auto-fill,minmax(240px,1fr)) }
+}
+@media(max-width:600px) {
+  #kpi-row { grid-template-columns:1fr 1fr; padding:12px 16px 0 }
+  #clients-toolbar { padding:14px 16px 0 }
+  #filter-bar { padding:10px 16px 0 }
+  #content { padding:12px 16px 0 }
+  .form-row-2 { grid-template-columns:1fr }
+  .grid-board { grid-template-columns:1fr }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── SIDEBAR ─────────────────────────────── -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row">
+      <span class="sb-logo-text">Ascendra</span>
+      <span class="sb-logo-chip">CRM</span>
+    </div>
+    <div class="sb-tagline">Growth Command</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni active" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span><span class="nb" id="sb-count">0</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <div class="user-pill">
+      <div class="u-av">DC</div>
+      <div>
+        <div class="u-name">Doris Cacarl</div>
+        <div class="u-role">Principal Director</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── TOPBAR ──────────────────────────────── -->
+<header id="topbar">
+  <button class="tb-menu" id="menu-btn" onclick="toggleSidebar()" style="display:none">
+    <span class="ms">menu</span>
+  </button>
+  <div class="tb-crumb">
+    <span class="tb-root">Ascendra</span>
+    <span class="tb-sep">/</span>
+    <span class="tb-cur">Clients</span>
+  </div>
+  <div class="tb-acts">
+    <div class="tb-icon" title="Notifications"><span class="ms">notifications</span></div>
+    <a href="dashboard.html"><div class="tb-icon" title="Command Center"><span class="ms">dashboard</span></div></a>
+    <div class="tb-av">DC</div>
+  </div>
+</header>
+
+<!-- ── MAIN ────────────────────────────────── -->
+<main id="main">
+
+  <!-- KPI ROW -->
+  <div id="kpi-row">
+    <div class="kpi gc">
+      <div class="kpi-lbl">Total Clients</div>
+      <div id="kpi-total" class="kpi-ghost">—</div>
+      <div class="kpi-sub" id="kpi-total-sub">No clients yet</div>
+    </div>
+    <div class="kpi gc">
+      <div class="kpi-lbl">Active</div>
+      <div id="kpi-active" class="kpi-ghost">—</div>
+      <div class="kpi-sub" id="kpi-active-sub">Onboarding included</div>
+    </div>
+    <div class="kpi gc">
+      <div class="kpi-lbl">Monthly Recurring</div>
+      <div id="kpi-mrr" class="kpi-ghost">—</div>
+      <div class="kpi-sub" id="kpi-mrr-sub">Active clients only</div>
+    </div>
+    <div class="kpi gc">
+      <div class="kpi-lbl">Avg. Monthly</div>
+      <div id="kpi-avg" class="kpi-ghost">—</div>
+      <div class="kpi-sub" id="kpi-avg-sub">Per active client</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div id="clients-toolbar">
+    <div class="search-box">
+      <span class="ms" style="font-size:15px;color:var(--muted)">search</span>
+      <input type="text" id="search-input" placeholder="Search clients, contacts, plans…" oninput="applyFilters()">
+    </div>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="vt-table" onclick="switchView('table')"><span class="ms" style="font-size:15px">table_rows</span> Table</button>
+      <button class="vt-btn" id="vt-grid" onclick="switchView('grid')"><span class="ms" style="font-size:15px">grid_view</span> Grid</button>
+    </div>
+    <button class="btn-g" onclick="toggleFilters()"><span class="ms">tune</span> Filters</button>
+    <button class="btn-p" onclick="openAddClient()"><span class="ms">add_business</span> Add Client</button>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div id="filter-bar">
+    <span class="filter-label">Status</span>
+    <span class="filter-chip" data-filter="status" data-val="active" onclick="toggleChip(this)">Active</span>
+    <span class="filter-chip" data-filter="status" data-val="onboarding" onclick="toggleChip(this)">Onboarding</span>
+    <span class="filter-chip" data-filter="status" data-val="paused" onclick="toggleChip(this)">Paused</span>
+    <span class="filter-chip" data-filter="status" data-val="churned" onclick="toggleChip(this)">Churned</span>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Plan</span>
+    <span class="filter-chip" data-filter="plan" data-val="foundation" onclick="toggleChip(this)">Foundation</span>
+    <span class="filter-chip" data-filter="plan" data-val="growth" onclick="toggleChip(this)">Growth</span>
+    <span class="filter-chip" data-filter="plan" data-val="authority" onclick="toggleChip(this)">Authority</span>
+    <span class="filter-chip" data-filter="plan" data-val="enterprise" onclick="toggleChip(this)">Enterprise</span>
+    <div class="filter-sep"></div>
+    <select class="filter-sel" id="sort-select" onchange="applyFilters()">
+      <option value="startedAt-desc">Newest first</option>
+      <option value="startedAt-asc">Oldest first</option>
+      <option value="mrr-desc">Highest MRR</option>
+      <option value="mrr-asc">Lowest MRR</option>
+      <option value="company-asc">Company A–Z</option>
+    </select>
+    <span class="filter-clear" onclick="clearFilters()">Clear all</span>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- TABLE VIEW -->
+    <div class="view active" id="view-table">
+      <div class="tbl-wrap">
+        <table class="dt" id="clients-table">
+          <thead>
+            <tr>
+              <th onclick="sortBy('company')">Company</th>
+              <th onclick="sortBy('contact')">Contact</th>
+              <th onclick="sortBy('status')">Status</th>
+              <th onclick="sortBy('plan')">Plan</th>
+              <th onclick="sortBy('mrr')">MRR</th>
+              <th onclick="sortBy('startedAt')">Client Since</th>
+              <th>Projects</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="clients-tbody"></tbody>
+        </table>
+        <div id="table-empty" class="empty-state" style="display:none">
+          <div class="es-icon-wrap">
+            <div class="es-glow"></div>
+            <div class="es-icon"><span class="ms">domain</span><div class="es-ring"></div></div>
+          </div>
+          <div class="es-eyebrow">Client Roster</div>
+          <div class="es-title">No clients yet</div>
+          <div class="es-desc">Add your first client to track active relationships, service plans, and monthly recurring revenue.</div>
+          <div class="es-actions">
+            <button class="btn-p" onclick="openAddClient()"><span class="ms">add_business</span> Add First Client</button>
+          </div>
+        </div>
+        <div id="table-no-results" class="empty-state" style="display:none">
+          <div class="es-icon-wrap">
+            <div class="es-glow"></div>
+            <div class="es-icon"><span class="ms">search_off</span><div class="es-ring"></div></div>
+          </div>
+          <div class="es-eyebrow">No Matches</div>
+          <div class="es-title">Nothing found</div>
+          <div class="es-desc">Try adjusting your search or filter criteria.</div>
+          <div class="es-actions">
+            <button class="btn-g" onclick="clearFilters()">Clear filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div class="view" id="view-grid">
+      <div class="grid-board" id="grid-board" style="display:none"></div>
+      <div id="grid-empty" class="empty-state" style="display:none">
+        <div class="es-icon-wrap">
+          <div class="es-glow"></div>
+          <div class="es-icon"><span class="ms">domain</span><div class="es-ring"></div></div>
+        </div>
+        <div class="es-eyebrow">Client Roster</div>
+        <div class="es-title">No clients yet</div>
+        <div class="es-desc">Add your first client to start building your roster.</div>
+        <div class="es-actions">
+          <button class="btn-p" onclick="openAddClient()"><span class="ms">add_business</span> Add First Client</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div id="detail-panel">
+      <div class="dp-head">
+        <div style="flex:1;min-width:0">
+          <div class="dp-company" id="dp-company">—</div>
+          <div class="dp-sub" id="dp-sub">—</div>
+        </div>
+        <div class="dp-close" onclick="closeDetail()"><span class="ms">close</span></div>
+      </div>
+      <div class="dp-body" id="dp-body"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── ADD CLIENT MODCL ───────────────── -->
+<div class="modal-bg" id="modal-add">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Add Client</div>
+      <div class="modal-close" onclick="closeModal('modal-add')"><span class="ms">close</span></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-row-2">
+        <div><div class="form-lbl">Company *</div><input class="form-inp" id="f-company" placeholder="Acme Corp" type="text"></div>
+        <div><div class="form-lbl">Contact Name *</div><input class="form-inp" id="f-contact" placeholder="Jane Smith" type="text"></div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Role / Title</div><input class="form-inp" id="f-role" placeholder="CEO" type="text"></div>
+        <div><div class="form-lbl">Industry</div><input class="form-inp" id="f-industry" placeholder="Restaurant, Medical…" type="text"></div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Email</div><input class="form-inp" id="f-email" placeholder="jane@acme.com" type="email"></div>
+        <div><div class="form-lbl">Phone</div><input class="form-inp" id="f-phone" placeholder="+1 555 000 0000" type="tel"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-lbl">Website</div>
+        <input class="form-inp" id="f-website" placeholder="https://acme.com" type="url">
+      </div>
+      <div class="form-row-2">
+        <div>
+          <div class="form-lbl">Status</div>
+          <select class="form-inp" id="f-status">
+            <option value="onboarding">Onboarding</option>
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+            <option value="churned">Churned</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-lbl">Service Plan</div>
+          <select class="form-inp" id="f-plan">
+            <option value="foundation">Foundation</option>
+            <option value="growth" selected>Growth</option>
+            <option value="authority">Authority</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Monthly Retainer ($)</div><input class="form-inp" id="f-mrr" placeholder="3000" type="number" min="0"></div>
+        <div><div class="form-lbl">Client Since</div><input class="form-inp" id="f-started" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-lbl">Notes</div>
+        <textarea class="form-inp" id="f-notes" rows="3" placeholder="Key goals, special arrangements, context…"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('modal-add')">Cancel</button>
+      <button class="btn-p" onclick="saveClient()"><span class="ms">check</span> Save Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── EDIT CLIENT MODCL ──────────────── -->
+<div class="modal-bg" id="modal-edit">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Edit Client</div>
+      <div class="modal-close" onclick="closeModal('modal-edit')"><span class="ms">close</span></div>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="e-id">
+      <div class="form-row-2">
+        <div><div class="form-lbl">Company *</div><input class="form-inp" id="e-company" type="text"></div>
+        <div><div class="form-lbl">Contact Name *</div><input class="form-inp" id="e-contact" type="text"></div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Role / Title</div><input class="form-inp" id="e-role" type="text"></div>
+        <div><div class="form-lbl">Industry</div><input class="form-inp" id="e-industry" type="text"></div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Email</div><input class="form-inp" id="e-email" type="email"></div>
+        <div><div class="form-lbl">Phone</div><input class="form-inp" id="e-phone" type="tel"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-lbl">Website</div>
+        <input class="form-inp" id="e-website" type="url">
+      </div>
+      <div class="form-row-2">
+        <div>
+          <div class="form-lbl">Status</div>
+          <select class="form-inp" id="e-status">
+            <option value="onboarding">Onboarding</option>
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+            <option value="churned">Churned</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-lbl">Service Plan</div>
+          <select class="form-inp" id="e-plan">
+            <option value="foundation">Foundation</option>
+            <option value="growth">Growth</option>
+            <option value="authority">Authority</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div><div class="form-lbl">Monthly Retainer ($)</div><input class="form-inp" id="e-mrr" type="number" min="0"></div>
+        <div><div class="form-lbl">Client Since</div><input class="form-inp" id="e-started" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-lbl">Notes</div>
+        <textarea class="form-inp" id="e-notes" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="deleteClient()" style="color:var(--red);border-color:rgba(252,165,165,0.15);margin-right:auto"><span class="ms" style="font-size:15px">delete</span> Delete</button>
+      <button class="btn-g" onclick="closeModal('modal-edit')">Cancel</button>
+      <button class="btn-p" onclick="updateClient()"><span class="ms">check</span> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+/* ═══════════ STATE ═══════════ */
+const STORAGE_KEY = 'ascendra_clients_v1';
+let clients = [];
+let activeFilters = { status:[], plan:[] };
+let sortField = 'startedAt';
+let sortDir = 'desc';
+let selectedId = null;
+let currentView = 'table';
+
+const STATUS_LABELS = { active:'Active', onboarding:'Onboarding', paused:'Paused', churned:'Churned' };
+const STATUS_BADGE  = { active:'b-green', onboarding:'b-blue', paused:'b-amber', churned:'b-red' };
+const PLAN_LABELS   = { foundation:'Foundation', growth:'Growth', authority:'Authority', enterprise:'Enterprise' };
+const PLAN_BADGE    = { foundation:'b-gray', growth:'b-blue', authority:'b-amber', enterprise:'b-purple' };
+const AV_COLORS     = ['av-blue','av-green','av-amber','av-purple','av-red'];
+
+/* ═══════════ STORAGE ═════════ */
+function loadData()  { try { clients = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { clients = []; } }
+function saveData()  { localStorage.setItem(STORAGE_KEY, JSON.stringify(clients)); }
+function uid()       { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function esc(s)      { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function avColor(s)  { let h=0; for(const c of s) h=(h*31+c.charCodeAt(0))|0; return AV_COLORS[Math.abs(h)%AV_COLORS.length]; }
+function initials(s) { return (s||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+
+function fmtMRR(v) {
+  if (!v) return '—';
+  const n = parseInt(v);
+  if (n >= 1000) return '$'+(n/1000).toFixed(n%1000===0?0:1)+'K';
+  return '$'+n.toLocaleString();
+}
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+function monthsSince(iso) {
+  if (!iso) return 0;
+  const d = new Date(iso), now = new Date();
+  return Math.max(0,(now.getFullYear()-d.getFullYear())*12+(now.getMonth()-d.getMonth()));
+}
+function tenureLabel(iso) {
+  const m = monthsSince(iso);
+  if (m === 0) return 'Just started';
+  if (m === 1) return '1 month';
+  if (m < 12)  return m+' months';
+  const yr = Math.floor(m/12), rem = m%12;
+  return yr+'yr'+(rem?` ${rem}mo`:'');
+}
+
+/* ═══════════ KPIs ════════════ */
+function updateKPIs() {
+  const active   = clients.filter(c=>c.status==='active');
+  const engaged  = clients.filter(c=>c.status==='active'||c.status==='onboarding');
+  const totalMRR = active.reduce((s,c)=>s+(parseInt(c.mrr)||0),0);
+  const avgMRR   = active.length ? Math.round(totalMRR/active.length) : null;
+  const churned  = clients.filter(c=>c.status==='churned').length;
+
+  const g = id => document.getElementById(id);
+
+  if (clients.length === 0) {
+    ['kpi-total','kpi-active','kpi-mrr','kpi-avg'].forEach(id=>{ g(id).className='kpi-ghost'; g(id).textContent='—'; });
+    g('kpi-total-sub').textContent='No clients yet';
+    g('kpi-active-sub').textContent='Onboarding included';
+    g('kpi-mrr-sub').textContent='Active clients only';
+    g('kpi-avg-sub').textContent='Per active client';
+  } else {
+    g('kpi-total').className='kpi-val'; g('kpi-total').textContent=clients.length;
+    g('kpi-total-sub').textContent=churned ? churned+' churned' : 'All accounts';
+    g('kpi-active').className='kpi-val'; g('kpi-active').textContent=engaged.length;
+    g('kpi-active-sub').textContent=clients.filter(c=>c.status==='onboarding').length+' onboarding';
+    g('kpi-mrr').className='kpi-val'; g('kpi-mrr').textContent=totalMRR ? fmtMRR(totalMRR) : '$0';
+    g('kpi-mrr-sub').textContent='From '+active.length+' active';
+    g('kpi-avg').className='kpi-val'; g('kpi-avg').textContent=avgMRR ? fmtMRR(avgMRR) : '—';
+    g('kpi-avg-sub').textContent=active.length ? 'Across '+active.length+' active' : 'No active clients';
+  }
+  document.getElementById('sb-count').textContent = clients.length;
+}
+
+/* ═══════════ FILTERS ═════════ */
+function applyFilters() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  const sv = document.getElementById('sort-select').value;
+  [sortField, sortDir] = sv.split('-');
+
+  let filtered = clients.filter(c => {
+    if (activeFilters.status.length && !activeFilters.status.includes(c.status)) return false;
+    if (activeFilters.plan.length   && !activeFilters.plan.includes(c.plan))     return false;
+    if (q) {
+      const hay = [c.company,c.contact,c.role,c.email,c.industry,c.notes,PLAN_LABELS[c.plan]||''].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a,b) => {
+    let av = a[sortField]||'', bv = b[sortField]||'';
+    if (sortField==='mrr') { av=parseInt(av)||0; bv=parseInt(bv)||0; }
+    if (av<bv) return sortDir==='asc'?-1:1;
+    if (av>bv) return sortDir==='asc'?1:-1;
+    return 0;
+  });
+
+  renderTable(filtered);
+  renderGrid(filtered);
+  updateKPIs();
+}
+
+function toggleFilters() { document.getElementById('filter-bar').classList.toggle('open'); }
+function toggleChip(el) {
+  el.classList.toggle('on');
+  const {filter,val} = el.dataset;
+  if (el.classList.contains('on')) activeFilters[filter].push(val);
+  else activeFilters[filter] = activeFilters[filter].filter(v=>v!==val);
+  applyFilters();
+}
+function clearFilters() {
+  activeFilters = {status:[],plan:[]};
+  document.querySelectorAll('.filter-chip.on').forEach(c=>c.classList.remove('on'));
+  document.getElementById('search-input').value='';
+  document.getElementById('sort-select').value='startedAt-desc';
+  applyFilters();
+}
+function sortBy(field) {
+  if (sortField===field) sortDir=sortDir==='asc'?'desc':'asc';
+  else { sortField=field; sortDir='asc'; }
+  document.querySelectorAll('table.dt th').forEach(th=>th.classList.remove('sort-asc','sort-desc'));
+  const map={company:0,contact:1,status:2,plan:3,mrr:4,startedAt:5};
+  if (map[field]!==undefined) {
+    const ths=document.querySelectorAll('table.dt th');
+    if(ths[map[field]]) ths[map[field]].classList.add(sortDir==='asc'?'sort-asc':'sort-desc');
+  }
+  document.getElementById('sort-select').value=sortField+'-'+sortDir;
+  applyFilters();
+}
+
+/* ═══════════ TABLE ═══════════ */
+function renderTable(filtered) {
+  const tbody = document.getElementById('clients-tbody');
+  const tbl   = document.getElementById('clients-table');
+  const empty = document.getElementById('table-empty');
+  const noRes = document.getElementById('table-no-results');
+
+  tbody.innerHTML = '';
+  if (clients.length===0) { tbl.style.display='none'; empty.style.display='flex'; noRes.style.display='none'; return; }
+  if (filtered.length===0){ tbl.style.display='none'; empty.style.display='none'; noRes.style.display='flex'; return; }
+  tbl.style.display='table'; empty.style.display='none'; noRes.style.display='none';
+
+  filtered.forEach(c => {
+    const mo = monthsSince(c.startedAt);
+    const tr = document.createElement('tr');
+    tr.onclick = () => openDetail(c.id);
+    tr.innerHTML = `
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div class="av ${avColor(c.company)}">${initials(c.company)}</div>
+        <span class="p">${esc(c.company)}</span>
+      </div></td>
+      <td>${esc(c.contact)}${c.role?`<span style="color:var(--muted);font-size:11px"> · ${esc(c.role)}</span>`:''}</td>
+      <td><span class="badge ${STATUS_BADGE[c.status]||'b-gray'}">${STATUS_LABELS[c.status]||c.status}</span></td>
+      <td><span class="badge ${PLAN_BADGE[c.plan]||'b-gray'}">${PLAN_LABELS[c.plan]||c.plan}</span></td>
+      <td class="p">${c.mrr?'$'+parseInt(c.mrr).toLocaleString()+'/mo':'—'}</td>
+      <td>${fmtDate(c.startedAt)}${mo?`<span style="color:var(--muted);font-size:11px"> · ${mo}mo</span>`:''}</td>
+      <td><span style="color:var(--text2)">${c.projectCount||0} project${(c.projectCount||0)!==1?'s':''}</span></td>
+      <td>
+        <div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
+          <div class="btn-icon" title="Edit" onclick="openEditModal('${c.id}')"><span class="ms" style="font-size:14px">edit</span></div>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ═══════════ GRID ════════════ */
+function renderGrid(filtered) {
+  const board = document.getElementById('grid-board');
+  const empty = document.getElementById('grid-empty');
+
+  if (clients.length===0 || filtered.length===0) {
+    board.style.display='none'; empty.style.display='flex'; return;
+  }
+  board.style.display='grid'; empty.style.display='none';
+  board.innerHTML = filtered.map(c => {
+    const mo = monthsSince(c.startedAt);
+    const since = mo===0?'Just started':mo===1?'1 month':mo<12?mo+' months':Math.floor(mo/12)+'yr'+(mo%12?` ${mo%12}mo`:'');
+    return `<div class="client-card gc" onclick="openDetail('${c.id}')">
+      <div class="cc-head">
+        <div class="av ${avColor(c.company)} cc-av-lg" style="width:42px;height:42px;border-radius:12px;font-size:16px">${initials(c.company)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="cc-name">${esc(c.company)}</div>
+          <div class="cc-sub">${esc(c.contact)}${c.role?` · ${esc(c.role)}`:''}</div>
+        </div>
+      </div>
+      <div class="cc-badges">
+        <span class="badge ${STATUS_BADGE[c.status]||'b-gray'}">${STATUS_LABELS[c.status]||c.status}</span>
+        <span class="badge ${PLAN_BADGE[c.plan]||'b-gray'}">${PLAN_LABELS[c.plan]||c.plan}</span>
+      </div>
+      <div class="cc-mrr-row">
+        <span class="cc-mrr-val">${c.mrr?fmtMRR(c.mrr):'—'}</span>
+        ${c.mrr?'<span class="cc-mrr-unit">/mo</span>':''}
+      </div>
+      <div class="cc-foot">
+        <span class="cc-since"><span class="ms" style="font-size:12px;margin-right:3px">schedule</span>${since}</span>
+        <div class="cc-actions" onclick="event.stopPropagation()">
+          <div class="btn-icon" title="Edit" onclick="openEditModal('${c.id}')"><span class="ms" style="font-size:13px">edit</span></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════ VIEW SWITCH ═════ */
+function switchView(v) {
+  currentView = v;
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.getElementById('vt-'+v).classList.add('active');
+}
+
+/* ═══════════ DETAIL PANEL ════ */
+function openDetail(id) {
+  const c = clients.find(x=>x.id===id);
+  if (!c) return;
+  selectedId = id;
+
+  document.getElementById('dp-company').textContent = c.company;
+  document.getElementById('dp-sub').textContent = c.contact + (c.role?` · ${c.role}`:'');
+
+  const mo = monthsSince(c.startedAt);
+  const totalBilled = (parseInt(c.mrr)||0) * mo;
+  const dotColor = {active:'green',onboarding:'blue',paused:'amber',churned:'red'}[c.status]||'gray';
+
+  document.getElementById('dp-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <span class="badge ${STATUS_BADGE[c.status]||'b-gray'}" style="padding:4px 10px">${STATUS_LABELS[c.status]||c.status}</span>
+      <span class="badge ${PLAN_BADGE[c.plan]||'b-gray'}" style="padding:4px 10px">${PLAN_LABELS[c.plan]||c.plan}</span>
+    </div>
+
+    <div class="plan-pill">
+      <div class="plan-pill-name">${PLAN_LABELS[c.plan]||c.plan} Plan</div>
+      <div class="plan-pill-mrr">${c.mrr?`<span>$${parseInt(c.mrr).toLocaleString()}/mo</span> monthly retainer`:'No retainer set'}</div>
+      ${totalBilled?`<div style="font-family:var(--fw-m);font-size:10px;color:var(--muted);margin-top:6px">~$${totalBilled.toLocaleString()} total · ${mo} month${mo!==1?'s':''}</div>`:''}
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-sec-lbl">Contact</div>
+      ${c.email?`<div class="dp-field"><span class="dp-field-lbl">Email</span><span class="dp-field-val dp-val-strong">${esc(c.email)}</span></div>`:''}
+      ${c.phone?`<div class="dp-field"><span class="dp-field-lbl">Phone</span><span class="dp-field-val">${esc(c.phone)}</span></div>`:''}
+      ${c.website?`<div class="dp-field"><span class="dp-field-lbl">Website</span><span class="dp-field-val"><a href="${esc(c.website)}" target="_blank" rel="noopener" style="color:var(--primary)">${esc(c.website.replace(/^https?:\/\//,''))}</a></span></div>`:''}
+      ${c.industry?`<div class="dp-field"><span class="dp-field-lbl">Industry</span><span class="dp-field-val">${esc(c.industry)}</span></div>`:''}
+      ${c.startedAt?`<div class="dp-field"><span class="dp-field-lbl">Since</span><span class="dp-field-val">${fmtDate(c.startedAt)}${mo?` (${tenureLabel(c.startedAt)})`:''}</span></div>`:''}
+      <div class="dp-field"><span class="dp-field-lbl">Projects</span><span class="dp-field-val">${c.projectCount||0} project${(c.projectCount||0)!==1?'s':''}</span></div>
+    </div>
+
+    ${c.notes?`
+    <div class="dp-section">
+      <div class="dp-sec-lbl">Notes</div>
+      <div style="font-size:12.5px;color:var(--text2);line-height:1.75;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px">${esc(c.notes)}</div>
+    </div>`:''}
+
+    <div class="dp-section">
+      <div class="dp-sec-lbl">Timeline</div>
+      ${c.startedAt?`<div class="tl-item"><div class="tl-dot blue"></div><div class="tl-body"><div class="tl-text"><strong>Joined as client</strong></div><div class="tl-time">${fmtDate(c.startedAt)}</div></div></div>`:''}
+      <div class="tl-item"><div class="tl-dot ${dotColor}"></div><div class="tl-body"><div class="tl-text"><strong>Status: ${STATUS_LABELS[c.status]||c.status}</strong></div><div class="tl-time">Current</div></div></div>
+      <div class="tl-item"><div class="tl-dot gray"></div><div class="tl-body"><div class="tl-text">Record created</div><div class="tl-time">${fmtDate(c.createdAt)}</div></div></div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:22px">
+      <button class="btn-g" style="flex:1" onclick="openEditModal('${c.id}')"><span class="ms" style="font-size:15px">edit</span> Edit</button>
+    </div>`;
+
+  document.getElementById('detail-panel').classList.add('open');
+}
+
+function closeDetail() {
+  selectedId = null;
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+/* ═══════════ MODCLS ══════════ */
+function openAddClient() {
+  ['f-company','f-contact','f-role','f-industry','f-email','f-phone','f-website','f-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-status').value = 'onboarding';
+  document.getElementById('f-plan').value   = 'growth';
+  document.getElementById('f-mrr').value    = '';
+  document.getElementById('f-started').value = new Date().toISOString().slice(0,10);
+  openModal('modal-add');
+}
+
+function saveClient() {
+  const company = document.getElementById('f-company').value.trim();
+  const contact = document.getElementById('f-contact').value.trim();
+  if (!company || !contact) { toast('Company and contact are required.','⚠'); return; }
+
+  clients.unshift({
+    id:uid(), company, contact,
+    role:     document.getElementById('f-role').value.trim(),
+    industry: document.getElementById('f-industry').value.trim(),
+    email:    document.getElementById('f-email').value.trim(),
+    phone:    document.getElementById('f-phone').value.trim(),
+    website:  document.getElementById('f-website').value.trim(),
+    status:   document.getElementById('f-status').value,
+    plan:     document.getElementById('f-plan').value,
+    mrr:      parseInt(document.getElementById('f-mrr').value)||0,
+    startedAt:document.getElementById('f-started').value,
+    notes:    document.getElementById('f-notes').value.trim(),
+    projectCount:0,
+    createdAt:new Date().toISOString()
+  });
+  saveData(); closeModal('modal-add'); applyFilters();
+  toast(`<strong>${esc(company)}</strong> added to clients.`,'✓');
+}
+
+function openEditModal(id) {
+  const c = clients.find(x=>x.id===id);
+  if (!c) return;
+  document.getElementById('e-id').value      = c.id;
+  document.getElementById('e-company').value = c.company||'';
+  document.getElementById('e-contact').value = c.contact||'';
+  document.getElementById('e-role').value    = c.role||'';
+  document.getElementById('e-industry').value= c.industry||'';
+  document.getElementById('e-email').value   = c.email||'';
+  document.getElementById('e-phone').value   = c.phone||'';
+  document.getElementById('e-website').value = c.website||'';
+  document.getElementById('e-status').value  = c.status||'active';
+  document.getElementById('e-plan').value    = c.plan||'growth';
+  document.getElementById('e-mrr').value     = c.mrr||'';
+  document.getElementById('e-started').value = c.startedAt||'';
+  document.getElementById('e-notes').value   = c.notes||'';
+  openModal('modal-edit');
+}
+
+function updateClient() {
+  const id      = document.getElementById('e-id').value;
+  const company = document.getElementById('e-company').value.trim();
+  const contact = document.getElementById('e-contact').value.trim();
+  if (!company || !contact) { toast('Company and contact are required.','⚠'); return; }
+  const idx = clients.findIndex(x=>x.id===id);
+  if (idx===-1) return;
+  clients[idx] = { ...clients[idx], company, contact,
+    role:     document.getElementById('e-role').value.trim(),
+    industry: document.getElementById('e-industry').value.trim(),
+    email:    document.getElementById('e-email').value.trim(),
+    phone:    document.getElementById('e-phone').value.trim(),
+    website:  document.getElementById('e-website').value.trim(),
+    status:   document.getElementById('e-status').value,
+    plan:     document.getElementById('e-plan').value,
+    mrr:      parseInt(document.getElementById('e-mrr').value)||0,
+    startedAt:document.getElementById('e-started').value,
+    notes:    document.getElementById('e-notes').value.trim()
+  };
+  saveData(); closeModal('modal-edit');
+  if (selectedId===id) openDetail(id);
+  applyFilters();
+  toast(`<strong>${esc(company)}</strong> updated.`,'✓');
+}
+
+function deleteClient() {
+  const id = document.getElementById('e-id').value;
+  const c  = clients.find(x=>x.id===id);
+  if (!c || !confirm(`Delete ${c.company}? This cannot be undone.`)) return;
+  clients = clients.filter(x=>x.id!==id);
+  saveData(); closeModal('modal-edit');
+  if (selectedId===id) closeDetail();
+  applyFilters();
+  toast(`<strong>${esc(c.company)}</strong> deleted.`,'🗑');
+}
+
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+/* ═══════════ SIDEBAR ═════════ */
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  const sb=document.getElementById('sidebar'), btn=document.getElementById('menu-btn');
+  if (sb.classList.contains('open') && !sb.contains(e.target) && e.target!==btn) sb.classList.remove('open');
+});
+
+/* ═══════════ TOAST ═══════════ */
+function toast(msg, icon='✓') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className='toast';
+  t.innerHTML=`<span class="toast-icon">${icon}</span><span class="toast-msg">${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(()=>{ t.classList.add('fadeout'); setTimeout(()=>t.remove(),320); },3000);
+}
+
+/* ═══════════ MOBILE CHECK ════ */
+function checkMobile() {
+  const btn=document.getElementById('menu-btn');
+  if (window.innerWidth<=960) btn.style.display='flex';
+  else { btn.style.display='none'; document.getElementById('sidebar').classList.remove('open'); }
+}
+window.addEventListener('resize', checkMobile);
+checkMobile();
+
+/* ═══════════ MODCL BACKDROP ══ */
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e=>{ if(e.target===bg) bg.classList.remove('open'); });
+});
+
+/* ═══════════ INIT ════════════ */
+loadData();
+applyFilters();
+</script>
+</body>
+</html>

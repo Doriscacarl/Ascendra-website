@@ -233,6 +233,144 @@
   </div>
 </section>
 
+<!-- Send Us a Message Section -->
+<section id="message" class="py-24 md:py-32 px-6 md:px-16 bg-charcoal border-t border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="max-w-[760px] mx-auto">
+      <div class="reveal text-center mb-12">
+        <span class="eyebrow text-pewter block mb-4">Quick Message</span>
+        <h2 class="font-editorial font-bold platinum-text mb-4" style="font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;">Send Us a <em class="italic font-normal">Message</em></h2>
+        <p class="text-silver font-body text-base leading-relaxed font-light">Have a quick question? Send a direct message and we'll respond within 24 hours.</p>
+      </div>
+      <div class="reveal card-elevated p-8 md:p-12" style="transition-delay:120ms;" id="msgCardWrapper">
+        <form id="messageForm" onsubmit="return handleMessageSubmit(event)">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+            <div>
+              <label class="eyebrow text-pewter block mb-2">Full Name *</label>
+              <input type="text" name="name" placeholder="John Smith" class="form-input" required>
+            </div>
+            <div>
+              <label class="eyebrow text-pewter block mb-2">Business Name</label>
+              <input type="text" name="business_name" placeholder="Company Name" class="form-input">
+            </div>
+            <div>
+              <label class="eyebrow text-pewter block mb-2">Email Address *</label>
+              <input type="email" name="email" placeholder="john@company.com" class="form-input" required>
+            </div>
+            <div>
+              <label class="eyebrow text-pewter block mb-2">Phone Number</label>
+              <input type="tel" name="phone" placeholder="+1 555 000 0000" class="form-input">
+            </div>
+          </div>
+          <div class="mb-8">
+            <label class="eyebrow text-pewter block mb-2">Subject *</label>
+            <input type="text" name="subject" placeholder="What is your message about?" class="form-input" required>
+          </div>
+          <div class="mb-8">
+            <label class="eyebrow text-pewter block mb-2">Message *</label>
+            <textarea name="message" placeholder="Write your message here..." class="form-input" rows="5" style="resize:vertical;" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary w-full justify-center">
+            Send Message
+            <span class="material-symbols-outlined" style="font-size:16px;">send</span>
+          </button>
+          <p class="text-pewter text-xs font-body mt-4 text-center">We respond to all messages within 24 hours.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Website Audit Section -->
+<section id="audit" class="py-24 md:py-32 px-6 md:px-16 bg-void border-t border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+      <div class="lg:col-span-4 reveal">
+        <div class="lg:sticky top-28 flex flex-col gap-6">
+          <div>
+            <span class="eyebrow text-pewter block mb-4">Free Website Audit</span>
+            <h2 class="font-editorial font-bold platinum-text mb-4" style="font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;letter-spacing:-0.03em;">Already Have a Website?</h2>
+            <p class="text-silver font-body text-sm leading-relaxed">We'll analyse your current site — performance, design, conversion rate, and SEO — and show you exactly what's holding your business back.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="flex items-start gap-3"><span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span><span class="text-silver text-sm font-body">Complete design &amp; UX review</span></div>
+            <div class="flex items-start gap-3"><span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span><span class="text-silver text-sm font-body">Mobile performance analysis</span></div>
+            <div class="flex items-start gap-3"><span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span><span class="text-silver text-sm font-body">Conversion rate assessment</span></div>
+            <div class="flex items-start gap-3"><span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span><span class="text-silver text-sm font-body">Growth opportunities report</span></div>
+          </div>
+          <div class="card p-5">
+            <p class="font-mono text-platinum text-xs font-medium mb-1">Completely Free</p>
+            <p class="text-pewter text-xs font-body leading-relaxed">No cost, no obligation. We deliver the audit within 48 hours of your submission.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-8 reveal" style="transition-delay:120ms;">
+        <div class="card-elevated p-8 md:p-12" id="auditCardWrapper">
+          <h3 class="font-editorial font-bold text-platinum mb-8" style="font-size:1.6rem;letter-spacing:-0.02em;">Request a Free Website Audit</h3>
+          <form id="auditForm" onsubmit="return handleAuditSubmit(event)">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Full Name *</label>
+                <input type="text" name="name" placeholder="John Smith" class="form-input" required>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Business Name</label>
+                <input type="text" name="business_name" placeholder="Company Name" class="form-input">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Email Address *</label>
+                <input type="email" name="email" placeholder="john@company.com" class="form-input" required>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Phone Number</label>
+                <input type="tel" name="phone" placeholder="+1 555 000 0000" class="form-input">
+              </div>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">Current Website URL *</label>
+              <input type="url" name="website_url" placeholder="https://your-website.com" class="form-input" required>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Budget Range</label>
+                <select name="budget" class="select-custom">
+                  <option value="">Select budget...</option>
+                  <option>Under $2,000</option>
+                  <option>$2,000 – $5,000</option>
+                  <option>$5,000 – $10,000</option>
+                  <option>$10,000 – $25,000</option>
+                  <option>$25,000+</option>
+                  <option>Not Sure Yet</option>
+                </select>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Timeline</label>
+                <select name="timeline" class="select-custom">
+                  <option value="">Select timeline...</option>
+                  <option>As soon as possible</option>
+                  <option>Within 1 month</option>
+                  <option>Within 3 months</option>
+                  <option>Within 6 months</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">What's not working on your current site?</label>
+              <textarea name="goals" placeholder="Outdated design, poor mobile experience, low traffic, not converting visitors, missing booking system…" class="form-input" rows="4" style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full justify-center">
+              Request Free Audit
+              <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>
+            </button>
+            <p class="text-pewter text-xs font-body mt-4 text-center">Audit delivered within 48 hours. Completely free, no obligation.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Assurance section -->
 <section class="py-20 px-6 md:px-16 bg-charcoal border-t border-white/5">
   <div class="max-w-[1200px] mx-auto reveal">
@@ -312,15 +450,72 @@ async function handleSubmit(e) {
   return false;
 }
 
-function showFormError(msg) {
-  const existing = document.getElementById('formErr');
+function showFormError(msg, errId) {
+  const id = errId || 'formErr';
+  const existing = document.getElementById(id);
   if (existing) existing.remove();
   const el = document.createElement('div');
-  el.id = 'formErr';
+  el.id = id;
   el.style.cssText = 'margin-top:12px;padding:12px 16px;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.2);font-family:Geist,monospace;font-size:0.7rem;letter-spacing:0.05em;color:#e8e6e4;text-align:center;';
   el.textContent = msg;
-  document.getElementById('contactForm')?.after(el);
+  const form = id === 'formErr' ? document.getElementById('contactForm') : id === 'msgErr' ? document.getElementById('messageForm') : document.getElementById('auditForm');
+  form?.after(el);
   setTimeout(() => el.remove(), 4000);
+}
+
+async function handleMessageSubmit(e) {
+  e.preventDefault();
+  const f = e.target;
+  const btn = f.querySelector('button[type="submit"]');
+  const data = {
+    name: f.querySelector('[name="name"]').value.trim(),
+    business_name: f.querySelector('[name="business_name"]').value.trim() || null,
+    email: f.querySelector('[name="email"]').value.trim(),
+    phone: f.querySelector('[name="phone"]').value.trim() || null,
+    subject: f.querySelector('[name="subject"]').value.trim() || null,
+    message: f.querySelector('[name="message"]').value.trim(),
+    source: 'website',
+    is_read: false,
+  };
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="animation:spin 0.8s linear infinite;width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Sending…</span>';
+  const { error } = await _supabase.from('messages').insert([data]);
+  if (error) {
+    btn.disabled = false;
+    btn.innerHTML = 'Send Message <span class="material-symbols-outlined" style="font-size:16px;">send</span>';
+    showFormError('Something went wrong. Please try again or email us directly.', 'msgErr');
+  } else {
+    document.getElementById('msgCardWrapper').innerHTML = `<div style="text-align:center;padding:60px 24px;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><span class="material-symbols-outlined" style="font-size:24px;color:#adc6ff;">check</span></div><h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:1.4rem;letter-spacing:-0.02em;">Message Received</h3><p class="text-silver font-body text-sm leading-relaxed" style="max-width:360px;margin:0 auto;">Thank you, ${data.name}. Your message has been received and we'll respond within 24 hours.</p></div>`;
+  }
+  return false;
+}
+
+async function handleAuditSubmit(e) {
+  e.preventDefault();
+  const f = e.target;
+  const btn = f.querySelector('button[type="submit"]');
+  const data = {
+    name: f.querySelector('[name="name"]').value.trim(),
+    business_name: f.querySelector('[name="business_name"]').value.trim() || null,
+    email: f.querySelector('[name="email"]').value.trim(),
+    phone: f.querySelector('[name="phone"]').value.trim() || null,
+    website_url: f.querySelector('[name="website_url"]').value.trim(),
+    budget: f.querySelector('[name="budget"]').value || null,
+    timeline: f.querySelector('[name="timeline"]').value || null,
+    goals: f.querySelector('[name="goals"]').value.trim() || null,
+    status: 'new',
+  };
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="animation:spin 0.8s linear infinite;width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Submitting…</span>';
+  const { error } = await _supabase.from('website_audit_requests').insert([data]);
+  if (error) {
+    btn.disabled = false;
+    btn.innerHTML = 'Request Free Audit <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>';
+    showFormError('Something went wrong. Please try again or email us directly.', 'auditErr');
+  } else {
+    document.getElementById('auditCardWrapper').innerHTML = `<div style="text-align:center;padding:60px 24px;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><span class="material-symbols-outlined" style="font-size:24px;color:#adc6ff;">check</span></div><h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:1.4rem;letter-spacing:-0.02em;">Audit Request Received</h3><p class="text-silver font-body text-sm leading-relaxed" style="max-width:360px;margin:0 auto;">Thank you, ${data.name}. We'll audit your website and send a detailed report within 48 hours.</p></div>`;
+  }
+  return false;
 }
 
 const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});

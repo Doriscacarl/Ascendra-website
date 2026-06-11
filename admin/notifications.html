@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | Notifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--s4:#2e2d2d;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--indigo:#818cf8;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--r-xl:20px;--sidebar:256px;--topbar:62px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
+#app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh;position:relative}
+#sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sb-logo-text{font-family:var(--fw-d);font-size:19px;font-weight:700;letter-spacing:-0.02em}
+.sb-logo-chip{font-family:var(--fw-m);font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.15);border-radius:4px;padding:2px 6px}
+.sb-tagline{font-family:var(--fw-m);font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
+.ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
+.ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
+.ni .lbl{font-size:13px;font-weight:500}
+.nb{margin-left:auto;background:var(--primary-dim);color:var(--primary);font-family:var(--fw-m);font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);flex-shrink:0}
+.user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s;text-decoration:none;color:inherit}
+.user-pill:hover{background:rgba(255,255,255,0.045)}
+.u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
+.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+.u-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(110,231,183,0.5);flex-shrink:0}
+#topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
+.tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.tb-menu:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-crumb{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tb-sep{color:var(--border3);font-size:16px}
+.tb-cur{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap}
+.tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.tb-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer;flex-shrink:0}
+#main{grid-column:2;overflow:hidden;background:var(--bg);display:flex;flex-direction:column}
+.gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
+.btn-g{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12.5px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s,border-color 0.13s;min-height:36px}
+.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border2)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:99px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+.b-blue{background:rgba(173,198,255,0.09);color:var(--primary)}
+.b-green{background:rgba(110,231,183,0.09);color:var(--green)}
+.b-amber{background:rgba(252,211,77,0.09);color:var(--amber)}
+.b-red{background:rgba(252,165,165,0.09);color:var(--red)}
+.b-gray{background:rgba(255,255,255,0.05);color:var(--muted)}
+.b-purple{background:rgba(196,181,253,0.09);color:var(--purple)}
+
+/* ── KPI ROW ────────────────────────────────────── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 28px 0;flex-shrink:0}
+.kpi{padding:16px 18px 12px;cursor:default;transition:border-color 0.18s,transform 0.18s;position:relative;overflow:hidden}
+.kpi:hover{border-color:rgba(173,198,255,0.10);transform:translateY(-1px)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(173,198,255,0.12),transparent)}
+.kpi-lbl{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-val{font-family:var(--fw-d);font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--text);line-height:1}
+.kpi-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+/* ── TOOLBAR ────────────────────────────────────── */
+#toolbar{flex-shrink:0;padding:16px 28px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;font-family:var(--fw-m);font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text2);transition:all 0.13s;user-select:none}
+.fchip:hover{background:rgba(255,255,255,0.06);border-color:var(--border2)}
+.fchip.on{background:var(--primary-dim);border-color:rgba(173,198,255,0.2);color:var(--primary)}
+.mark-all-btn{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:5px 8px;border-radius:var(--r-sm);transition:color 0.13s,background 0.13s}
+.mark-all-btn:hover{color:var(--text2);background:rgba(255,255,255,0.04)}
+
+/* ── CONTENT ────────────────────────────────────── */
+#content{flex:1;overflow-y:auto;padding:14px 28px 32px}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.05);border-radius:2px}
+
+/* ── SECTION LABELS ─────────────────────────────── */
+.day-label{font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:18px 0 8px;opacity:0.55}
+
+/* ── NOTIFICATION ITEMS ─────────────────────────── */
+.ncard{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border-radius:var(--r);background:rgba(14,14,14,0.7);border:1px solid var(--border);margin-bottom:4px;cursor:pointer;transition:background 0.11s,border-color 0.11s;position:relative;text-decoration:none;color:inherit}
+.ncard:hover{background:rgba(255,255,255,0.025);border-color:var(--border2)}
+.ncard.unread{background:rgba(173,198,255,0.022);border-color:rgba(173,198,255,0.07)}
+.ncard.unread:hover{background:rgba(173,198,255,0.04)}
+.n-dot{position:absolute;top:18px;right:16px;width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px var(--glow)}
+.n-ic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.n-ic .ms{font-size:20px}
+.n-ic.blue{background:rgba(173,198,255,0.09);color:var(--primary)}
+.n-ic.green{background:rgba(110,231,183,0.09);color:var(--green)}
+.n-ic.amber{background:rgba(252,211,77,0.09);color:var(--amber)}
+.n-ic.red{background:rgba(252,165,165,0.09);color:var(--red)}
+.n-ic.purple{background:rgba(196,181,253,0.09);color:var(--purple)}
+.n-ic.gray{background:rgba(255,255,255,0.05);color:var(--muted)}
+.n-body{flex:1;min-width:0}
+.n-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.35}
+.n-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.n-time{font-family:var(--fw-m);font-size:9.5px;color:var(--muted);margin-top:5px}
+.n-badge-row{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+
+/* ── EMPTY STATE ────────────────────────────────── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px;min-height:380px}
+.es-ring{position:relative;margin-bottom:24px}
+.es-glow-outer{position:absolute;inset:-32px;border-radius:50%;background:radial-gradient(ellipse,rgba(173,198,255,0.04) 0%,transparent 70%);pointer-events:none}
+.es-icon{width:72px;height:72px;border-radius:var(--r-xl);background:rgba(255,255,255,0.02);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;position:relative}
+.es-icon .ms{font-size:30px;color:var(--muted)}
+.es-inner-ring{position:absolute;inset:-8px;border-radius:calc(var(--r-xl) + 8px);border:1px solid rgba(173,198,255,0.05)}
+.es-eyebrow{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--primary);margin-bottom:8px;opacity:0.65}
+.es-title{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.es-sub{font-size:13px;color:var(--muted);max-width:380px;line-height:1.65;margin-bottom:26px}
+.es-items{display:flex;flex-direction:column;gap:8px;width:100%;max-width:420px}
+.es-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);text-align:left}
+.es-item-ic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.es-item-ic .ms{font-size:14px}
+.es-item-text{font-size:12px;color:var(--muted)}
+
+/* ── SIDEBAR OVERLAY ────────────────────────────── */
+#sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
+#sb-ov.show{display:block}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:960px){
+  :root{--sidebar:0px}
+  #sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}
+  #sidebar.open{transform:translateX(0)}
+  #app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}
+  #main,#topbar{grid-column:1}
+  .tb-menu{display:flex!important}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .kpi-row{grid-template-columns:1fr 1fr;padding:16px 16px 0}
+  #toolbar{padding:12px 16px 0}
+  #content{padding:12px 16px 24px}
+}
+@media(max-width:430px){
+  .kpi-row{grid-template-columns:1fr}
+}
+
+#main{animation:pageIn 0.22s ease}
+@keyframes pageIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row"><span class="sb-logo-text">Ascendra</span><span class="sb-logo-chip">PRO</span></div>
+    <div class="sb-tagline">Executive Command Center</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni active" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <a class="user-pill" href="settings.html">
+      <div class="u-av">DC</div>
+      <div style="flex:1;min-width:0"><div class="u-name">Doris Cacarl</div><div class="u-role">Principal Director</div></div>
+      <div class="u-dot"></div>
+    </a>
+  </div>
+</aside>
+
+<div id="sb-ov" onclick="closeSidebar()"></div>
+
+<header id="topbar">
+  <button class="tb-menu" onclick="toggleSidebar()" aria-label="Open menu"><span class="ms">menu</span></button>
+  <div class="tb-crumb">
+    <span class="tb-root">Core</span>
+    <span class="tb-sep">›</span>
+    <span class="tb-cur">Notifications</span>
+  </div>
+  <div class="tb-acts">
+    <a href="dashboard.html" class="tb-icon" title="Dashboard"><span class="ms">space_dashboard</span></a>
+    <a href="settings.html" class="tb-av" title="Doris Cacarl">DC</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="kpi-row">
+    <div class="gc kpi">
+      <div class="kpi-lbl">Total</div>
+      <div class="kpi-val" id="k-total">0</div>
+      <div class="kpi-sub">All notifications</div>
+    </div>
+    <div class="gc kpi">
+      <div class="kpi-lbl">Unread</div>
+      <div class="kpi-val" id="k-unread" style="color:var(--primary)">0</div>
+      <div class="kpi-sub">Awaiting review</div>
+    </div>
+    <div class="gc kpi">
+      <div class="kpi-lbl">Urgent</div>
+      <div class="kpi-val" id="k-urgent" style="color:var(--red)">0</div>
+      <div class="kpi-sub">Needs action</div>
+    </div>
+    <div class="gc kpi">
+      <div class="kpi-lbl">Today</div>
+      <div class="kpi-val" id="k-today">0</div>
+      <div class="kpi-sub">New today</div>
+    </div>
+  </div>
+
+  <div id="toolbar">
+    <div class="fchip on" data-filter="all" onclick="setFilter(this,'all')"><span class="ms" style="font-size:14px">all_inbox</span> All</div>
+    <div class="fchip" data-filter="quote" onclick="setFilter(this,'quote')"><span class="ms" style="font-size:14px">request_quote</span> Quotes</div>
+    <div class="fchip" data-filter="audit" onclick="setFilter(this,'audit')"><span class="ms" style="font-size:14px">pageview</span> Audits</div>
+    <div class="fchip" data-filter="lead" onclick="setFilter(this,'lead')"><span class="ms" style="font-size:14px">person_search</span> Leads</div>
+    <div class="fchip" data-filter="project" onclick="setFilter(this,'project')"><span class="ms" style="font-size:14px">folder_open</span> Projects</div>
+    <div class="fchip" data-filter="invoice" onclick="setFilter(this,'invoice')"><span class="ms" style="font-size:14px">receipt_long</span> Invoices</div>
+    <div class="fchip" data-filter="plan" onclick="setFilter(this,'plan')"><span class="ms" style="font-size:14px">credit_card</span> Plans</div>
+    <button class="mark-all-btn" onclick="markAllRead()" id="mark-all-btn"><span class="ms" style="font-size:14px">done_all</span> Mark all read</button>
+  </div>
+
+  <div id="content"></div>
+</main>
+</div>
+
+<script>
+/* ── DATA STORES ─────────────────────────────────── */
+function load(key){try{return JSON.parse(localStorage.getItem(key))||[];}catch{return[]}}
+function save(key,data){localStorage.setItem(key,JSON.stringify(data))}
+
+const NOTIF_KEY='ascendra_notifications_v1';
+
+/* ── NOTIFICATION GENERATION ─────────────────────── */
+function generateSystemNotifs(){
+  const notifs=[];
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+
+  /* Quote Requests */
+  const quotes=load('ascendra_quotes_v1');
+  quotes.forEach(q=>{
+    if(q.status==='new'||q.status==='New'){
+      notifs.push({id:'q_'+q.id,type:'quote',icon:'request_quote',color:'blue',
+        title:'New Quote Request',
+        desc:(q.business||q.client||'A prospect')+' submitted a quote request'+(q.projectType?' for '+q.projectType:''),
+        time:q.created||q.submittedAt||now.toISOString(),link:'quote-requests.html',unread:true,urgent:false});
+    }
+  });
+
+  /* Website Audits */
+  const audits=load('ascendra_audits_v1');
+  audits.forEach(a=>{
+    if(a.status==='new'||a.status==='New Audit'){
+      notifs.push({id:'a_'+a.id,type:'audit',icon:'pageview',color:'purple',
+        title:'New Website Audit Request',
+        desc:(a.business||a.client||'A business')+' requested a website audit'+(a.url?' for '+a.url:''),
+        time:a.created||a.submittedAt||now.toISOString(),link:'website-audits.html',unread:true,urgent:false});
+    }
+  });
+
+  /* Leads */
+  const leads=load('ascendra_crm_leads');
+  leads.filter(l=>l.status==='new'||l.followUpDate).forEach(l=>{
+    if(l.followUpDate){
+      const fup=new Date(l.followUpDate);
+      if(fup<=today){
+        notifs.push({id:'lf_'+l.id,type:'lead',icon:'person_search',color:'amber',
+          title:'Follow-Up Due — '+esc(l.name||'Lead'),
+          desc:'Follow-up with '+(l.company||l.name||'this lead')+' was due '+(fup<today?'on '+fmtDate(l.followUpDate):'today'),
+          time:l.followUpDate,link:'crm-leads.html',unread:true,urgent:true});
+      }
+    }
+    if(l.status==='new'){
+      notifs.push({id:'ln_'+l.id,type:'lead',icon:'person_add',color:'green',
+        title:'New Lead Added',
+        desc:(l.name||'A lead')+' was added to your pipeline'+(l.company?' from '+l.company:''),
+        time:l.created||now.toISOString(),link:'crm-leads.html',unread:false,urgent:false});
+    }
+  });
+
+  /* Projects */
+  const projects=load('ascendra_projects_v1');
+  projects.filter(p=>p.dueDate&&(p.status==='active'||p.status==='review')).forEach(p=>{
+    const due=new Date(p.dueDate);
+    const daysLeft=Math.ceil((due-now)/(1000*60*60*24));
+    if(daysLeft<=7&&daysLeft>=0){
+      notifs.push({id:'pd_'+p.id,type:'project',icon:'folder_open',color:'amber',
+        title:'Project Deadline Approaching',
+        desc:(p.name||'A project')+' is due in '+(daysLeft===0?'today':daysLeft+' day'+(daysLeft!==1?'s':'')),
+        time:p.dueDate,link:'projects.html',unread:true,urgent:daysLeft<=2});
+    }
+    if(daysLeft<0){
+      notifs.push({id:'po_'+p.id,type:'project',icon:'warning',color:'red',
+        title:'Project Overdue',
+        desc:(p.name||'A project')+' was due '+Math.abs(daysLeft)+' day'+(Math.abs(daysLeft)!==1?'s':'')+' ago',
+        time:p.dueDate,link:'projects.html',unread:true,urgent:true});
+    }
+  });
+
+  /* Invoices */
+  const invoices=load('ascendra_invoices_v1');
+  invoices.filter(i=>i.status==='paid').forEach(i=>{
+    notifs.push({id:'ip_'+i.id,type:'invoice',icon:'payments',color:'green',
+      title:'Payment Received',
+      desc:'Invoice '+(i.num||'')+' from '+(i.client||'a client')+' has been marked paid — '+fmtAmt(i.amount),
+      time:i.paidAt||i.created||now.toISOString(),link:'payments.html',unread:false,urgent:false});
+  });
+  invoices.filter(i=>i.status!=='paid'&&i.dueDate).forEach(i=>{
+    const due=new Date(i.dueDate);
+    if(due<now){
+      notifs.push({id:'io_'+i.id,type:'invoice',icon:'receipt_long',color:'red',
+        title:'Invoice Overdue — '+esc(i.client||'Client'),
+        desc:'Invoice '+(i.num||'')+' for '+fmtAmt(i.amount)+' was due '+fmtDate(i.dueDate),
+        time:i.dueDate,link:'invoices.html',unread:true,urgent:true});
+    }
+  });
+
+  /* Service Plans */
+  const plans=load('ascendra_service_plans_assigned_v1');
+  plans.filter(p=>p.renewalDate).forEach(p=>{
+    const ren=new Date(p.renewalDate);
+    const daysLeft=Math.ceil((ren-now)/(1000*60*60*24));
+    if(daysLeft<=14&&daysLeft>=0){
+      notifs.push({id:'sp_'+p.id,type:'plan',icon:'credit_card',color:'amber',
+        title:'Service Plan Expiring Soon',
+        desc:(p.clientName||'A client')+"'s service plan expires in "+(daysLeft===0?'today':daysLeft+' day'+(daysLeft!==1?'s':'')),
+        time:p.renewalDate,link:'service-plans.html',unread:true,urgent:daysLeft<=3});
+    }
+  });
+
+  /* Sort by time (newest first) */
+  notifs.sort((a,b)=>new Date(b.time)-new Date(a.time));
+  return notifs;
+}
+
+/* ── PERSIST READ STATE ──────────────────────────── */
+function getReadIds(){try{return new Set(JSON.parse(localStorage.getItem('ascendra_notif_read'))||[]);}catch{return new Set()}}
+function markRead(id){const s=getReadIds();s.add(id);localStorage.setItem('ascendra_notif_read',JSON.stringify([...s]))}
+function markAllRead(){const notifs=generateSystemNotifs();const s=getReadIds();notifs.forEach(n=>s.add(n.id));localStorage.setItem('ascendra_notif_read',JSON.stringify([...s]));render()}
+
+/* ── FILTER STATE ────────────────────────────────── */
+let activeFilter='all';
+function setFilter(el,f){
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  activeFilter=f;
+  render();
+}
+
+/* ── HELPERS ─────────────────────────────────────── */
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fmtAmt(v){const n=parseFloat(v)||0;return'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return d}}
+function timeAgo(iso){
+  if(!iso)return'';
+  const diff=Date.now()-new Date(iso).getTime();
+  const m=Math.floor(diff/60000);
+  if(m<1)return'Just now';
+  if(m<60)return m+'m ago';
+  const h=Math.floor(m/60);
+  if(h<24)return h+'h ago';
+  const d=Math.floor(h/24);
+  if(d<7)return d+'d ago';
+  return fmtDate(iso);
+}
+function isToday(iso){
+  if(!iso)return false;
+  const d=new Date(iso);
+  const t=new Date();
+  return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+}
+
+/* ── RENDER ──────────────────────────────────────── */
+function render(){
+  const allNotifs=generateSystemNotifs();
+  const readIds=getReadIds();
+
+  /* Apply read state */
+  allNotifs.forEach(n=>{if(readIds.has(n.id))n.unread=false});
+
+  /* KPIs */
+  document.getElementById('k-total').textContent=allNotifs.length;
+  document.getElementById('k-unread').textContent=allNotifs.filter(n=>n.unread).length;
+  document.getElementById('k-urgent').textContent=allNotifs.filter(n=>n.urgent).length;
+  document.getElementById('k-today').textContent=allNotifs.filter(n=>isToday(n.time)).length;
+
+  /* Show/hide mark all */
+  const hasUnread=allNotifs.some(n=>n.unread);
+  document.getElementById('mark-all-btn').style.display=hasUnread&&allNotifs.length?'inline-flex':'none';
+
+  /* Filter */
+  const filtered=activeFilter==='all'?allNotifs:allNotifs.filter(n=>n.type===activeFilter);
+
+  const container=document.getElementById('content');
+  if(allNotifs.length===0){
+    container.innerHTML=renderEmpty();
+    return;
+  }
+  if(filtered.length===0){
+    container.innerHTML=`<div class="empty-state"><div class="es-ring"><div class="es-glow-outer"></div><div class="es-icon"><span class="ms">filter_list</span><div class="es-inner-ring"></div></div></div><div class="es-eyebrow">No results</div><div class="es-title">No notifications here</div><div class="es-sub">There are no notifications matching this filter yet. They will appear here as your business grows.</div></div>`;
+    return;
+  }
+
+  /* Group by today / earlier */
+  const todayItems=filtered.filter(n=>isToday(n.time));
+  const earlierItems=filtered.filter(n=>!isToday(n.time));
+
+  let html='';
+  if(todayItems.length){
+    html+=`<div class="day-label">Today</div>`;
+    html+=todayItems.map(renderCard).join('');
+  }
+  if(earlierItems.length){
+    html+=`<div class="day-label">${todayItems.length?'Earlier':'All Notifications'}</div>`;
+    html+=earlierItems.map(renderCard).join('');
+  }
+  container.innerHTML=html;
+}
+
+function renderCard(n){
+  const urgentBadge=n.urgent?`<span class="badge b-red">Urgent</span>`:'';
+  const typeBadge=`<span class="badge b-gray">${n.type.charAt(0).toUpperCase()+n.type.slice(1)}</span>`;
+  return`<a class="ncard${n.unread?' unread':''}" href="${esc(n.link)}" onclick="markRead('${esc(n.id)}')">
+    ${n.unread?'<div class="n-dot"></div>':''}
+    <div class="n-ic ${n.color}"><span class="ms">${esc(n.icon)}</span></div>
+    <div class="n-body">
+      <div class="n-title">${esc(n.title)}</div>
+      <div class="n-desc">${esc(n.desc)}</div>
+      <div class="n-badge-row">${typeBadge}${urgentBadge}</div>
+      <div class="n-time">${timeAgo(n.time)}</div>
+    </div>
+  </a>`;
+}
+
+function renderEmpty(){
+  return`<div class="empty-state">
+    <div class="es-ring">
+      <div class="es-glow-outer"></div>
+      <div class="es-icon"><span class="ms" style="font-size:30px;color:var(--muted)">notifications_none</span><div class="es-inner-ring"></div></div>
+    </div>
+    <div class="es-eyebrow">All Clear</div>
+    <div class="es-title">No Notifications Yet</div>
+    <div class="es-sub">Notifications will appear here automatically as your business generates activity. Here's what triggers them:</div>
+    <div class="es-items">
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(173,198,255,0.09)"><span class="ms" style="font-size:14px;color:var(--primary)">request_quote</span></div><div class="es-item-text">New quote requests from your website</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(196,181,253,0.09)"><span class="ms" style="font-size:14px;color:var(--purple)">pageview</span></div><div class="es-item-text">New website audit submissions</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,211,77,0.09)"><span class="ms" style="font-size:14px;color:var(--amber)">person_search</span></div><div class="es-item-text">Follow-up reminders for leads</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,165,165,0.09)"><span class="ms" style="font-size:14px;color:var(--red)">receipt_long</span></div><div class="es-item-text">Overdue invoices requiring attention</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(110,231,183,0.09)"><span class="ms" style="font-size:14px;color:var(--green)">payments</span></div><div class="es-item-text">Payments received from clients</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,211,77,0.09)"><span class="ms" style="font-size:14px;color:var(--amber)">credit_card</span></div><div class="es-item-text">Service plans expiring soon</div></div>
+    </div>
+  </div>`;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────── */
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
+window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
+
+render();
+</script>
+</body>
+</html>
