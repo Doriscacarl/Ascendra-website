@@ -137,6 +137,7 @@ a{color:inherit;text-decoration:none}
   <div class="tb-acts">
     <button class="btn-p" onclick="openCompose()"><span class="ms" style="font-size:15px">edit</span> Compose</button>
     <a href="dashboard.html" class="tb-icon"><span class="ms">space_dashboard</span></a>
+    <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
     <a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
@@ -247,6 +248,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeS
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 document.querySelector('.modal-bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
 loadMessages();
+
+// Real-time: new messages from public website
+_sb.channel('msg_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},payload=>{
+  const r=payload.new;
+  if(r.source==='internal') return;
+  data.unshift({id:r.id,from:r.name+(r.business_name?' — '+r.business_name:''),to:null,subject:r.subject||'',body:r.message||'',email:r.email||'',unread:true,sent:false,created:r.created_at});
+  render();
+  toast('New message from '+(r.name||'visitor'));
+}).subscribe();
+
+// Notification bell
+(async()=>{try{const{count}=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&count>0){b.textContent=count>99?'99+':String(count);b.style.display='flex';}_sb.channel('nb_msg').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
 </script>
 </body>
 </html>

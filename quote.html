@@ -824,6 +824,7 @@ document.getElementById('estimateForm')?.addEventListener('submit', async functi
     btn.innerHTML = 'Submit & Request Consultation <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>';
     showError('Something went wrong. Please try again.');
   } else {
+    _supabase.from('notifications').insert([{type:'new_quote',title:'New Quote Request',message:data.name+(data.business?' from '+data.business:'')+' submitted a quote request.',status:'unread',related_table:'quote_leads'}]).then();
     const form = document.getElementById('estimateForm');
     form.innerHTML = `
       <div style="text-align:center;padding:40px 16px;">

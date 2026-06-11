@@ -182,6 +182,7 @@ a{color:inherit;text-decoration:none}
     <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
     <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
     <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+    <a class="ni" href="data-debug.html"><span class="ms">bug_report</span><span class="lbl">Data Debug</span></a>
   </nav>
   <div class="sb-foot">
     <a class="user-pill" href="settings.html">
@@ -236,9 +237,7 @@ a{color:inherit;text-decoration:none}
     <div class="fchip" data-filter="quote" onclick="setFilter(this,'quote')"><span class="ms" style="font-size:14px">request_quote</span> Quotes</div>
     <div class="fchip" data-filter="audit" onclick="setFilter(this,'audit')"><span class="ms" style="font-size:14px">pageview</span> Audits</div>
     <div class="fchip" data-filter="lead" onclick="setFilter(this,'lead')"><span class="ms" style="font-size:14px">person_search</span> Leads</div>
-    <div class="fchip" data-filter="project" onclick="setFilter(this,'project')"><span class="ms" style="font-size:14px">folder_open</span> Projects</div>
-    <div class="fchip" data-filter="invoice" onclick="setFilter(this,'invoice')"><span class="ms" style="font-size:14px">receipt_long</span> Invoices</div>
-    <div class="fchip" data-filter="plan" onclick="setFilter(this,'plan')"><span class="ms" style="font-size:14px">credit_card</span> Plans</div>
+    <div class="fchip" data-filter="message" onclick="setFilter(this,'message')"><span class="ms" style="font-size:14px">chat_bubble</span> Messages</div>
     <button class="mark-all-btn" onclick="markAllRead()" id="mark-all-btn"><span class="ms" style="font-size:14px">done_all</span> Mark all read</button>
   </div>
 
@@ -246,233 +245,163 @@ a{color:inherit;text-decoration:none}
 </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ── DATA STORES ─────────────────────────────────── */
-function load(key){try{return JSON.parse(localStorage.getItem(key))||[];}catch{return[]}}
-function save(key,data){localStorage.setItem(key,JSON.stringify(data))}
+const _sb = window.supabase.createClient(
+  'https://nfowsobglotbjrdqsiid.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+);
 
-const NOTIF_KEY='ascendra_notifications_v1';
+/* ── TYPE CONFIG ─────────────────────────────────── */
+const TYPE_CFG = {
+  new_lead:    { filter:'lead',    icon:'person_add',    color:'green',  link:'crm-leads.html',      label:'Lead' },
+  new_quote:   { filter:'quote',   icon:'request_quote', color:'blue',   link:'quote-requests.html', label:'Quote' },
+  new_audit:   { filter:'audit',   icon:'pageview',      color:'purple', link:'website-audits.html', label:'Audit' },
+  new_message: { filter:'message', icon:'chat_bubble',   color:'blue',   link:'messages.html',       label:'Message' },
+};
 
-/* ── NOTIFICATION GENERATION ─────────────────────── */
-function generateSystemNotifs(){
-  const notifs=[];
-  const now=new Date();
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+let notifs = [];
+let activeFilter = 'all';
 
-  /* Quote Requests */
-  const quotes=load('ascendra_quotes_v1');
-  quotes.forEach(q=>{
-    if(q.status==='new'||q.status==='New'){
-      notifs.push({id:'q_'+q.id,type:'quote',icon:'request_quote',color:'blue',
-        title:'New Quote Request',
-        desc:(q.business||q.client||'A prospect')+' submitted a quote request'+(q.projectType?' for '+q.projectType:''),
-        time:q.created||q.submittedAt||now.toISOString(),link:'quote-requests.html',unread:true,urgent:false});
-    }
-  });
-
-  /* Website Audits */
-  const audits=load('ascendra_audits_v1');
-  audits.forEach(a=>{
-    if(a.status==='new'||a.status==='New Audit'){
-      notifs.push({id:'a_'+a.id,type:'audit',icon:'pageview',color:'purple',
-        title:'New Website Audit Request',
-        desc:(a.business||a.client||'A business')+' requested a website audit'+(a.url?' for '+a.url:''),
-        time:a.created||a.submittedAt||now.toISOString(),link:'website-audits.html',unread:true,urgent:false});
-    }
-  });
-
-  /* Leads */
-  const leads=load('ascendra_crm_leads');
-  leads.filter(l=>l.status==='new'||l.followUpDate).forEach(l=>{
-    if(l.followUpDate){
-      const fup=new Date(l.followUpDate);
-      if(fup<=today){
-        notifs.push({id:'lf_'+l.id,type:'lead',icon:'person_search',color:'amber',
-          title:'Follow-Up Due — '+esc(l.name||'Lead'),
-          desc:'Follow-up with '+(l.company||l.name||'this lead')+' was due '+(fup<today?'on '+fmtDate(l.followUpDate):'today'),
-          time:l.followUpDate,link:'crm-leads.html',unread:true,urgent:true});
-      }
-    }
-    if(l.status==='new'){
-      notifs.push({id:'ln_'+l.id,type:'lead',icon:'person_add',color:'green',
-        title:'New Lead Added',
-        desc:(l.name||'A lead')+' was added to your pipeline'+(l.company?' from '+l.company:''),
-        time:l.created||now.toISOString(),link:'crm-leads.html',unread:false,urgent:false});
-    }
-  });
-
-  /* Projects */
-  const projects=load('ascendra_projects_v1');
-  projects.filter(p=>p.dueDate&&(p.status==='active'||p.status==='review')).forEach(p=>{
-    const due=new Date(p.dueDate);
-    const daysLeft=Math.ceil((due-now)/(1000*60*60*24));
-    if(daysLeft<=7&&daysLeft>=0){
-      notifs.push({id:'pd_'+p.id,type:'project',icon:'folder_open',color:'amber',
-        title:'Project Deadline Approaching',
-        desc:(p.name||'A project')+' is due in '+(daysLeft===0?'today':daysLeft+' day'+(daysLeft!==1?'s':'')),
-        time:p.dueDate,link:'projects.html',unread:true,urgent:daysLeft<=2});
-    }
-    if(daysLeft<0){
-      notifs.push({id:'po_'+p.id,type:'project',icon:'warning',color:'red',
-        title:'Project Overdue',
-        desc:(p.name||'A project')+' was due '+Math.abs(daysLeft)+' day'+(Math.abs(daysLeft)!==1?'s':'')+' ago',
-        time:p.dueDate,link:'projects.html',unread:true,urgent:true});
-    }
-  });
-
-  /* Invoices */
-  const invoices=load('ascendra_invoices_v1');
-  invoices.filter(i=>i.status==='paid').forEach(i=>{
-    notifs.push({id:'ip_'+i.id,type:'invoice',icon:'payments',color:'green',
-      title:'Payment Received',
-      desc:'Invoice '+(i.num||'')+' from '+(i.client||'a client')+' has been marked paid — '+fmtAmt(i.amount),
-      time:i.paidAt||i.created||now.toISOString(),link:'payments.html',unread:false,urgent:false});
-  });
-  invoices.filter(i=>i.status!=='paid'&&i.dueDate).forEach(i=>{
-    const due=new Date(i.dueDate);
-    if(due<now){
-      notifs.push({id:'io_'+i.id,type:'invoice',icon:'receipt_long',color:'red',
-        title:'Invoice Overdue — '+esc(i.client||'Client'),
-        desc:'Invoice '+(i.num||'')+' for '+fmtAmt(i.amount)+' was due '+fmtDate(i.dueDate),
-        time:i.dueDate,link:'invoices.html',unread:true,urgent:true});
-    }
-  });
-
-  /* Service Plans */
-  const plans=load('ascendra_service_plans_assigned_v1');
-  plans.filter(p=>p.renewalDate).forEach(p=>{
-    const ren=new Date(p.renewalDate);
-    const daysLeft=Math.ceil((ren-now)/(1000*60*60*24));
-    if(daysLeft<=14&&daysLeft>=0){
-      notifs.push({id:'sp_'+p.id,type:'plan',icon:'credit_card',color:'amber',
-        title:'Service Plan Expiring Soon',
-        desc:(p.clientName||'A client')+"'s service plan expires in "+(daysLeft===0?'today':daysLeft+' day'+(daysLeft!==1?'s':'')),
-        time:p.renewalDate,link:'service-plans.html',unread:true,urgent:daysLeft<=3});
-    }
-  });
-
-  /* Sort by time (newest first) */
-  notifs.sort((a,b)=>new Date(b.time)-new Date(a.time));
-  return notifs;
+/* ── LOAD & REALTIME ─────────────────────────────── */
+async function loadNotifs() {
+  const { data, error } = await _sb.from('notifications').select('*').order('created_at', { ascending: false });
+  if (error) { notifs = []; }
+  else { notifs = data || []; }
+  render();
 }
 
-/* ── PERSIST READ STATE ──────────────────────────── */
-function getReadIds(){try{return new Set(JSON.parse(localStorage.getItem('ascendra_notif_read'))||[]);}catch{return new Set()}}
-function markRead(id){const s=getReadIds();s.add(id);localStorage.setItem('ascendra_notif_read',JSON.stringify([...s]))}
-function markAllRead(){const notifs=generateSystemNotifs();const s=getReadIds();notifs.forEach(n=>s.add(n.id));localStorage.setItem('ascendra_notif_read',JSON.stringify([...s]));render()}
+function initRealtime() {
+  _sb.channel('notifs_page')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications' }, payload => {
+      notifs.unshift(payload.new);
+      render();
+      showToast('New: ' + (payload.new.title || 'notification'));
+    })
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'notifications' }, payload => {
+      const idx = notifs.findIndex(n => n.id === payload.new.id);
+      if (idx >= 0) notifs[idx] = payload.new;
+      render();
+    })
+    .subscribe();
+}
+
+/* ── MARK READ ───────────────────────────────────── */
+async function markRead(id) {
+  const idx = notifs.findIndex(n => n.id === id);
+  if (idx >= 0 && notifs[idx].status === 'unread') {
+    notifs[idx] = { ...notifs[idx], status: 'read' };
+    render();
+    await _sb.from('notifications').update({ status: 'read' }).eq('id', id);
+  }
+}
+
+async function markAllRead() {
+  const unreadIds = notifs.filter(n => n.status === 'unread').map(n => n.id);
+  if (!unreadIds.length) return;
+  notifs = notifs.map(n => n.status === 'unread' ? { ...n, status: 'read' } : n);
+  render();
+  await _sb.from('notifications').update({ status: 'read' }).in('id', unreadIds);
+}
 
 /* ── FILTER STATE ────────────────────────────────── */
-let activeFilter='all';
-function setFilter(el,f){
-  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+function setFilter(el, f) {
+  document.querySelectorAll('.fchip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
-  activeFilter=f;
+  activeFilter = f;
   render();
 }
 
 /* ── HELPERS ─────────────────────────────────────── */
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function fmtAmt(v){const n=parseFloat(v)||0;return'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return d}}
-function timeAgo(iso){
-  if(!iso)return'';
-  const diff=Date.now()-new Date(iso).getTime();
-  const m=Math.floor(diff/60000);
-  if(m<1)return'Just now';
-  if(m<60)return m+'m ago';
-  const h=Math.floor(m/60);
-  if(h<24)return h+'h ago';
-  const d=Math.floor(h/24);
-  if(d<7)return d+'d ago';
-  return fmtDate(iso);
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'Just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + 'h ago';
+  const d = Math.floor(h / 24);
+  if (d < 7) return d + 'd ago';
+  try { return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); } catch { return iso; }
 }
-function isToday(iso){
-  if(!iso)return false;
-  const d=new Date(iso);
-  const t=new Date();
-  return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+function isToday(iso) {
+  if (!iso) return false;
+  const d = new Date(iso), t = new Date();
+  return d.getFullYear()===t.getFullYear() && d.getMonth()===t.getMonth() && d.getDate()===t.getDate();
 }
 
 /* ── RENDER ──────────────────────────────────────── */
-function render(){
-  const allNotifs=generateSystemNotifs();
-  const readIds=getReadIds();
+function render() {
+  const unreadCount = notifs.filter(n => n.status === 'unread').length;
+  const urgentCount = notifs.filter(n => n.status === 'unread' && n.type === 'new_lead').length;
+  const todayCount = notifs.filter(n => isToday(n.created_at)).length;
 
-  /* Apply read state */
-  allNotifs.forEach(n=>{if(readIds.has(n.id))n.unread=false});
+  document.getElementById('k-total').textContent = notifs.length;
+  document.getElementById('k-unread').textContent = unreadCount;
+  document.getElementById('k-urgent').textContent = urgentCount;
+  document.getElementById('k-today').textContent = todayCount;
 
-  /* KPIs */
-  document.getElementById('k-total').textContent=allNotifs.length;
-  document.getElementById('k-unread').textContent=allNotifs.filter(n=>n.unread).length;
-  document.getElementById('k-urgent').textContent=allNotifs.filter(n=>n.urgent).length;
-  document.getElementById('k-today').textContent=allNotifs.filter(n=>isToday(n.time)).length;
+  const hasUnread = notifs.some(n => n.status === 'unread');
+  document.getElementById('mark-all-btn').style.display = hasUnread && notifs.length ? 'inline-flex' : 'none';
 
-  /* Show/hide mark all */
-  const hasUnread=allNotifs.some(n=>n.unread);
-  document.getElementById('mark-all-btn').style.display=hasUnread&&allNotifs.length?'inline-flex':'none';
+  let filtered = activeFilter === 'all' ? notifs : notifs.filter(n => {
+    const cfg = TYPE_CFG[n.type];
+    return cfg && cfg.filter === activeFilter;
+  });
 
-  /* Filter */
-  const filtered=activeFilter==='all'?allNotifs:allNotifs.filter(n=>n.type===activeFilter);
-
-  const container=document.getElementById('content');
-  if(allNotifs.length===0){
-    container.innerHTML=renderEmpty();
-    return;
-  }
-  if(filtered.length===0){
-    container.innerHTML=`<div class="empty-state"><div class="es-ring"><div class="es-glow-outer"></div><div class="es-icon"><span class="ms">filter_list</span><div class="es-inner-ring"></div></div></div><div class="es-eyebrow">No results</div><div class="es-title">No notifications here</div><div class="es-sub">There are no notifications matching this filter yet. They will appear here as your business grows.</div></div>`;
+  const container = document.getElementById('content');
+  if (notifs.length === 0) { container.innerHTML = renderEmpty(); return; }
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="es-ring"><div class="es-glow-outer"></div><div class="es-icon"><span class="ms">filter_list</span><div class="es-inner-ring"></div></div></div><div class="es-eyebrow">No results</div><div class="es-title">No notifications here</div><div class="es-sub">There are no notifications matching this filter yet.</div></div>`;
     return;
   }
 
-  /* Group by today / earlier */
-  const todayItems=filtered.filter(n=>isToday(n.time));
-  const earlierItems=filtered.filter(n=>!isToday(n.time));
-
-  let html='';
-  if(todayItems.length){
-    html+=`<div class="day-label">Today</div>`;
-    html+=todayItems.map(renderCard).join('');
-  }
-  if(earlierItems.length){
-    html+=`<div class="day-label">${todayItems.length?'Earlier':'All Notifications'}</div>`;
-    html+=earlierItems.map(renderCard).join('');
-  }
-  container.innerHTML=html;
+  const todayItems = filtered.filter(n => isToday(n.created_at));
+  const earlierItems = filtered.filter(n => !isToday(n.created_at));
+  let html = '';
+  if (todayItems.length) { html += `<div class="day-label">Today</div>` + todayItems.map(renderCard).join(''); }
+  if (earlierItems.length) { html += `<div class="day-label">${todayItems.length ? 'Earlier' : 'All Notifications'}</div>` + earlierItems.map(renderCard).join(''); }
+  container.innerHTML = html;
 }
 
-function renderCard(n){
-  const urgentBadge=n.urgent?`<span class="badge b-red">Urgent</span>`:'';
-  const typeBadge=`<span class="badge b-gray">${n.type.charAt(0).toUpperCase()+n.type.slice(1)}</span>`;
-  return`<a class="ncard${n.unread?' unread':''}" href="${esc(n.link)}" onclick="markRead('${esc(n.id)}')">
-    ${n.unread?'<div class="n-dot"></div>':''}
-    <div class="n-ic ${n.color}"><span class="ms">${esc(n.icon)}</span></div>
+function renderCard(n) {
+  const cfg = TYPE_CFG[n.type] || { icon:'notifications', color:'gray', link:'dashboard.html', label:'System' };
+  const isUnread = n.status === 'unread';
+  return `<a class="ncard${isUnread?' unread':''}" href="${esc(cfg.link)}" onclick="markRead('${esc(n.id)}');event.stopPropagation()">
+    ${isUnread ? '<div class="n-dot"></div>' : ''}
+    <div class="n-ic ${cfg.color}"><span class="ms">${esc(cfg.icon)}</span></div>
     <div class="n-body">
       <div class="n-title">${esc(n.title)}</div>
-      <div class="n-desc">${esc(n.desc)}</div>
-      <div class="n-badge-row">${typeBadge}${urgentBadge}</div>
-      <div class="n-time">${timeAgo(n.time)}</div>
+      <div class="n-desc">${esc(n.message||'')}</div>
+      <div class="n-badge-row"><span class="badge b-gray">${esc(cfg.label)}</span></div>
+      <div class="n-time">${timeAgo(n.created_at)}</div>
     </div>
   </a>`;
 }
 
-function renderEmpty(){
-  return`<div class="empty-state">
-    <div class="es-ring">
-      <div class="es-glow-outer"></div>
-      <div class="es-icon"><span class="ms" style="font-size:30px;color:var(--muted)">notifications_none</span><div class="es-inner-ring"></div></div>
-    </div>
+function renderEmpty() {
+  return `<div class="empty-state">
+    <div class="es-ring"><div class="es-glow-outer"></div><div class="es-icon"><span class="ms" style="font-size:30px;color:var(--muted)">notifications_none</span><div class="es-inner-ring"></div></div></div>
     <div class="es-eyebrow">All Clear</div>
     <div class="es-title">No Notifications Yet</div>
-    <div class="es-sub">Notifications will appear here automatically as your business generates activity. Here's what triggers them:</div>
+    <div class="es-sub">Notifications appear automatically when leads, quotes, audits, or messages are submitted on your website.</div>
     <div class="es-items">
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(173,198,255,0.09)"><span class="ms" style="font-size:14px;color:var(--primary)">request_quote</span></div><div class="es-item-text">New quote requests from your website</div></div>
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(196,181,253,0.09)"><span class="ms" style="font-size:14px;color:var(--purple)">pageview</span></div><div class="es-item-text">New website audit submissions</div></div>
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,211,77,0.09)"><span class="ms" style="font-size:14px;color:var(--amber)">person_search</span></div><div class="es-item-text">Follow-up reminders for leads</div></div>
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,165,165,0.09)"><span class="ms" style="font-size:14px;color:var(--red)">receipt_long</span></div><div class="es-item-text">Overdue invoices requiring attention</div></div>
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(110,231,183,0.09)"><span class="ms" style="font-size:14px;color:var(--green)">payments</span></div><div class="es-item-text">Payments received from clients</div></div>
-      <div class="es-item"><div class="es-item-ic" style="background:rgba(252,211,77,0.09)"><span class="ms" style="font-size:14px;color:var(--amber)">credit_card</span></div><div class="es-item-text">Service plans expiring soon</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(110,231,183,0.09)"><span class="ms" style="font-size:14px;color:var(--green)">person_add</span></div><div class="es-item-text">New consultation request submitted</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(173,198,255,0.09)"><span class="ms" style="font-size:14px;color:var(--primary)">request_quote</span></div><div class="es-item-text">New quote calculator submission</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(196,181,253,0.09)"><span class="ms" style="font-size:14px;color:var(--purple)">pageview</span></div><div class="es-item-text">New website audit request</div></div>
+      <div class="es-item"><div class="es-item-ic" style="background:rgba(173,198,255,0.09)"><span class="ms" style="font-size:14px;color:var(--primary)">chat_bubble</span></div><div class="es-item-text">New contact message received</div></div>
     </div>
   </div>`;
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:600;display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--s2);border:1px solid var(--border2);border-radius:12px;font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:var(--fw-b);animation:pageIn 0.3s ease';
+  t.innerHTML = '<span class="ms" style="color:var(--primary)">notifications</span>' + esc(msg);
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3500);
 }
 
 /* ── SIDEBAR ─────────────────────────────────────── */
@@ -481,7 +410,9 @@ function closeSidebar(){document.getElementById('sidebar').classList.remove('ope
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 
-render();
+loadNotifs();
+initRealtime();
+
 </script>
 </body>
 </html>

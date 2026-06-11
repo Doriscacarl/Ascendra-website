@@ -198,6 +198,7 @@ select.f-inp option{background:var(--s2)}
   </div>
   <div class="tb-acts">
     <a href="dashboard.html" class="tb-icon" title="Dashboard"><span class="ms">space_dashboard</span></a>
+    <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
     <a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
@@ -546,6 +547,16 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){['modal-add','moda
 window.addEventListener('resize',()=>{ if(window.innerWidth>960) closeSidebar() });
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open') }));
 load();
+
+// Real-time: new website audit requests from public site
+_sb.channel('wa_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'website_audit_requests'},payload=>{
+  const r=payload.new;
+  const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business_name||'',url:r.website_url||'',budget:r.budget||'',timeline:r.timeline||'',goals:r.goals||'',features:r.features||'',notes:r.notes||'',status:r.status||'new',createdAt:r.created_at};
+  data.unshift(item); render(); toast('New website audit request from '+(r.name||'visitor'));
+}).subscribe();
+
+// Notification bell
+(async()=>{try{const{count}=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&count>0){b.textContent=count>99?'99+':String(count);b.style.display='flex';}_sb.channel('nb_wa').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
 </script>
 </body>
 </html>

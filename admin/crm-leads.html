@@ -413,8 +413,8 @@ select.form-inp option { background:var(--s2) }
     <span class="tb-cur">CRM &amp; Leads</span>
   </div>
   <div class="tb-acts">
-    <div class="tb-icon" title="Notifications"><span class="ms">notifications</span></div>
-    <a href="dashboard.html"><div class="tb-icon" title="Command Center"><span class="ms">dashboard</span></div></a>
+    <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
+    <a href="dashboard.html" class="tb-icon" title="Dashboard"><span class="ms">dashboard</span></a>
     <div class="tb-av">DC</div>
   </div>
 </header>
@@ -1532,6 +1532,19 @@ document.addEventListener('click', e=>{
 document.querySelectorAll('.modal-bg').forEach(bg=>{
   bg.addEventListener('click', e=>{ if(e.target===bg) bg.classList.remove('open'); });
 });
+
+// Real-time: new leads from public website contact form
+_sb.channel('lead_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'contact_submissions'},payload=>{
+  const r=payload.new;
+  const meta={followUps:[],timeline:[{text:'Lead submitted via <strong>'+(r.source||'Contact Form')+'</strong>',color:'blue',date:r.created_at}]};
+  leads.unshift({id:r.id,company:r.business||r.name||'—',contact:r.name||'—',role:r.role||'',email:r.email||'',phone:r.phone||'',value:r.value||0,status:r.status||'new',source:r.source||'Contact Form',industry:r.industry||'',notes:r.goals||r.notes||'',createdAt:r.created_at,followUps:meta.followUps,timeline:meta.timeline});
+  applyFilters();
+  const sb=document.getElementById('sb-lead-count');if(sb)sb.textContent=leads.length;
+  toast('New lead: '+(r.name||'Unknown')+(r.business?' from '+r.business:''),'info');
+}).subscribe();
+
+// Notification bell
+(async()=>{try{const{count}=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&count>0){b.textContent=count>99?'99+':String(count);b.style.display='flex';}_sb.channel('nb_crm').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
 </script>
 </body>
 </html>

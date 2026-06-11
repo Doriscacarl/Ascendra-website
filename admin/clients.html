@@ -341,6 +341,7 @@ select.form-inp option { background:var(--s2) }
     <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
     <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
     <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+    <a class="ni" href="data-debug.html"><span class="ms">bug_report</span><span class="lbl">Data Debug</span></a>
   </nav>
   <div class="sb-foot">
     <div class="user-pill">
@@ -364,9 +365,9 @@ select.form-inp option { background:var(--s2) }
     <span class="tb-cur">Clients</span>
   </div>
   <div class="tb-acts">
-    <div class="tb-icon" title="Notifications"><span class="ms">notifications</span></div>
-    <a href="dashboard.html"><div class="tb-icon" title="Command Center"><span class="ms">dashboard</span></div></a>
-    <div class="tb-av">DC</div>
+    <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
+    <a href="dashboard.html" class="tb-icon" title="Command Center"><span class="ms">dashboard</span></a>
+    <a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
 
@@ -1042,6 +1043,10 @@ document.querySelectorAll('.modal-bg').forEach(bg => {
 /* ═══════════ INIT ════════════ */
 loadData();
 applyFilters();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async()=>{try{var sb=window.supabase.createClient('https://nfowsobglotbjrdqsiid.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4');var res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');var b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}sb.channel('nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){var b=document.getElementById('notif-count');if(!b)return;var c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
 </script>
 </body>
 </html>

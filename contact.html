@@ -438,6 +438,7 @@ async function handleSubmit(e) {
     btn.innerHTML = 'Submit & Request Consultation <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>';
     showFormError('Something went wrong. Please try again or email us directly.');
   } else {
+    _supabase.from('notifications').insert([{type:'new_lead',title:'New Consultation Request',message:data.name+(data.business?' from '+data.business:'')+' requested a private consultation.',status:'unread',related_table:'contact_submissions'}]).then();
     f.closest('.card-elevated').innerHTML = `
       <div style="text-align:center;padding:60px 24px;">
         <div style="width:56px;height:56px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
@@ -485,6 +486,7 @@ async function handleMessageSubmit(e) {
     btn.innerHTML = 'Send Message <span class="material-symbols-outlined" style="font-size:16px;">send</span>';
     showFormError('Something went wrong. Please try again or email us directly.', 'msgErr');
   } else {
+    _supabase.from('notifications').insert([{type:'new_message',title:'New Message',message:data.name+' sent a message'+(data.subject?': '+data.subject:'.')+(''),status:'unread',related_table:'messages'}]).then();
     document.getElementById('msgCardWrapper').innerHTML = `<div style="text-align:center;padding:60px 24px;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><span class="material-symbols-outlined" style="font-size:24px;color:#adc6ff;">check</span></div><h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:1.4rem;letter-spacing:-0.02em;">Message Received</h3><p class="text-silver font-body text-sm leading-relaxed" style="max-width:360px;margin:0 auto;">Thank you, ${data.name}. Your message has been received and we'll respond within 24 hours.</p></div>`;
   }
   return false;
@@ -513,6 +515,7 @@ async function handleAuditSubmit(e) {
     btn.innerHTML = 'Request Free Audit <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>';
     showFormError('Something went wrong. Please try again or email us directly.', 'auditErr');
   } else {
+    _supabase.from('notifications').insert([{type:'new_audit',title:'New Website Audit Request',message:data.name+(data.business_name?' from '+data.business_name:'')+' requested a website audit'+(data.website_url?' for '+data.website_url:'')+(''),status:'unread',related_table:'website_audit_requests'}]).then();
     document.getElementById('auditCardWrapper').innerHTML = `<div style="text-align:center;padding:60px 24px;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><span class="material-symbols-outlined" style="font-size:24px;color:#adc6ff;">check</span></div><h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:1.4rem;letter-spacing:-0.02em;">Audit Request Received</h3><p class="text-silver font-body text-sm leading-relaxed" style="max-width:360px;margin:0 auto;">Thank you, ${data.name}. We'll audit your website and send a detailed report within 48 hours.</p></div>`;
   }
   return false;

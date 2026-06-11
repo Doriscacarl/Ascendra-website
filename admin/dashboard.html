@@ -1539,6 +1539,8 @@ async function loadDashboardData() {
 }
 
 loadDashboardData();
+
+(async()=>{try{var res=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');if(res.count>0){unreadCount=res.count;refreshBadge();}_sb.channel('nb_dash').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){unreadCount++;refreshBadge();}).subscribe();}catch(e){}})();
 </script>
 </body>
 </html>
