@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects & Case Studies — Ascendra</title>
+<meta name="description" content="Real results for real businesses. See how Ascendra transforms ambitious companies with premium websites, AI systems, and automation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};</script>
+<style>
+.filter-chip {
+  display: inline-flex; align-items: center; padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 99px;
+  font-family: 'Geist', monospace; font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #767472;
+  cursor: pointer; transition: all 0.2s ease; user-select: none; white-space: nowrap;
+}
+.filter-chip:hover { border-color: rgba(255,255,255,0.15); color: #b4b2b0; }
+.filter-chip.active { border-color: rgba(173,198,255,0.3); background: rgba(173,198,255,0.07); color: #adc6ff; }
+
+.project-card {
+  background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.05);
+  border-top-color: rgba(255,255,255,0.08); border-radius: 12px;
+  padding: 32px; display: flex; flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(173,198,255,0.04);
+}
+
+.metric-val {
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em;
+  color: #e8e6e4; line-height: 1;
+}
+.metric-lbl {
+  font-family: 'Geist', monospace; font-size: 0.55rem;
+  font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #767472;
+  margin-top: 4px;
+}
+
+.industry-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 99px;
+  font-family: 'Geist', monospace; font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); color: #b4b2b0;
+}
+
+.stat-bar {
+  height: 2px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; margin-top: 6px;
+}
+.stat-fill {
+  height: 100%; background: linear-gradient(90deg, #adc6ff, #4d8eff);
+  border-radius: 2px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+
+@keyframes countup { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.metric-val { animation: countup 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+    <a href="website-audit.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Website Audit</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Get My Quote</a></div>
+</div>
+
+<!-- Desktop Nav -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow nav-active text-platinum">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Get My Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="pt-40 pb-20 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 opacity-[0.035]" style="background:radial-gradient(ellipse at 60% 40%,#adc6ff,transparent 55%);"></div>
+    <svg class="absolute left-0 bottom-0 opacity-[0.04] w-full" viewBox="0 0 1440 400" fill="none" preserveAspectRatio="xMidYMax slice">
+      <line x1="0" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="360" y1="400" x2="1080" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="1440" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div class="max-w-[1200px] mx-auto relative z-10">
+    <div class="reveal max-w-3xl">
+      <span class="eyebrow text-pewter block mb-5">Transformation Stories</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        From Digital Ghost<br><em class="italic font-normal text-platinum">to Market Authority.</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed font-light">Real results for real businesses. Every project below represents a business that outgrew its digital presence — and the systems we built to match their ambition.</p>
+    </div>
+
+    <!-- Stats Strip -->
+    <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-6 mt-14 pt-12 border-t border-white/5" style="transition-delay:100ms;">
+      <div>
+        <div class="font-editorial font-bold platinum-text" style="font-size:2.4rem;line-height:1;letter-spacing:-0.04em;">48+</div>
+        <div class="eyebrow text-pewter mt-2">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="font-editorial font-bold platinum-text" style="font-size:2.4rem;line-height:1;letter-spacing:-0.04em;">$2.4M</div>
+        <div class="eyebrow text-pewter mt-2">Revenue Generated</div>
+      </div>
+      <div>
+        <div class="font-editorial font-bold platinum-text" style="font-size:2.4rem;line-height:1;letter-spacing:-0.04em;">100%</div>
+        <div class="eyebrow text-pewter mt-2">Client Retention</div>
+      </div>
+      <div>
+        <div class="font-editorial font-bold platinum-text" style="font-size:2.4rem;line-height:1;letter-spacing:-0.04em;">12</div>
+        <div class="eyebrow text-pewter mt-2">Industries Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter Bar -->
+<section class="py-8 px-6 md:px-16 bg-void border-b border-white/5 sticky top-20 z-40" style="backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(3,3,3,0.92);">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="flex items-center gap-3 overflow-x-auto pb-1" style="-ms-overflow-style:none;scrollbar-width:none;">
+      <span class="filter-chip active" data-filter="all" onclick="filterProjects('all',this)">All Projects</span>
+      <span class="filter-chip" data-filter="law" onclick="filterProjects('law',this)">Law &amp; Legal</span>
+      <span class="filter-chip" data-filter="medical" onclick="filterProjects('medical',this)">Medical &amp; Health</span>
+      <span class="filter-chip" data-filter="restaurant" onclick="filterProjects('restaurant',this)">Restaurants</span>
+      <span class="filter-chip" data-filter="realestate" onclick="filterProjects('realestate',this)">Real Estate</span>
+      <span class="filter-chip" data-filter="ecommerce" onclick="filterProjects('ecommerce',this)">E-Commerce</span>
+      <span class="filter-chip" data-filter="professional" onclick="filterProjects('professional',this)">Professional Services</span>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-20 md:py-32 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+
+    <!-- Featured Project -->
+    <div class="reveal mb-16" id="featured-block">
+      <div class="card-elevated p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">gavel</span>Law Firm</span>
+            <span class="eyebrow text-glow/70" style="font-size:0.55rem;">Featured Case Study</span>
+          </div>
+          <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.05;letter-spacing:-0.03em;">How a Mid-Size Law Firm Tripled Their Consultation Bookings</h2>
+          <p class="text-silver font-body text-sm leading-relaxed mb-8 font-light">A regional litigation firm was losing qualified leads to competitors with more polished digital presences. Manual intake consumed over 3 attorney hours daily. We rebuilt their entire digital acquisition system — from website to automated intake to AI pre-qualification.</p>
+
+          <div class="grid grid-cols-3 gap-6 mb-8 pt-6 border-t border-white/5">
+            <div>
+              <div class="metric-val">+42%</div>
+              <div class="metric-lbl">Qualified Inquiries</div>
+              <div class="stat-bar"><div class="stat-fill" style="width:42%;"></div></div>
+            </div>
+            <div>
+              <div class="metric-val">–3h</div>
+              <div class="metric-lbl">Daily Admin</div>
+              <div class="stat-bar"><div class="stat-fill" style="width:65%;"></div></div>
+            </div>
+            <div>
+              <div class="metric-val">3×</div>
+              <div class="metric-lbl">Consultations</div>
+              <div class="stat-bar"><div class="stat-fill" style="width:90%;"></div></div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-glow/60 flex-shrink-0" style="font-size:14px;">check_circle</span>
+              <span class="text-silver text-xs font-body">Custom intake system with AI lead qualification</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-glow/60 flex-shrink-0" style="font-size:14px;">check_circle</span>
+              <span class="text-silver text-xs font-body">Automated scheduling &amp; client communication flows</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-glow/60 flex-shrink-0" style="font-size:14px;">check_circle</span>
+              <span class="text-silver text-xs font-body">Premium website with SEO-optimised practice area pages</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <div class="aspect-video rounded-lg overflow-hidden relative" style="background:linear-gradient(135deg,#0d0d0d 0%,#141414 100%);border:1px solid rgba(255,255,255,0.06);">
+            <div class="absolute inset-0 flex flex-col items-center justify-center gap-3">
+              <span class="material-symbols-outlined text-pewter/20" style="font-size:48px;">gavel</span>
+              <span class="eyebrow text-pewter/20" style="font-size:0.55rem;">Law Firm Website</span>
+            </div>
+            <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(173,198,255,0.03),transparent 60%);"></div>
+          </div>
+          <blockquote class="card p-6">
+            <p class="text-platinum font-body font-light text-sm leading-relaxed mb-4">"Ascendra didn't just build us a website. They built a business development machine. We've tripled our consultation bookings and our attorneys spend their time on billable work, not admin."</p>
+            <div class="flex items-center gap-3">
+              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(173,198,255,0.2),rgba(77,142,255,0.2));border:1px solid rgba(173,198,255,0.15);display:flex;align-items:center;justify-content:center;">
+                <span class="font-editorial text-glow text-sm font-bold">M</span>
+              </div>
+              <div>
+                <div class="text-platinum text-xs font-body font-medium">Managing Partner</div>
+                <div class="text-pewter text-xs font-mono">Regional Litigation Firm</div>
+              </div>
+            </div>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+
+      <!-- Law Firm -->
+      <div class="project-card reveal" data-industry="law">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">gavel</span>Law Firm</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">gavel</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Low-quality intake leads and manual scheduling consuming 3+ attorney hours daily.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+42%</div><div class="metric-lbl">Qualified Leads</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">–3h</div><div class="metric-lbl">Daily Admin</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Website</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">AI Intake</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Automation</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"Ascendra built us a business development machine. We've tripled our consultation bookings."</blockquote>
+      </div>
+
+      <!-- Medical Practice -->
+      <div class="project-card reveal" data-industry="medical" style="transition-delay:80ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">medical_services</span>Medical Practice</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">medical_services</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">22% no-show rate and fragmented patient communication across 4 platforms.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">–60%</div><div class="metric-lbl">No-Show Rate</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">+38%</div><div class="metric-lbl">New Patients</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Booking System</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">SMS Automation</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">CRM</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"The automation system saves my team 20+ hours a week. Our close rate has never been higher."</blockquote>
+      </div>
+
+      <!-- Restaurant Group -->
+      <div class="project-card reveal" data-industry="restaurant" style="transition-delay:160ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">restaurant</span>Restaurant Group</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">restaurant</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">$18,000+ annually lost to third-party platform commissions and no direct booking channel.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+65%</div><div class="metric-lbl">Direct Bookings</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">$0</div><div class="metric-lbl">Commissions</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Reservation System</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Website</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Menu System</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"Direct bookings are up 65% and we've eliminated commission costs entirely."</blockquote>
+      </div>
+
+      <!-- Real Estate Agency -->
+      <div class="project-card reveal" data-industry="realestate">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">home_work</span>Real Estate</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">home_work</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Outdated listings site losing buyers to Zillow. No lead capture or follow-up system in place.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+87%</div><div class="metric-lbl">Qualified Leads</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">–52%</div><div class="metric-lbl">Cost Per Lead</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Premium Website</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">CRM</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Lead Automation</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"We went from losing leads to Zillow to capturing them ourselves. The CRM integration changed everything."</blockquote>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="project-card reveal" data-industry="ecommerce" style="transition-delay:80ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">shopping_bag</span>E-Commerce</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">shopping_bag</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">High traffic but 1.4% conversion rate on a slow, generic Shopify template with poor mobile UX.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">4.1%</div><div class="metric-lbl">Conversion Rate</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">+193%</div><div class="metric-lbl">Monthly Revenue</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Custom Store</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Mobile-First</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">CRO</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"Same traffic, nearly 3× the revenue. The redesign paid for itself in the first 6 weeks."</blockquote>
+      </div>
+
+      <!-- Dental Practice -->
+      <div class="project-card reveal" data-industry="medical" style="transition-delay:160ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">dentistry</span>Dental Practice</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">dentistry</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Phone-only bookings with a 48-hour callback window losing new patients to same-day competitors.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+110%</div><div class="metric-lbl">Online Bookings</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">4.9★</div><div class="metric-lbl">Google Rating</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Booking System</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Review Automation</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Website</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"Patients can book at 11pm now. We added two new chair sessions per day within the first month."</blockquote>
+      </div>
+
+      <!-- Accounting Firm -->
+      <div class="project-card reveal" data-industry="professional">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">calculate</span>Accounting Firm</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">calculate</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Manual client onboarding taking 5 days per client and losing prospects to faster competitors.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">–80%</div><div class="metric-lbl">Onboarding Time</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">+55%</div><div class="metric-lbl">New Clients</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Client Portal</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Workflow Automation</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Website</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"Onboarding used to take us a week. Now it takes a day. We're closing clients our competitors are still emailing PDFs to."</blockquote>
+      </div>
+
+      <!-- Luxury Hotel -->
+      <div class="project-card reveal" data-industry="restaurant" style="transition-delay:80ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">hotel</span>Boutique Hotel</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">hotel</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">80% of bookings through OTAs at 18–22% commission. Website felt cheap vs. $400/night room rates.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+48%</div><div class="metric-lbl">Direct Bookings</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">$82K</div><div class="metric-lbl">Saved / Year</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Luxury Website</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Booking Engine</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Email Flows</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"The website finally matches the experience of staying with us. Direct bookings have transformed our margins."</blockquote>
+      </div>
+
+      <!-- Financial Advisor -->
+      <div class="project-card reveal" data-industry="professional" style="transition-delay:160ms;">
+        <div class="flex items-center justify-between mb-6">
+          <span class="industry-tag"><span class="material-symbols-outlined" style="font-size:13px;">savings</span>Financial Advisory</span>
+          <span class="material-symbols-outlined text-pewter/25" style="font-size:20px;">savings</span>
+        </div>
+        <div class="flex flex-col gap-4 flex-1 mb-6">
+          <div>
+            <p class="eyebrow text-pewter/50 mb-1.5">Challenge</p>
+            <p class="text-silver text-sm font-body leading-relaxed">Compliance-heavy industry with no digital lead strategy. All growth came from referrals alone.</p>
+          </div>
+          <div class="h-px bg-white/5"></div>
+          <div>
+            <p class="eyebrow text-pewter/50 mb-2">Results</p>
+            <div class="flex gap-5">
+              <div><div class="metric-val" style="font-size:1.3rem;">+220%</div><div class="metric-lbl">Digital Leads</div></div>
+              <div><div class="metric-val" style="font-size:1.3rem;">$1.2M</div><div class="metric-lbl">AUM Added</div></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-1">
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Authority Website</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Lead Funnel</span>
+            <span style="font-family:'Geist',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Content System</span>
+          </div>
+        </div>
+        <blockquote class="text-platinum font-body font-light text-xs border-t border-white/5 pt-5 leading-relaxed">"I used to grow only through referrals. Now inbound leads come in while I sleep."</blockquote>
+      </div>
+
+    </div>
+
+    <!-- No results state -->
+    <div id="no-results" style="display:none;" class="text-center py-24">
+      <span class="material-symbols-outlined text-pewter/20 block mb-4" style="font-size:40px;">search_off</span>
+      <p class="text-silver font-body text-sm">No projects in this category yet. <a href="contact.html" class="text-glow hover:text-platinum transition-colors" style="text-decoration:underline;text-underline-offset:3px;">Start a conversation →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 md:py-32 px-6 md:px-16 bg-charcoal border-t border-white/5 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.025] pointer-events-none" style="background:radial-gradient(ellipse at 50% 50%,#adc6ff,transparent 60%);"></div>
+  <div class="max-w-[900px] mx-auto text-center relative z-10 reveal">
+    <span class="eyebrow text-pewter block mb-6">Ready to Write Your Story?</span>
+    <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,6vw,5.5rem);line-height:0.95;letter-spacing:-0.04em;">
+      Your Business<br><em class="italic font-normal text-platinum">Is Next.</em>
+    </h2>
+    <p class="text-silver font-body text-lg leading-relaxed max-w-xl mx-auto mb-10 font-light">Every result above started with a 30-minute discovery call. No pitch, no pressure — just an honest conversation about your business and what's possible.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="quote.html" class="btn-primary justify-center">Get My Project Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+      <a href="contact.html" class="btn-ghost justify-center">Request Private Consultation</a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="quote.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Calculate Quote →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function filterProjects(filter, chipEl) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  chipEl.classList.add('active');
+
+  const cards = document.querySelectorAll('#projects-grid .project-card');
+  const featured = document.getElementById('featured-block');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const industry = card.dataset.industry;
+    const show = filter === 'all' || industry === filter;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Featured block only visible on 'all' or 'law'
+  if (featured) featured.style.display = (filter === 'all' || filter === 'law') ? '' : 'none';
+
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible'); }), { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const d = document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click', () => { d.classList.add('open'); document.body.style.overflow = 'hidden'; });
+document.getElementById('closeMenu')?.addEventListener('click', () => { d.classList.remove('open'); document.body.style.overflow = ''; });
+d?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { d.classList.remove('open'); document.body.style.overflow = ''; }));
+</script>
+</body>
+</html>
