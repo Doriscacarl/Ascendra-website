@@ -83,6 +83,9 @@ CREATE TABLE IF NOT EXISTS quote_leads (
 -- Add missing columns if the table already exists without them
 ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS status text DEFAULT 'new';
 ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS features text;
+ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS timeline text;
+ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS budget text;
 
 -- RLS
 ALTER TABLE quote_leads ENABLE ROW LEVEL SECURITY;

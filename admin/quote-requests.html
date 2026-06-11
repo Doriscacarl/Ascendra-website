@@ -384,7 +384,7 @@ const SB = {new:'b-gray',reviewed:'b-blue',contacted:'b-purple',proposal:'b-ambe
 
 async function load(){
   const {data:rows,error}=await _sb.from('quote_leads').select('*').order('created_at',{ascending:false});
-  if(error){console.error('Load error:',error);data=[];}
+  if(error){console.error('Load error:',error);data=[];toast('Could not load quote requests — check Supabase setup');}
   else{
     data=rows.map(r=>({
       id:r.id,
@@ -417,10 +417,9 @@ async function deleteRecord(id){
 async function insertNew(q){
   const {data:row,error}=await _sb.from('quote_leads').insert([{
     name:q.name,email:q.email,phone:q.phone,business:q.biz,
-    project_type:q.type,budget:null,timeline:q.timeline,
-    package_selected:q.package,features:q.features,notes:q.notes,status:q.status
+    project_type:q.type,package_selected:q.package,notes:q.notes,status:q.status
   }]).select().single();
-  if(error){console.error(error);return null;}
+  if(error){console.error(error);toast('Failed to save — check Supabase columns');return null;}
   return row;
 }
 
