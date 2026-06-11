@@ -1115,6 +1115,39 @@ a { color: inherit; text-decoration: none }
     </a>
   </div>
 
+  <!-- ── Inbound Submissions ──────────────────── -->
+  <div class="sec-lbl">Inbound — New Submissions</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px" id="inbound-grid">
+    <a class="kpi gc" href="crm-leads.html" style="cursor:pointer;text-decoration:none;display:block">
+      <div class="kpi-lbl">New Leads</div>
+      <div class="kpi-icon-box"><span class="ms">person_search</span></div>
+      <div class="kpi-ghost-val" id="ib-leads">—</div>
+      <div class="kpi-empty-msg" id="ib-leads-sub">Strategy call requests</div>
+      <div class="kpi-cta">View leads <span class="ms">arrow_forward</span></div>
+    </a>
+    <a class="kpi gc" href="quote-requests.html" style="cursor:pointer;text-decoration:none;display:block">
+      <div class="kpi-lbl">Quote Requests</div>
+      <div class="kpi-icon-box"><span class="ms" style="color:var(--amber)">request_quote</span></div>
+      <div class="kpi-ghost-val" id="ib-quotes">—</div>
+      <div class="kpi-empty-msg" id="ib-quotes-sub">Calculator submissions</div>
+      <div class="kpi-cta">View quotes <span class="ms">arrow_forward</span></div>
+    </a>
+    <a class="kpi gc" href="website-audits.html" style="cursor:pointer;text-decoration:none;display:block">
+      <div class="kpi-lbl">Website Audits</div>
+      <div class="kpi-icon-box"><span class="ms" style="color:var(--green)">pageview</span></div>
+      <div class="kpi-ghost-val" id="ib-audits">—</div>
+      <div class="kpi-empty-msg" id="ib-audits-sub">Audit form requests</div>
+      <div class="kpi-cta">View audits <span class="ms">arrow_forward</span></div>
+    </a>
+    <a class="kpi gc" href="messages.html" style="cursor:pointer;text-decoration:none;display:block">
+      <div class="kpi-lbl">Unread Messages</div>
+      <div class="kpi-icon-box"><span class="ms" style="color:var(--purple)">chat_bubble</span></div>
+      <div class="kpi-ghost-val" id="ib-messages">—</div>
+      <div class="kpi-empty-msg" id="ib-messages-sub">Website contact messages</div>
+      <div class="kpi-cta">View messages <span class="ms">arrow_forward</span></div>
+    </a>
+  </div>
+
   <!-- ── KPI Cards ─────────────────────────────── -->
   <div class="sec-lbl">Overview</div>
   <div class="kpi-grid">
@@ -1182,11 +1215,15 @@ a { color: inherit; text-decoration: none }
   <!-- ── Activity + Mini Notif ─────────────────── -->
   <div class="mid-grid">
     <div class="gc" style="padding:20px">
-      <div class="sec-lbl">Recent Activity</div>
-      <div class="act-empty">
-        <span class="ms" style="font-size:38px;color:rgba(255,255,255,0.055);display:block;margin-bottom:12px">history</span>
-        <div class="ae-title">No activity yet</div>
-        <div class="ae-desc">Actions across your modules will appear here in real time</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="sec-lbl" style="margin-bottom:0">Recent Activity</div>
+        <a href="data-debug.html" style="font-family:var(--fw-m);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px;opacity:0.6;transition:opacity 0.13s;text-decoration:none" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"><span class="ms" style="font-size:13px">bug_report</span> Debug</a>
+      </div>
+      <div id="activity-feed">
+        <div class="act-empty">
+          <span class="ms" style="font-size:38px;color:rgba(255,255,255,0.055);display:block;margin-bottom:12px">history</span>
+          <div class="ae-title">Loading activity…</div>
+        </div>
       </div>
     </div>
     <div class="gc" style="padding:20px">
@@ -1215,7 +1252,7 @@ a { color: inherit; text-decoration: none }
       </div>
       <div class="mc-name">Leads &amp; CRM</div>
       <div class="mc-desc">Capture, qualify, and move prospects through your pipeline to conversion.</div>
-      <div class="mc-status"><span class="mc-sdot"></span>No active leads</div>
+      <div class="mc-status" id="mod-leads-status"><span class="mc-sdot"></span>Loading…</div>
     </a>
     <a class="mod-card gc" href="clients.html">
       <div class="mc-arrow"><span class="ms">arrow_forward</span></div>
@@ -1303,6 +1340,7 @@ a { color: inherit; text-decoration: none }
 
 </div><!-- #app -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ── SIDEBAR (mobile) ───────────────────────────────────
 function toggleSidebar() {
@@ -1397,6 +1435,110 @@ refreshBadge();
 window.addEventListener('resize', () => {
   if (window.innerWidth > 960) closeSidebar();
 });
+
+// ── SUPABASE INBOUND DATA ─────────────────────────────
+const _sb = window.supabase.createClient(
+  'https://nfowsobglotbjrdqsiid.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+);
+
+function setIbKpi(id, val, subId, subText) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (val === null || val === undefined) { el.textContent = '—'; return; }
+  el.textContent = val;
+  el.className = val > 0 ? 'kpi-ghost-val' : 'kpi-ghost-val';
+  el.style.color = val > 0 ? 'var(--primary)' : 'rgba(255,255,255,0.10)';
+  if (subId && subText) {
+    const sub = document.getElementById(subId);
+    if (sub) sub.textContent = subText;
+  }
+}
+
+function timeAgo(d) {
+  if (!d) return '';
+  const ms = Date.now() - new Date(d).getTime();
+  const m = Math.floor(ms / 60000);
+  if (m < 1) return 'Just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h / 24) + 'd ago';
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function loadDashboardData() {
+  try {
+    const [leads, quotes, audits, msgs] = await Promise.all([
+      _sb.from('contact_submissions').select('*', { count: 'exact', head: true }).eq('status', 'new'),
+      _sb.from('quote_leads').select('*', { count: 'exact', head: true }).eq('status', 'new'),
+      _sb.from('website_audit_requests').select('*', { count: 'exact', head: true }).eq('status', 'new'),
+      _sb.from('messages').select('*', { count: 'exact', head: true }).eq('is_read', false),
+    ]);
+
+    const lc = leads.error ? null : (leads.count ?? 0);
+    const qc = quotes.error ? null : (quotes.count ?? 0);
+    const ac = audits.error ? null : (audits.count ?? 0);
+    const mc = msgs.error ? null : (msgs.count ?? 0);
+
+    setIbKpi('ib-leads', lc, 'ib-leads-sub', lc === 1 ? '1 new lead' : (lc > 0 ? lc + ' new leads' : 'No new leads'));
+    setIbKpi('ib-quotes', qc, 'ib-quotes-sub', qc === 1 ? '1 new request' : (qc > 0 ? qc + ' new requests' : 'No new requests'));
+    setIbKpi('ib-audits', ac, 'ib-audits-sub', ac === 1 ? '1 new audit' : (ac > 0 ? ac + ' new audits' : 'No new audits'));
+    setIbKpi('ib-messages', mc, 'ib-messages-sub', mc === 1 ? '1 unread' : (mc > 0 ? mc + ' unread' : 'All read'));
+
+    // Update Leads & CRM module card
+    const leadsStatusEl = document.getElementById('mod-leads-status');
+    if (leadsStatusEl && lc !== null) {
+      leadsStatusEl.innerHTML = `<span class="mc-sdot" style="${lc > 0 ? 'background:var(--primary)' : ''}"></span>${lc > 0 ? lc + ' new lead' + (lc > 1 ? 's' : '') : 'No new leads'}`;
+    }
+
+    // Load recent activity feed
+    const [recentLeads, recentQuotes, recentAudits, recentMsgs] = await Promise.all([
+      _sb.from('contact_submissions').select('id,name,business,created_at').order('created_at', { ascending: false }).limit(3),
+      _sb.from('quote_leads').select('id,name,business,created_at').order('created_at', { ascending: false }).limit(3),
+      _sb.from('website_audit_requests').select('id,name,business_name,created_at').order('created_at', { ascending: false }).limit(3),
+      _sb.from('messages').select('id,name,subject,created_at').order('created_at', { ascending: false }).limit(3),
+    ]);
+
+    const items = [];
+    if (!recentLeads.error) recentLeads.data.forEach(r => items.push({ icon: 'person_search', color: 'var(--primary)', label: 'Strategy Call', name: r.name || r.business || '—', time: r.created_at }));
+    if (!recentQuotes.error) recentQuotes.data.forEach(r => items.push({ icon: 'request_quote', color: 'var(--amber)', label: 'Quote Request', name: r.name || r.business || '—', time: r.created_at }));
+    if (!recentAudits.error) recentAudits.data.forEach(r => items.push({ icon: 'pageview', color: 'var(--green)', label: 'Website Audit', name: r.name || r.business_name || '—', time: r.created_at }));
+    if (!recentMsgs.error) recentMsgs.data.forEach(r => items.push({ icon: 'chat_bubble', color: 'var(--purple)', label: 'Message', name: r.name || r.subject || '—', time: r.created_at }));
+
+    items.sort((a, b) => new Date(b.time) - new Date(a.time));
+    const top5 = items.slice(0, 5);
+
+    const feed = document.getElementById('activity-feed');
+    if (!feed) return;
+
+    if (top5.length === 0) {
+      feed.innerHTML = `<div class="act-empty"><span class="ms" style="font-size:38px;color:rgba(255,255,255,0.055);display:block;margin-bottom:12px">history</span><div class="ae-title">No activity yet</div><div class="ae-desc">Form submissions from your website will appear here</div></div>`;
+      return;
+    }
+
+    feed.innerHTML = top5.map(item => `
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.025)">
+        <div style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <span class="ms" style="font-size:15px;color:${item.color}">${item.icon}</span>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(item.name)}</div>
+          <div style="font-size:11.5px;color:var(--muted)">${item.label}</div>
+        </div>
+        <div style="font-family:var(--fw-m);font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0">${timeAgo(item.time)}</div>
+      </div>
+    `).join('') + `<div style="padding-top:12px;text-align:center"><a href="data-debug.html" style="font-family:var(--fw-m);font-size:10px;color:var(--muted);opacity:0.55;text-decoration:none;display:inline-flex;align-items:center;gap:4px" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.55"><span class="ms" style="font-size:12px">open_in_new</span> View all in Data Debug</a></div>`;
+
+  } catch(e) {
+    console.error('Dashboard data load error:', e);
+    const leadsStatusEl = document.getElementById('mod-leads-status');
+    if (leadsStatusEl) leadsStatusEl.innerHTML = `<span class="mc-sdot"></span>Error loading data`;
+  }
+}
+
+loadDashboardData();
 </script>
 </body>
 </html>

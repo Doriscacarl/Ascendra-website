@@ -1,6 +1,8 @@
 -- ═══════════════════════════════════════════════════════════
 -- Ascendra Supabase Schema
 -- Run this in the Supabase SQL Editor to set up all tables.
+-- Note: "CREATE POLICY IF NOT EXISTS" is not valid PostgreSQL.
+--       Use DROP POLICY IF EXISTS first, then CREATE POLICY.
 -- ═══════════════════════════════════════════════════════════
 
 
@@ -9,41 +11,52 @@
 -- Read by:  Admin CRM & Leads (crm-leads.html)
 
 CREATE TABLE IF NOT EXISTS contact_submissions (
-  id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name        text,
-  business    text,
-  email       text,
-  phone       text,
-  source      text DEFAULT 'Contact Form',
-  goals       text,
-  status      text DEFAULT 'new',
-  value       numeric,
-  role        text,
-  industry    text,
-  notes       text,
-  created_at  timestamptz DEFAULT now()
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name          text,
+  business      text,
+  email         text,
+  phone         text,
+  source        text DEFAULT 'Contact Form',
+  goals         text,
+  status        text DEFAULT 'new',
+  value         numeric,
+  role          text,
+  industry      text,
+  notes         text,
+  project_type  text,
+  budget        text,
+  timeline      text,
+  created_at    timestamptz DEFAULT now()
 );
 
--- Add status column if the table already exists without it
+-- Add columns if the table already exists without them
 ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS status text DEFAULT 'new';
 ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS value numeric;
 ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS role text;
 ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS industry text;
 ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS notes text;
+ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS project_type text;
+ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS budget text;
+ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS timeline text;
 
--- RLS: allow anon read/write (public form submissions + admin panel reads)
+-- RLS: allow anon read/write
 ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "anon_select_contact_submissions"
+DROP POLICY IF EXISTS "anon_select_contact_submissions" ON contact_submissions;
+DROP POLICY IF EXISTS "anon_insert_contact_submissions" ON contact_submissions;
+DROP POLICY IF EXISTS "anon_update_contact_submissions" ON contact_submissions;
+DROP POLICY IF EXISTS "anon_delete_contact_submissions" ON contact_submissions;
+
+CREATE POLICY "anon_select_contact_submissions"
   ON contact_submissions FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_insert_contact_submissions"
+CREATE POLICY "anon_insert_contact_submissions"
   ON contact_submissions FOR INSERT WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "anon_update_contact_submissions"
+CREATE POLICY "anon_update_contact_submissions"
   ON contact_submissions FOR UPDATE USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_delete_contact_submissions"
+CREATE POLICY "anon_delete_contact_submissions"
   ON contact_submissions FOR DELETE USING (true);
 
 
@@ -53,6 +66,7 @@ CREATE POLICY IF NOT EXISTS "anon_delete_contact_submissions"
 
 CREATE TABLE IF NOT EXISTS quote_leads (
   id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name              text,
   business          text,
   email             text,
   phone             text,
@@ -66,22 +80,28 @@ CREATE TABLE IF NOT EXISTS quote_leads (
   created_at        timestamptz DEFAULT now()
 );
 
--- Add status column if already exists without it
+-- Add missing columns if the table already exists without them
 ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS status text DEFAULT 'new';
+ALTER TABLE quote_leads ADD COLUMN IF NOT EXISTS name text;
 
 -- RLS
 ALTER TABLE quote_leads ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "anon_select_quote_leads"
+DROP POLICY IF EXISTS "anon_select_quote_leads" ON quote_leads;
+DROP POLICY IF EXISTS "anon_insert_quote_leads" ON quote_leads;
+DROP POLICY IF EXISTS "anon_update_quote_leads" ON quote_leads;
+DROP POLICY IF EXISTS "anon_delete_quote_leads" ON quote_leads;
+
+CREATE POLICY "anon_select_quote_leads"
   ON quote_leads FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_insert_quote_leads"
+CREATE POLICY "anon_insert_quote_leads"
   ON quote_leads FOR INSERT WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "anon_update_quote_leads"
+CREATE POLICY "anon_update_quote_leads"
   ON quote_leads FOR UPDATE USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_delete_quote_leads"
+CREATE POLICY "anon_delete_quote_leads"
   ON quote_leads FOR DELETE USING (true);
 
 
@@ -105,16 +125,21 @@ CREATE TABLE IF NOT EXISTS messages (
 -- RLS
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "anon_select_messages"
+DROP POLICY IF EXISTS "anon_select_messages" ON messages;
+DROP POLICY IF EXISTS "anon_insert_messages" ON messages;
+DROP POLICY IF EXISTS "anon_update_messages" ON messages;
+DROP POLICY IF EXISTS "anon_delete_messages" ON messages;
+
+CREATE POLICY "anon_select_messages"
   ON messages FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_insert_messages"
+CREATE POLICY "anon_insert_messages"
   ON messages FOR INSERT WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "anon_update_messages"
+CREATE POLICY "anon_update_messages"
   ON messages FOR UPDATE USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_delete_messages"
+CREATE POLICY "anon_delete_messages"
   ON messages FOR DELETE USING (true);
 
 
@@ -132,21 +157,32 @@ CREATE TABLE IF NOT EXISTS website_audit_requests (
   budget        text,
   timeline      text,
   goals         text,
+  features      text,
+  notes         text,
   status        text DEFAULT 'new',
   created_at    timestamptz DEFAULT now()
 );
 
+-- Add columns if the table already exists without them
+ALTER TABLE website_audit_requests ADD COLUMN IF NOT EXISTS features text;
+ALTER TABLE website_audit_requests ADD COLUMN IF NOT EXISTS notes text;
+
 -- RLS
 ALTER TABLE website_audit_requests ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "anon_select_website_audit_requests"
+DROP POLICY IF EXISTS "anon_select_website_audit_requests" ON website_audit_requests;
+DROP POLICY IF EXISTS "anon_insert_website_audit_requests" ON website_audit_requests;
+DROP POLICY IF EXISTS "anon_update_website_audit_requests" ON website_audit_requests;
+DROP POLICY IF EXISTS "anon_delete_website_audit_requests" ON website_audit_requests;
+
+CREATE POLICY "anon_select_website_audit_requests"
   ON website_audit_requests FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_insert_website_audit_requests"
+CREATE POLICY "anon_insert_website_audit_requests"
   ON website_audit_requests FOR INSERT WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "anon_update_website_audit_requests"
+CREATE POLICY "anon_update_website_audit_requests"
   ON website_audit_requests FOR UPDATE USING (true);
 
-CREATE POLICY IF NOT EXISTS "anon_delete_website_audit_requests"
+CREATE POLICY "anon_delete_website_audit_requests"
   ON website_audit_requests FOR DELETE USING (true);
