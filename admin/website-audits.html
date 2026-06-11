@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#090909">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ascendra">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <title>ASCENDRA | Website Audits</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -402,7 +410,8 @@ async function deleteRecord(id){
       }
     }catch(e){console.warn('Storage cleanup error:',e);}
   }
-  await _sb.from('website_audit_requests').delete().eq('id',id);
+  const{error}=await _sb.from('website_audit_requests').delete().eq('id',id);
+  return error;
 }
 async function insertNew(a){
   const {data:row,error}=await _sb.from('website_audit_requests').insert([{
@@ -560,7 +569,8 @@ async function deleteA(){
   if(!confirm('Delete this audit? This will also remove any uploaded screenshot.')) return;
   const btn=document.querySelector('#modal-edit .modal-foot button:first-child');
   if(btn){btn.disabled=true;btn.innerHTML='<span class="ms" style="font-size:15px">hourglass_empty</span> Deleting…';}
-  await deleteRecord(id);
+  const err=await deleteRecord(id);
+  if(err){if(btn){btn.disabled=false;btn.innerHTML='<span class="ms" style="font-size:15px">delete</span> Delete';}toast('Delete failed — please try again');return;}
   data=data.filter(x=>x.id!==id); render(); closeModal('modal-edit'); closeDetail(); toast('Audit deleted');
 }
 
@@ -640,5 +650,6 @@ _sb.channel('wa_rt')
 // Notification bell
 (async()=>{try{const{count}=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&count>0){b.textContent=count>99?'99+':String(count);b.style.display='flex';}_sb.channel('nb_wa').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
 </script>
+<script>if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});</script>
 </body>
 </html>
