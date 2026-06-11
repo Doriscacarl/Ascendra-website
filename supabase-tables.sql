@@ -189,3 +189,119 @@ CREATE POLICY "anon_update_website_audit_requests"
 
 CREATE POLICY "anon_delete_website_audit_requests"
   ON website_audit_requests FOR DELETE USING (true);
+
+
+-- ── 5. projects_content ──────────────────────────────────────
+-- Managed by: Admin Website Content (website-content.html)
+-- Read by:    Public Projects page (projects.html)
+-- Purpose:    CMS for project cards and case studies
+
+CREATE TABLE IF NOT EXISTS projects_content (
+  id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title          text NOT NULL,
+  industry       text,
+  category_label text,
+  project_type   text DEFAULT 'concept', -- 'concept' | 'real'
+  status         text DEFAULT 'published', -- 'published' | 'draft'
+  challenge      text,
+  solution       text,
+  metrics        jsonb DEFAULT '[]'::jsonb, -- [{value, label}]
+  tags           jsonb DEFAULT '[]'::jsonb, -- ["Website", "Automation", …]
+  footer_note    text,
+  image_url      text,
+  sort_order     integer DEFAULT 0,
+  created_at     timestamptz DEFAULT now(),
+  updated_at     timestamptz DEFAULT now()
+);
+
+ALTER TABLE projects_content ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "anon_select_projects_content" ON projects_content;
+DROP POLICY IF EXISTS "anon_insert_projects_content" ON projects_content;
+DROP POLICY IF EXISTS "anon_update_projects_content" ON projects_content;
+DROP POLICY IF EXISTS "anon_delete_projects_content" ON projects_content;
+
+CREATE POLICY "anon_select_projects_content"
+  ON projects_content FOR SELECT USING (true);
+
+CREATE POLICY "anon_insert_projects_content"
+  ON projects_content FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "anon_update_projects_content"
+  ON projects_content FOR UPDATE USING (true);
+
+CREATE POLICY "anon_delete_projects_content"
+  ON projects_content FOR DELETE USING (true);
+
+
+-- ── 6. website_content ───────────────────────────────────────
+-- Managed by: Admin Website Content (website-content.html)
+-- Read by:    All public pages
+-- Purpose:    Key-value CMS for editable page text and copy
+
+CREATE TABLE IF NOT EXISTS website_content (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  section_key  text UNIQUE NOT NULL, -- e.g. 'hero_headline', 'cta_primary'
+  content_json text,                  -- JSON blob for flexible field storage
+  updated_at   timestamptz DEFAULT now()
+);
+
+ALTER TABLE website_content ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "anon_select_website_content" ON website_content;
+DROP POLICY IF EXISTS "anon_insert_website_content" ON website_content;
+DROP POLICY IF EXISTS "anon_update_website_content" ON website_content;
+DROP POLICY IF EXISTS "anon_delete_website_content" ON website_content;
+
+CREATE POLICY "anon_select_website_content"
+  ON website_content FOR SELECT USING (true);
+
+CREATE POLICY "anon_insert_website_content"
+  ON website_content FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "anon_update_website_content"
+  ON website_content FOR UPDATE USING (true);
+
+CREATE POLICY "anon_delete_website_content"
+  ON website_content FOR DELETE USING (true);
+
+
+-- ── 7. media_uploads ─────────────────────────────────────────
+-- Managed by: Admin Website Content (website-content.html)
+-- Purpose:    Tracks uploaded project/media files
+-- Note:       Files themselves live in Supabase Storage bucket 'project-images'
+
+CREATE TABLE IF NOT EXISTS media_uploads (
+  id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  file_name   text,
+  storage_path text,
+  public_url  text,
+  linked_to   text, -- 'project:<id>' | 'section:<key>' | NULL
+  file_size   integer,
+  mime_type   text,
+  created_at  timestamptz DEFAULT now()
+);
+
+ALTER TABLE media_uploads ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "anon_select_media_uploads" ON media_uploads;
+DROP POLICY IF EXISTS "anon_insert_media_uploads" ON media_uploads;
+DROP POLICY IF EXISTS "anon_update_media_uploads" ON media_uploads;
+DROP POLICY IF EXISTS "anon_delete_media_uploads" ON media_uploads;
+
+CREATE POLICY "anon_select_media_uploads"
+  ON media_uploads FOR SELECT USING (true);
+
+CREATE POLICY "anon_insert_media_uploads"
+  ON media_uploads FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "anon_update_media_uploads"
+  ON media_uploads FOR UPDATE USING (true);
+
+CREATE POLICY "anon_delete_media_uploads"
+  ON media_uploads FOR DELETE USING (true);
+
+-- ── Supabase Storage bucket ───────────────────────────────────
+-- Create a public bucket named 'project-images' in the Supabase
+-- Storage dashboard (Storage → New bucket → Name: project-images → Public: ON).
+-- This bucket stores uploaded project images/screenshots.
