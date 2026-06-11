@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCENDRA | AI Qualification Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────── */
+:root {
+  --bg:          #090909;
+  --s0:          #101010;
+  --s1:          #161515;
+  --s2:          #1c1b1b;
+  --s3:          #242323;
+  --s4:          #2e2d2d;
+  --primary:     #adc6ff;
+  --primary-b:   #4d8eff;
+  --primary-dim: rgba(173,198,255,0.09);
+  --primary-glo: rgba(173,198,255,0.18);
+  --text:        #e6e3e2;
+  --text2:       #b4b9c7;
+  --muted:       #72768a;
+  --border:      rgba(255,255,255,0.040);
+  --border2:     rgba(255,255,255,0.072);
+  --border3:     rgba(255,255,255,0.110);
+  --glow:        rgba(173,198,255,0.22);
+  --green:       #6ee7b7;
+  --amber:       #fcd34d;
+  --red:         #fca5a5;
+  --purple:      #c4b5fd;
+  --indigo:      #818cf8;
+  --fw-d:        'Bodoni Moda', Georgia, serif;
+  --fw-b:        'Hanken Grotesk', system-ui, sans-serif;
+  --fw-m:        'Geist', monospace;
+  --r:           12px;
+  --r-sm:        8px;
+  --r-lg:        16px;
+  --r-xl:        20px;
+  --sidebar:     256px;
+  --topbar:      62px;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--fw-b); font-size:14px; line-height:1.6; overflow:hidden }
+button,input,select,textarea { font-family:inherit }
+a { color:inherit; text-decoration:none }
+.ms { font-family:'Material Symbols Outlined'; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24; font-size:18px; vertical-align:middle; flex-shrink:0; font-style:normal }
+.ms-f { font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24 }
+
+/* ── SHELL ──────────────────────────────────────── */
+#app { display:grid; grid-template-columns:var(--sidebar) 1fr; grid-template-rows:var(--topbar) 1fr; height:100vh; position:relative }
+
+/* ── SIDEBAR ────────────────────────────────────── */
+#sidebar {
+  grid-row:1/3; background:var(--s0); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; overflow:hidden; z-index:100;
+  transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)
+}
+.sb-logo { padding:22px 20px 18px; border-bottom:1px solid var(--border); flex-shrink:0 }
+.sb-logo-row { display:flex; align-items:center; gap:8px; margin-bottom:4px }
+.sb-logo-text { font-family:var(--fw-d); font-size:19px; font-weight:700; letter-spacing:-0.02em }
+.sb-logo-chip { font-family:var(--fw-m); font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--primary); background:var(--primary-dim); border:1px solid rgba(173,198,255,0.15); border-radius:4px; padding:2px 6px }
+.sb-tagline { font-family:var(--fw-m); font-size:9px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted) }
+.sb-nav { flex:1; padding:10px 8px; display:flex; flex-direction:column; gap:1px; overflow-y:auto; overflow-x:hidden }
+.sb-nav::-webkit-scrollbar { display:none }
+.sb-sec { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); padding:14px 12px 5px; opacity:0.45 }
+.ni { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-sm); cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; user-select:none; position:relative; min-height:40px }
+.ni:hover { background:rgba(255,255,255,0.03); color:var(--text2) }
+.ni.active { background:rgba(173,198,255,0.065); color:var(--primary) }
+.ni.active::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:2px; height:54%; background:var(--primary); border-radius:2px; box-shadow:0 0 10px var(--glow) }
+.ni .lbl { font-size:13px; font-weight:500 }
+.nb { margin-left:auto; background:var(--primary-dim); color:var(--primary); font-family:var(--fw-m); font-size:9px; font-weight:700; padding:2px 7px; border-radius:99px }
+.sb-foot { padding:10px 8px; border-top:1px solid var(--border); flex-shrink:0 }
+.user-pill { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--r-sm); background:rgba(255,255,255,0.02); border:1px solid var(--border); cursor:pointer; transition:background 0.13s }
+.user-pill:hover { background:rgba(255,255,255,0.045) }
+.u-av { width:30px; height:30px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:11px; font-weight:700; color:#001a42 }
+.u-name { font-size:12.5px; font-weight:600; color:var(--text) }
+.u-role { font-family:var(--fw-m); font-size:9px; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted) }
+
+/* ── TOPBAR ─────────────────────────────────────── */
+#topbar {
+  grid-column:2; background:rgba(16,16,16,0.9); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 28px; gap:10px; z-index:50
+}
+.tb-menu { display:none; width:36px; height:36px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s; flex-shrink:0 }
+.tb-menu:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.tb-crumb { flex:1; display:flex; align-items:center; gap:8px; min-width:0 }
+.tb-root { font-family:var(--fw-m); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap }
+.tb-sep { color:var(--border3); font-size:16px }
+.tb-cur { font-size:13px; font-weight:600; color:var(--text); white-space:nowrap }
+.tb-acts { display:flex; align-items:center; gap:6px; flex-shrink:0 }
+.tb-icon { width:36px; height:36px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s }
+.tb-icon:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.tb-av { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:11px; font-weight:700; color:#001a42; cursor:pointer; flex-shrink:0 }
+
+/* ── MAIN ───────────────────────────────────────── */
+#main { grid-column:2; overflow:hidden; background:var(--bg); position:relative; display:flex; flex-direction:column }
+
+/* ── GLASS ──────────────────────────────────────── */
+.gc { background:rgba(20,19,19,0.55); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--border); border-top-color:var(--border2); border-radius:var(--r) }
+.gc-hi { background:rgba(24,23,23,0.72); backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px); border:1px solid var(--border2); border-top-color:var(--border3); border-radius:var(--r); box-shadow:0 20px 60px rgba(0,0,0,0.38) }
+
+/* ── BUTTONS ────────────────────────────────────── */
+.btn-p { display:inline-flex; align-items:center; gap:5px; padding:9px 18px; background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%); color:#001a42; font-weight:700; font-size:12.5px; border-radius:var(--r-sm); border:none; cursor:pointer; transition:transform 0.13s,box-shadow 0.13s; box-shadow:0 4px 20px rgba(173,198,255,0.18) }
+.btn-p:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(173,198,255,0.32) }
+.btn-p:active { transform:translateY(0) }
+.btn-g { display:inline-flex; align-items:center; gap:5px; padding:8px 14px; background:rgba(255,255,255,0.04); color:var(--text2); font-size:12.5px; font-weight:500; border-radius:var(--r-sm); border:1px solid var(--border); cursor:pointer; transition:background 0.13s,color 0.13s,border-color 0.13s }
+.btn-g:hover { background:rgba(255,255,255,0.08); color:var(--text); border-color:var(--border2) }
+.btn-g.active { background:var(--primary-dim); color:var(--primary); border-color:rgba(173,198,255,0.18) }
+.btn-sm { display:inline-flex; align-items:center; gap:4px; padding:5px 10px; background:rgba(255,255,255,0.04); color:var(--text2); font-size:11.5px; font-weight:500; border-radius:var(--r-sm); border:1px solid var(--border); cursor:pointer; transition:background 0.13s,color 0.13s; white-space:nowrap }
+.btn-sm:hover { background:rgba(255,255,255,0.08); color:var(--text) }
+.btn-sm.green { background:rgba(110,231,183,0.07); color:var(--green); border-color:rgba(110,231,183,0.15) }
+.btn-sm.green:hover { background:rgba(110,231,183,0.14) }
+.btn-sm.red { background:rgba(252,165,165,0.07); color:var(--red); border-color:rgba(252,165,165,0.15) }
+.btn-sm.red:hover { background:rgba(252,165,165,0.14) }
+.btn-sm.blue { background:rgba(173,198,255,0.07); color:var(--primary); border-color:rgba(173,198,255,0.15) }
+.btn-sm.blue:hover { background:rgba(173,198,255,0.14) }
+.btn-sm.amber { background:rgba(252,211,77,0.07); color:var(--amber); border-color:rgba(252,211,77,0.15) }
+.btn-sm.amber:hover { background:rgba(252,211,77,0.14) }
+.btn-sm.purple { background:rgba(196,181,253,0.07); color:var(--purple); border-color:rgba(196,181,253,0.15) }
+.btn-sm.purple:hover { background:rgba(196,181,253,0.14) }
+
+/* ── BADGES ─────────────────────────────────────── */
+.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:99px; font-family:var(--fw-m); font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase }
+.b-blue   { background:rgba(173,198,255,0.09); color:var(--primary) }
+.b-green  { background:rgba(110,231,183,0.09); color:var(--green) }
+.b-amber  { background:rgba(252,211,77,0.09);  color:var(--amber) }
+.b-red    { background:rgba(252,165,165,0.09); color:var(--red) }
+.b-gray   { background:rgba(255,255,255,0.05); color:var(--muted) }
+.b-purple { background:rgba(196,181,253,0.09); color:var(--purple) }
+.b-indigo { background:rgba(129,140,248,0.09); color:var(--indigo) }
+
+/* ── TOOLBAR ────────────────────────────────────── */
+#toolbar { flex-shrink:0; padding:20px 28px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+.search-box { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--r-sm); padding:8px 13px; flex:1; max-width:300px; transition:border-color 0.2s }
+.search-box:focus-within { border-color:rgba(173,198,255,0.22); background:rgba(255,255,255,0.04) }
+.search-box input { background:none; border:none; outline:none; color:var(--text); font-family:var(--fw-b); font-size:13px; width:100% }
+.search-box input::placeholder { color:var(--muted) }
+
+/* ── KPI ROW ────────────────────────────────────── */
+#kpi-row { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; padding:16px 28px 0; flex-shrink:0 }
+.kpi { padding:16px 18px 13px; cursor:pointer; transition:border-color 0.18s,transform 0.18s,background 0.18s; position:relative; overflow:hidden }
+.kpi:hover { border-color:rgba(173,198,255,0.10); transform:translateY(-1px) }
+.kpi.active { background:rgba(173,198,255,0.05); border-color:rgba(173,198,255,0.15) }
+.kpi-lbl { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:8px }
+.kpi-val { font-family:var(--fw-d); font-size:24px; font-weight:700; letter-spacing:-0.03em; color:var(--text); line-height:1 }
+.kpi-sub { font-size:11px; color:var(--muted); margin-top:5px }
+.kpi-bar { position:absolute; bottom:0; left:0; right:0; height:2px }
+
+/* ── TAB BAR ────────────────────────────────────── */
+#tab-bar { flex-shrink:0; padding:14px 28px 0; display:flex; align-items:center; gap:2px; border-bottom:1px solid var(--border); margin:0 28px; margin-top:16px }
+.tab { display:flex; align-items:center; gap:7px; padding:9px 14px; border-radius:var(--r-sm) var(--r-sm) 0 0; cursor:pointer; color:var(--muted); font-size:12.5px; font-weight:500; transition:background 0.13s,color 0.13s; border:1px solid transparent; border-bottom:none; user-select:none; position:relative; bottom:-1px }
+.tab:hover { color:var(--text2); background:rgba(255,255,255,0.02) }
+.tab.active { color:var(--text); background:var(--bg); border-color:var(--border) }
+.tab-cnt { font-family:var(--fw-m); font-size:9px; font-weight:700; padding:2px 6px; border-radius:99px; background:rgba(255,255,255,0.06); color:var(--muted) }
+.tab.active .tab-cnt { background:var(--primary-dim); color:var(--primary) }
+
+/* ── CONTENT ────────────────────────────────────── */
+#content { flex:1; overflow:hidden; padding:20px 28px 0; display:flex; flex-direction:column }
+.panel { display:none; flex:1; overflow-y:auto; padding-bottom:28px }
+.panel.active { display:block }
+.panel::-webkit-scrollbar { width:4px }
+.panel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.05); border-radius:2px }
+
+/* ── LEAD CARD GRID ─────────────────────────────── */
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:14px }
+
+/* ── AI LEAD CARD ───────────────────────────────── */
+.ai-card {
+  padding:20px; cursor:pointer;
+  transition:transform 0.18s cubic-bezier(0.16,1,0.3,1), border-color 0.18s, box-shadow 0.18s;
+  position:relative; overflow:hidden;
+  background:rgba(20,19,19,0.6);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border); border-top-color:var(--border2);
+  border-radius:var(--r);
+}
+.ai-card:hover { transform:translateY(-2px); border-color:rgba(173,198,255,0.12); box-shadow:0 16px 48px rgba(0,0,0,0.4) }
+.ai-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(173,198,255,0.08), transparent);
+  pointer-events:none
+}
+
+/* score accent line */
+.ai-card .score-line { position:absolute; left:0; top:0; bottom:0; width:3px; border-radius:var(--r) 0 0 var(--r) }
+.score-line.high     { background:linear-gradient(180deg, var(--green), rgba(110,231,183,0.3)) }
+.score-line.qualified { background:linear-gradient(180deg, var(--primary), rgba(173,198,255,0.3)) }
+.score-line.low      { background:linear-gradient(180deg, var(--amber), rgba(252,211,77,0.3)) }
+.score-line.rejected  { background:linear-gradient(180deg, var(--red), rgba(252,165,165,0.3)) }
+.score-line.review   { background:linear-gradient(180deg, var(--purple), rgba(196,181,253,0.3)) }
+
+.card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:14px; padding-left:6px }
+.card-avatar { width:38px; height:38px; border-radius:var(--r-sm); display:flex; align-items:center; justify-content:center; font-family:var(--fw-d); font-size:14px; font-weight:700; flex-shrink:0 }
+.av-blue   { background:linear-gradient(135deg,rgba(173,198,255,0.2),rgba(77,142,255,0.15)); color:var(--primary) }
+.av-green  { background:linear-gradient(135deg,rgba(110,231,183,0.2),rgba(52,211,153,0.15)); color:var(--green) }
+.av-amber  { background:linear-gradient(135deg,rgba(252,211,77,0.2),rgba(245,158,11,0.15)); color:var(--amber) }
+.av-purple { background:linear-gradient(135deg,rgba(196,181,253,0.2),rgba(139,92,246,0.15)); color:var(--purple) }
+.av-red    { background:linear-gradient(135deg,rgba(252,165,165,0.2),rgba(239,68,68,0.15)); color:var(--red) }
+
+.card-meta { flex:1; min-width:0 }
+.card-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.card-biz  { font-size:12px; color:var(--text2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.card-badges { display:flex; align-items:center; gap:5px; flex-wrap:wrap; margin-top:6px }
+
+.card-score-wrap { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0 }
+.score-ring { position:relative; width:48px; height:48px }
+.score-ring svg { transform:rotate(-90deg) }
+.score-ring .score-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--fw-m); font-size:13px; font-weight:700; color:var(--text) }
+.score-lbl { font-family:var(--fw-m); font-size:8px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted) }
+
+.card-fields { display:grid; grid-template-columns:1fr 1fr; gap:8px 12px; padding:12px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:12px; padding-left:6px }
+.cf-item {}
+.cf-lbl { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:2px }
+.cf-val { font-size:12.5px; color:var(--text2) }
+.cf-val.strong { color:var(--text); font-weight:600 }
+
+/* AI recommendation strip */
+.ai-rec { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:var(--r-sm); margin-bottom:12px; margin-left:6px }
+.ai-rec.accept  { background:rgba(110,231,183,0.06); border:1px solid rgba(110,231,183,0.12) }
+.ai-rec.reject  { background:rgba(252,165,165,0.06); border:1px solid rgba(252,165,165,0.12) }
+.ai-rec.review  { background:rgba(196,181,253,0.06); border:1px solid rgba(196,181,253,0.12) }
+.ai-rec-icon { width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0 }
+.ai-rec.accept .ai-rec-icon  { background:rgba(110,231,183,0.12) }
+.ai-rec.reject .ai-rec-icon  { background:rgba(252,165,165,0.12) }
+.ai-rec.review .ai-rec-icon  { background:rgba(196,181,253,0.12) }
+.ai-rec.accept .ai-rec-icon .ms { color:var(--green); font-size:15px }
+.ai-rec.reject .ai-rec-icon .ms { color:var(--red); font-size:15px }
+.ai-rec.review .ai-rec-icon .ms { color:var(--purple); font-size:15px }
+.ai-rec-text { flex:1; min-width:0 }
+.ai-rec-label { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:1px }
+.ai-rec.accept .ai-rec-label { color:var(--green) }
+.ai-rec.reject .ai-rec-label { color:var(--red) }
+.ai-rec.review .ai-rec-label { color:var(--purple) }
+.ai-rec-note { font-size:11.5px; color:var(--text2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+
+/* call status pulse */
+.call-status { display:flex; align-items:center; gap:6px; font-family:var(--fw-m); font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase }
+.cs-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0 }
+.cs-pending  .cs-dot { background:var(--muted) }
+.cs-calling  .cs-dot { background:var(--amber); box-shadow:0 0 0 0 rgba(252,211,77,0.4); animation:pulse 1.4s infinite }
+.cs-completed .cs-dot { background:var(--green) }
+.cs-failed   .cs-dot { background:var(--red) }
+.cs-followup .cs-dot { background:var(--purple); box-shadow:0 0 0 0 rgba(196,181,253,0.4); animation:pulse 1.4s infinite }
+.cs-pending  { color:var(--muted) }
+.cs-calling  { color:var(--amber) }
+.cs-completed { color:var(--green) }
+.cs-failed   { color:var(--red) }
+.cs-followup { color:var(--purple) }
+@keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(252,211,77,0.4) } 50% { box-shadow:0 0 0 5px rgba(252,211,77,0) } }
+
+.card-footer { display:flex; align-items:center; justify-content:space-between; gap:6px; padding-left:6px }
+.card-actions { display:flex; align-items:center; gap:5px; flex-wrap:wrap }
+.card-time { font-family:var(--fw-m); font-size:10px; color:var(--muted); flex-shrink:0 }
+
+/* ── CALLING ANIMATION (full card overlay for "calling" state) ── */
+.calling-overlay { position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:var(--r) }
+.calling-overlay::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(252,211,77,0.03), transparent); animation:shimmer 2s linear infinite }
+@keyframes shimmer { from { transform:translateX(-100%) } to { transform:translateX(100%) } }
+
+/* ── EMPTY STATE ────────────────────────────────── */
+.empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 32px; }
+.es-icon-wrap { position:relative; margin-bottom:26px }
+.es-glow { position:absolute; inset:-28px; border-radius:50%; background:radial-gradient(ellipse,rgba(173,198,255,0.05) 0%,transparent 70%); pointer-events:none }
+.es-icon { width:72px; height:72px; border-radius:var(--r-xl); background:rgba(255,255,255,0.02); border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; position:relative }
+.es-icon .ms { font-size:30px; color:var(--muted) }
+.es-ring { position:absolute; inset:-8px; border-radius:calc(var(--r-xl) + 8px); border:1px solid rgba(173,198,255,0.05); pointer-events:none }
+.es-eyebrow { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--primary); margin-bottom:9px; opacity:0.6 }
+.es-title { font-family:var(--fw-d); font-size:22px; font-weight:700; letter-spacing:-0.02em; color:var(--text); margin-bottom:9px; line-height:1.3 }
+.es-desc { font-size:13px; color:var(--muted); max-width:380px; line-height:1.8 }
+
+/* ── MODAL ──────────────────────────────────────── */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(10px); z-index:500; display:none; align-items:center; justify-content:center; padding:20px }
+.modal-bg.open { display:flex }
+.modal { background:var(--s1); border:1px solid var(--border2); border-radius:var(--r-lg); width:100%; max-width:560px; max-height:90vh; overflow-y:auto; box-shadow:0 40px 100px rgba(0,0,0,0.7); animation:ma 0.22s cubic-bezier(0.16,1,0.3,1) }
+.modal::-webkit-scrollbar { display:none }
+@keyframes ma { from { opacity:0; transform:scale(0.96) translateY(8px) } to { opacity:1; transform:scale(1) translateY(0) } }
+.modal-head { display:flex; align-items:center; justify-content:space-between; padding:22px 24px 16px; border-bottom:1px solid var(--border) }
+.modal-title { font-family:var(--fw-d); font-size:20px; font-weight:700; letter-spacing:-0.02em }
+.modal-close { width:30px; height:30px; border-radius:var(--r-sm); background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:background 0.13s,color 0.13s }
+.modal-close:hover { background:rgba(255,255,255,0.08); color:var(--text2) }
+.modal-body { padding:22px 24px }
+.modal-foot { padding:16px 24px 22px; display:flex; align-items:center; justify-content:flex-end; gap:8px; border-top:1px solid var(--border) }
+
+/* transcript / summary */
+.transcript-block { background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--r-sm); padding:16px; margin-top:12px }
+.t-line { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.03) }
+.t-line:last-child { border:none }
+.t-speaker { font-family:var(--fw-m); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; width:56px; flex-shrink:0; padding-top:2px }
+.t-speaker.ai { color:var(--primary) }
+.t-speaker.lead { color:var(--amber) }
+.t-text { font-size:12.5px; color:var(--text2); line-height:1.65 }
+
+.summary-row { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03) }
+.summary-row:last-child { border:none }
+.summary-lbl { font-family:var(--fw-m); font-size:9.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); width:120px; flex-shrink:0; padding-top:2px }
+.summary-val { font-size:12.5px; color:var(--text2); flex:1 }
+.summary-val strong { color:var(--text) }
+
+/* score breakdown */
+.score-bar-row { display:flex; align-items:center; gap:10px; margin-bottom:8px }
+.sbar-lbl { font-family:var(--fw-m); font-size:10px; color:var(--muted); width:90px; flex-shrink:0 }
+.sbar-track { flex:1; height:5px; border-radius:99px; background:rgba(255,255,255,0.05); overflow:hidden }
+.sbar-fill { height:100%; border-radius:99px; transition:width 0.6s cubic-bezier(0.16,1,0.3,1) }
+.sbar-num { font-family:var(--fw-m); font-size:10px; color:var(--text2); width:28px; text-align:right; flex-shrink:0 }
+
+/* ── TOAST ──────────────────────────────────────── */
+#toast-container { position:fixed; bottom:28px; right:28px; z-index:900; display:flex; flex-direction:column; gap:8px; pointer-events:none }
+.toast { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:var(--r); background:var(--s2); border:1px solid var(--border2); box-shadow:0 12px 40px rgba(0,0,0,0.5); animation:ta 0.22s cubic-bezier(0.16,1,0.3,1); min-width:240px; max-width:340px; pointer-events:all }
+@keyframes ta { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
+.toast.fadeout { opacity:0; transition:opacity 0.3s }
+.toast-text { font-size:13px; color:var(--text2); flex:1 }
+.toast-text strong { color:var(--text) }
+
+/* ── AI PULSE HEADER ────────────────────────────── */
+.ai-header { flex-shrink:0; padding:22px 28px 0; display:flex; align-items:flex-start; justify-content:space-between; gap:16px }
+.ai-header-left {}
+.ai-page-eyebrow { font-family:var(--fw-m); font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--primary); opacity:0.7; margin-bottom:5px; display:flex; align-items:center; gap:6px }
+.ai-pulse { width:6px; height:6px; border-radius:50%; background:var(--primary); box-shadow:0 0 0 0 var(--glow); animation:aipulse 2s infinite }
+@keyframes aipulse { 0%,100% { box-shadow:0 0 0 0 rgba(173,198,255,0.4) } 50% { box-shadow:0 0 0 6px rgba(173,198,255,0) } }
+.ai-page-title { font-family:var(--fw-d); font-size:26px; font-weight:700; letter-spacing:-0.03em; color:var(--text); line-height:1.2 }
+.ai-page-sub { font-size:13px; color:var(--muted); margin-top:4px }
+.ai-header-right { display:flex; align-items:center; gap:8px; flex-shrink:0; padding-top:4px }
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:960px) {
+  :root { --sidebar:0px }
+  #sidebar { position:fixed; left:0; top:0; height:100vh; width:256px; transform:translateX(-100%); z-index:200 }
+  #sidebar.open { transform:translateX(0) }
+  #app { grid-template-columns:1fr; grid-template-rows:var(--topbar) 1fr }
+  #main,#topbar { grid-column:1 }
+  .tb-menu { display:flex !important }
+  #kpi-row { grid-template-columns:repeat(3,1fr) }
+}
+@media(max-width:700px) {
+  #kpi-row { grid-template-columns:repeat(2,1fr); padding:12px 16px 0 }
+  .ai-header { padding:16px 16px 0; flex-direction:column }
+  #toolbar { padding:12px 16px 0 }
+  #tab-bar { margin:0 16px; padding:12px 0 0 }
+  #content { padding:16px 16px 0 }
+  .cards-grid { grid-template-columns:1fr }
+}
+@media(max-width:480px) {
+  #kpi-row { grid-template-columns:1fr 1fr }
+  .ai-page-title { font-size:20px }
+  .tab { padding:7px 10px; font-size:12px }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── SIDEBAR ─────────────────────────────────────────── -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row">
+      <span class="sb-logo-text">Ascendra</span>
+      <span class="sb-logo-chip">Admin</span>
+    </div>
+    <div class="sb-tagline">Sales Command</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Core</div>
+    <a class="ni" href="dashboard.html"><span class="ms">space_dashboard</span><span class="lbl">Dashboard</span></a>
+    <a class="ni" href="notifications.html"><span class="ms">notifications</span><span class="lbl">Notifications</span></a>
+    <div class="sb-sec">Sales</div>
+    <a class="ni" href="quote-requests.html"><span class="ms">request_quote</span><span class="lbl">Quote Requests</span></a>
+    <a class="ni" href="website-audits.html"><span class="ms">pageview</span><span class="lbl">Website Audits</span></a>
+    <a class="ni active" href="ai-qualification.html"><span class="ms">smart_toy</span><span class="lbl">AI Qualification</span><span class="nb" id="sb-pending-count">0</span></a>
+    <a class="ni" href="crm-leads.html"><span class="ms">person_search</span><span class="lbl">Leads</span></a>
+    <a class="ni" href="crm-pipeline.html"><span class="ms">account_tree</span><span class="lbl">CRM Pipeline</span></a>
+    <div class="sb-sec">Clients</div>
+    <a class="ni" href="clients.html"><span class="ms">domain</span><span class="lbl">Clients</span></a>
+    <a class="ni" href="projects.html"><span class="ms">folder_open</span><span class="lbl">Projects</span></a>
+    <a class="ni" href="tasks.html"><span class="ms">task_alt</span><span class="lbl">Tasks</span></a>
+    <div class="sb-sec">Recurring Revenue</div>
+    <a class="ni" href="service-plans.html"><span class="ms">credit_card</span><span class="lbl">Service Plans</span></a>
+    <a class="ni" href="invoices.html"><span class="ms">receipt_long</span><span class="lbl">Invoices</span></a>
+    <a class="ni" href="payments.html"><span class="ms">payments</span><span class="lbl">Payments</span></a>
+    <div class="sb-sec">Intelligence</div>
+    <a class="ni" href="analytics.html"><span class="ms">bar_chart</span><span class="lbl">Analytics</span></a>
+    <a class="ni" href="messages.html"><span class="ms">chat_bubble</span><span class="lbl">Messages</span></a>
+    <div class="sb-sec">System</div>
+    <a class="ni" href="settings.html"><span class="ms">manage_accounts</span><span class="lbl">Settings</span></a>
+    <a class="ni" href="brand-system.html"><span class="ms">palette</span><span class="lbl">Brand System</span></a>
+    <a class="ni" href="mobile-control.html"><span class="ms">smartphone</span><span class="lbl">Mobile Control</span></a>
+  </nav>
+  <div class="sb-foot">
+    <div class="user-pill">
+      <div class="u-av">DC</div>
+      <div>
+        <div class="u-name">Doris Cacarl</div>
+        <div class="u-role">Principal Director</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── TOPBAR ───────────────────────────────────────────── -->
+<header id="topbar">
+  <button class="tb-menu" id="menu-btn" onclick="toggleSidebar()"><span class="ms">menu</span></button>
+  <div class="tb-crumb">
+    <span class="tb-root">Admin</span>
+    <span class="tb-sep ms" style="font-size:14px">chevron_right</span>
+    <span class="tb-cur">AI Qualification Center</span>
+  </div>
+  <div class="tb-acts">
+    <button class="btn-p" style="font-size:12px;padding:7px 14px" onclick="showToast('Syncing AI call data…','sync')">
+      <span class="ms" style="font-size:15px">sync</span> Sync Calls
+    </button>
+    <div class="tb-icon" onclick="showToast('Settings coming soon','settings')"><span class="ms">tune</span></div>
+    <div class="tb-av">DC</div>
+  </div>
+</header>
+
+<!-- ── MAIN ─────────────────────────────────────────────── -->
+<main id="main">
+
+  <!-- Page Header -->
+  <div class="ai-header">
+    <div class="ai-header-left">
+      <div class="ai-page-eyebrow"><div class="ai-pulse"></div> AI-Powered Lead Intelligence</div>
+      <div class="ai-page-title">AI Qualification Center</div>
+      <div class="ai-page-sub">Leads automatically screened before you spend time on consultations</div>
+    </div>
+    <div class="ai-header-right">
+      <button class="btn-g" onclick="showToast('Export generated','download')"><span class="ms" style="font-size:15px">download</span> Export</button>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div id="kpi-row">
+    <div class="gc kpi active" onclick="filterTab('pending')" id="kpi-pending">
+      <div class="kpi-lbl">Pending Calls</div>
+      <div class="kpi-val" id="kv-pending">0</div>
+      <div class="kpi-sub">Awaiting AI call</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(114,118,138,0.5),transparent)"></div>
+    </div>
+    <div class="gc kpi" onclick="filterTab('completed')" id="kpi-completed">
+      <div class="kpi-lbl">Completed</div>
+      <div class="kpi-val" id="kv-completed">0</div>
+      <div class="kpi-sub">Calls finished</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(173,198,255,0.4),transparent)"></div>
+    </div>
+    <div class="gc kpi" onclick="filterTab('qualified')" id="kpi-qualified">
+      <div class="kpi-lbl">Qualified</div>
+      <div class="kpi-val" id="kv-qualified">0</div>
+      <div class="kpi-sub">$2,500–$4,999</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(173,198,255,0.5),transparent)"></div>
+    </div>
+    <div class="gc kpi" onclick="filterTab('high')" id="kpi-high">
+      <div class="kpi-lbl">High Priority</div>
+      <div class="kpi-val" id="kv-high">0</div>
+      <div class="kpi-sub">Budget $5,000+</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(110,231,183,0.5),transparent)"></div>
+    </div>
+    <div class="gc kpi" onclick="filterTab('rejected')" id="kpi-rejected">
+      <div class="kpi-lbl">Rejected</div>
+      <div class="kpi-val" id="kv-rejected">0</div>
+      <div class="kpi-sub">Not qualified</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(252,165,165,0.4),transparent)"></div>
+    </div>
+    <div class="gc kpi" onclick="filterTab('review')" id="kpi-review">
+      <div class="kpi-lbl">Needs Review</div>
+      <div class="kpi-val" id="kv-review">0</div>
+      <div class="kpi-sub">Manual check</div>
+      <div class="kpi-bar" style="background:linear-gradient(90deg,rgba(196,181,253,0.4),transparent)"></div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div id="toolbar">
+    <div class="search-box">
+      <span class="ms" style="color:var(--muted);font-size:16px">search</span>
+      <input type="text" placeholder="Search leads…" id="search-input" oninput="filterCards()">
+    </div>
+    <select class="btn-g" style="padding:8px 12px;cursor:pointer;background:rgba(255,255,255,0.04)" id="sort-select" onchange="sortCards()">
+      <option value="score-desc">Score: High → Low</option>
+      <option value="score-asc">Score: Low → High</option>
+      <option value="budget-desc">Budget: High → Low</option>
+      <option value="newest">Newest First</option>
+    </select>
+    <button class="btn-g" id="all-tab-btn" onclick="filterTab('all')" style="background:var(--primary-dim);color:var(--primary);border-color:rgba(173,198,255,0.18)">
+      <span class="ms" style="font-size:15px">filter_list</span> All Leads
+    </button>
+  </div>
+
+  <!-- Tab Bar -->
+  <div id="tab-bar">
+    <div class="tab active" data-tab="all" onclick="switchTab('all')"><span class="ms" style="font-size:15px">view_list</span> All <span class="tab-cnt" id="tc-all">0</span></div>
+    <div class="tab" data-tab="pending" onclick="switchTab('pending')"><span class="ms" style="font-size:15px">schedule</span> Pending <span class="tab-cnt" id="tc-pending">0</span></div>
+    <div class="tab" data-tab="completed" onclick="switchTab('completed')"><span class="ms" style="font-size:15px">check_circle</span> Completed <span class="tab-cnt" id="tc-completed">0</span></div>
+    <div class="tab" data-tab="high" onclick="switchTab('high')"><span class="ms" style="font-size:15px">star</span> High Priority <span class="tab-cnt" id="tc-high">0</span></div>
+    <div class="tab" data-tab="qualified" onclick="switchTab('qualified')"><span class="ms" style="font-size:15px">verified</span> Qualified <span class="tab-cnt" id="tc-qualified">0</span></div>
+    <div class="tab" data-tab="rejected" onclick="switchTab('rejected')"><span class="ms" style="font-size:15px">cancel</span> Rejected <span class="tab-cnt" id="tc-rejected">0</span></div>
+    <div class="tab" data-tab="review" onclick="switchTab('review')"><span class="ms" style="font-size:15px">help</span> Needs Review <span class="tab-cnt" id="tc-review">0</span></div>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+    <div class="panel active" id="panel-cards">
+      <div class="cards-grid" id="cards-grid"></div>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <div class="es-icon-wrap">
+          <div class="es-glow"></div>
+          <div class="es-icon">
+            <span class="ms">smart_toy</span>
+            <div class="es-ring"></div>
+          </div>
+        </div>
+        <div class="es-eyebrow">AI Qualification Center</div>
+        <div class="es-title">No AI-qualified leads yet</div>
+        <div class="es-desc">New qualification calls will appear here once strategy call requests are submitted.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ── TRANSCRIPT MODAL ──────────────────────────────────── -->
+<div class="modal-bg" id="modal-transcript">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Call Transcript</div>
+      <button class="modal-close" onclick="closeModal('modal-transcript')"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body" id="transcript-body"></div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('modal-transcript')">Close</button>
+      <button class="btn-p" onclick="showToast('Transcript exported','download')"><span class="ms" style="font-size:15px">download</span> Export</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SUMMARY MODAL ─────────────────────────────────────── -->
+<div class="modal-bg" id="modal-summary">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">AI Summary</div>
+      <button class="modal-close" onclick="closeModal('modal-summary')"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body" id="summary-body"></div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('modal-summary')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SCHEDULE MODAL ────────────────────────────────────── -->
+<div class="modal-bg" id="modal-schedule">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Schedule Consultation</div>
+      <button class="modal-close" onclick="closeModal('modal-schedule')"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:14px">
+        <div class="kpi-lbl" style="margin-bottom:6px">Date</div>
+        <input type="date" class="form-inp" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:var(--fw-b);font-size:13px;padding:9px 12px;outline:none">
+      </div>
+      <div style="margin-bottom:14px">
+        <div class="kpi-lbl" style="margin-bottom:6px">Time</div>
+        <input type="time" class="form-inp" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:var(--fw-b);font-size:13px;padding:9px 12px;outline:none">
+      </div>
+      <div>
+        <div class="kpi-lbl" style="margin-bottom:6px">Notes</div>
+        <textarea rows="3" placeholder="Add consultation notes…" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:var(--fw-b);font-size:13px;padding:9px 12px;outline:none;resize:none"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('modal-schedule')">Cancel</button>
+      <button class="btn-p" onclick="closeModal('modal-schedule');showToast('Consultation scheduled','event')"><span class="ms" style="font-size:15px">event</span> Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ─────────────────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<script>
+/* ── DATA ─────────────────────────────────────────────────── */
+const LEADS = [];
+
+/* ── STATE ────────────────────────────────────────────────── */
+let activeTab = 'all';
+let searchQuery = '';
+let sortMode = 'score-desc';
+
+/* ── INIT ─────────────────────────────────────────────────── */
+function init() {
+  updateKPIs();
+  renderCards();
+}
+
+function updateKPIs() {
+  const counts = { pending:0, completed:0, qualified:0, high:0, rejected:0, review:0 };
+  LEADS.forEach(l => {
+    if (l.callStatus === 'pending' || l.callStatus === 'calling') counts.pending++;
+    if (l.callStatus === 'completed') counts.completed++;
+    if (l.budgetTier === 'qualified') counts.qualified++;
+    if (l.budgetTier === 'high') counts.high++;
+    if (l.aiRec === 'reject') counts.rejected++;
+    if (l.aiRec === 'review') counts.review++;
+  });
+  document.getElementById('kv-pending').textContent   = counts.pending;
+  document.getElementById('kv-completed').textContent = counts.completed;
+  document.getElementById('kv-qualified').textContent = counts.qualified;
+  document.getElementById('kv-high').textContent      = counts.high;
+  document.getElementById('kv-rejected').textContent  = counts.rejected;
+  document.getElementById('kv-review').textContent    = counts.review;
+  document.getElementById('sb-pending-count').textContent = counts.pending;
+
+  // tab counts
+  const all = LEADS.length;
+  document.getElementById('tc-all').textContent       = all;
+  document.getElementById('tc-pending').textContent   = counts.pending;
+  document.getElementById('tc-completed').textContent = counts.completed;
+  document.getElementById('tc-high').textContent      = counts.high;
+  document.getElementById('tc-qualified').textContent = counts.qualified;
+  document.getElementById('tc-rejected').textContent  = counts.rejected;
+  document.getElementById('tc-review').textContent    = counts.review;
+}
+
+function getFilteredLeads() {
+  let list = [...LEADS];
+  // tab filter
+  if (activeTab === 'pending')   list = list.filter(l => l.callStatus==='pending'||l.callStatus==='calling');
+  if (activeTab === 'completed') list = list.filter(l => l.callStatus==='completed');
+  if (activeTab === 'high')      list = list.filter(l => l.budgetTier==='high');
+  if (activeTab === 'qualified') list = list.filter(l => l.budgetTier==='qualified');
+  if (activeTab === 'rejected')  list = list.filter(l => l.aiRec==='reject');
+  if (activeTab === 'review')    list = list.filter(l => l.aiRec==='review');
+  // search
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(l => l.name.toLowerCase().includes(q) || l.biz.toLowerCase().includes(q) || l.type.toLowerCase().includes(q));
+  }
+  // sort
+  if (sortMode === 'score-desc') list.sort((a,b) => b.score - a.score);
+  if (sortMode === 'score-asc')  list.sort((a,b) => a.score - b.score);
+  if (sortMode === 'budget-desc') {
+    const tierOrder = {high:3, qualified:2, low:1, unqualified:0};
+    list.sort((a,b) => (tierOrder[b.budgetTier]||0) - (tierOrder[a.budgetTier]||0));
+  }
+  if (sortMode === 'newest') list.sort((a,b) => b.id - a.id);
+  return list;
+}
+
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
+  const empty = document.getElementById('empty-state');
+  const leads = getFilteredLeads();
+  if (!leads.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = leads.map(l => buildCard(l)).join('');
+}
+
+function scoreColor(score) {
+  if (score >= 80) return '#6ee7b7';
+  if (score >= 60) return '#adc6ff';
+  if (score >= 40) return '#fcd34d';
+  return '#fca5a5';
+}
+function scoreLineClass(l) {
+  if (l.aiRec === 'reject') return 'rejected';
+  if (l.budgetTier === 'high') return 'high';
+  if (l.budgetTier === 'qualified') return 'qualified';
+  if (l.aiRec === 'review') return 'review';
+  return 'low';
+}
+function recClass(rec) { return rec; }
+function recIcon(rec) { return rec==='accept'?'check_circle':rec==='reject'?'cancel':'help'; }
+function recLabel(rec) { return rec==='accept'?'AI: Accept':rec==='reject'?'AI: Reject':'AI: Needs Review'; }
+function callStatusHtml(status) {
+  const map = {
+    'pending':    {cls:'cs-pending',  label:'Pending Call',       icon:'schedule'},
+    'calling':    {cls:'cs-calling',  label:'Calling…',           icon:'phone_in_talk'},
+    'completed':  {cls:'cs-completed',label:'Completed',           icon:'call_end'},
+    'failed':     {cls:'cs-failed',   label:'Call Failed',        icon:'phone_missed'},
+    'follow-up':  {cls:'cs-followup', label:'Follow-Up Required', icon:'phone_callback'},
+  };
+  const m = map[status] || map['pending'];
+  return `<div class="call-status ${m.cls}"><div class="cs-dot"></div>${m.label}</div>`;
+}
+function tierBadge(tier) {
+  const map = {
+    high:        {cls:'b-green',  label:'High Priority'},
+    qualified:   {cls:'b-blue',   label:'Qualified'},
+    low:         {cls:'b-amber',  label:'Low Priority'},
+    unqualified: {cls:'b-red',    label:'Not Qualified'},
+  };
+  const m = map[tier] || {cls:'b-gray',label:tier};
+  return `<span class="badge ${m.cls}">${m.label}</span>`;
+}
+
+function buildScoreRing(score) {
+  const r = 20, c = 2*Math.PI*r;
+  const filled = (score/100)*c;
+  const col = scoreColor(score);
+  return `<div class="score-ring">
+    <svg width="48" height="48" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
+      <circle cx="24" cy="24" r="${r}" fill="none" stroke="${col}" stroke-width="4"
+        stroke-dasharray="${filled} ${c}" stroke-linecap="round"/>
+    </svg>
+    <div class="score-num">${score}</div>
+  </div>`;
+}
+
+function buildCard(l) {
+  const callingOverlay = l.callStatus==='calling' ? '<div class="calling-overlay"></div>' : '';
+  return `<div class="ai-card" id="card-${l.id}">
+    ${callingOverlay}
+    <div class="score-line ${scoreLineClass(l)}"></div>
+    <div class="card-header">
+      <div class="card-avatar ${l.avClass}">${l.avatar}</div>
+      <div class="card-meta">
+        <div class="card-name">${l.name}</div>
+        <div class="card-biz">${l.biz}</div>
+        <div class="card-badges">
+          ${tierBadge(l.budgetTier)}
+          ${callStatusHtml(l.callStatus)}
+        </div>
+      </div>
+      <div class="card-score-wrap">
+        ${buildScoreRing(l.score)}
+        <div class="score-lbl">Lead Score</div>
+      </div>
+    </div>
+    <div class="card-fields">
+      <div class="cf-item">
+        <div class="cf-lbl">Project Type</div>
+        <div class="cf-val">${l.type}</div>
+      </div>
+      <div class="cf-item">
+        <div class="cf-lbl">Budget Range</div>
+        <div class="cf-val strong">${l.budget}</div>
+      </div>
+      <div class="cf-item">
+        <div class="cf-lbl">Timeline</div>
+        <div class="cf-val">${l.timeline}</div>
+      </div>
+      <div class="cf-item">
+        <div class="cf-lbl">Call Status</div>
+        <div class="cf-val">${l.callStatus.charAt(0).toUpperCase()+l.callStatus.slice(1)}</div>
+      </div>
+    </div>
+    <div class="ai-rec ${recClass(l.aiRec)}">
+      <div class="ai-rec-icon"><span class="ms" style="font-size:15px">${recIcon(l.aiRec)}</span></div>
+      <div class="ai-rec-text">
+        <div class="ai-rec-label">${recLabel(l.aiRec)}</div>
+        <div class="ai-rec-note">${l.aiNote}</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="card-actions">
+        ${l.transcript.length ? `<button class="btn-sm blue" onclick="event.stopPropagation();openTranscript(${l.id})"><span class="ms" style="font-size:13px">receipt_long</span> Transcript</button>` : ''}
+        ${l.summary ? `<button class="btn-sm purple" onclick="event.stopPropagation();openSummary(${l.id})"><span class="ms" style="font-size:13px">auto_awesome</span> AI Summary</button>` : ''}
+        ${l.aiRec==='accept'||l.budgetTier==='high'||l.budgetTier==='qualified' ? `<button class="btn-sm green" onclick="event.stopPropagation();acceptLead(${l.id})"><span class="ms" style="font-size:13px">check</span> Accept</button>` : ''}
+        ${l.aiRec==='reject' ? `<button class="btn-sm red" onclick="event.stopPropagation();rejectLead(${l.id})"><span class="ms" style="font-size:13px">close</span> Reject</button>` : ''}
+        <button class="btn-sm" onclick="event.stopPropagation();openModal('modal-schedule')"><span class="ms" style="font-size:13px">event</span></button>
+        <button class="btn-sm amber" onclick="event.stopPropagation();moveToCRM(${l.id})"><span class="ms" style="font-size:13px">move_up</span></button>
+      </div>
+      <div class="card-time">${l.time}</div>
+    </div>
+  </div>`;
+}
+
+/* ── TABS ─────────────────────────────────────────────────── */
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===tab));
+  renderCards();
+}
+function filterTab(tab) { switchTab(tab); }
+function filterCards() {
+  searchQuery = document.getElementById('search-input').value;
+  renderCards();
+}
+function sortCards() {
+  sortMode = document.getElementById('sort-select').value;
+  renderCards();
+}
+
+/* ── MODALS ───────────────────────────────────────────────── */
+function openModal(id) { document.getElementById(id).classList.add('open') }
+function closeModal(id) { document.getElementById(id).classList.remove('open') }
+
+function openTranscript(id) {
+  const l = LEADS.find(x=>x.id===id);
+  const lines = l.transcript.map(t =>
+    `<div class="t-line"><div class="t-speaker ${t.speaker==='ai'?'ai':'lead'}">${t.speaker==='ai'?'Aria AI':l.name.split(' ')[0]}</div><div class="t-text">${t.text}</div></div>`
+  ).join('');
+  document.getElementById('transcript-body').innerHTML =
+    `<p style="font-size:12px;color:var(--muted);margin-bottom:12px">Call with <strong style="color:var(--text)">${l.name}</strong> · ${l.biz}</p>
+     <div class="transcript-block">${lines || '<p style="color:var(--muted);font-size:13px">Transcript not yet available.</p>'}</div>`;
+  openModal('modal-transcript');
+}
+
+function openSummary(id) {
+  const l = LEADS.find(x=>x.id===id);
+  const s = l.summary;
+  if (!s) return;
+  const col = scoreColor(l.score);
+  const bars = Object.entries(s.scoreBreakdown).map(([k,v])=>
+    `<div class="score-bar-row">
+      <div class="sbar-lbl">${k.charAt(0).toUpperCase()+k.slice(1)}</div>
+      <div class="sbar-track"><div class="sbar-fill" style="width:${v}%;background:${scoreColor(v)}"></div></div>
+      <div class="sbar-num">${v}</div>
+    </div>`
+  ).join('');
+  document.getElementById('summary-body').innerHTML =
+    `<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm)">
+      <div class="card-avatar ${l.avClass}" style="width:44px;height:44px;font-size:16px">${l.avatar}</div>
+      <div><div style="font-size:15px;font-weight:700;color:var(--text)">${l.name}</div><div style="font-size:12px;color:var(--muted)">${l.biz}</div></div>
+      <div style="margin-left:auto;text-align:center"><div style="font-family:var(--fw-d);font-size:28px;font-weight:700;color:${col}">${l.score}</div><div style="font-family:var(--fw-m);font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase">Lead Score</div></div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div class="kpi-lbl" style="margin-bottom:8px">Call Summary</div>
+      <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px">
+        ${[['Interest',s.interest],['Budget',s.budget],['Timeline',s.timeline],['Pain Points',s.painPoints],['Readiness',s.readiness],['Concerns',s.concerns]].map(([k,v])=>
+          `<div class="summary-row"><div class="summary-lbl">${k}</div><div class="summary-val">${v}</div></div>`
+        ).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="kpi-lbl" style="margin-bottom:8px">Score Breakdown</div>
+      <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px">${bars}</div>
+    </div>`;
+  openModal('modal-summary');
+}
+
+/* ── ACTIONS ──────────────────────────────────────────────── */
+function acceptLead(id) {
+  const l = LEADS.find(x=>x.id===id);
+  showToast(`<strong>${l.name}</strong> accepted — moved to CRM Pipeline`, 'check_circle');
+}
+function rejectLead(id) {
+  const l = LEADS.find(x=>x.id===id);
+  showToast(`<strong>${l.name}</strong> marked as rejected`, 'cancel');
+}
+function moveToCRM(id) {
+  const l = LEADS.find(x=>x.id===id);
+  showToast(`<strong>${l.name}</strong> moved to CRM`, 'move_up');
+}
+
+/* ── SIDEBAR ──────────────────────────────────────────────── */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if (sb.classList.contains('open') && !sb.contains(e.target) && !document.getElementById('menu-btn').contains(e.target)) {
+    sb.classList.remove('open');
+  }
+});
+
+/* ── TOAST ────────────────────────────────────────────────── */
+function showToast(msg, icon='info') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="ms" style="color:var(--primary);font-size:16px">${icon}</span><div class="toast-text">${msg}</div>`;
+  c.appendChild(t);
+  setTimeout(()=>{ t.classList.add('fadeout'); setTimeout(()=>t.remove(), 320) }, 2800);
+}
+
+/* ── CLOSE MODALS ON BACKDROP ─────────────────────────────── */
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open') });
+});
+
+init();
+</script>
+</body>
+</html>
