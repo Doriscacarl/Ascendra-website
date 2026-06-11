@@ -234,6 +234,7 @@ select.f-inp option{background:var(--s2)}
             <th>Current Website</th>
             <th>Budget</th>
             <th>What's Not Working</th>
+            <th>Screenshot</th>
             <th>Status</th>
             <th>Submitted</th>
             <th></th>
@@ -363,27 +364,46 @@ async function load(){
   const {data:rows,error}=await _sb.from('website_audit_requests').select('*').order('created_at',{ascending:false});
   if(error){console.error('Load error:',error);data=[];}
   else{
-    data=rows.map(r=>({
-      id:r.id,
-      name:r.name||'',
-      email:r.email||'',
-      phone:r.phone||'',
-      biz:r.business_name||'',
-      url:r.website_url||'',
-      budget:r.budget||'',
-      timeline:r.timeline||'',
-      goals:r.goals||'',
-      features:r.features||'',
-      notes:r.notes||'',
-      status:r.status||'new',
-      createdAt:r.created_at,
-    }));
+    data=rows.map(mapRow);
   }
   render();
 }
+function mapRow(r){
+  return {
+    id:r.id,
+    name:r.name||'',
+    email:r.email||'',
+    phone:r.phone||'',
+    biz:r.business_name||'',
+    url:r.website_url||'',
+    budget:r.budget||'',
+    timeline:r.timeline||'',
+    goals:r.goals||'',
+    features:r.features||'',
+    notes:r.notes||'',
+    screenshotUrl:r.screenshot_url||null,
+    status:r.status||'new',
+    createdAt:r.created_at,
+  };
+}
 async function saveStatus_sb(id,status){ await _sb.from('website_audit_requests').update({status}).eq('id',id); }
 async function saveEdit_sb(id,fields){ await _sb.from('website_audit_requests').update(fields).eq('id',id); }
-async function deleteRecord(id){ await _sb.from('website_audit_requests').delete().eq('id',id); }
+async function deleteRecord(id){
+  const a=data.find(x=>x.id===id);
+  // Remove screenshot from storage if present
+  if(a?.screenshotUrl){
+    try{
+      const url=new URL(a.screenshotUrl);
+      const parts=url.pathname.split('/');
+      const bucketIdx=parts.indexOf('audit-screenshots');
+      if(bucketIdx!==-1){
+        const filePath=parts.slice(bucketIdx+1).join('/');
+        if(filePath) await _sb.storage.from('audit-screenshots').remove([filePath]);
+      }
+    }catch(e){console.warn('Storage cleanup error:',e);}
+  }
+  await _sb.from('website_audit_requests').delete().eq('id',id);
+}
 async function insertNew(a){
   const {data:row,error}=await _sb.from('website_audit_requests').insert([{
     name:a.name,email:a.email,phone:a.phone||null,business_name:a.biz||null,
@@ -435,11 +455,15 @@ function render(){
     const tr=document.createElement('tr');
     tr.onclick=()=>openDetail(a.id);
     const shortUrl=(a.url||'').replace(/^https?:\/\//,'').replace(/\/.*$/,'').slice(0,30);
+    const thumbCell=a.screenshotUrl
+      ?`<td onclick="event.stopPropagation()"><img src="${esc(a.screenshotUrl)}" alt="screenshot" style="width:48px;height:34px;object-fit:cover;border-radius:4px;border:1px solid rgba(255,255,255,0.08);cursor:zoom-in;transition:opacity 0.15s" onclick="openScreenshot('${esc(a.screenshotUrl)}')" title="Click to enlarge"></td>`
+      :`<td><span style="font-size:11px;color:var(--muted)">—</span></td>`;
     tr.innerHTML=`<td class="p">${esc(a.name)}</td>
       <td>${esc(a.biz||'—')}</td>
       <td><a href="${esc(a.url||'#')}" target="_blank" onclick="event.stopPropagation()" style="color:var(--primary);text-decoration:underline;text-underline-offset:3px">${esc(shortUrl||'—')}</a></td>
       <td>${esc(a.budget||'—')}</td>
       <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.goals||'—')}</td>
+      ${thumbCell}
       <td><span class="badge ${SB[a.status]||'b-gray'}">${SL[a.status]||a.status}</span></td>
       <td style="white-space:nowrap">${d===0?'Today':d===1?'Yesterday':d+' days ago'}</td>
       <td><div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
@@ -472,6 +496,15 @@ function openDetail(id){
     <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(a.phone||'—')}</span></div>
     <div class="dp-sec-lbl">Current Site</div>
     <div class="dp-field"><span class="dp-fl">URL</span><span class="dp-fv"><a href="${esc(a.url||'#')}" target="_blank" style="color:var(--primary)">${esc(a.url||'—')}</a></span></div>
+    ${a.screenshotUrl?`
+    <div class="dp-sec-lbl">Screenshot</div>
+    <div style="margin-bottom:10px">
+      <img src="${esc(a.screenshotUrl)}" alt="Site screenshot" style="width:100%;border-radius:8px;border:1px solid rgba(255,255,255,0.08);cursor:zoom-in;display:block;object-fit:cover;max-height:180px" onclick="openScreenshot('${esc(a.screenshotUrl)}')" title="Click to enlarge">
+      <div style="display:flex;gap:6px;margin-top:8px">
+        <button class="btn-g" style="flex:1;font-size:11px;padding:6px 10px;min-height:32px" onclick="openScreenshot('${esc(a.screenshotUrl)}')"><span class="ms" style="font-size:13px">zoom_in</span> Enlarge</button>
+        <a href="${esc(a.screenshotUrl)}" target="_blank" class="btn-g" style="flex:1;font-size:11px;padding:6px 10px;min-height:32px;text-align:center"><span class="ms" style="font-size:13px">open_in_new</span> Open Tab</a>
+      </div>
+    </div>`:''}
     <div class="dp-sec-lbl">Redesign Brief</div>
     <div class="dp-field"><span class="dp-fl">Dislikes</span><span class="dp-fv">${esc(a.goals||'—')}</span></div>
     <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(a.features||'—')}</span></div>
@@ -524,9 +557,33 @@ function saveEdit(){
 }
 async function deleteA(){
   const id=document.getElementById('e-id').value;
-  if(!confirm('Delete this audit?')) return;
+  if(!confirm('Delete this audit? This will also remove any uploaded screenshot.')) return;
+  const btn=document.querySelector('#modal-edit .modal-foot button:first-child');
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="ms" style="font-size:15px">hourglass_empty</span> Deleting…';}
   await deleteRecord(id);
   data=data.filter(x=>x.id!==id); render(); closeModal('modal-edit'); closeDetail(); toast('Audit deleted');
+}
+
+function openScreenshot(url){
+  let ov=document.getElementById('screenshot-overlay');
+  if(!ov){
+    ov=document.createElement('div');
+    ov.id='screenshot-overlay';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out';
+    ov.onclick=()=>ov.remove();
+    ov.innerHTML=`<div style="position:relative;max-width:90vw;max-height:90vh">
+      <img id="ss-img" style="max-width:100%;max-height:90vh;border-radius:10px;border:1px solid rgba(255,255,255,0.1);display:block;object-fit:contain">
+      <div style="position:absolute;top:-44px;right:0;display:flex;gap:8px">
+        <a id="ss-newtab" target="_blank" style="display:flex;align-items:center;gap:5px;padding:7px 12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#e6e3e2;font-family:Geist,monospace;font-size:11px;cursor:pointer;text-decoration:none"><span class="ms" style="font-size:14px">open_in_new</span>Open in new tab</a>
+        <div onclick="document.getElementById('screenshot-overlay').remove()" style="display:flex;align-items:center;padding:7px 12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#e6e3e2;cursor:pointer;font-family:Geist,monospace;font-size:11px"><span class="ms" style="font-size:14px">close</span></div>
+      </div>
+    </div>`;
+    document.body.appendChild(ov);
+  }
+  document.getElementById('ss-img').src=url;
+  document.getElementById('ss-newtab').href=url;
+  ov.style.display='flex';
+  document.addEventListener('keydown',function escClose(ev){if(ev.key==='Escape'){ov.remove();document.removeEventListener('keydown',escClose);}});
 }
 async function toLead(id){
   const a=data.find(x=>x.id===id); if(!a) return;
@@ -548,20 +605,37 @@ window.addEventListener('resize',()=>{ if(window.innerWidth>960) closeSidebar() 
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open') }));
 load();
 
-// Real-time: new website audit requests from public site
-_sb.channel('wa_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'website_audit_requests'},async payload=>{
-  const r=payload.new;
-  const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business_name||'',url:r.website_url||'',budget:r.budget||'',timeline:r.timeline||'',goals:r.goals||'',features:r.features||'',notes:r.notes||'',status:r.status||'new',createdAt:r.created_at};
-  data.unshift(item); render(); toast('New website audit request from '+(r.name||'visitor'));
-  // Auto-create CRM lead record
-  try{
-    const {data:ex}=await _sb.from('crm_leads').select('id').eq('source_id',r.id).maybeSingle();
-    if(!ex){
-      await _sb.from('crm_leads').insert({source:'website_audit',source_id:r.id,name:r.name||'Unknown',business:r.business_name||'',email:r.email||'',phone:r.phone||'',project_type:'Website Audit',budget:r.budget||'',budget_value:0,timeline:r.timeline||'',pipeline_stage:'quote_request',created_at:r.created_at});
-      await _sb.from('notifications').insert({type:'new_lead',title:'New Website Audit from '+(r.business_name||r.name||'visitor'),message:'Automatically added to CRM Pipeline.',status:'unread',related_table:'crm_leads',related_id:null});
-    }
-  }catch(e){console.error('CRM auto-create error:',e);}
-}).subscribe();
+// Real-time: INSERT / UPDATE / DELETE on website_audit_requests
+_sb.channel('wa_rt')
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'website_audit_requests'},async payload=>{
+    const r=payload.new;
+    // Avoid duplicate if we just inserted it ourselves
+    if(data.find(x=>x.id===r.id)) return;
+    data.unshift(mapRow(r));
+    render();
+    toast('New audit request from '+(r.name||'visitor'));
+    // Auto-create CRM lead record
+    try{
+      const {data:ex}=await _sb.from('crm_leads').select('id').eq('source_id',r.id).maybeSingle();
+      if(!ex){
+        await _sb.from('crm_leads').insert({source:'website_audit',source_id:r.id,name:r.name||'Unknown',business:r.business_name||'',email:r.email||'',phone:r.phone||'',project_type:'Website Audit',budget:r.budget||'',budget_value:0,timeline:r.timeline||'',pipeline_stage:'quote_request',created_at:r.created_at});
+        await _sb.from('notifications').insert({type:'new_lead',title:'New Website Audit from '+(r.business_name||r.name||'visitor'),message:'Automatically added to CRM Pipeline.',status:'unread',related_table:'crm_leads',related_id:null});
+      }
+    }catch(e){console.error('CRM auto-create error:',e);}
+  })
+  .on('postgres_changes',{event:'UPDATE',schema:'public',table:'website_audit_requests'},payload=>{
+    const r=payload.new;
+    const idx=data.findIndex(x=>x.id===r.id);
+    if(idx!==-1){ data[idx]=mapRow(r); render(); if(selId===r.id) openDetail(r.id); }
+  })
+  .on('postgres_changes',{event:'DELETE',schema:'public',table:'website_audit_requests'},payload=>{
+    const id=payload.old?.id;
+    if(!id) return;
+    data=data.filter(x=>x.id!==id);
+    if(selId===id) closeDetail();
+    render();
+  })
+  .subscribe();
 
 // Notification bell
 (async()=>{try{const{count}=await _sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&count>0){b.textContent=count>99?'99+':String(count);b.style.display='flex';}_sb.channel('nb_wa').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();

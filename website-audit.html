@@ -258,10 +258,12 @@
               <p class="text-pewter/60 text-xs font-body mb-3">Upload a screenshot of your current site if you'd like us to see a specific issue.</p>
               <div class="file-drop" id="fileDrop">
                 <input type="file" name="screenshot" id="screenshotInput" accept="image/*,.pdf" onchange="onFileSelect(this)">
-                <span class="material-symbols-outlined text-pewter block mb-2" style="font-size:24px;">upload_file</span>
+                <span class="material-symbols-outlined text-pewter block mb-2" style="font-size:24px;" id="fileIcon">upload_file</span>
                 <p class="text-silver text-sm font-body mb-1" id="fileLabel">Click or drag to upload</p>
                 <p class="text-pewter/60 text-xs font-body">PNG, JPG, PDF — max 10MB</p>
               </div>
+              <!-- Upload status indicator -->
+              <div id="uploadStatus" style="display:none;margin-top:10px;display:flex;align-items:center;gap:8px;font-family:'Geist',monospace;font-size:0.7rem;letter-spacing:0.06em;"></div>
             </div>
 
             <button type="submit" class="btn-primary w-full justify-center">
@@ -320,13 +322,25 @@ const _supabase = window.supabase.createClient(
 function onFileSelect(input) {
   const drop = document.getElementById('fileDrop');
   const label = document.getElementById('fileLabel');
+  const status = document.getElementById('uploadStatus');
   if (input.files && input.files[0]) {
     drop.classList.add('has-file');
     label.textContent = input.files[0].name;
+    status.style.display = 'none';
   } else {
     drop.classList.remove('has-file');
     label.textContent = 'Click or drag to upload';
+    status.style.display = 'none';
   }
+}
+
+function setUploadStatus(state, msg) {
+  const el = document.getElementById('uploadStatus');
+  const colors = { uploading: '#adc6ff', success: '#6ee7b7', error: '#fca5a5' };
+  const icons = { uploading: '⏳', success: '✓', error: '✕' };
+  el.style.display = 'flex';
+  el.style.color = colors[state] || '#b4b9c7';
+  el.innerHTML = `<span style="font-size:12px;">${icons[state]}</span><span>${msg}</span>`;
 }
 
 function showAuditError(msg) {
@@ -337,32 +351,24 @@ function showAuditError(msg) {
   el.style.cssText = 'margin-top:12px;padding:12px 16px;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.2);font-family:Geist,monospace;font-size:0.7rem;letter-spacing:0.05em;color:#e8e6e4;text-align:center;';
   el.textContent = msg;
   document.getElementById('auditForm')?.after(el);
-  setTimeout(() => el.remove(), 5000);
+  setTimeout(() => el.remove(), 6000);
 }
 
 async function handleAuditSubmit(e) {
   e.preventDefault();
   const f = e.target;
   const btn = f.querySelector('button[type="submit"]');
-
-  const dislikesText = f.querySelector('[name="dislikes"]').value.trim();
-  const improvementsText = f.querySelector('[name="improvements"]').value.trim();
-  const featuresText = f.querySelector('[name="features"]').value.trim();
   const screenshotFile = f.querySelector('[name="screenshot"]').files[0];
 
   btn.disabled = true;
   btn.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="animation:spin 0.8s linear infinite;width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Submitting…</span>';
 
-  // Build goals from dislikes
-  let goalsText = dislikesText || null;
+  let screenshotUrl = null;
 
-  // Build notes from improvements + optional screenshot reference
-  let notesText = improvementsText || null;
-
-  // Attempt screenshot upload if provided
   if (screenshotFile) {
+    setUploadStatus('uploading', 'Uploading screenshot…');
     try {
-      const ext = screenshotFile.name.split('.').pop();
+      const ext = screenshotFile.name.split('.').pop().toLowerCase();
       const fileName = `audit-${Date.now()}-${Math.random().toString(36).slice(2,6)}.${ext}`;
       const { error: uploadError } = await _supabase.storage
         .from('audit-screenshots')
@@ -370,15 +376,15 @@ async function handleAuditSubmit(e) {
 
       if (!uploadError) {
         const { data: urlData } = _supabase.storage.from('audit-screenshots').getPublicUrl(fileName);
-        const screenshotUrl = urlData?.publicUrl;
-        if (screenshotUrl) {
-          notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot: ' + screenshotUrl;
-        }
+        screenshotUrl = urlData?.publicUrl || null;
+        setUploadStatus('success', 'Screenshot uploaded successfully');
       } else {
-        notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot submitted: ' + screenshotFile.name + ' (storage not configured — please email separately)';
+        console.error('Upload error:', uploadError);
+        setUploadStatus('error', 'Upload failed — screenshot skipped');
       }
-    } catch {
-      notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot submitted: ' + screenshotFile.name + ' (storage not configured — please email separately)';
+    } catch (err) {
+      console.error('Upload exception:', err);
+      setUploadStatus('error', 'Upload failed — screenshot skipped');
     }
   }
 
@@ -388,9 +394,10 @@ async function handleAuditSubmit(e) {
     email: f.querySelector('[name="email"]').value.trim(),
     phone: f.querySelector('[name="phone"]').value.trim() || null,
     website_url: f.querySelector('[name="website_url"]').value.trim(),
-    goals: goalsText,
-    features: featuresText || null,
-    notes: notesText,
+    goals: f.querySelector('[name="dislikes"]').value.trim() || null,
+    features: f.querySelector('[name="features"]').value.trim() || null,
+    notes: f.querySelector('[name="improvements"]').value.trim() || null,
+    screenshot_url: screenshotUrl,
     budget: f.querySelector('[name="budget"]').value || null,
     timeline: f.querySelector('[name="timeline"]').value || null,
     status: 'new',
@@ -401,7 +408,7 @@ async function handleAuditSubmit(e) {
   if (error) {
     btn.disabled = false;
     btn.innerHTML = 'Submit Audit Request <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>';
-    showAuditError('Something went wrong. Please try again or email us directly at doriscacarlm40@gmail.com');
+    showAuditError('Something went wrong. Please try again or email us at doriscacarlm40@gmail.com');
     return false;
   }
 
