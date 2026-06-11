@@ -885,8 +885,21 @@ async function saveLeadFields_sb(id, fields) {
   if (Object.keys(row).length) await _sb.from('contact_submissions').update(row).eq('id', id);
 }
 async function deleteLeadRecord(id) {
-  const { error } = await _sb.from('contact_submissions').delete().eq('id', id);
-  return error;
+  const { data: deleted, error } = await _sb.from('contact_submissions').delete().eq('id', id).select();
+  if (error) return error;
+  if (!deleted || deleted.length === 0) return { message: 'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.' };
+  return null;
+}
+async function quickDeleteLead(id) {
+  const l = leads.find(x=>x.id===id);
+  if (!l) return;
+  if (!confirm(`Delete lead for ${l.company}? This cannot be undone.`)) return;
+  const err = await deleteLeadRecord(id);
+  if (err) { toast(`Delete failed: ${err.message}`, 'error'); return; }
+  leads = leads.filter(x=>x.id!==id);
+  if (selectedLeadId===id) closeDetail();
+  applyFilters();
+  toast('Lead deleted', 'info');
 }
 async function insertNewLead(lead) {
   const { data, error } = await _sb.from('contact_submissions').insert([{
@@ -1077,6 +1090,7 @@ function renderTable(filtered) {
           <div class="btn-icon" title="Schedule follow-up" onclick="openFollowUpModal('${l.id}')"><span class="ms" style="font-size:14px">event_note</span></div>
           <div class="btn-icon" title="Move stage" onclick="openMoveModal('${l.id}')"><span class="ms" style="font-size:14px">swap_horiz</span></div>
           <div class="btn-icon" title="Edit" onclick="openEditModal('${l.id}')"><span class="ms" style="font-size:14px">edit</span></div>
+          <div class="btn-icon" title="Delete" onclick="quickDeleteLead('${l.id}')" style="color:rgba(252,165,165,0.6)"><span class="ms" style="font-size:14px">delete</span></div>
         </div>
       </td>`;
     tbody.appendChild(tr);
@@ -1378,16 +1392,8 @@ async function updateLead() {
 }
 async function deleteLead() {
   const id = document.getElementById('e-id').value;
-  const l = leads.find(x=>x.id===id);
-  if (!l) return;
-  if (!confirm(`Delete lead for ${l.company}? This cannot be undone.`)) return;
-  const err = await deleteLeadRecord(id);
-  if (err) { toast('Delete failed — please try again','error'); return; }
-  leads = leads.filter(x=>x.id!==id);
+  await quickDeleteLead(id);
   closeModal('modal-edit');
-  if (selectedLeadId===id) closeDetail();
-  applyFilters();
-  toast(`Lead deleted`,'info');
 }
 
 /* ═══════════════════════════════════════════════════════════

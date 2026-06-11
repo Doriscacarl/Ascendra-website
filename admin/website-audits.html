@@ -410,8 +410,18 @@ async function deleteRecord(id){
       }
     }catch(e){console.warn('Storage cleanup error:',e);}
   }
-  const{error}=await _sb.from('website_audit_requests').delete().eq('id',id);
-  return error;
+  const{data:deleted,error}=await _sb.from('website_audit_requests').delete().eq('id',id).select();
+  if(error) return error;
+  if(!deleted||deleted.length===0) return {message:'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.'};
+  return null;
+}
+async function quickDelete(id){
+  if(!confirm('Delete this audit request? This cannot be undone.')) return;
+  const err=await deleteRecord(id);
+  if(err){toast('Delete failed: '+err.message);return;}
+  data=data.filter(x=>x.id!==id);
+  if(selId===id) closeDetail();
+  render(); toast('Audit deleted');
 }
 async function insertNew(a){
   const {data:row,error}=await _sb.from('website_audit_requests').insert([{
@@ -478,6 +488,7 @@ function render(){
       <td><div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
         <div class="btn-icon" title="Edit" onclick="openEdit('${a.id}')"><span class="ms" style="font-size:14px">edit</span></div>
         <div class="btn-icon" title="Convert to Lead" onclick="toLead('${a.id}')"><span class="ms" style="font-size:14px">person_add</span></div>
+        <div class="btn-icon" title="Delete" onclick="quickDelete('${a.id}')" style="color:rgba(252,165,165,0.6)"><span class="ms" style="font-size:14px">delete</span></div>
       </div></td>`;
     tbody.appendChild(tr);
   });
@@ -566,12 +577,8 @@ function saveEdit(){
 }
 async function deleteA(){
   const id=document.getElementById('e-id').value;
-  if(!confirm('Delete this audit? This will also remove any uploaded screenshot.')) return;
-  const btn=document.querySelector('#modal-edit .modal-foot button:first-child');
-  if(btn){btn.disabled=true;btn.innerHTML='<span class="ms" style="font-size:15px">hourglass_empty</span> Deleting…';}
-  const err=await deleteRecord(id);
-  if(err){if(btn){btn.disabled=false;btn.innerHTML='<span class="ms" style="font-size:15px">delete</span> Delete';}toast('Delete failed — please try again');return;}
-  data=data.filter(x=>x.id!==id); render(); closeModal('modal-edit'); closeDetail(); toast('Audit deleted');
+  await quickDelete(id);
+  closeModal('modal-edit');
 }
 
 function openScreenshot(url){

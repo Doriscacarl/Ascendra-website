@@ -411,8 +411,18 @@ async function saveEdit_sb(id,fields){
   await _sb.from('quote_leads').update(fields).eq('id',id);
 }
 async function deleteRecord(id){
-  const{error}=await _sb.from('quote_leads').delete().eq('id',id);
-  return error;
+  const{data:deleted,error}=await _sb.from('quote_leads').delete().eq('id',id).select();
+  if(error) return error;
+  if(!deleted||deleted.length===0) return {message:'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.'};
+  return null;
+}
+async function quickDelete(id){
+  if(!confirm('Delete this quote request? This cannot be undone.')) return;
+  const err=await deleteRecord(id);
+  if(err){toast('Delete failed: '+err.message);return;}
+  data=data.filter(x=>x.id!==id);
+  if(selId===id) closeDetail();
+  render(); toast('Request deleted');
 }
 async function insertNew(q){
   const {data:row,error}=await _sb.from('quote_leads').insert([{
@@ -483,6 +493,7 @@ function render(){
       <td><div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
         <div class="btn-icon" title="Edit" onclick="openEdit('${q.id}')"><span class="ms" style="font-size:14px">edit</span></div>
         <div class="btn-icon" title="Convert to Lead" onclick="toLeadConvert('${q.id}')"><span class="ms" style="font-size:14px">person_add</span></div>
+        <div class="btn-icon" title="Delete" onclick="quickDelete('${q.id}')" style="color:rgba(252,165,165,0.6)"><span class="ms" style="font-size:14px">delete</span></div>
       </div></td>`;
     tbody.appendChild(tr);
   });
@@ -619,11 +630,8 @@ function saveEdit(){
 }
 async function deleteQ(){
   const id=document.getElementById('e-id').value;
-  if(!confirm('Delete this quote request?')) return;
-  const err=await deleteRecord(id);
-  if(err){toast('Delete failed — please try again');return;}
-  data=data.filter(x=>x.id!==id);
-  render(); closeModal('modal-edit'); closeDetail(); toast('Request deleted');
+  await quickDelete(id);
+  closeModal('modal-edit');
 }
 
 async function toLeadConvert(id){
