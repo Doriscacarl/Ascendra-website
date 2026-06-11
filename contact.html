@@ -281,6 +281,22 @@
   </div>
 </section>
 
+<!-- Already Have a Website Banner -->
+<section class="py-8 px-6 md:px-16 bg-void border-t border-white/5">
+  <div class="max-w-[1200px] mx-auto">
+    <a href="website-audit.html" class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 card p-5 group hover:border-glow/20 transition-all" style="text-decoration:none;">
+      <div class="flex items-start sm:items-center gap-4">
+        <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5 sm:mt-0" style="font-size:22px;">pageview</span>
+        <div>
+          <p class="font-body font-medium text-platinum text-sm mb-0.5">Already have a website?</p>
+          <p class="text-silver text-xs font-body leading-relaxed">Get a free expert audit — design, performance, conversions, and SEO. Delivered within 48 hours.</p>
+        </div>
+      </div>
+      <span class="eyebrow text-glow text-xs flex-shrink-0 group-hover:text-platinum transition-colors" style="white-space:nowrap;">Free Audit <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">arrow_forward</span></span>
+    </a>
+  </div>
+</section>
+
 <!-- Website Audit Section -->
 <section id="audit" class="py-24 md:py-32 px-6 md:px-16 bg-void border-t border-white/5">
   <div class="max-w-[1200px] mx-auto">
@@ -356,14 +372,19 @@
               </div>
             </div>
             <div class="mb-8">
-              <label class="eyebrow text-pewter block mb-2">What's not working on your current site?</label>
-              <textarea name="goals" placeholder="Outdated design, poor mobile experience, low traffic, not converting visitors, missing booking system…" class="form-input" rows="4" style="resize:vertical;"></textarea>
+              <label class="eyebrow text-pewter block mb-2">What do you dislike about your current website?</label>
+              <textarea name="goals" placeholder="Outdated design, poor mobile experience, low traffic, not converting visitors, missing booking system…" class="form-input" rows="3" style="resize:vertical;"></textarea>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">Requested Features</label>
+              <input type="text" name="features" placeholder="Online booking, live chat, CRM integration, payment gateway…" class="form-input">
             </div>
             <button type="submit" class="btn-primary w-full justify-center">
               Request Free Audit
               <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>
             </button>
             <p class="text-pewter text-xs font-body mt-4 text-center">Audit delivered within 48 hours. Completely free, no obligation.</p>
+            <p class="text-pewter/50 text-xs font-body mt-2 text-center">Need more options? <a href="website-audit.html" class="text-glow/80 hover:text-glow transition-colors" style="text-decoration:underline;text-underline-offset:3px;">Use our full audit form →</a></p>
           </form>
         </div>
       </div>
@@ -505,6 +526,7 @@ async function handleAuditSubmit(e) {
     budget: f.querySelector('[name="budget"]').value || null,
     timeline: f.querySelector('[name="timeline"]').value || null,
     goals: f.querySelector('[name="goals"]').value.trim() || null,
+    features: f.querySelector('[name="features"]').value.trim() || null,
     status: 'new',
   };
   btn.disabled = true;

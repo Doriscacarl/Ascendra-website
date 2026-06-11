@@ -233,7 +233,7 @@ select.f-inp option{background:var(--s2)}
             <th>Business</th>
             <th>Current Website</th>
             <th>Budget</th>
-            <th>Goal</th>
+            <th>What's Not Working</th>
             <th>Status</th>
             <th>Submitted</th>
             <th></th>
@@ -296,14 +296,14 @@ select.f-inp option{background:var(--s2)}
           </select>
         </div>
       </div>
-      <div class="f-row"><div class="f-lbl">Redesign Goals</div><textarea class="f-inp" id="a-goals" rows="2" placeholder="Modernize design, improve conversions, add booking system…"></textarea></div>
+      <div class="f-row"><div class="f-lbl">What They Dislike</div><textarea class="f-inp" id="a-goals" rows="2" placeholder="Outdated design, slow loading, poor mobile, not converting…"></textarea></div>
       <div class="f-row"><div class="f-lbl">Requested Features</div><input class="f-inp" id="a-features" type="text" placeholder="Online booking, CRM integration, live chat…"></div>
       <div class="f-row"><div class="f-lbl">Status</div>
         <select class="f-inp" id="a-status">
           <option value="new">New Audit</option><option value="reviewing">Reviewing</option><option value="proposal">Proposal Sent</option><option value="won">Won</option><option value="lost">Lost</option>
         </select>
       </div>
-      <div class="f-row"><div class="f-lbl">Notes</div><textarea class="f-inp" id="a-notes" rows="2" placeholder="Additional context, problems with current site…"></textarea></div>
+      <div class="f-row"><div class="f-lbl">Improvements / Notes</div><textarea class="f-inp" id="a-notes" rows="2" placeholder="What they want improved, desired features, admin context…"></textarea></div>
     </div>
     <div class="modal-foot">
       <button class="btn-g" onclick="closeModal('modal-add')">Cancel</button>
@@ -331,10 +331,10 @@ select.f-inp option{background:var(--s2)}
         <div><div class="f-lbl">Budget</div><select class="f-inp" id="e-budget"><option>Under $2,000</option><option>$2,000–$5,000</option><option>$5,000–$10,000</option><option>$10,000–$25,000</option><option>$25,000+</option><option>Not Sure</option></select></div>
         <div><div class="f-lbl">Timeline</div><select class="f-inp" id="e-timeline"><option>ASAP</option><option>1 Month</option><option>2–3 Months</option><option>3–6 Months</option><option>Flexible</option></select></div>
       </div>
-      <div class="f-row"><div class="f-lbl">Redesign Goals</div><textarea class="f-inp" id="e-goals" rows="2"></textarea></div>
+      <div class="f-row"><div class="f-lbl">What They Dislike</div><textarea class="f-inp" id="e-goals" rows="2"></textarea></div>
       <div class="f-row"><div class="f-lbl">Requested Features</div><input class="f-inp" id="e-features" type="text"></div>
       <div class="f-row"><div class="f-lbl">Status</div><select class="f-inp" id="e-status"><option value="new">New Audit</option><option value="reviewing">Reviewing</option><option value="proposal">Proposal Sent</option><option value="won">Won</option><option value="lost">Lost</option></select></div>
-      <div class="f-row"><div class="f-lbl">Notes</div><textarea class="f-inp" id="e-notes" rows="2"></textarea></div>
+      <div class="f-row"><div class="f-lbl">Improvements / Notes</div><textarea class="f-inp" id="e-notes" rows="2"></textarea></div>
     </div>
     <div class="modal-foot">
       <button class="btn-g" onclick="deleteA()" style="color:var(--red);border-color:rgba(252,165,165,0.15)"><span class="ms" style="font-size:15px">delete</span> Delete</button>
@@ -473,12 +473,12 @@ function openDetail(id){
     <div class="dp-sec-lbl">Current Site</div>
     <div class="dp-field"><span class="dp-fl">URL</span><span class="dp-fv"><a href="${esc(a.url||'#')}" target="_blank" style="color:var(--primary)">${esc(a.url||'—')}</a></span></div>
     <div class="dp-sec-lbl">Redesign Brief</div>
-    <div class="dp-field"><span class="dp-fl">Goals</span><span class="dp-fv">${esc(a.goals||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Dislikes</span><span class="dp-fv">${esc(a.goals||'—')}</span></div>
     <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(a.features||'—')}</span></div>
     <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(a.budget||'—')}</span></div>
     <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(a.timeline||'—')}</span></div>
-    <div class="dp-sec-lbl">Notes</div>
-    <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px">${esc(a.notes||'No notes.')}</div>
+    <div class="dp-sec-lbl">Desired Improvements / Notes</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;white-space:pre-wrap;">${esc(a.notes||'—')}</div>
     <div class="dp-sec-lbl">Submission</div>
     <div class="dp-field"><span class="dp-fl">Date</span><span class="dp-fv">${fmtDate(a.createdAt)}</span></div>
   `;

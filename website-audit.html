@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Website Audit — Ascendra</title>
+<meta name="description" content="Already have a website? Get a free expert audit and redesign brief from Ascendra. We'll review your design, performance, and conversions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{void:'#030303',obsidian:'#060606',charcoal:'#0d0d0d',iron:'#141414',graphite:'#1e1e1e',smoke:'#2e2e2e',platinum:'#e8e6e4',silver:'#b4b2b0',pewter:'#767472',glow:'#adc6ff'},fontFamily:{editorial:['Bodoni Moda','Georgia','serif'],body:['Hanken Grotesk','system-ui','sans-serif'],mono:['Geist','ui-monospace','monospace']}}}};</script>
+<style>
+.select-custom {
+  width:100%; background:#0d0d0d; border:none; border-bottom:1px solid rgba(255,255,255,0.1);
+  color:#e8e6e4; font-family:'Geist',monospace; font-size:0.875rem;
+  padding:14px 0; outline:none; appearance:none; cursor:pointer;
+  transition:border-color 0.3s ease;
+}
+.select-custom:focus { border-bottom-color:rgba(255,255,255,0.4); }
+.select-custom option { background:#0d0d0d; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.file-drop {
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  position: relative;
+}
+.file-drop:hover { border-color: rgba(173,198,255,0.3); background: rgba(173,198,255,0.03); }
+.file-drop.has-file { border-color: rgba(173,198,255,0.25); background: rgba(173,198,255,0.04); }
+.file-drop input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-nav-drawer flex flex-col" id="mobileDrawer">
+  <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+    <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+    <button class="p-2 text-silver" id="closeMenu"><span class="material-symbols-outlined" style="font-size:24px;">close</span></button>
+  </div>
+  <nav class="flex flex-col gap-0 flex-1 pt-4">
+    <a href="services.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Services</a>
+    <a href="projects.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Projects</a>
+    <a href="process.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Process</a>
+    <a href="about.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">About</a>
+    <a href="insights.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Insights</a>
+    <a href="contact.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-silver border-b border-white/5">Contact</a>
+    <a href="website-audit.html" class="mobile-nav-link px-6 py-5 text-sm tracking-widest uppercase font-mono text-platinum border-b border-white/5">Website Audit</a>
+  </nav>
+  <div class="px-6 pb-12 pt-6"><a href="quote.html" class="btn-primary w-full justify-center">Get My Quote</a></div>
+</div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-20 glass">
+  <a href="index.html" class="font-editorial text-xl md:text-2xl tracking-tight text-platinum font-bold flex-shrink-0">ASCENDRA</a>
+  <div class="hidden lg:flex items-center gap-10">
+    <a href="services.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Services</a>
+    <a href="projects.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Projects</a>
+    <a href="process.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Process</a>
+    <a href="about.html" class="eyebrow text-pewter hover:text-platinum transition-colors">About</a>
+    <a href="insights.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Insights</a>
+    <a href="contact.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Contact</a>
+    <a href="website-audit.html" class="eyebrow nav-active text-platinum">Website Audit</a>
+  </div>
+  <a href="quote.html" class="hidden lg:inline-flex btn-primary" style="font-size:0.6875rem;">Get My Quote <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+  <button class="lg:hidden p-2 text-silver" id="openMenu"><span class="material-symbols-outlined" style="font-size:24px;">menu</span></button>
+</nav>
+
+<!-- Hero -->
+<section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 opacity-[0.03]" style="background:radial-gradient(ellipse at 50% 30%,#adc6ff,transparent 60%);"></div>
+    <svg class="absolute left-0 bottom-0 opacity-[0.04] w-full" viewBox="0 0 1440 400" fill="none" preserveAspectRatio="xMidYMax slice">
+      <line x1="0" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="180" y1="400" x2="900" y2="0" stroke="white" stroke-width="0.5"/>
+      <line x1="1440" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div class="max-w-[1200px] mx-auto relative z-10">
+    <div class="reveal max-w-3xl">
+      <span class="eyebrow text-pewter block mb-5">Free Website Audit &amp; Redesign Brief</span>
+      <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
+        Already Have a<br><em class="italic font-normal text-platinum">Website?</em>
+      </h1>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed font-light">Tell us about your existing site and what's holding you back. We'll review your design, performance, and conversions — and respond with a detailed audit within 48 hours. No cost, no obligation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Form Layout -->
+<section class="py-24 md:py-40 px-6 md:px-16 bg-void">
+  <div class="max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+
+      <!-- Left: Context -->
+      <div class="lg:col-span-4 reveal">
+        <div class="lg:sticky top-28 flex flex-col gap-8">
+          <div>
+            <h2 class="font-editorial font-bold text-platinum mb-4" style="font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.1;letter-spacing:-0.02em;">What We'll<br>Audit For You</h2>
+            <div class="flex flex-col gap-4 mt-6">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span>
+                <div>
+                  <p class="font-body font-medium text-platinum text-sm mb-0.5">Design &amp; Visual Quality</p>
+                  <p class="text-silver text-xs font-body leading-relaxed">Branding consistency, visual hierarchy, mobile layout, typography.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span>
+                <div>
+                  <p class="font-body font-medium text-platinum text-sm mb-0.5">Mobile Performance</p>
+                  <p class="text-silver text-xs font-body leading-relaxed">Loading speed, responsiveness, Core Web Vitals on phones and tablets.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span>
+                <div>
+                  <p class="font-body font-medium text-platinum text-sm mb-0.5">Conversion Rate</p>
+                  <p class="text-silver text-xs font-body leading-relaxed">CTAs, user flow, contact forms, booking systems, friction points.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span>
+                <div>
+                  <p class="font-body font-medium text-platinum text-sm mb-0.5">SEO Fundamentals</p>
+                  <p class="text-silver text-xs font-body leading-relaxed">Meta tags, page structure, indexability, local search signals.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5" style="font-size:16px;">check_circle</span>
+                <div>
+                  <p class="font-body font-medium text-platinum text-sm mb-0.5">Growth Opportunities</p>
+                  <p class="text-silver text-xs font-body leading-relaxed">Features and upgrades that could meaningfully impact your revenue.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-6 flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-pewter" style="font-size:18px;">star</span>
+              <span class="text-silver text-sm font-body font-medium">Completely free, no obligation</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-pewter" style="font-size:18px;">schedule</span>
+              <span class="text-silver text-sm font-body">Detailed report within 48 hours</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-pewter" style="font-size:18px;">lock</span>
+              <span class="text-silver text-sm font-body">Your info is kept strictly private</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="eyebrow text-pewter mb-3">Starting from scratch instead?</p>
+            <a href="quote.html" class="btn-ghost w-full justify-center" style="padding:12px 24px;font-size:0.62rem;">
+              Use Quote Calculator <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+            </a>
+            <a href="contact.html" class="btn-ghost w-full justify-center mt-3" style="padding:12px 24px;font-size:0.62rem;">
+              Request a Consultation <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="lg:col-span-8 reveal" style="transition-delay:120ms;">
+        <div class="card-elevated p-8 md:p-12" id="auditCardWrapper">
+          <h3 class="font-editorial font-bold text-platinum mb-2" style="font-size:1.6rem;letter-spacing:-0.02em;">Request Your Free Website Audit</h3>
+          <p class="text-pewter text-sm font-body mb-8">Tell us about your existing site and goals. The more detail you provide, the more useful your audit will be.</p>
+
+          <form id="auditForm" onsubmit="return handleAuditSubmit(event)">
+            <!-- Contact Details -->
+            <div class="mb-3">
+              <p class="eyebrow text-pewter/60 text-xs mb-5" style="letter-spacing:0.14em;">YOUR DETAILS</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Full Name *</label>
+                <input type="text" name="name" placeholder="John Smith" class="form-input" required>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Business Name</label>
+                <input type="text" name="business_name" placeholder="Company Name" class="form-input">
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Email Address *</label>
+                <input type="email" name="email" placeholder="john@company.com" class="form-input" required>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Phone Number</label>
+                <input type="tel" name="phone" placeholder="+1 555 000 0000" class="form-input">
+              </div>
+            </div>
+
+            <!-- Current Website -->
+            <div class="mb-3 mt-2">
+              <p class="eyebrow text-pewter/60 text-xs mb-5" style="letter-spacing:0.14em;">YOUR CURRENT WEBSITE</p>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">Current Website URL *</label>
+              <input type="url" name="website_url" placeholder="https://your-website.com" class="form-input" required>
+            </div>
+
+            <!-- Redesign Brief -->
+            <div class="mb-3 mt-2">
+              <p class="eyebrow text-pewter/60 text-xs mb-5" style="letter-spacing:0.14em;">REDESIGN BRIEF</p>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">What do you dislike about your current website? *</label>
+              <textarea name="dislikes" placeholder="Outdated design, poor mobile experience, low traffic, slow loading, doesn't reflect our brand, not converting visitors…" class="form-input" rows="4" style="resize:vertical;" required></textarea>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">What do you want improved or added?</label>
+              <textarea name="improvements" placeholder="Modernise the design, add an online booking system, improve the contact form, better product gallery, SEO improvements…" class="form-input" rows="4" style="resize:vertical;"></textarea>
+            </div>
+            <div class="mb-8">
+              <label class="eyebrow text-pewter block mb-2">Requested Features</label>
+              <input type="text" name="features" placeholder="Online booking, live chat, CRM integration, WhatsApp button, payment gateway…" class="form-input">
+            </div>
+
+            <!-- Budget & Timeline -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Budget Range</label>
+                <select name="budget" class="select-custom">
+                  <option value="">Select budget...</option>
+                  <option>Under $2,000</option>
+                  <option>$2,000 – $5,000</option>
+                  <option>$5,000 – $10,000</option>
+                  <option>$10,000 – $25,000</option>
+                  <option>$25,000+</option>
+                  <option>Not Sure Yet</option>
+                </select>
+              </div>
+              <div>
+                <label class="eyebrow text-pewter block mb-2">Preferred Timeline</label>
+                <select name="timeline" class="select-custom">
+                  <option value="">Select timeline...</option>
+                  <option>As soon as possible</option>
+                  <option>Within 1 month</option>
+                  <option>Within 3 months</option>
+                  <option>Within 6 months</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Screenshot Upload -->
+            <div class="mb-10">
+              <label class="eyebrow text-pewter block mb-2">Screenshot (Optional)</label>
+              <p class="text-pewter/60 text-xs font-body mb-3">Upload a screenshot of your current site if you'd like us to see a specific issue.</p>
+              <div class="file-drop" id="fileDrop">
+                <input type="file" name="screenshot" id="screenshotInput" accept="image/*,.pdf" onchange="onFileSelect(this)">
+                <span class="material-symbols-outlined text-pewter block mb-2" style="font-size:24px;">upload_file</span>
+                <p class="text-silver text-sm font-body mb-1" id="fileLabel">Click or drag to upload</p>
+                <p class="text-pewter/60 text-xs font-body">PNG, JPG, PDF — max 10MB</p>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary w-full justify-center">
+              Submit Audit Request
+              <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>
+            </button>
+            <p class="text-pewter text-xs font-body mt-4 text-center">Your audit will be delivered within 48 hours. Completely free, no obligation.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Assurance strip -->
+<section class="py-20 px-6 md:px-16 bg-charcoal border-t border-white/5">
+  <div class="max-w-[1200px] mx-auto reveal">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="text-center">
+        <span class="material-symbols-outlined text-silver mb-3 block" style="font-size:28px;">lock</span>
+        <h4 class="font-body font-medium text-platinum text-sm mb-2">100% Private</h4>
+        <p class="text-pewter text-xs font-body leading-relaxed">Your information and website details are never shared, sold, or used outside of this project.</p>
+      </div>
+      <div class="text-center">
+        <span class="material-symbols-outlined text-silver mb-3 block" style="font-size:28px;">volunteer_activism</span>
+        <h4 class="font-body font-medium text-platinum text-sm mb-2">No Obligation</h4>
+        <p class="text-pewter text-xs font-body leading-relaxed">The audit is completely free. There's no pressure to proceed — only if it's the right fit.</p>
+      </div>
+      <div class="text-center">
+        <span class="material-symbols-outlined text-silver mb-3 block" style="font-size:28px;">schedule</span>
+        <h4 class="font-body font-medium text-platinum text-sm mb-2">48-Hour Delivery</h4>
+        <p class="text-pewter text-xs font-body leading-relaxed">We review every submission personally and deliver a detailed audit within two business days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-void border-t border-white/5">
+  <div class="px-6 md:px-16 py-10">
+    <div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <a href="index.html" class="font-editorial text-xl tracking-tight text-platinum font-bold">ASCENDRA</a>
+      <p class="text-pewter/50 text-xs font-mono">© 2026 ASCENDRA. ALL RIGHTS RESERVED.</p>
+      <a href="quote.html" class="eyebrow text-pewter hover:text-platinum transition-colors">Calculate Quote →</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _supabase = window.supabase.createClient(
+  'https://nfowsobglotbjrdqsiid.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+);
+
+function onFileSelect(input) {
+  const drop = document.getElementById('fileDrop');
+  const label = document.getElementById('fileLabel');
+  if (input.files && input.files[0]) {
+    drop.classList.add('has-file');
+    label.textContent = input.files[0].name;
+  } else {
+    drop.classList.remove('has-file');
+    label.textContent = 'Click or drag to upload';
+  }
+}
+
+function showAuditError(msg) {
+  const existing = document.getElementById('auditErr');
+  if (existing) existing.remove();
+  const el = document.createElement('div');
+  el.id = 'auditErr';
+  el.style.cssText = 'margin-top:12px;padding:12px 16px;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.2);font-family:Geist,monospace;font-size:0.7rem;letter-spacing:0.05em;color:#e8e6e4;text-align:center;';
+  el.textContent = msg;
+  document.getElementById('auditForm')?.after(el);
+  setTimeout(() => el.remove(), 5000);
+}
+
+async function handleAuditSubmit(e) {
+  e.preventDefault();
+  const f = e.target;
+  const btn = f.querySelector('button[type="submit"]');
+
+  const dislikesText = f.querySelector('[name="dislikes"]').value.trim();
+  const improvementsText = f.querySelector('[name="improvements"]').value.trim();
+  const featuresText = f.querySelector('[name="features"]').value.trim();
+  const screenshotFile = f.querySelector('[name="screenshot"]').files[0];
+
+  btn.disabled = true;
+  btn.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg style="animation:spin 0.8s linear infinite;width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>Submitting…</span>';
+
+  // Build goals from dislikes
+  let goalsText = dislikesText || null;
+
+  // Build notes from improvements + optional screenshot reference
+  let notesText = improvementsText || null;
+
+  // Attempt screenshot upload if provided
+  if (screenshotFile) {
+    try {
+      const ext = screenshotFile.name.split('.').pop();
+      const fileName = `audit-${Date.now()}-${Math.random().toString(36).slice(2,6)}.${ext}`;
+      const { error: uploadError } = await _supabase.storage
+        .from('audit-screenshots')
+        .upload(fileName, screenshotFile, { cacheControl: '3600', upsert: false });
+
+      if (!uploadError) {
+        const { data: urlData } = _supabase.storage.from('audit-screenshots').getPublicUrl(fileName);
+        const screenshotUrl = urlData?.publicUrl;
+        if (screenshotUrl) {
+          notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot: ' + screenshotUrl;
+        }
+      } else {
+        notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot submitted: ' + screenshotFile.name + ' (storage not configured — please email separately)';
+      }
+    } catch {
+      notesText = (notesText ? notesText + '\n\n' : '') + 'Screenshot submitted: ' + screenshotFile.name + ' (storage not configured — please email separately)';
+    }
+  }
+
+  const data = {
+    name: f.querySelector('[name="name"]').value.trim(),
+    business_name: f.querySelector('[name="business_name"]').value.trim() || null,
+    email: f.querySelector('[name="email"]').value.trim(),
+    phone: f.querySelector('[name="phone"]').value.trim() || null,
+    website_url: f.querySelector('[name="website_url"]').value.trim(),
+    goals: goalsText,
+    features: featuresText || null,
+    notes: notesText,
+    budget: f.querySelector('[name="budget"]').value || null,
+    timeline: f.querySelector('[name="timeline"]').value || null,
+    status: 'new',
+  };
+
+  const { error } = await _supabase.from('website_audit_requests').insert([data]);
+
+  if (error) {
+    btn.disabled = false;
+    btn.innerHTML = 'Submit Audit Request <span class="material-symbols-outlined" style="font-size:16px;">pageview</span>';
+    showAuditError('Something went wrong. Please try again or email us directly at doriscacarlm40@gmail.com');
+    return false;
+  }
+
+  _supabase.from('notifications').insert([{
+    type: 'new_audit',
+    title: 'New Website Audit Request',
+    message: data.name + (data.business_name ? ' from ' + data.business_name : '') + ' requested a website audit' + (data.website_url ? ' for ' + data.website_url : '') + '.',
+    status: 'unread',
+    related_table: 'website_audit_requests',
+  }]).then();
+
+  document.getElementById('auditCardWrapper').innerHTML = `
+    <div style="text-align:center;padding:64px 24px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:rgba(173,198,255,0.08);border:1px solid rgba(173,198,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;">
+        <span class="material-symbols-outlined" style="font-size:28px;color:#adc6ff;">check</span>
+      </div>
+      <h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:1.6rem;letter-spacing:-0.02em;">Audit Request Received</h3>
+      <p class="text-silver font-body text-sm leading-relaxed" style="max-width:400px;margin:0 auto 24px;">Thank you, ${data.name}. We've received your website audit request and will review your site. You'll hear back from us within 48 hours with a detailed report.</p>
+      <a href="index.html" class="btn-ghost" style="padding:12px 28px;font-size:0.7rem;">Back to Home</a>
+    </div>`;
+
+  return false;
+}
+
+const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible'); }), { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const d = document.getElementById('mobileDrawer');
+document.getElementById('openMenu')?.addEventListener('click', () => { d.classList.add('open'); document.body.style.overflow = 'hidden'; });
+document.getElementById('closeMenu')?.addEventListener('click', () => { d.classList.remove('open'); document.body.style.overflow = ''; });
+d?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { d.classList.remove('open'); document.body.style.overflow = ''; }));
+</script>
+</body>
+</html>
