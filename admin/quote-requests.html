@@ -652,10 +652,20 @@ document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',fun
 load();
 
 // Real-time: new quote requests from public website
-_sb.channel('qr_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'quote_leads'},payload=>{
+_sb.channel('qr_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'quote_leads'},async payload=>{
   const r=payload.new;
   const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business||'',type:r.project_type||r.industry||'Quote Calculator',budget:r.estimated_min&&r.estimated_max?'$'+Number(r.estimated_min).toLocaleString()+' – $'+Number(r.estimated_max).toLocaleString():(r.budget||'—'),package:r.package_selected||'',features:r.features||'',notes:r.notes||'',timeline:r.timeline||'',status:r.status||'new',createdAt:r.created_at};
   data.unshift(item); render(); toast('New quote request from '+(r.name||'visitor'));
+  // Auto-create CRM lead record
+  try{
+    const {data:ex}=await _sb.from('crm_leads').select('id').eq('source_id',r.id).maybeSingle();
+    if(!ex){
+      const bv=r.estimated_max||0;
+      const budget=r.estimated_max?'$'+Number(r.estimated_min||0).toLocaleString()+'–$'+Number(r.estimated_max||0).toLocaleString():(r.budget||'');
+      await _sb.from('crm_leads').insert({source:'quote_request',source_id:r.id,name:r.name||'Unknown',business:r.business||'',email:r.email||'',phone:r.phone||'',project_type:r.project_type||'Website',budget,budget_value:bv,timeline:r.timeline||'',pipeline_stage:'quote_request',created_at:r.created_at});
+      await _sb.from('notifications').insert({type:'new_lead',title:'New Quote Request from '+(r.business||r.name||'visitor'),message:'Automatically added to CRM Pipeline.',status:'unread',related_table:'crm_leads',related_id:null});
+    }
+  }catch(e){console.error('CRM auto-create error:',e);}
 }).subscribe();
 
 // Notification bell

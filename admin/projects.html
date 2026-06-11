@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -77,7 +77,7 @@ a{color:inherit;text-decoration:none}
 .p-card:hover{transform:translateY(-2px);border-color:rgba(173,198,255,0.12)}
 .pc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
 .pc-title{font-size:14.5px;font-weight:600;color:var(--text);line-height:1.3}
-.pc-client{font-size:12px;color:var(--muted);margin-bottom:10px}
+.pc-client{font-size:12px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .st-badge{display:inline-flex;align-items:center;font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid transparent;white-space:nowrap}
 .pc-prog{margin-top:10px}
 .pc-prog-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:4px}
@@ -101,6 +101,7 @@ a{color:inherit;text-decoration:none}
 .fld select option{background:var(--s2)}
 .fld textarea{resize:vertical;min-height:80px}
 .modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:0 24px 22px}
+.crm-hint{font-family:var(--fw-m);font-size:10px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:5px}
 .toast{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:slideUp 0.3s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 #sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
@@ -185,6 +186,7 @@ a{color:inherit;text-decoration:none}
 </main>
 </div>
 
+<!-- Add Project Modal -->
 <div class="modal-bg" id="addModal">
   <div class="modal">
     <div class="modal-head"><span class="modal-title">New Project</span><button class="modal-close" onclick="closeModal('addModal')"><span class="ms">close</span></button></div>
@@ -201,11 +203,17 @@ a{color:inherit;text-decoration:none}
       </div>
       <div class="fld"><label>Project Value ($)</label><input id="f-val" type="number" min="0" placeholder="0"></div>
       <div class="fld"><label>Notes</label><textarea id="f-notes" placeholder="Brief scope or description..."></textarea></div>
+      <div class="fld">
+        <label>Link to Won CRM Lead (optional)</label>
+        <select id="f-lead"><option value="">— None —</option></select>
+        <div class="crm-hint"><span class="ms" style="font-size:13px;color:var(--green)">bolt</span> Creating this project moves the linked lead to <strong style="color:var(--green)">Active Client</strong></div>
+      </div>
     </div>
     <div class="modal-foot"><button class="btn-g" onclick="closeModal('addModal')">Cancel</button><button class="btn-p" onclick="saveProject()">Create Project</button></div>
   </div>
 </div>
 
+<!-- Edit Project Modal -->
 <div class="modal-bg" id="editModal">
   <div class="modal">
     <div class="modal-head"><span class="modal-title">Edit Project</span><button class="modal-close" onclick="closeModal('editModal')"><span class="ms">close</span></button></div>
@@ -227,38 +235,142 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const KEY='ascendra_projects_v1';
-let data=[],filter='all',editId=null;
+const SB_URL='https://nfowsobglotbjrdqsiid.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+let sb, data=[], filter='all', editId=null;
+
 const ST={planning:{lbl:'Planning',color:'var(--muted)',bg:'rgba(114,118,138,0.1)'},active:{lbl:'In Progress',color:'var(--primary)',bg:'rgba(173,198,255,0.1)'},review:{lbl:'In Review',color:'var(--amber)',bg:'rgba(252,211,77,0.1)'},complete:{lbl:'Complete',color:'var(--green)',bg:'rgba(110,231,183,0.1)'},hold:{lbl:'On Hold',color:'var(--red)',bg:'rgba(252,165,165,0.1)'}};
-function load(){try{data=JSON.parse(localStorage.getItem(KEY))||[];}catch{data=[]}}
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function genId(){return 'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)}
+
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function fmtDate(d){if(!d)return'';const p=d.split('-');if(p.length<3)return d;return p[1]+'/'+p[2]+'/'+p[0]}
+function fmtDate(d){if(!d)return'';const p=String(d).split('T')[0].split('-');if(p.length<3)return d;return p[1]+'/'+p[2]+'/'+p[0]}
 function setFilter(f,el){filter=f;document.querySelectorAll('.fc').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function openAdd(){document.getElementById('addModal').classList.add('open')}
+function openAdd(){loadLeadOptions();document.getElementById('addModal').classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
-function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='<span class="ms" style="color:var(--green)">check_circle</span>'+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3000)}
-function saveProject(){
+
+function toast(msg,icon='check_circle',color='var(--green)'){
+  const t=document.createElement('div');t.className='toast';
+  t.innerHTML=`<span class="ms" style="color:${color}">${icon}</span>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3500);
+}
+
+async function loadLeadOptions(){
+  const sel=document.getElementById('f-lead');
+  sel.innerHTML='<option value="">— None —</option>';
+  try{
+    const {data:leads}=await sb.from('crm_leads').select('id,name,business,pipeline_stage')
+      .eq('status','active').eq('pipeline_stage','won').order('created_at',{ascending:false});
+    (leads||[]).forEach(l=>{
+      const opt=document.createElement('option');
+      opt.value=l.id;
+      opt.textContent=`${l.name||'Unknown'}${l.business?' — '+l.business:''}`;
+      sel.appendChild(opt);
+    });
+  }catch(e){console.warn('Could not load CRM leads:',e)}
+}
+
+async function saveProject(){
   const n=document.getElementById('f-name').value.trim();
   if(!n){alert('Project name is required');return}
-  data.push({id:genId(),name:n,client:document.getElementById('f-client').value.trim(),status:document.getElementById('f-status').value,progress:parseInt(document.getElementById('f-prog').value)||0,start:document.getElementById('f-start').value,due:document.getElementById('f-due').value,value:document.getElementById('f-val').value,notes:document.getElementById('f-notes').value.trim(),created:new Date().toISOString()});
-  save();closeModal('addModal');
-  ['f-name','f-client','f-prog','f-start','f-due','f-val','f-notes'].forEach(id=>{const el=document.getElementById(id);el.value='';});
-  toast('Project created');
+  const clientName=document.getElementById('f-client').value.trim();
+  const crm_lead_id=document.getElementById('f-lead').value||null;
+  const row={
+    name:n,client:clientName,status:document.getElementById('f-status').value,
+    progress:parseInt(document.getElementById('f-prog').value)||0,
+    start_date:document.getElementById('f-start').value||null,
+    due_date:document.getElementById('f-due').value||null,
+    value:parseFloat(document.getElementById('f-val').value)||0,
+    notes:document.getElementById('f-notes').value.trim(),
+    crm_lead_id
+  };
+  try{
+    const {error}=await sb.from('projects').insert(row);
+    if(error)throw error;
+    if(crm_lead_id) await triggerActiveClient(crm_lead_id,n,clientName);
+    closeModal('addModal');
+    ['f-name','f-client','f-prog','f-start','f-due','f-val','f-notes'].forEach(id=>{document.getElementById(id).value='';});
+    document.getElementById('f-status').value='planning';document.getElementById('f-lead').value='';
+    toast('Project created'+(crm_lead_id?' — CRM moved to Active Client':''));
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
 }
+
+async function triggerActiveClient(leadId, projectName, clientName){
+  try{
+    await sb.from('crm_leads').update({
+      pipeline_stage:'active_client',
+      project_name:projectName,
+      client_name:clientName||null,
+      updated_at:new Date().toISOString()
+    }).eq('id',leadId);
+    await sb.from('notifications').insert({
+      type:'stage_change',
+      title:'New Active Client — '+(clientName||projectName),
+      message:'Project "'+projectName+'" created. Lead moved to Active Client.',
+      status:'unread',related_table:'crm_leads',related_id:leadId
+    });
+  }catch(e){console.error('CRM Active Client trigger error:',e)}
+}
+
 function editProject(id){
-  editId=id;const p=data.find(x=>x.id===id);if(!p)return;
-  document.getElementById('ef-name').value=p.name;document.getElementById('ef-client').value=p.client||'';document.getElementById('ef-status').value=p.status;document.getElementById('ef-prog').value=p.progress||0;document.getElementById('ef-start').value=p.start||'';document.getElementById('ef-due').value=p.due||'';document.getElementById('ef-val').value=p.value||'';document.getElementById('ef-notes').value=p.notes||'';
+  editId=id;
+  const p=data.find(x=>x.id===id);if(!p)return;
+  document.getElementById('ef-name').value=p.name;
+  document.getElementById('ef-client').value=p.client||'';
+  document.getElementById('ef-status').value=p.status;
+  document.getElementById('ef-prog').value=p.progress||0;
+  document.getElementById('ef-start').value=p.start_date?String(p.start_date).split('T')[0]:'';
+  document.getElementById('ef-due').value=p.due_date?String(p.due_date).split('T')[0]:'';
+  document.getElementById('ef-val').value=p.value||'';
+  document.getElementById('ef-notes').value=p.notes||'';
   document.getElementById('editModal').classList.add('open');
 }
-function updateProject(){
-  const idx=data.findIndex(x=>x.id===editId);if(idx<0)return;
-  data[idx]={...data[idx],name:document.getElementById('ef-name').value.trim(),client:document.getElementById('ef-client').value.trim(),status:document.getElementById('ef-status').value,progress:parseInt(document.getElementById('ef-prog').value)||0,start:document.getElementById('ef-start').value,due:document.getElementById('ef-due').value,value:document.getElementById('ef-val').value,notes:document.getElementById('ef-notes').value.trim()};
-  save();closeModal('editModal');toast('Project updated');
+
+async function updateProject(){
+  if(!editId)return;
+  const n=document.getElementById('ef-name').value.trim();
+  if(!n){alert('Project name is required');return}
+  try{
+    const {error}=await sb.from('projects').update({
+      name:n,client:document.getElementById('ef-client').value.trim(),
+      status:document.getElementById('ef-status').value,
+      progress:parseInt(document.getElementById('ef-prog').value)||0,
+      start_date:document.getElementById('ef-start').value||null,
+      due_date:document.getElementById('ef-due').value||null,
+      value:parseFloat(document.getElementById('ef-val').value)||0,
+      notes:document.getElementById('ef-notes').value.trim()
+    }).eq('id',editId);
+    if(error)throw error;
+    closeModal('editModal');toast('Project updated');
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
 }
-function deleteProject(id){if(!confirm('Delete this project?'))return;data=data.filter(x=>x.id!==id);save();toast('Project deleted')}
+
+async function deleteProject(id){
+  if(!confirm('Delete this project?'))return;
+  try{
+    const {error}=await sb.from('projects').delete().eq('id',id);
+    if(error)throw error;
+    toast('Project deleted','delete','var(--red)');
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
+}
+
+async function loadAndRender(){
+  try{
+    const {data:rows,error}=await sb.from('projects').select('*').order('created_at',{ascending:false});
+    if(error)throw error;
+    data=rows||[];
+  }catch(e){
+    data=[];
+    const g=document.getElementById('grid');
+    g.innerHTML='';
+    const d2=document.createElement('div');d2.style.gridColumn='1/-1';
+    d2.innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--amber)">warning</span></div><div class="empty-title">Database Setup Required</div><div class="empty-sub">Run <strong>invoices-projects-automation.sql</strong> in your Supabase SQL Editor to create the projects table, then refresh.</div></div>`;
+    g.appendChild(d2);return;
+  }
+  render();
+}
+
 function render(){
   const filtered=filter==='all'?data:data.filter(p=>p.status===filter);
   document.getElementById('k-total').textContent=data.length;
@@ -275,19 +387,20 @@ function render(){
   }
   g.innerHTML=filtered.map(p=>{
     const st=ST[p.status]||ST.planning;const prog=Math.min(100,Math.max(0,p.progress||0));
+    const crmBadge=p.crm_lead_id?`<span class="ms" style="font-size:13px;color:var(--green)">link</span>`:'';
     return`<div class="gc p-card">
       <div class="pc-top">
         <div class="pc-title">${esc(p.name)}</div>
         <span class="st-badge" style="background:${st.bg};color:${st.color};border-color:${st.color}25">${st.lbl}</span>
       </div>
-      ${p.client?`<div class="pc-client"><span class="ms" style="font-size:14px;vertical-align:-2px;margin-right:4px">domain</span>${esc(p.client)}</div>`:'<div class="pc-client" style="height:18px"></div>'}
+      ${p.client?`<div class="pc-client">${crmBadge}<span class="ms" style="font-size:14px;vertical-align:-2px;margin-right:2px">domain</span>${esc(p.client)}</div>`:'<div class="pc-client" style="height:18px"></div>'}
       <div class="pc-prog">
         <div class="pc-prog-bar"><div class="pc-prog-fill" style="width:${prog}%"></div></div>
         <div class="pc-prog-lbl"><span>Progress</span><span>${prog}%</span></div>
       </div>
       <div class="pc-foot">
         <div style="display:flex;gap:14px">
-          ${p.due?`<div class="pc-foot-item"><span class="ms" style="font-size:13px">event</span>${fmtDate(p.due)}</div>`:''}
+          ${p.due_date?`<div class="pc-foot-item"><span class="ms" style="font-size:13px">event</span>${fmtDate(p.due_date)}</div>`:''}
           ${p.value?`<div class="pc-foot-item"><span class="ms" style="font-size:13px">attach_money</span>${parseInt(p.value).toLocaleString()}</div>`:''}
         </div>
         <div class="pc-actions">
@@ -295,18 +408,26 @@ function render(){
           <button class="ic-btn" title="Delete" onclick="deleteProject('${p.id}')" style="color:rgba(252,165,165,0.5)"><span class="ms" style="font-size:14px">delete</span></button>
         </div>
       </div>
-    </div>`}).join('');
+    </div>`;
+  }).join('');
 }
+
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('addModal');closeModal('editModal');closeSidebar()}});
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
-load();render();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(async()=>{try{var sb=window.supabase.createClient('https://nfowsobglotbjrdqsiid.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4');var res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');var b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}sb.channel('nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){var b=document.getElementById('notif-count');if(!b)return;var c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
+
+async function init(){
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  // notification badge
+  try{const res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}}catch(e){}
+  await loadAndRender();
+  // live updates
+  sb.channel('projects_live').on('postgres_changes',{event:'*',schema:'public',table:'projects'},()=>loadAndRender()).subscribe();
+  sb.channel('notif_proj').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();
+}
+window.addEventListener('load',init);
 </script>
 </body>
 </html>

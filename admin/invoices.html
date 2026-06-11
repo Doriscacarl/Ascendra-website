@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -95,6 +95,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
 .fld select option{background:var(--s2)}
 .fld textarea{resize:vertical;min-height:70px}
 .modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:0 24px 22px}
+.crm-hint{font-family:var(--fw-m);font-size:10px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:5px}
 .toast{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:slideUp 0.3s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 #sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
@@ -194,46 +195,144 @@ tr:hover td{background:rgba(255,255,255,0.015)}
         <div class="fld"><label>Due Date</label><input id="f-due" type="date"></div>
       </div>
       <div class="fld"><label>Description / Service</label><textarea id="f-desc" placeholder="Website design, SEO package, monthly retainer..."></textarea></div>
+      <div class="fld">
+        <label>Link to CRM Lead (optional)</label>
+        <select id="f-lead"><option value="">— None —</option></select>
+        <div class="crm-hint"><span class="ms" style="font-size:13px;color:var(--green)">bolt</span> When this invoice is paid, the linked lead moves to <strong style="color:var(--green)">Won</strong></div>
+      </div>
     </div>
     <div class="modal-foot"><button class="btn-g" onclick="closeModal('addModal')">Cancel</button><button class="btn-p" onclick="saveInvoice()">Create Invoice</button></div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const KEY='ascendra_invoices_v1';
-let data=[],filter='all';
+const SB_URL='https://nfowsobglotbjrdqsiid.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+let sb, data=[], filter='all';
+
 const ST={draft:{lbl:'Draft',color:'var(--muted)',bg:'rgba(114,118,138,0.1)'},sent:{lbl:'Sent',color:'var(--primary)',bg:'rgba(173,198,255,0.1)'},paid:{lbl:'Paid',color:'var(--green)',bg:'rgba(110,231,183,0.1)'},overdue:{lbl:'Overdue',color:'var(--red)',bg:'rgba(252,165,165,0.1)'},archived:{lbl:'Archived',color:'var(--muted)',bg:'rgba(114,118,138,0.07)'}};
-function load(){try{data=JSON.parse(localStorage.getItem(KEY))||[];}catch{data=[]}}
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function genId(){return 'inv_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)}
-function genNum(){return 'INV-'+String(Math.floor(1000+Math.random()*9000))}
+
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function fmtDate(d){if(!d)return'—';const p=d.split('-');if(p.length<3)return d;return p[1]+'/'+p[2]+'/'+p[0]}
+function fmtDate(d){if(!d)return'—';const p=String(d).split('T')[0].split('-');if(p.length<3)return d;return p[1]+'/'+p[2]+'/'+p[0]}
 function fmtAmt(v){const n=parseFloat(v)||0;return'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function setFilter(f,el){filter=f;document.querySelectorAll('.fc').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function openAdd(){document.getElementById('addModal').classList.add('open')}
+function openAdd(){loadLeadOptions();document.getElementById('addModal').classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
-function toast(msg,icon='check_circle',color='var(--green)'){const t=document.createElement('div');t.className='toast';t.innerHTML=`<span class="ms" style="color:${color}">${icon}</span>${msg}`;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3000)}
-function saveInvoice(){
-  const c=document.getElementById('f-client').value.trim(),a=document.getElementById('f-amount').value;
-  if(!c||!a){alert('Client name and amount are required');return}
-  data.unshift({id:genId(),num:genNum(),client:c,email:document.getElementById('f-email').value.trim(),amount:parseFloat(a),status:document.getElementById('f-status').value,issued:document.getElementById('f-issued').value,due:document.getElementById('f-due').value,desc:document.getElementById('f-desc').value.trim(),created:new Date().toISOString()});
-  save();closeModal('addModal');
-  ['f-client','f-email','f-amount','f-issued','f-due','f-desc'].forEach(id=>{document.getElementById(id).value=''});
-  document.getElementById('f-status').value='draft';
-  toast('Invoice created');
+function isOverdue(inv){if(!inv.due||inv.status==='paid'||inv.status==='archived')return false;return new Date(String(inv.due).split('T')[0])<new Date()&&inv.status!=='paid'}
+
+function toast(msg,icon='check_circle',color='var(--green)'){
+  const t=document.createElement('div');t.className='toast';
+  t.innerHTML=`<span class="ms" style="color:${color}">${icon}</span>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3500);
 }
-function markPaid(id){const idx=data.findIndex(x=>x.id===id);if(idx<0)return;data[idx].status='paid';data[idx].paidAt=new Date().toISOString();save();toast('Marked as paid')}
-function sendReminder(id){const inv=data.find(x=>x.id===id);if(!inv)return;toast(`Reminder sent to ${inv.email||inv.client}`,'send','var(--primary)')}
-function archiveInv(id){const idx=data.findIndex(x=>x.id===id);if(idx<0)return;data[idx].status='archived';save();toast('Invoice archived')}
-function deleteInv(id){if(!confirm('Delete this invoice? This cannot be undone.'))return;data=data.filter(x=>x.id!==id);save();toast('Invoice deleted','delete','var(--red)')}
-function isOverdue(inv){if(!inv.due||inv.status==='paid'||inv.status==='archived')return false;return new Date(inv.due)<new Date()&&inv.status!=='paid'}
+
+function genNum(){return'INV-'+String(Math.floor(1000+Math.random()*9000))}
+
+async function loadLeadOptions(){
+  const sel=document.getElementById('f-lead');
+  sel.innerHTML='<option value="">— None —</option>';
+  try{
+    const {data:leads}=await sb.from('crm_leads').select('id,name,business,pipeline_stage')
+      .eq('status','active').in('pipeline_stage',['proposal_sent','negotiating','won']).order('created_at',{ascending:false});
+    (leads||[]).forEach(l=>{
+      const opt=document.createElement('option');
+      opt.value=l.id;
+      const stageLabel={proposal_sent:'Proposal Sent',negotiating:'Negotiating',won:'Won'}[l.pipeline_stage]||l.pipeline_stage;
+      opt.textContent=`${l.name||'Unknown'}${l.business?' — '+l.business:''} [${stageLabel}]`;
+      sel.appendChild(opt);
+    });
+  }catch(e){console.warn('Could not load CRM leads:',e)}
+}
+
+async function saveInvoice(){
+  const c=document.getElementById('f-client').value.trim();
+  const a=document.getElementById('f-amount').value;
+  if(!c||!a){alert('Client name and amount are required');return}
+  const status=document.getElementById('f-status').value;
+  const crm_lead_id=document.getElementById('f-lead').value||null;
+  const row={
+    invoice_number:genNum(),client:c,email:document.getElementById('f-email').value.trim(),
+    amount:parseFloat(a),status,issued:document.getElementById('f-issued').value||null,
+    due:document.getElementById('f-due').value||null,description:document.getElementById('f-desc').value.trim(),
+    crm_lead_id
+  };
+  if(status==='paid') row.paid_at=new Date().toISOString();
+  try{
+    const {error}=await sb.from('invoices').insert(row);
+    if(error)throw error;
+    if(status==='paid'&&crm_lead_id) await triggerWon(crm_lead_id,c);
+    closeModal('addModal');
+    ['f-client','f-email','f-amount','f-issued','f-due','f-desc'].forEach(id=>{document.getElementById(id).value=''});
+    document.getElementById('f-status').value='draft';document.getElementById('f-lead').value='';
+    toast('Invoice created');
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
+}
+
+async function markPaid(id){
+  const inv=data.find(x=>x.id===id);if(!inv)return;
+  try{
+    const {error}=await sb.from('invoices').update({status:'paid',paid_at:new Date().toISOString()}).eq('id',id);
+    if(error)throw error;
+    if(inv.crm_lead_id) await triggerWon(inv.crm_lead_id,inv.client);
+    toast('Marked as paid — CRM updated'+(inv.crm_lead_id?' → Won':''));
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
+}
+
+async function triggerWon(leadId, clientName){
+  try{
+    await sb.from('crm_leads').update({pipeline_stage:'won',updated_at:new Date().toISOString()}).eq('id',leadId);
+    await sb.from('notifications').insert({
+      type:'stage_change',
+      title:'Deal Won — '+clientName,
+      message:'First invoice paid. Lead moved to Won stage.',
+      status:'unread',related_table:'crm_leads',related_id:leadId
+    });
+  }catch(e){console.error('CRM Won trigger error:',e)}
+}
+
+async function sendReminder(id){
+  const inv=data.find(x=>x.id===id);if(!inv)return;
+  toast(`Reminder sent to ${inv.email||inv.client}`,'send','var(--primary)');
+}
+
+async function archiveInv(id){
+  try{
+    const {error}=await sb.from('invoices').update({status:'archived'}).eq('id',id);
+    if(error)throw error;
+    toast('Invoice archived');
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
+}
+
+async function deleteInv(id){
+  if(!confirm('Delete this invoice? This cannot be undone.'))return;
+  try{
+    const {error}=await sb.from('invoices').delete().eq('id',id);
+    if(error)throw error;
+    toast('Invoice deleted','delete','var(--red)');
+  }catch(e){toast('Error: '+e.message,'error','var(--red)')}
+}
+
+async function loadAndRender(){
+  try{
+    const {data:rows,error}=await sb.from('invoices').select('*').order('created_at',{ascending:false});
+    if(error)throw error;
+    data=rows||[];
+  }catch(e){
+    data=[];
+    document.getElementById('table-container').innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--amber)">warning</span></div><div class="empty-title">Database Setup Required</div><div class="empty-sub">Run <strong>invoices-projects-automation.sql</strong> in your Supabase SQL Editor to create the invoices table, then refresh.</div></div>`;
+    return;
+  }
+  render();
+}
+
 function render(){
   let filtered=filter==='all'?data:data.filter(inv=>filter==='overdue'?isOverdue(inv):inv.status===filter);
-  const totalAmt=data.reduce((s,i)=>s+(i.status!=='archived'?i.amount:0),0);
-  const paidAmt=data.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
-  const dueAmt=data.filter(i=>i.status==='sent'&&!isOverdue(i)).reduce((s,i)=>s+i.amount,0);
-  const overAmt=data.filter(i=>isOverdue(i)).reduce((s,i)=>s+i.amount,0);
+  const totalAmt=data.reduce((s,i)=>s+(i.status!=='archived'?parseFloat(i.amount)||0:0),0);
+  const paidAmt=data.filter(i=>i.status==='paid').reduce((s,i)=>s+(parseFloat(i.amount)||0),0);
+  const dueAmt=data.filter(i=>i.status==='sent'&&!isOverdue(i)).reduce((s,i)=>s+(parseFloat(i.amount)||0),0);
+  const overAmt=data.filter(i=>isOverdue(i)).reduce((s,i)=>s+(parseFloat(i.amount)||0),0);
   document.getElementById('k-total').textContent=fmtAmt(totalAmt);
   document.getElementById('k-paid').textContent=fmtAmt(paidAmt);
   document.getElementById('k-due').textContent=fmtAmt(dueAmt);
@@ -241,24 +340,32 @@ function render(){
   document.getElementById('sb-count').textContent=data.filter(i=>i.status!=='archived').length;
   const c=document.getElementById('table-container');
   if(filtered.length===0){
-    c.innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--primary)">receipt_long</span></div><div class="empty-title">No Invoices Created Yet</div><div class="empty-sub">Create your first invoice to start tracking payments and billing. Invoices are stored locally in your browser.</div><button class="btn-p" onclick="openAdd()"><span class="ms" style="font-size:15px">add</span> Create First Invoice</button></div>`;
+    c.innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--primary)">receipt_long</span></div><div class="empty-title">No Invoices Yet</div><div class="empty-sub">Create your first invoice to start tracking payments and billing.</div><button class="btn-p" onclick="openAdd()"><span class="ms" style="font-size:15px">add</span> Create First Invoice</button></div>`;
     return;
   }
   c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Status</th><th>Issued</th><th>Due</th><th>Actions</th></tr></thead><tbody>${filtered.map(inv=>{
     const ov=isOverdue(inv);const stKey=ov&&inv.status==='sent'?'overdue':inv.status;const st=ST[stKey]||ST.draft;
-    return`<tr><td style="font-family:var(--fw-m);font-size:11px;color:var(--muted)">${esc(inv.num)}</td><td><div style="font-weight:500">${esc(inv.client)}</div>${inv.email?`<div style="font-size:11px;color:var(--muted)">${esc(inv.email)}</div>`:''}</td><td style="font-family:var(--fw-d);font-size:14px;font-weight:600">${fmtAmt(inv.amount)}</td><td><span class="st-badge" style="background:${st.bg};color:${st.color};border-color:${st.color}20">${st.lbl}</span></td><td style="color:var(--muted);font-size:12px">${fmtDate(inv.issued)}</td><td style="color:${ov?'var(--red)':'var(--muted)'};font-size:12px">${fmtDate(inv.due)}</td><td><div class="act-row">${inv.status!=='paid'&&inv.status!=='archived'?`<button class="btn-sm" onclick="markPaid('${inv.id}')"><span class="ms" style="font-size:13px">check</span>Paid</button>`:''}${inv.email&&inv.status==='sent'?`<button class="btn-sm" onclick="sendReminder('${inv.id}')"><span class="ms" style="font-size:13px">send</span>Remind</button>`:''}${inv.status!=='archived'?`<button class="btn-sm" onclick="archiveInv('${inv.id}')"><span class="ms" style="font-size:13px">archive</span>Archive</button>`:''}<button class="btn-sm" style="color:rgba(252,165,165,0.5)" onclick="deleteInv('${inv.id}')"><span class="ms" style="font-size:13px">delete</span></button></div></td></tr>`;
+    const crmBadge=inv.crm_lead_id?`<span style="font-family:var(--fw-m);font-size:9px;color:var(--green);margin-left:6px;opacity:0.7">● CRM</span>`:'';
+    return`<tr><td style="font-family:var(--fw-m);font-size:11px;color:var(--muted)">${esc(inv.invoice_number||'—')}</td><td><div style="font-weight:500;display:flex;align-items:center">${esc(inv.client)}${crmBadge}</div>${inv.email?`<div style="font-size:11px;color:var(--muted)">${esc(inv.email)}</div>`:''}</td><td style="font-family:var(--fw-d);font-size:14px;font-weight:600">${fmtAmt(inv.amount)}</td><td><span class="st-badge" style="background:${st.bg};color:${st.color};border-color:${st.color}20">${st.lbl}</span></td><td style="color:var(--muted);font-size:12px">${fmtDate(inv.issued)}</td><td style="color:${ov?'var(--red)':'var(--muted)'};font-size:12px">${fmtDate(inv.due)}</td><td><div class="act-row">${inv.status!=='paid'&&inv.status!=='archived'?`<button class="btn-sm" onclick="markPaid('${inv.id}')"><span class="ms" style="font-size:13px">check</span>Paid</button>`:''}${inv.email&&inv.status==='sent'?`<button class="btn-sm" onclick="sendReminder('${inv.id}')"><span class="ms" style="font-size:13px">send</span>Remind</button>`:''}${inv.status!=='archived'?`<button class="btn-sm" onclick="archiveInv('${inv.id}')"><span class="ms" style="font-size:13px">archive</span>Archive</button>`:''}<button class="btn-sm" style="color:rgba(252,165,165,0.5)" onclick="deleteInv('${inv.id}')"><span class="ms" style="font-size:13px">delete</span></button></div></td></tr>`;
   }).join('')}</tbody></table></div>`;
 }
+
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('addModal');closeSidebar()}});
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
-load();render();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(async()=>{try{var sb=window.supabase.createClient('https://nfowsobglotbjrdqsiid.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4');var res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');var b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}sb.channel('nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){var b=document.getElementById('notif-count');if(!b)return;var c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
+
+async function init(){
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  // notification badge
+  try{const res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');const b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}}catch(e){}
+  await loadAndRender();
+  // live updates
+  sb.channel('invoices_live').on('postgres_changes',{event:'*',schema:'public',table:'invoices'},()=>loadAndRender()).subscribe();
+  sb.channel('notif_inv').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{const b=document.getElementById('notif-count');if(!b)return;const c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();
+}
+window.addEventListener('load',init);
 </script>
 </body>
 </html>

@@ -549,10 +549,18 @@ document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',fun
 load();
 
 // Real-time: new website audit requests from public site
-_sb.channel('wa_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'website_audit_requests'},payload=>{
+_sb.channel('wa_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'website_audit_requests'},async payload=>{
   const r=payload.new;
   const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business_name||'',url:r.website_url||'',budget:r.budget||'',timeline:r.timeline||'',goals:r.goals||'',features:r.features||'',notes:r.notes||'',status:r.status||'new',createdAt:r.created_at};
   data.unshift(item); render(); toast('New website audit request from '+(r.name||'visitor'));
+  // Auto-create CRM lead record
+  try{
+    const {data:ex}=await _sb.from('crm_leads').select('id').eq('source_id',r.id).maybeSingle();
+    if(!ex){
+      await _sb.from('crm_leads').insert({source:'website_audit',source_id:r.id,name:r.name||'Unknown',business:r.business_name||'',email:r.email||'',phone:r.phone||'',project_type:'Website Audit',budget:r.budget||'',budget_value:0,timeline:r.timeline||'',pipeline_stage:'quote_request',created_at:r.created_at});
+      await _sb.from('notifications').insert({type:'new_lead',title:'New Website Audit from '+(r.business_name||r.name||'visitor'),message:'Automatically added to CRM Pipeline.',status:'unread',related_table:'crm_leads',related_id:null});
+    }
+  }catch(e){console.error('CRM auto-create error:',e);}
 }).subscribe();
 
 // Notification bell

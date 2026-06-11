@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,11 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--sidebar:256px;--topbar:62px}
+:root{--bg:#090909;--s0:#101010;--s1:#161515;--s2:#1c1b1b;--s3:#242323;--primary:#adc6ff;--primary-b:#4d8eff;--primary-dim:rgba(173,198,255,0.09);--primary-glo:rgba(173,198,255,0.18);--text:#e6e3e2;--text2:#b4b9c7;--muted:#72768a;--border:rgba(255,255,255,0.040);--border2:rgba(255,255,255,0.072);--border3:rgba(255,255,255,0.110);--glow:rgba(173,198,255,0.22);--green:#6ee7b7;--amber:#fcd34d;--red:#fca5a5;--purple:#c4b5fd;--indigo:#818cf8;--fw-d:'Bodoni Moda',Georgia,serif;--fw-b:'Hanken Grotesk',system-ui,sans-serif;--fw-m:'Geist',monospace;--r:12px;--r-sm:8px;--r-lg:16px;--sidebar:256px;--topbar:62px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--fw-b);font-size:14px;line-height:1.6;overflow:hidden}
-button,input,select,textarea{font-family:inherit}
-a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit}a{color:inherit;text-decoration:none}
 .ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;font-size:18px;vertical-align:middle;flex-shrink:0;font-style:normal}
 #app{display:grid;grid-template-columns:var(--sidebar) 1fr;grid-template-rows:var(--topbar) 1fr;height:100vh}
 #sidebar{grid-row:1/3;background:var(--s0);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1)}
@@ -35,51 +34,151 @@ a{color:inherit;text-decoration:none}
 .user-pill{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border);cursor:pointer;transition:background 0.13s;text-decoration:none;color:inherit}
 .user-pill:hover{background:rgba(255,255,255,0.045)}
 .u-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42}
-.u-name{font-size:12.5px;font-weight:600;color:var(--text)}
-.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
+.u-name{font-size:12.5px;font-weight:600;color:var(--text)}.u-role{font-family:var(--fw-m);font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted)}
 .u-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(110,231,183,0.5);flex-shrink:0}
 #topbar{grid-column:2;background:rgba(16,16,16,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:10px;z-index:50}
 .tb-menu{display:none;width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;flex-shrink:0}
+.tb-menu:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
 .tb-crumb{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
 .tb-root{font-family:var(--fw-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
-.tb-sep{color:var(--border3);font-size:16px}
-.tb-cur{font-size:13px;font-weight:600;color:var(--text)}
+.tb-sep{color:var(--border3);font-size:16px}.tb-cur{font-size:13px;font-weight:600;color:var(--text)}
 .tb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .tb-icon{width:36px;height:36px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
 .tb-icon:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
 .tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer;flex-shrink:0}
+.btn-p{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
+.btn-g{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s}
+.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text)}
 #main{grid-column:2;overflow:hidden;background:var(--bg);position:relative;display:flex;flex-direction:column}
 .gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
-.btn-p{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18);min-height:36px}
-.btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
-.btn-g{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s}
-.btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text)}
-#funnel-bar{flex-shrink:0;padding:20px 28px 0;display:flex;align-items:stretch;gap:0;overflow-x:auto}
+/* ── METRICS ── */
+#metrics-row{flex-shrink:0;display:grid;grid-template-columns:repeat(8,1fr);gap:8px;padding:16px 28px 0}
+.metric{padding:13px 14px 10px;cursor:default;transition:border-color 0.18s,transform 0.15s;position:relative;overflow:hidden}
+.metric:hover{border-color:rgba(173,198,255,0.1);transform:translateY(-1px)}
+.metric::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(173,198,255,0.08),transparent);pointer-events:none}
+.metric-lbl{font-family:var(--fw-m);font-size:8px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.metric-val{font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--text)}
+.metric-sub{font-size:10px;color:var(--muted);margin-top:3px}
+/* ── FUNNEL ── */
+#funnel-bar{flex-shrink:0;padding:12px 28px 0;display:flex;align-items:stretch;gap:0;overflow-x:auto}
 #funnel-bar::-webkit-scrollbar{display:none}
-.funnel-stage{display:flex;align-items:center;gap:0;flex:1;min-width:120px}
-.fs-box{flex:1;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;transition:background 0.15s,border-color 0.15s;text-decoration:none;color:inherit}
+.funnel-stage{display:flex;align-items:center;gap:0;flex:1;min-width:100px}
+.fs-box{flex:1;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;transition:background 0.15s,border-color 0.15s;text-decoration:none;color:inherit}
 .fs-box:hover{background:rgba(255,255,255,0.04);border-color:var(--border2)}
-.fs-box.active-stage{background:var(--primary-dim);border-color:rgba(173,198,255,0.2)}
-.fs-num{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:3px}
-.fs-lbl{font-family:var(--fw-m);font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
-.fs-arrow{color:var(--border2);font-size:22px;flex-shrink:0;display:flex;align-items:center;padding:0 3px}
-#board-area{flex:1;overflow:hidden;padding:14px 28px;display:flex;gap:10px}
-.k-col{flex:1;min-width:200px;background:rgba(255,255,255,0.013);border:1px solid var(--border);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;overflow:hidden}
-.k-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0}
-.k-title{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.fs-num{font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:2px}
+.fs-lbl{font-family:var(--fw-m);font-size:7.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.fs-arrow{color:var(--border2);font-size:20px;flex-shrink:0;display:flex;align-items:center;padding:0 2px}
+/* ── BOARD ── */
+#board-area{flex:1;overflow:hidden;padding:10px 28px 14px;display:flex;gap:8px}
+.k-col{flex:1;min-width:185px;background:rgba(255,255,255,0.013);border:1px solid var(--border);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;overflow:hidden}
+.k-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-shrink:0}
+.k-title{font-family:var(--fw-m);font-size:8.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
 .k-cnt{min-width:18px;height:18px;border-radius:99px;background:rgba(255,255,255,0.06);font-family:var(--fw-m);font-size:9px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0 5px}
-.k-cards{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.k-cards{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
 .k-cards::-webkit-scrollbar{display:none}
-.k-card{padding:11px 12px;cursor:pointer;transition:transform 0.13s,border-color 0.13s;border-radius:var(--r-sm);background:rgba(20,19,19,0.6);border:1px solid var(--border)}
-.k-card:hover{transform:translateY(-1px);border-color:rgba(173,198,255,0.12)}
-.kc-name{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px;line-height:1.3}
-.kc-sub{font-size:11px;color:var(--muted);margin-bottom:6px}
-.kc-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:99px}
-.k-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 12px;text-align:center;opacity:0.45}
+/* ── CARDS ── */
+.k-card{padding:10px 11px;cursor:pointer;transition:transform 0.13s,border-color 0.13s,box-shadow 0.13s;border-radius:var(--r-sm);background:rgba(20,19,19,0.7);border:1px solid var(--border);position:relative;overflow:hidden}
+.k-card:hover{transform:translateY(-1px);border-color:rgba(173,198,255,0.12);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.kc-top{display:flex;align-items:center;gap:4px;margin-bottom:7px;flex-wrap:wrap}
+.kc-src{font-family:var(--fw-m);font-size:7.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 5px;border-radius:4px}
+.kc-src.quote{background:rgba(173,198,255,0.09);color:var(--primary)}
+.kc-src.audit{background:rgba(196,181,253,0.09);color:var(--purple)}
+.kc-src.contact{background:rgba(110,231,183,0.09);color:var(--green)}
+.kc-src.manual{background:rgba(255,255,255,0.05);color:var(--muted)}
+.kc-pri{font-family:var(--fw-m);font-size:7.5px;font-weight:700;color:var(--amber);background:rgba(252,211,77,0.09);border-radius:4px;padding:2px 5px}
+.kc-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:1px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kc-biz{font-size:10.5px;color:var(--muted);margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kc-meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
+.kc-badge{display:inline-flex;align-items:center;font-family:var(--fw-m);font-size:8px;font-weight:600;letter-spacing:0.05em;padding:2px 6px;border-radius:99px}
+.kc-score-bar{height:3px;border-radius:99px;background:rgba(255,255,255,0.05);overflow:hidden;margin-bottom:7px}
+.kc-score-fill{height:100%;border-radius:99px;transition:width 0.4s cubic-bezier(0.16,1,0.3,1)}
+.kc-foot{display:flex;align-items:center;justify-content:space-between;gap:4px}
+.kc-date{font-family:var(--fw-m);font-size:9px;color:var(--muted);flex-shrink:0}
+.kc-act{display:inline-flex;align-items:center;gap:3px;padding:3px 7px;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);font-size:10px;cursor:pointer;transition:background 0.13s,color 0.13s;flex-shrink:0}
+.kc-act:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+.k-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 8px;text-align:center;opacity:0.4}
+/* ── LEAD DETAIL PANEL ── */
+#panel-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;backdrop-filter:blur(2px)}
+#panel-bg.show{display:block}
+#lead-panel{position:fixed;top:0;right:0;height:100vh;width:360px;background:var(--s1);border-left:1px solid var(--border2);z-index:201;transform:translateX(100%);transition:transform 0.32s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;overflow:hidden}
+#lead-panel.open{transform:translateX(0)}
+.lp-scroll{flex:1;overflow-y:auto;padding:22px 22px 0}
+.lp-scroll::-webkit-scrollbar{width:3px}
+.lp-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.05);border-radius:2px}
+.lp-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.lp-info{flex:1;min-width:0}
+.lp-name{font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:2px;line-height:1.2}
+.lp-biz{font-size:12px;color:var(--muted);margin-bottom:8px}
+.lp-badges{display:flex;gap:5px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px;font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.b-blue{background:rgba(173,198,255,0.09);color:var(--primary)}
+.b-green{background:rgba(110,231,183,0.09);color:var(--green)}
+.b-amber{background:rgba(252,211,77,0.09);color:var(--amber)}
+.b-red{background:rgba(252,165,165,0.09);color:var(--red)}
+.b-purple{background:rgba(196,181,253,0.09);color:var(--purple)}
+.b-gray{background:rgba(255,255,255,0.05);color:var(--muted)}
+.b-indigo{background:rgba(129,140,248,0.09);color:var(--indigo)}
+.lp-score-wrap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.lp-score-ring{position:relative;width:64px;height:64px}
+.lp-score-ring svg{transform:rotate(-90deg)}
+.lp-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fw-m);font-size:16px;font-weight:700}
+.lp-score-lbl{font-family:var(--fw-m);font-size:7.5px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase}
+.lp-sect{margin-bottom:16px}
+.lp-sect-title{font-family:var(--fw-m);font-size:8.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.lp-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:var(--text2)}
+.lp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lp-field-lbl{font-family:var(--fw-m);font-size:8.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.lp-field-val{font-size:12.5px;color:var(--text2)}
+.lp-field-val.strong{color:var(--text);font-weight:600}
+.lp-note{font-size:12px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px}
+.lp-actions{padding:16px 22px 22px;border-top:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;gap:6px}
+.lp-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 14px;border-radius:var(--r-sm);border:none;cursor:pointer;font-size:12.5px;font-weight:600;transition:transform 0.13s,opacity 0.13s;min-height:40px}
+.lp-btn:hover{transform:translateY(-1px);opacity:0.9}
+.lp-btn.primary{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42}
+.lp-btn.green{background:rgba(110,231,183,0.12);color:var(--green);border:1px solid rgba(110,231,183,0.2)}
+.lp-btn.amber{background:rgba(252,211,77,0.1);color:var(--amber);border:1px solid rgba(252,211,77,0.18)}
+.lp-btn.ghost{background:rgba(255,255,255,0.04);color:var(--text2);border:1px solid var(--border)}
+.lp-btn.danger{background:rgba(252,165,165,0.07);color:var(--red);border:1px solid rgba(252,165,165,0.15)}
+.lp-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s}
+.lp-close:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+/* ── MODALS ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:400;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:460px;box-shadow:0 32px 80px rgba(0,0,0,0.8);animation:ma 0.22s cubic-bezier(0.16,1,0.3,1)}
+@keyframes ma{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 14px;border-bottom:1px solid var(--border)}
+.modal-title{font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em}
+.modal-close{width:28px;height:28px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:background 0.13s}
+.modal-close:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:12px 22px 20px;display:flex;justify-content:flex-end;gap:8px}
+.stage-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stage-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;border-radius:var(--r-sm);border:1px solid var(--border);background:rgba(255,255,255,0.02);cursor:pointer;transition:background 0.13s,border-color 0.13s;text-align:center;gap:5px}
+.stage-btn:hover{background:rgba(255,255,255,0.05);border-color:var(--border2)}
+.stage-btn.cur{border-color:rgba(173,198,255,0.25);background:var(--primary-dim)}
+.stage-btn-label{font-size:12px;font-weight:600;color:var(--text)}
+.stage-btn-sub{font-family:var(--fw-m);font-size:9px;color:var(--muted)}
+.fld label{display:block;font-family:var(--fw-m);font-size:8.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:var(--r-sm);padding:9px 12px;color:var(--text);font-size:13px;outline:none;transition:border-color 0.13s;margin-bottom:12px}
+.fld input:focus,.fld select:focus{border-color:rgba(173,198,255,0.3)}
+.fld select option{background:var(--s2)}
+/* ── TOAST ── */
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:var(--r);background:var(--s2);border:1px solid var(--border2);box-shadow:0 12px 40px rgba(0,0,0,0.5);animation:ta 0.22s cubic-bezier(0.16,1,0.3,1);min-width:220px;max-width:320px;pointer-events:all}
+@keyframes ta{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toast.fadeout{opacity:0;transition:opacity 0.3s}
+.toast-text{font-size:12.5px;color:var(--text2);flex:1}
+.toast-text strong{color:var(--text)}
+/* ── OVERLAY ── */
 #sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
 #sb-ov.show{display:block}
-@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}}
-@media(max-width:640px){#funnel-bar{padding:14px 16px 0}#board-area{padding:12px 16px}}
+/* ── LOADING STATE ── */
+.loading-pulse{animation:lp 1.5s ease-in-out infinite}
+@keyframes lp{0%,100%{opacity:0.3}50%{opacity:0.7}}
+/* ── RESPONSIVE ── */
+@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}#metrics-row{grid-template-columns:repeat(4,1fr)}#lead-panel{width:100%;max-width:400px}}
+@media(max-width:640px){#metrics-row{grid-template-columns:repeat(2,1fr);padding:12px 16px 0}#funnel-bar{padding:10px 16px 0}#board-area{padding:8px 16px 12px}}
 </style>
 </head>
 <body>
@@ -125,97 +224,641 @@ a{color:inherit;text-decoration:none}
   <button class="tb-menu" onclick="toggleSidebar()"><span class="ms">menu</span></button>
   <div class="tb-crumb"><span class="tb-root">Ascendra</span><span class="tb-sep">›</span><span class="tb-cur">CRM Pipeline</span></div>
   <div class="tb-acts">
-    <a href="crm-leads.html" class="btn-g" style="font-size:12px;padding:6px 12px;min-height:0"><span class="ms" style="font-size:15px">person_add</span> Add Lead</a>
-    <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
+    <button class="btn-g" style="font-size:11px;padding:5px 10px" onclick="forceSync()" title="Sync all sources"><span class="ms" style="font-size:15px" id="sync-icon">sync</span></button>
+    <a href="notifications.html" class="tb-icon" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
     <a href="dashboard.html" class="tb-icon"><span class="ms">space_dashboard</span></a>
     <a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
 <main id="main">
-  <!-- Funnel Summary Bar -->
+  <div id="metrics-row"></div>
   <div id="funnel-bar"></div>
-  <!-- Kanban Board -->
   <div id="board-area"></div>
 </main>
-<script>
-const STAGES=[
-  {id:'quote',label:'Quote Request',sub:'New enquiries',color:'var(--primary)',bg:'rgba(173,198,255,0.07)',href:'quote-requests.html'},
-  {id:'lead',label:'Lead',sub:'In pipeline',color:'var(--purple)',bg:'rgba(196,181,253,0.07)',href:'crm-leads.html'},
-  {id:'consultation',label:'Consultation',sub:'Scheduled',color:'var(--indigo)',bg:'rgba(129,140,248,0.07)',href:'crm-leads.html'},
-  {id:'proposal',label:'Proposal Sent',sub:'Awaiting decision',color:'var(--amber)',bg:'rgba(252,211,77,0.07)',href:'crm-leads.html'},
-  {id:'negotiating',label:'Negotiating',sub:'Final terms',color:'var(--red)',bg:'rgba(252,165,165,0.07)',href:'crm-leads.html'},
-  {id:'won',label:'Won',sub:'Ready to onboard',color:'var(--green)',bg:'rgba(110,231,183,0.07)',href:'crm-leads.html'},
-  {id:'client',label:'Active Client',sub:'Delivering value',color:'var(--green)',bg:'rgba(110,231,183,0.05)',href:'clients.html'}
-];
-const STATUS_TO_STAGE={new:'lead',contacted:'consultation',qualified:'consultation',proposal:'proposal',negotiation:'negotiating',won:'won'};
+</div>
 
-function getData(){
-  let quotes=[],leads=[],clients=[];
-  try{quotes=JSON.parse(localStorage.getItem('ascendra_quotes_v1'))||[];}catch{}
-  try{leads=JSON.parse(localStorage.getItem('ascendra_crm_leads'))||[];}catch{}
-  try{clients=JSON.parse(localStorage.getItem('ascendra_clients_v1'))||[];}catch{}
-  const cards={quote:[],lead:[],consultation:[],proposal:[],negotiating:[],won:[],client:[]};
-  quotes.filter(q=>!['accepted','declined'].includes(q.status)).forEach(q=>{
-    cards.quote.push({name:q.name,sub:q.biz||q.email,badge:q.budget,id:q.id,href:'quote-requests.html'})
-  });
-  leads.filter(l=>l.status!=='lost').forEach(l=>{
-    const stage=STATUS_TO_STAGE[l.status]||'lead';
-    cards[stage].push({name:l.company,sub:l.contact,badge:l.value?fmtVal(l.value):'',id:l.id,href:'crm-leads.html'})
-  });
-  clients.filter(c=>c.status==='active'||c.status==='onboarding').forEach(c=>{
-    cards.client.push({name:c.name,sub:c.plan||'',badge:c.mrr?'$'+c.mrr+'/mo':'',id:c.id,href:'clients.html'})
-  });
-  return cards;
-}
+<!-- Lead Detail Panel -->
+<div id="panel-bg" onclick="closePanel()"></div>
+<div id="lead-panel">
+  <button class="lp-close" onclick="closePanel()"><span class="ms" style="font-size:15px">close</span></button>
+  <div class="lp-scroll" id="lp-scroll"></div>
+  <div class="lp-actions" id="lp-actions"></div>
+</div>
 
-function fmtVal(v){ const n=parseInt(v)||0; if(n>=1000) return '$'+Math.round(n/1000)+'K'; return '$'+n; }
-
-function render(){
-  const cards=getData();
-  const funnel=document.getElementById('funnel-bar');
-  const board=document.getElementById('board-area');
-  funnel.innerHTML=''; board.innerHTML='';
-  STAGES.forEach((s,i)=>{
-    const cnt=(cards[s.id]||[]).length;
-    const box=document.createElement('div');
-    box.className='funnel-stage';
-    box.innerHTML=`<a class="fs-box" href="${s.href}">
-      <div class="fs-num" style="color:${s.color}">${cnt||'0'}</div>
-      <div class="fs-lbl">${s.label}</div>
-    </a>${i<STAGES.length-1?'<div class="fs-arrow"><span class="ms" style="font-size:18px;color:var(--border3)">chevron_right</span></div>':''}`;
-    funnel.appendChild(box);
-  });
-  STAGES.forEach(s=>{
-    const stagecards=cards[s.id]||[];
-    const col=document.createElement('div');
-    col.className='k-col';
-    col.style.borderTop=`2px solid ${s.color}30`;
-    let cardsHtml=stagecards.length===0?
-      `<div class="k-empty"><span class="ms" style="font-size:22px;color:var(--muted);margin-bottom:6px">inbox</span><div style="font-size:11px;color:var(--muted)">Empty</div></div>`:
-      stagecards.map(c=>`<a class="k-card" href="${c.href}">
-        <div class="kc-name">${esc(c.name)}</div>
-        <div class="kc-sub">${esc(c.sub)}</div>
-        ${c.badge?`<span class="kc-badge" style="background:${s.bg};color:${s.color}">${esc(c.badge)}</span>`:''}
-      </a>`).join('');
-    col.innerHTML=`<div class="k-head">
-      <span class="k-title" style="color:${s.color}">${s.label}</span>
-      <span class="k-cnt">${stagecards.length}</span>
+<!-- Move Stage Modal -->
+<div class="modal-bg" id="move-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Move Stage</div>
+      <button class="modal-close" onclick="closeModal('move-modal')"><span class="ms">close</span></button>
     </div>
-    <div class="k-cards">${cardsHtml}</div>`;
-    board.appendChild(col);
-  });
-}
+    <div class="modal-body">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Select the target stage for this lead.</div>
+      <div class="stage-grid" id="stage-grid"></div>
+    </div>
+  </div>
+</div>
 
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-ov').classList.toggle('show') }
-function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-ov').classList.remove('show') }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSidebar() });
-window.addEventListener('resize',()=>{ if(window.innerWidth>960) closeSidebar() });
-render();
-</script>
+<!-- Proposal Modal -->
+<div class="modal-bg" id="proposal-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Send Proposal</div>
+      <button class="modal-close" onclick="closeModal('proposal-modal')"><span class="ms">close</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="fld">
+        <label>Proposal Value ($)</label>
+        <input type="number" id="prop-value" placeholder="e.g. 8500" min="0">
+        <label>Proposal Notes</label>
+        <textarea id="prop-notes" rows="3" placeholder="Brief description of scope…"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-g" onclick="closeModal('proposal-modal')">Cancel</button>
+      <button class="btn-p" onclick="confirmProposal()"><span class="ms" style="font-size:15px">description</span> Send Proposal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast-container"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-(async()=>{try{var sb=window.supabase.createClient('https://nfowsobglotbjrdqsiid.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4');var res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');var b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}sb.channel('nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){var b=document.getElementById('notif-count');if(!b)return;var c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
+/* ════════════════════════════════════════════════════════════
+   ASCENDRA CRM PIPELINE — Automated Supabase Engine
+   ════════════════════════════════════════════════════════════ */
+
+const SB_URL = 'https://nfowsobglotbjrdqsiid.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+
+const STAGES = [
+  {id:'quote_request', label:'Quote Request', sub:'New enquiries', color:'var(--primary)', bg:'rgba(173,198,255,0.08)'},
+  {id:'lead',          label:'Lead',          sub:'In pipeline',   color:'var(--purple)',  bg:'rgba(196,181,253,0.08)'},
+  {id:'consultation',  label:'Consultation',  sub:'Scheduled',     color:'var(--indigo)',  bg:'rgba(129,140,248,0.08)'},
+  {id:'proposal_sent', label:'Proposal Sent', sub:'Awaiting decision', color:'var(--amber)', bg:'rgba(252,211,77,0.08)'},
+  {id:'negotiating',   label:'Negotiating',   sub:'Final terms',   color:'var(--red)',     bg:'rgba(252,165,165,0.08)'},
+  {id:'won',           label:'Won',           sub:'Ready to onboard', color:'var(--green)', bg:'rgba(110,231,183,0.08)'},
+  {id:'active_client', label:'Active Client', sub:'Delivering value', color:'var(--green)', bg:'rgba(110,231,183,0.05)'}
+];
+
+let sb, leads = [], activePanelId = null, activeMoveId = null, activeProposalId = null;
+
+/* ── SCORING ─────────────────────────────────────────────── */
+function parseBudgetValue(budget, budgetValue) {
+  if (budgetValue && budgetValue > 0) return budgetValue;
+  if (!budget) return 0;
+  const clean = budget.replace(/[$,kK]/g, s => s.toLowerCase() === 'k' ? '000' : '');
+  const nums = clean.match(/\d+/g);
+  if (!nums) return 0;
+  return Math.max(...nums.map(Number));
+}
+
+function computeLeadScore(l) {
+  let score = 0;
+  const bv = parseBudgetValue(l.budget, l.budget_value);
+  // Budget (0–35)
+  if (bv >= 10000)     score += 35;
+  else if (bv >= 5000) score += 28;
+  else if (bv >= 2500) score += 20;
+  else if (bv >= 1000) score += 10;
+  else if (bv > 0)     score += 5;
+  // Timeline urgency (0–25)
+  const t = (l.timeline || '').toLowerCase();
+  if (t.match(/asap|immediately|urgent|right away/)) score += 25;
+  else if (t.match(/1.2 (week|month)|immediately/))  score += 22;
+  else if (t.match(/1.3 month|this month/))           score += 18;
+  else if (t.match(/3.6 month|quarter/))              score += 12;
+  else if (t.match(/6|later|year/))                   score += 6;
+  else if (t.match(/not sure|flexible|open/))         score += 4;
+  else score += 10;
+  // Project type (0–20)
+  const pt = (l.project_type || '').toLowerCase();
+  if (pt.match(/e.?commerce|store|shop/))             score += 20;
+  else if (pt.match(/redesign|rebuild|full/))          score += 18;
+  else if (pt.match(/website|web app/))               score += 14;
+  else if (pt.match(/audit/))                         score += 12;
+  else if (pt.match(/landing/))                       score += 10;
+  else score += 8;
+  // Profile completeness (0–20)
+  let fields = 0;
+  if (l.name && l.name !== 'Unknown') fields++;
+  if (l.business) fields++;
+  if (l.email) fields++;
+  if (l.phone) fields++;
+  if (l.project_type) fields++;
+  score += Math.round((fields / 5) * 20);
+  return Math.min(100, Math.max(0, score));
+}
+
+function scoreColor(s) {
+  if (s >= 80) return '#6ee7b7';
+  if (s >= 60) return '#adc6ff';
+  if (s >= 40) return '#fcd34d';
+  return '#fca5a5';
+}
+
+/* ── SUPABASE INIT ───────────────────────────────────────── */
+async function init() {
+  sb = window.supabase.createClient(SB_URL, SB_KEY);
+  updateNotifBadge();
+  // Render immediately with empty state, then sync in background
+  await loadAndRender();
+  syncSourcesIntoCRM().then(() => loadAndRender()).catch(e => console.error(e));
+  subscribeToChanges();
+}
+
+/* ── SYNC SOURCE TABLES → CRM LEADS ─────────────────────── */
+async function syncSourcesIntoCRM() {
+  try {
+    const { data: existing } = await sb.from('crm_leads').select('source_id').not('source_id','is',null);
+    const knownIds = new Set((existing||[]).map(e=>e.source_id));
+    const toInsert = [];
+
+    const [{ data: quotes }, { data: audits }, { data: contacts }] = await Promise.all([
+      sb.from('quote_leads').select('*'),
+      sb.from('website_audit_requests').select('*'),
+      sb.from('contact_submissions').select('*')
+    ]);
+
+    for (const q of quotes||[]) {
+      if (knownIds.has(q.id)) continue;
+      const budget = q.estimated_max
+        ? `$${Number(q.estimated_min||0).toLocaleString()}–$${Number(q.estimated_max||0).toLocaleString()}`
+        : (q.budget||'');
+      const lead = { source:'quote_request', source_id:q.id, name:q.name||'Unknown', business:q.business||'', email:q.email||'', phone:q.phone||'', project_type:q.project_type||'Website', budget, budget_value:q.estimated_max||0, timeline:q.timeline||'', pipeline_stage:'quote_request', created_at:q.created_at };
+      applyScoreToLead(lead);
+      toInsert.push(lead);
+    }
+    for (const a of audits||[]) {
+      if (knownIds.has(a.id)) continue;
+      const lead = { source:'website_audit', source_id:a.id, name:a.name||'Unknown', business:a.business_name||'', email:a.email||'', phone:a.phone||'', project_type:'Website Audit', budget:a.budget||'', budget_value:0, timeline:a.timeline||'', pipeline_stage:'quote_request', created_at:a.created_at };
+      applyScoreToLead(lead);
+      toInsert.push(lead);
+    }
+    for (const c of contacts||[]) {
+      if (knownIds.has(c.id)) continue;
+      const bv = parseFloat(c.value)||parseBudgetValue(c.budget||'',0);
+      const lead = { source:'contact_form', source_id:c.id, name:c.name||'Unknown', business:c.business||'', email:c.email||'', phone:c.phone||'', project_type:c.project_type||'Strategy Call', budget:c.budget||'', budget_value:bv, timeline:c.timeline||'', pipeline_stage:'quote_request', created_at:c.created_at };
+      applyScoreToLead(lead);
+      toInsert.push(lead);
+    }
+
+    if (toInsert.length > 0) {
+      const { error } = await sb.from('crm_leads').upsert(toInsert, { onConflict:'source_id', ignoreDuplicates:true });
+      if (!error) {
+        for (const l of toInsert) {
+          await notify('new_lead',
+            `New ${sourceLabel(l.source)} from ${l.business||l.name}`,
+            l.lead_score >= 50 ? `Qualified (score ${l.lead_score}) — moved to Lead stage.` : `Score ${l.lead_score} — needs review.`,
+            'crm_leads', null);
+        }
+      }
+    }
+  } catch(e) { console.error('Sync error:', e); }
+}
+
+function applyScoreToLead(lead) {
+  const score = computeLeadScore(lead);
+  lead.lead_score = score;
+  lead.priority_flag = score >= 70;
+  if (score >= 70)       { lead.pipeline_stage = 'lead'; lead.qualification_status = 'qualified'; }
+  else if (score >= 50)  { lead.pipeline_stage = 'lead'; lead.qualification_status = 'qualified'; }
+  else if (score >= 30)  { lead.qualification_status = 'needs_review'; }
+  else                   { lead.qualification_status = 'needs_review'; }
+  lead.qualification_notes = buildAINote(lead, score);
+}
+
+function buildAINote(l, score) {
+  const bv = parseBudgetValue(l.budget, l.budget_value);
+  if (score >= 70) return `High-value prospect. Budget ${l.budget||'not specified'}, timeline ${l.timeline||'open'}. Recommend immediate outreach.`;
+  if (score >= 50) return `Qualified lead with ${l.budget||'unspecified budget'}. Follow up within 24 hours.`;
+  if (score >= 30) return `Potential lead but needs further qualification. Budget or timeline unclear.`;
+  return `Low-priority. Limited budget signal or incomplete information. Review before investing time.`;
+}
+
+async function createCRMFromSource(source, row) {
+  try {
+    const { data: existing } = await sb.from('crm_leads').select('id').eq('source_id', row.id).maybeSingle();
+    if (existing) return;
+    const lead = mapSourceRowToLead(source, row);
+    applyScoreToLead(lead);
+    const { data: newLead } = await sb.from('crm_leads').insert(lead).select().single();
+    await notify('new_lead', `New ${sourceLabel(source)} from ${lead.business||lead.name}`,
+      lead.lead_score >= 50 ? `Automatically qualified — score ${lead.lead_score}.` : `Score ${lead.lead_score} — flagged for review.`,
+      'crm_leads', newLead?.id||null);
+    showToast(`New submission: <strong>${lead.business||lead.name}</strong>`, 'person_add');
+  } catch(e) { console.error('Create CRM lead error:', e); }
+}
+
+function mapSourceRowToLead(source, row) {
+  if (source === 'quote_request') {
+    const budget = row.estimated_max ? `$${Number(row.estimated_min||0).toLocaleString()}–$${Number(row.estimated_max||0).toLocaleString()}` : (row.budget||'');
+    return { source, source_id:row.id, name:row.name||'Unknown', business:row.business||'', email:row.email||'', phone:row.phone||'', project_type:row.project_type||'Website', budget, budget_value:row.estimated_max||0, timeline:row.timeline||'', pipeline_stage:'quote_request', created_at:row.created_at };
+  }
+  if (source === 'website_audit') {
+    return { source, source_id:row.id, name:row.name||'Unknown', business:row.business_name||'', email:row.email||'', phone:row.phone||'', project_type:'Website Audit', budget:row.budget||'', budget_value:0, timeline:row.timeline||'', pipeline_stage:'quote_request', created_at:row.created_at };
+  }
+  const bv = parseFloat(row.value)||parseBudgetValue(row.budget||'',0);
+  return { source:'contact_form', source_id:row.id, name:row.name||'Unknown', business:row.business||'', email:row.email||'', phone:row.phone||'', project_type:row.project_type||'Strategy Call', budget:row.budget||'', budget_value:bv, timeline:row.timeline||'', pipeline_stage:'quote_request', created_at:row.created_at };
+}
+
+/* ── LOAD & RENDER ───────────────────────────────────────── */
+async function loadAndRender() {
+  let dbError = null;
+  try {
+    const { data, error } = await sb.from('crm_leads').select('*').eq('status','active').order('created_at',{ascending:false});
+    if (error) { dbError = error; console.error('crm_leads query error:', error); }
+    else { leads = data || []; }
+  } catch(e) { dbError = e; console.error('loadAndRender error:', e); }
+  renderMetrics(dbError);
+  renderFunnel();
+  renderBoard(dbError);
+}
+
+function renderMetrics(dbError) {
+  if (dbError) {
+    document.getElementById('metrics-row').innerHTML = `<div class="gc metric" style="grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:14px 20px;border-color:rgba(252,211,77,0.2)"><span class="ms" style="color:var(--amber);font-size:20px">warning</span><div><div style="font-size:13px;font-weight:600;color:var(--amber)">Database Setup Required</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Run <strong style="color:var(--text);font-family:var(--fw-m)">crm-pipeline-automation.sql</strong> in your Supabase SQL Editor to create the <code style="font-family:var(--fw-m);color:var(--primary)">crm_leads</code> table, then refresh this page.</div></div></div>`;
+    return;
+  }
+  const active = leads.filter(l => l.status === 'active');
+  const total = active.length;
+  const qualified = active.filter(l => l.lead_score >= 50).length;
+  const consultations = active.filter(l => ['consultation','proposal_sent','negotiating','won','active_client'].includes(l.pipeline_stage)).length;
+  const proposals = active.filter(l => ['proposal_sent','negotiating','won','active_client'].includes(l.pipeline_stage)).length;
+  const won = active.filter(l => ['won','active_client'].includes(l.pipeline_stage)).length;
+  const clients = active.filter(l => l.pipeline_stage === 'active_client').length;
+  const pipelineVal = active.reduce((s,l)=>s+(l.proposal_value||l.budget_value||0),0);
+  const convRate = total > 0 ? Math.round((won/total)*100) : 0;
+
+  const metrics = [
+    {label:'Total Leads', val:total, sub:'All pipeline stages', col:'var(--text)'},
+    {label:'Qualified',   val:qualified, sub:'Score ≥ 50', col:'var(--primary)'},
+    {label:'Consultations',val:consultations,sub:'Scheduled',col:'var(--indigo)'},
+    {label:'Proposals',   val:proposals, sub:'Sent/Pending', col:'var(--amber)'},
+    {label:'Deals Won',   val:won,      sub:'Won + Active',  col:'var(--green)'},
+    {label:'Active Clients',val:clients, sub:'In delivery',  col:'var(--green)'},
+    {label:'Pipeline Value',val:'$'+fmtVal(pipelineVal),sub:'Estimated total',col:'var(--amber)',raw:true},
+    {label:'Conv. Rate',  val:convRate+'%',sub:'Win rate',   col:convRate>=20?'var(--green)':convRate>=10?'var(--amber)':'var(--red)',raw:true}
+  ];
+
+  const row = document.getElementById('metrics-row');
+  row.innerHTML = metrics.map(m=>`
+    <div class="gc metric">
+      <div class="metric-lbl">${m.label}</div>
+      <div class="metric-val" style="color:${m.col}">${m.raw?m.val:m.val}</div>
+      <div class="metric-sub">${m.sub}</div>
+    </div>`).join('');
+}
+
+function renderFunnel() {
+  const counts = {};
+  STAGES.forEach(s=>counts[s.id]=0);
+  leads.forEach(l=>{ if(counts[l.pipeline_stage]!==undefined) counts[l.pipeline_stage]++; });
+  const bar = document.getElementById('funnel-bar');
+  bar.innerHTML = STAGES.map((s,i)=>`
+    <div class="funnel-stage">
+      <div class="fs-box" onclick="scrollToStage('${s.id}')">
+        <div class="fs-num" style="color:${s.color}">${counts[s.id]||0}</div>
+        <div class="fs-lbl">${s.label}</div>
+      </div>
+      ${i<STAGES.length-1?'<div class="fs-arrow"><span class="ms" style="font-size:16px;color:var(--border3)">chevron_right</span></div>':''}
+    </div>`).join('');
+}
+
+function renderBoard(dbError) {
+  const byStage = {};
+  STAGES.forEach(s=>byStage[s.id]=[]);
+  leads.forEach(l=>{ if(byStage[l.pipeline_stage]) byStage[l.pipeline_stage].push(l); });
+  const board = document.getElementById('board-area');
+  board.innerHTML = STAGES.map(s=>{
+    const cards = byStage[s.id];
+    const cardsHtml = cards.length===0
+      ? `<div class="k-empty"><span class="ms" style="font-size:20px;color:var(--muted);margin-bottom:5px">inbox</span><div style="font-size:11px;color:var(--muted)">Empty</div></div>`
+      : cards.map(l=>buildCard(l,s)).join('');
+    return `<div class="k-col" id="col-${s.id}" style="border-top:2px solid ${s.color}30">
+      <div class="k-head">
+        <span class="k-title" style="color:${s.color}">${s.label}</span>
+        <span class="k-cnt">${cards.length}</span>
+      </div>
+      <div class="k-cards">${cardsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildCard(l, s) {
+  const score = l.lead_score || 0;
+  const scol = scoreColor(score);
+  const srcClass = {quote_request:'quote',website_audit:'audit',contact_form:'contact',manual:'manual'}[l.source]||'manual';
+  const srcLbl = {quote_request:'Quote',website_audit:'Audit',contact_form:'Contact',manual:'Manual'}[l.source]||'Manual';
+  return `<div class="k-card" onclick="openLead('${l.id}')">
+    <div class="kc-top">
+      <span class="kc-src ${srcClass}">${srcLbl}</span>
+      ${l.priority_flag?'<span class="kc-pri">⚡ Priority</span>':''}
+    </div>
+    <div class="kc-name">${esc(l.name)}</div>
+    <div class="kc-biz">${esc(l.business||l.email||'—')}</div>
+    <div class="kc-meta">
+      ${l.project_type?`<span class="kc-badge" style="background:${s.bg};color:${s.color}">${esc(l.project_type)}</span>`:''}
+      ${l.budget?`<span class="kc-badge" style="background:rgba(110,231,183,0.07);color:var(--green)">${esc(l.budget)}</span>`:''}
+    </div>
+    ${score>0?`<div class="kc-score-bar"><div class="kc-score-fill" style="width:${score}%;background:${scol}"></div></div>`:''}
+    <div class="kc-foot">
+      <span class="kc-date">${fmtDate(l.created_at)}</span>
+      <button class="kc-act" onclick="event.stopPropagation();openMoveModal('${l.id}')"><span class="ms" style="font-size:12px">swap_horiz</span></button>
+    </div>
+  </div>`;
+}
+
+/* ── LEAD DETAIL PANEL ───────────────────────────────────── */
+function openLead(id) {
+  const l = leads.find(x=>x.id===id);
+  if (!l) return;
+  activePanelId = id;
+  const stage = STAGES.find(s=>s.id===l.pipeline_stage)||STAGES[0];
+  const score = l.lead_score||0;
+  const scol = scoreColor(score);
+  const r=24, c=2*Math.PI*r, filled=(score/100)*c;
+
+  document.getElementById('lp-scroll').innerHTML = `
+    <div class="lp-head">
+      <div class="lp-info">
+        <div class="lp-name">${esc(l.name)}</div>
+        <div class="lp-biz">${esc(l.business||'')}</div>
+        <div class="lp-badges" style="margin-top:8px">
+          <span class="badge ${sourceBadgeClass(l.source)}">${sourceLabel(l.source)}</span>
+          ${l.priority_flag?'<span class="badge b-amber">⚡ Priority</span>':''}
+          <span class="badge" style="background:${stage.bg};color:${stage.color}">${stage.label}</span>
+        </div>
+      </div>
+      <div class="lp-score-wrap">
+        <div class="lp-score-ring">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="${r}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+            <circle cx="32" cy="32" r="${r}" fill="none" stroke="${scol}" stroke-width="5" stroke-dasharray="${filled} ${c}" stroke-linecap="round"/>
+          </svg>
+          <div class="lp-score-num" style="color:${scol}">${score}</div>
+        </div>
+        <div class="lp-score-lbl">Lead Score</div>
+      </div>
+    </div>
+
+    ${(l.email||l.phone)?`<div class="lp-sect">
+      <div class="lp-sect-title">Contact</div>
+      ${l.email?`<div class="lp-row"><span class="ms" style="font-size:15px;color:var(--muted);flex-shrink:0">email</span><span style="word-break:break-all">${esc(l.email)}</span></div>`:''}
+      ${l.phone?`<div class="lp-row"><span class="ms" style="font-size:15px;color:var(--muted);flex-shrink:0">phone</span>${esc(l.phone)}</div>`:''}
+      <div class="lp-row"><span class="ms" style="font-size:15px;color:var(--muted);flex-shrink:0">calendar_today</span><span style="color:var(--muted);font-size:11px">${new Date(l.created_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</span></div>
+    </div>`:''}
+
+    <div class="lp-sect">
+      <div class="lp-sect-title">Project</div>
+      <div class="lp-grid">
+        ${l.project_type?`<div><div class="lp-field-lbl">Type</div><div class="lp-field-val">${esc(l.project_type)}</div></div>`:''}
+        ${l.budget?`<div><div class="lp-field-lbl">Budget</div><div class="lp-field-val strong" style="color:var(--green)">${esc(l.budget)}</div></div>`:''}
+        ${l.timeline?`<div><div class="lp-field-lbl">Timeline</div><div class="lp-field-val">${esc(l.timeline)}</div></div>`:''}
+        <div><div class="lp-field-lbl">Owner</div><div class="lp-field-val">${esc(l.assigned_owner||'Doris Cacarl')}</div></div>
+      </div>
+    </div>
+
+    ${l.qualification_notes?`<div class="lp-sect">
+      <div class="lp-sect-title">AI Analysis</div>
+      <div class="lp-note">${esc(l.qualification_notes)}</div>
+    </div>`:''}
+
+    ${l.proposal_value?`<div class="lp-sect">
+      <div class="lp-sect-title">Proposal</div>
+      <div class="lp-grid">
+        <div><div class="lp-field-lbl">Value</div><div class="lp-field-val strong" style="color:var(--amber)">$${Number(l.proposal_value).toLocaleString()}</div></div>
+        ${l.proposal_status?`<div><div class="lp-field-lbl">Status</div><div class="lp-field-val">${esc(l.proposal_status)}</div></div>`:''}
+        ${l.proposal_date?`<div><div class="lp-field-lbl">Sent</div><div class="lp-field-val">${new Date(l.proposal_date).toLocaleDateString()}</div></div>`:''}
+      </div>
+    </div>`:''}
+  `;
+
+  document.getElementById('lp-actions').innerHTML = buildPanelActions(l);
+  document.getElementById('lead-panel').classList.add('open');
+  document.getElementById('panel-bg').classList.add('show');
+}
+
+function buildPanelActions(l) {
+  const id = `'${l.id}'`;
+  const btns = [];
+  switch(l.pipeline_stage) {
+    case 'quote_request':
+    case 'lead':
+      btns.push(`<button class="lp-btn primary" onclick="moveTo(${id},'consultation')"><span class="ms" style="font-size:15px">event</span> Schedule Consultation</button>`);
+      btns.push(`<button class="lp-btn amber" onclick="openProposalModal(${id})"><span class="ms" style="font-size:15px">description</span> Send Proposal</button>`);
+      break;
+    case 'consultation':
+      btns.push(`<button class="lp-btn primary" onclick="openProposalModal(${id})"><span class="ms" style="font-size:15px">description</span> Send Proposal</button>`);
+      break;
+    case 'proposal_sent':
+      btns.push(`<button class="lp-btn green" onclick="moveTo(${id},'won')"><span class="ms" style="font-size:15px">handshake</span> Mark as Won</button>`);
+      btns.push(`<button class="lp-btn amber" onclick="moveTo(${id},'negotiating')"><span class="ms" style="font-size:15px">sync</span> Enter Negotiation</button>`);
+      break;
+    case 'negotiating':
+      btns.push(`<button class="lp-btn green" onclick="moveTo(${id},'won')"><span class="ms" style="font-size:15px">handshake</span> Mark as Won</button>`);
+      break;
+    case 'won':
+      btns.push(`<button class="lp-btn green" onclick="moveTo(${id},'active_client')"><span class="ms" style="font-size:15px">rocket_launch</span> Activate as Client</button>`);
+      break;
+    case 'active_client':
+      btns.push(`<button class="lp-btn ghost" disabled style="opacity:0.5;cursor:default"><span class="ms" style="font-size:15px">check_circle</span> Active Client</button>`);
+      break;
+  }
+  btns.push(`<button class="lp-btn ghost" onclick="openMoveModal(${id})"><span class="ms" style="font-size:15px">swap_horiz</span> Move Stage Manually</button>`);
+  btns.push(`<button class="lp-btn danger" onclick="archiveLead(${id})"><span class="ms" style="font-size:15px">archive</span> Archive Lead</button>`);
+  return btns.join('');
+}
+
+function closePanel() {
+  activePanelId = null;
+  document.getElementById('lead-panel').classList.remove('open');
+  document.getElementById('panel-bg').classList.remove('show');
+}
+
+/* ── STAGE MOVEMENT ──────────────────────────────────────── */
+function openMoveModal(id) {
+  activeMoveId = id;
+  const l = leads.find(x=>x.id===id);
+  const grid = document.getElementById('stage-grid');
+  grid.innerHTML = STAGES.map(s=>`
+    <button class="stage-btn${s.id===l?.pipeline_stage?' cur':''}" onclick="moveTo('${id}','${s.id}')">
+      <span class="ms" style="font-size:18px;color:${s.color}">radio_button_${s.id===l?.pipeline_stage?'checked':'unchecked'}</span>
+      <span class="stage-btn-label">${s.label}</span>
+      <span class="stage-btn-sub">${s.sub}</span>
+    </button>`).join('');
+  document.getElementById('move-modal').classList.add('open');
+}
+
+async function moveTo(id, stage) {
+  const l = leads.find(x=>x.id===id);
+  if (!l) return;
+  const s = STAGES.find(x=>x.id===stage);
+  if (!s) return;
+  closeModal('move-modal');
+  closePanel();
+
+  const updates = { pipeline_stage: stage, updated_at: new Date().toISOString() };
+
+  try {
+    await sb.from('crm_leads').update(updates).eq('id', id);
+    // Notification messages per stage
+    const msgs = {
+      consultation: { title:`Consultation scheduled with ${l.business||l.name}`, msg:`Moving to Consultation stage.` },
+      proposal_sent:{ title:`Proposal sent to ${l.business||l.name}`, msg:`Lead moved to Proposal Sent stage.` },
+      negotiating:  { title:`${l.business||l.name} entered negotiation`, msg:`Revision or changes requested.` },
+      won:          { title:`New client won — ${l.business||l.name}`, msg:`Congratulations! Lead marked as Won.` },
+      active_client:{ title:`${l.business||l.name} is now active`, msg:`Client moved to active delivery.` }
+    };
+    if (msgs[stage]) await notify('pipeline_update', msgs[stage].title, msgs[stage].msg, 'crm_leads', id);
+    showToast(`Moved <strong>${l.name}</strong> to <strong>${s.label}</strong>`, 'check_circle');
+  } catch(e) { showToast('Error updating stage','error'); }
+}
+
+/* ── PROPOSAL ────────────────────────────────────────────── */
+function openProposalModal(id) {
+  activeProposalId = id;
+  document.getElementById('prop-value').value = '';
+  document.getElementById('prop-notes').value = '';
+  closePanel();
+  document.getElementById('proposal-modal').classList.add('open');
+}
+
+async function confirmProposal() {
+  if (!activeProposalId) return;
+  const val = parseFloat(document.getElementById('prop-value').value)||0;
+  const notes = document.getElementById('prop-notes').value.trim();
+  const l = leads.find(x=>x.id===activeProposalId);
+  if (!l) return;
+  closeModal('proposal-modal');
+  try {
+    await sb.from('crm_leads').update({
+      pipeline_stage:'proposal_sent',
+      proposal_value: val||null,
+      proposal_date: new Date().toISOString(),
+      proposal_status:'sent',
+      notes: notes||l.notes||'',
+      updated_at: new Date().toISOString()
+    }).eq('id', activeProposalId);
+    await notify('proposal_sent',
+      `Proposal sent to ${l.business||l.name}`,
+      val ? `Proposal value: $${val.toLocaleString()}` : 'Proposal sent.',
+      'crm_leads', activeProposalId);
+    showToast(`Proposal sent to <strong>${l.business||l.name}</strong>`, 'description');
+  } catch(e) { showToast('Error saving proposal','error'); }
+  activeProposalId = null;
+}
+
+/* ── ARCHIVE ─────────────────────────────────────────────── */
+async function archiveLead(id) {
+  const l = leads.find(x=>x.id===id);
+  if (!confirm(`Archive ${l?.name||'this lead'}? It will be hidden from the pipeline.`)) return;
+  closePanel();
+  try {
+    await sb.from('crm_leads').update({ status:'archived', updated_at:new Date().toISOString() }).eq('id', id);
+    showToast('Lead archived', 'archive');
+  } catch(e) { showToast('Error archiving lead','error'); }
+}
+
+/* ── REALTIME SUBSCRIPTIONS ──────────────────────────────── */
+function subscribeToChanges() {
+  // Live pipeline updates
+  sb.channel('crm_leads_live')
+    .on('postgres_changes', { event:'*', schema:'public', table:'crm_leads' }, () => loadAndRender())
+    .subscribe();
+
+  // Auto-intake from source tables
+  sb.channel('source_intake')
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'quote_leads' }, p => createCRMFromSource('quote_request', p.new))
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'website_audit_requests' }, p => createCRMFromSource('website_audit', p.new))
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'contact_submissions' }, p => createCRMFromSource('contact_form', p.new))
+    .subscribe();
+}
+
+/* ── NOTIFICATIONS ───────────────────────────────────────── */
+async function notify(type, title, message, related_table, related_id) {
+  try {
+    await sb.from('notifications').insert({ type, title, message, status:'unread', related_table:related_table||null, related_id:related_id||null });
+  } catch(e) {}
+}
+
+async function updateNotifBadge() {
+  try {
+    const { count } = await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');
+    const b = document.getElementById('notif-count');
+    if (b && count > 0) { b.textContent = count > 99 ? '99+' : String(count); b.style.display='flex'; }
+    sb.channel('nb_'+Math.random().toString(36).slice(2))
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'}, () => {
+        const b = document.getElementById('notif-count');
+        if (!b) return;
+        const c = (parseInt(b.textContent)||0)+1;
+        b.textContent = c>99?'99+':String(c); b.style.display='flex';
+      }).subscribe();
+  } catch(e) {}
+}
+
+/* ── FORCE SYNC (manual refresh button) ─────────────────── */
+async function forceSync() {
+  const icon = document.getElementById('sync-icon');
+  icon.style.animation = 'spin 1s linear infinite';
+  icon.style.cssText += ';animation:spin 1s linear infinite;display:inline-block';
+  await syncSourcesIntoCRM();
+  await loadAndRender();
+  icon.style.animation = '';
+  showToast('Pipeline synced', 'check_circle');
+}
+
+/* ── HELPERS ─────────────────────────────────────────────── */
+function fmtDate(d) {
+  if (!d) return '';
+  const diff = Date.now() - new Date(d).getTime();
+  const days = Math.floor(diff/86400000);
+  if (days === 0) return 'Today';
+  if (days === 1) return '1d ago';
+  if (days < 30)  return days+'d ago';
+  if (days < 365) return Math.floor(days/30)+'mo ago';
+  return Math.floor(days/365)+'y ago';
+}
+
+function fmtVal(v) {
+  if (!v) return '0';
+  if (v >= 1000000) return (v/1000000).toFixed(1)+'M';
+  if (v >= 1000) return Math.round(v/1000)+'K';
+  return String(v);
+}
+
+function sourceLabel(s) { return {quote_request:'Quote Request',website_audit:'Website Audit',contact_form:'Contact Form',manual:'Manual'}[s]||'Source'; }
+function sourceBadgeClass(s) { return {quote_request:'b-blue',website_audit:'b-purple',contact_form:'b-green',manual:'b-gray'}[s]||'b-gray'; }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function scrollToStage(id) { const el=document.getElementById('col-'+id); if(el) el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'}); }
+
+function showToast(msg, icon='info', persist=false) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="ms" style="color:var(--primary);font-size:16px">${icon}</span><div class="toast-text">${msg}</div>`;
+  c.appendChild(t);
+  if (!persist) setTimeout(()=>{ t.classList.add('fadeout'); setTimeout(()=>t.remove(),320); }, 3000);
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-ov').classList.toggle('show'); }
+function closeSidebar()  { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-ov').classList.remove('show'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ closePanel(); closeSidebar(); } });
+window.addEventListener('resize', () => { if(window.innerWidth > 960) closeSidebar(); });
+
+// Close modals on backdrop click
+document.querySelectorAll('.modal-bg').forEach(bg => bg.addEventListener('click', e => { if(e.target===bg) bg.classList.remove('open'); }));
+
+/* ── SPIN KEYFRAME ────────────────────────────────────────── */
+const spinStyle = document.createElement('style');
+spinStyle.textContent = '@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
+document.head.appendChild(spinStyle);
+
+/* ── START ────────────────────────────────────────────────── */
+window.addEventListener('load', init);
 </script>
 </body>
 </html>

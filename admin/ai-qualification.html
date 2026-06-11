@@ -575,7 +575,7 @@ a { color:inherit; text-decoration:none }
     </div>
     <div class="modal-foot">
       <button class="btn-g" onclick="closeModal('modal-schedule')">Cancel</button>
-      <button class="btn-p" onclick="closeModal('modal-schedule');showToast('Consultation scheduled','event')"><span class="ms" style="font-size:15px">event</span> Confirm</button>
+      <button class="btn-p" onclick="confirmSchedule()"><span class="ms" style="font-size:15px">event</span> Confirm</button>
     </div>
   </div>
 </div>
@@ -583,14 +583,84 @@ a { color:inherit; text-decoration:none }
 <!-- ── TOAST ─────────────────────────────────────────────── -->
 <div id="toast-container"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ════════════════════════════════════════════════════════════
+   AI QUALIFICATION CENTER — Supabase Integration
+   ════════════════════════════════════════════════════════════ */
+const SB_URL = 'https://nfowsobglotbjrdqsiid.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+let sbClient;
+let scheduleLeadId = null;
+
 /* ── DATA ─────────────────────────────────────────────────── */
-const LEADS = [];
+let LEADS = [];
 
 /* ── STATE ────────────────────────────────────────────────── */
 let activeTab = 'all';
 let searchQuery = '';
 let sortMode = 'score-desc';
+
+/* ── SUPABASE: MAP DB ROW → CARD FORMAT ───────────────────── */
+function hashCode(s) { let h=0; for(let i=0;i<s.length;i++) h=Math.imul(31,h)+s.charCodeAt(i)|0; return h; }
+function fmtTime(d) {
+  if (!d) return '';
+  const diff = Date.now() - new Date(d).getTime();
+  const mins = Math.floor(diff/60000);
+  if (mins < 60)  return mins + 'm ago';
+  const hours = Math.floor(diff/3600000);
+  if (hours < 24) return hours + 'h ago';
+  return Math.floor(diff/86400000) + 'd ago';
+}
+function buildAINote(score) {
+  if (score >= 70) return 'High-value prospect. Strong budget signal. Recommend immediate outreach.';
+  if (score >= 50) return 'Qualified lead. Follow up within 24 hours.';
+  if (score >= 30) return 'Potential lead. Needs further qualification before investing time.';
+  return 'Low-priority. Budget or project information is incomplete.';
+}
+function mapDBToCard(l) {
+  const score = l.lead_score || 0;
+  const isRejected = l.qualification_status === 'rejected';
+  const isHighPri  = l.priority_flag || score >= 70;
+  const avCols = ['av-blue','av-green','av-amber','av-purple','av-red'];
+  const avClass = avCols[Math.abs(hashCode(l.id||'')) % avCols.length];
+  let budgetTier, callStatus, aiRec;
+  if (isHighPri)                                    { budgetTier='high';        }
+  else if (score >= 50)                             { budgetTier='qualified';   }
+  else if (score >= 30)                             { budgetTier='low';         }
+  else                                              { budgetTier='unqualified'; }
+  if (isRejected)                                   { callStatus='failed'; aiRec='reject'; }
+  else if (l.qualification_status==='needs_review') { callStatus='follow-up'; aiRec='review'; }
+  else if (l.qualification_status==='pending' || !l.lead_score) { callStatus='pending'; aiRec='review'; }
+  else                                              { callStatus='completed'; aiRec=score>=50?'accept':'review'; }
+  return {
+    id: l.id,
+    name: l.name || 'Unknown',
+    biz: l.business || l.email || '',
+    type: l.project_type || 'General',
+    budget: l.budget || 'Not specified',
+    timeline: l.timeline || 'Not specified',
+    score, budgetTier, callStatus, aiRec,
+    aiNote: l.qualification_notes || buildAINote(score),
+    avatar: (l.name||'U')[0].toUpperCase(),
+    avClass,
+    time: fmtTime(l.created_at),
+    created_at: l.created_at,
+    transcript: [],
+    summary: null
+  };
+}
+
+/* ── SUPABASE: LOAD LEADS ─────────────────────────────────── */
+async function reloadLeads() {
+  try {
+    const { data } = await sbClient.from('crm_leads').select('*').neq('status','archived').order('created_at',{ascending:false});
+    LEADS.length = 0;
+    (data||[]).forEach(l => LEADS.push(mapDBToCard(l)));
+    updateKPIs();
+    renderCards();
+  } catch(e) { console.error('Reload error:', e); }
+}
 
 /* ── INIT ─────────────────────────────────────────────────── */
 function init() {
@@ -648,7 +718,7 @@ function getFilteredLeads() {
     const tierOrder = {high:3, qualified:2, low:1, unqualified:0};
     list.sort((a,b) => (tierOrder[b.budgetTier]||0) - (tierOrder[a.budgetTier]||0));
   }
-  if (sortMode === 'newest') list.sort((a,b) => b.id - a.id);
+  if (sortMode === 'newest') list.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
   return list;
 }
 
@@ -764,12 +834,12 @@ function buildCard(l) {
     </div>
     <div class="card-footer">
       <div class="card-actions">
-        ${l.transcript.length ? `<button class="btn-sm blue" onclick="event.stopPropagation();openTranscript(${l.id})"><span class="ms" style="font-size:13px">receipt_long</span> Transcript</button>` : ''}
-        ${l.summary ? `<button class="btn-sm purple" onclick="event.stopPropagation();openSummary(${l.id})"><span class="ms" style="font-size:13px">auto_awesome</span> AI Summary</button>` : ''}
-        ${l.aiRec==='accept'||l.budgetTier==='high'||l.budgetTier==='qualified' ? `<button class="btn-sm green" onclick="event.stopPropagation();acceptLead(${l.id})"><span class="ms" style="font-size:13px">check</span> Accept</button>` : ''}
-        ${l.aiRec==='reject' ? `<button class="btn-sm red" onclick="event.stopPropagation();rejectLead(${l.id})"><span class="ms" style="font-size:13px">close</span> Reject</button>` : ''}
-        <button class="btn-sm" onclick="event.stopPropagation();openModal('modal-schedule')"><span class="ms" style="font-size:13px">event</span></button>
-        <button class="btn-sm amber" onclick="event.stopPropagation();moveToCRM(${l.id})"><span class="ms" style="font-size:13px">move_up</span></button>
+        ${l.transcript.length ? `<button class="btn-sm blue" onclick="event.stopPropagation();openTranscript('${l.id}')"><span class="ms" style="font-size:13px">receipt_long</span> Transcript</button>` : ''}
+        ${l.summary ? `<button class="btn-sm purple" onclick="event.stopPropagation();openSummary('${l.id}')"><span class="ms" style="font-size:13px">auto_awesome</span> AI Summary</button>` : ''}
+        ${l.aiRec==='accept'||l.budgetTier==='high'||l.budgetTier==='qualified' ? `<button class="btn-sm green" onclick="event.stopPropagation();acceptLead('${l.id}')"><span class="ms" style="font-size:13px">check</span> Accept</button>` : ''}
+        ${(l.aiRec==='reject'||l.budgetTier==='unqualified') ? `<button class="btn-sm red" onclick="event.stopPropagation();rejectLead('${l.id}')"><span class="ms" style="font-size:13px">close</span> Reject</button>` : ''}
+        <button class="btn-sm" onclick="event.stopPropagation();openScheduleModal('${l.id}')"><span class="ms" style="font-size:13px">event</span></button>
+        <button class="btn-sm amber" onclick="event.stopPropagation();moveToCRM('${l.id}')"><span class="ms" style="font-size:13px">move_up</span></button>
       </div>
       <div class="card-time">${l.time}</div>
     </div>
@@ -841,17 +911,53 @@ function openSummary(id) {
 }
 
 /* ── ACTIONS ──────────────────────────────────────────────── */
-function acceptLead(id) {
+async function acceptLead(id) {
   const l = LEADS.find(x=>x.id===id);
-  showToast(`<strong>${l.name}</strong> accepted — moved to CRM Pipeline`, 'check_circle');
+  if (!l) return;
+  try {
+    await sbClient.from('crm_leads').update({ pipeline_stage:'lead', qualification_status:'qualified', updated_at:new Date().toISOString() }).eq('id', id);
+    await sbClient.from('notifications').insert({ type:'lead_qualified', title:`New qualified lead: ${l.name}`, message:'New qualified lead ready for review.', status:'unread', related_table:'crm_leads', related_id:String(id) });
+    showToast(`<strong>${l.name}</strong> accepted — moved to Pipeline`, 'check_circle');
+    await reloadLeads();
+  } catch(e) { showToast('Error accepting lead', 'error'); }
 }
-function rejectLead(id) {
+
+async function rejectLead(id) {
   const l = LEADS.find(x=>x.id===id);
-  showToast(`<strong>${l.name}</strong> marked as rejected`, 'cancel');
+  if (!l) return;
+  try {
+    await sbClient.from('crm_leads').update({ qualification_status:'rejected', status:'archived', updated_at:new Date().toISOString() }).eq('id', id);
+    showToast(`<strong>${l.name}</strong> rejected`, 'cancel');
+    await reloadLeads();
+  } catch(e) { showToast('Error rejecting lead', 'error'); }
 }
-function moveToCRM(id) {
+
+async function moveToCRM(id) {
   const l = LEADS.find(x=>x.id===id);
-  showToast(`<strong>${l.name}</strong> moved to CRM`, 'move_up');
+  if (!l) return;
+  try {
+    await sbClient.from('crm_leads').update({ pipeline_stage:'lead', updated_at:new Date().toISOString() }).eq('id', id);
+    showToast(`<strong>${l.name}</strong> moved to CRM Pipeline`, 'move_up');
+    await reloadLeads();
+  } catch(e) { showToast('Error moving lead', 'error'); }
+}
+
+function openScheduleModal(id) {
+  scheduleLeadId = id;
+  openModal('modal-schedule');
+}
+
+async function confirmSchedule() {
+  closeModal('modal-schedule');
+  if (!scheduleLeadId) return;
+  const l = LEADS.find(x=>x.id===scheduleLeadId);
+  try {
+    await sbClient.from('crm_leads').update({ pipeline_stage:'consultation', updated_at:new Date().toISOString() }).eq('id', scheduleLeadId);
+    await sbClient.from('notifications').insert({ type:'consultation_scheduled', title:`Consultation scheduled with ${l?.name||'Lead'}`, message:'Lead moved to Consultation stage.', status:'unread', related_table:'crm_leads', related_id:String(scheduleLeadId) });
+    showToast('Consultation scheduled', 'event');
+    await reloadLeads();
+  } catch(e) { showToast('Error scheduling consultation', 'error'); }
+  scheduleLeadId = null;
 }
 
 /* ── SIDEBAR ──────────────────────────────────────────────── */
@@ -880,11 +986,26 @@ document.querySelectorAll('.modal-bg').forEach(bg => {
   bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open') });
 });
 
-init();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(async()=>{try{var sb=window.supabase.createClient('https://nfowsobglotbjrdqsiid.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4');var res=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');var b=document.getElementById('notif-count');if(b&&res.count>0){b.textContent=res.count>99?'99+':String(res.count);b.style.display='flex';}sb.channel('nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},function(){var b=document.getElementById('notif-count');if(!b)return;var c=(parseInt(b.textContent)||0)+1;b.textContent=c>99?'99+':String(c);b.style.display='flex';}).subscribe();}catch(e){}})();
+/* ── STARTUP ──────────────────────────────────────────────── */
+async function startup() {
+  sbClient = window.supabase.createClient(SB_URL, SB_KEY);
+  // Load notification badge
+  try {
+    const { count } = await sbClient.from('notifications').select('*',{count:'exact',head:true}).eq('status','unread');
+    const b = document.getElementById('notif-count');
+    if (b && count > 0) { b.textContent = count>99?'99+':String(count); b.style.display='flex'; }
+    sbClient.channel('aq_nb_'+Math.random().toString(36).slice(2)).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{
+      const b=document.getElementById('notif-count'); if(!b)return;
+      const c=(parseInt(b.textContent)||0)+1; b.textContent=c>99?'99+':String(c); b.style.display='flex';
+    }).subscribe();
+  } catch(e){}
+  // Load leads from Supabase
+  await reloadLeads();
+  // Subscribe to realtime updates
+  sbClient.channel('aq_crm_live').on('postgres_changes',{event:'*',schema:'public',table:'crm_leads'},()=>reloadLeads()).subscribe();
+}
+
+window.addEventListener('load', startup);
 </script>
 </body>
 </html>
