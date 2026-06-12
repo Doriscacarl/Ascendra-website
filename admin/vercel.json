@@ -1,6 +1,7 @@
 {
+  "buildCommand": "node build.js",
   "redirects": [
-    { "source": "/", "destination": "/dashboard.html", "permanent": false }
+    { "source": "/", "destination": "/lock.html", "permanent": false }
   ],
   "headers": [
     {

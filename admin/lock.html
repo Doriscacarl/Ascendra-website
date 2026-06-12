@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#090909">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ascendra">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<title>ASCENDRA | Admin Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+:root{
+  --bg:#090909;
+  --primary:#adc6ff;
+  --primary-b:#4d8eff;
+  --primary-dim:rgba(173,198,255,0.08);
+  --primary-glo:rgba(173,198,255,0.22);
+  --text:#e6e3e2;
+  --muted:#72768a;
+  --border:rgba(255,255,255,0.055);
+  --border2:rgba(255,255,255,0.10);
+  --red:#fca5a5;
+  --amber:#fcd34d;
+  --green:#6ee7b7;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Geist',system-ui,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100dvh;
+  position:relative;
+}
+
+/* ── Background mesh ───────────────────────────────── */
+.bg-mesh{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(90px);opacity:0.6;
+}
+.orb-1{
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(173,198,255,0.065) 0%,transparent 65%);
+  top:-280px;left:-160px;
+  animation:drift1 28s ease-in-out infinite alternate;
+}
+.orb-2{
+  width:550px;height:550px;
+  background:radial-gradient(circle,rgba(100,70,210,0.048) 0%,transparent 65%);
+  bottom:-180px;right:-120px;
+  animation:drift2 34s ease-in-out infinite alternate;
+}
+.orb-3{
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(173,198,255,0.035) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:drift3 20s ease-in-out infinite alternate;
+}
+@keyframes drift1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(70px,50px) scale(1.12)}}
+@keyframes drift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-50px,-40px) scale(1.08)}}
+@keyframes drift3{0%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1.25) rotate(15deg)}}
+
+/* Grain overlay */
+.grain{
+  position:fixed;inset:-50%;
+  width:200%;height:200%;
+  pointer-events:none;z-index:2;
+  opacity:0.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+  animation:grain 0.5s steps(1) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}
+  20%{transform:translate(2%,1%)}30%{transform:translate(-1%,3%)}
+  40%{transform:translate(3%,-2%)}50%{transform:translate(-2%,2%)}
+  60%{transform:translate(1%,-3%)}70%{transform:translate(-3%,1%)}
+  80%{transform:translate(2%,3%)}90%{transform:translate(-1%,-1%)}
+  100%{transform:translate(0,0)}
+}
+
+/* ── Main lock container ────────────────────────────── */
+.lock{
+  position:relative;z-index:3;
+  width:100%;max-width:380px;
+  padding:0 24px 32px;
+  display:flex;flex-direction:column;
+  align-items:center;
+}
+
+/* ── Clock ──────────────────────────────────────────── */
+.clock-time{
+  font-family:'Bodoni Moda',Georgia,serif;
+  font-size:clamp(72px,18vw,96px);
+  font-weight:400;
+  letter-spacing:-0.05em;
+  color:#fff;
+  line-height:1;
+  margin-bottom:6px;
+  text-align:center;
+  text-shadow:0 0 60px rgba(255,255,255,0.06);
+}
+.clock-date{
+  font-size:11px;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:36px;text-align:center;
+}
+
+/* ── Brand ──────────────────────────────────────────── */
+.brand-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:5px;
+}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bodoni Moda',serif;font-size:14px;font-weight:700;
+  color:#001a42;flex-shrink:0;
+  box-shadow:0 2px 12px rgba(173,198,255,0.25);
+}
+.brand-name{
+  font-size:12px;font-weight:700;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text);
+}
+.brand-sub{
+  font-size:9px;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px;text-align:center;
+}
+
+/* ── PIN dots ────────────────────────────────────────── */
+.pin-row{
+  display:flex;gap:10px;
+  margin-bottom:8px;justify-content:center;
+  min-height:16px;
+}
+.dot{
+  width:11px;height:11px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.14);
+  background:transparent;
+  transition:background 0.14s,border-color 0.14s,box-shadow 0.14s,transform 0.14s;
+}
+.dot.filled{
+  background:var(--primary);
+  border-color:var(--primary);
+  box-shadow:0 0 10px rgba(173,198,255,0.55);
+  transform:scale(1.1);
+}
+.dot.err{
+  background:var(--red);
+  border-color:var(--red);
+  box-shadow:0 0 10px rgba(252,165,165,0.55);
+}
+
+/* ── Message ────────────────────────────────────────── */
+.msg{
+  font-size:11.5px;font-weight:500;letter-spacing:0.04em;
+  color:transparent;min-height:17px;
+  text-align:center;margin-bottom:18px;
+  transition:color 0.18s;
+}
+.msg.error{color:var(--red)}
+.msg.warn{color:var(--amber)}
+.msg.info{color:var(--muted)}
+
+/* ── Shake ──────────────────────────────────────────── */
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  15%{transform:translateX(-9px)}30%{transform:translateX(8px)}
+  45%{transform:translateX(-5px)}60%{transform:translateX(5px)}
+  75%{transform:translateX(-2px)}90%{transform:translateX(2px)}
+}
+.shaking{animation:shake 0.42s cubic-bezier(0.36,0.07,0.19,0.97)}
+
+/* ── Keypad ─────────────────────────────────────────── */
+.keypad{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;width:100%;max-width:296px;
+  margin-bottom:14px;
+}
+.k{
+  border-radius:50%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;overflow:hidden;
+  transition:background 0.1s,border-color 0.1s,transform 0.09s;
+  gap:2px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  aspect-ratio:1;
+  min-height:72px;
+  touch-action:manipulation;
+}
+.k:hover{background:rgba(255,255,255,0.07);border-color:var(--border2)}
+.k:active,.k.press{
+  background:rgba(173,198,255,0.10);
+  border-color:rgba(173,198,255,0.22);
+  transform:scale(0.91);
+}
+.k.k-empty{pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
+.k-n{
+  font-family:'Bodoni Moda',serif;
+  font-size:26px;font-weight:400;line-height:1;
+  color:#fff;
+}
+.k-a{
+  font-size:7.5px;font-weight:600;
+  letter-spacing:0.18em;color:var(--muted);
+  text-align:center;
+}
+
+/* special bottom-row keys */
+.k-del .k-sym,.k-ok .k-sym{font-size:18px;color:var(--text)}
+.k-ok{
+  background:var(--primary-dim);
+  border-color:rgba(173,198,255,0.16);
+}
+.k-ok:not(:disabled):hover{background:rgba(173,198,255,0.13)}
+.k-ok .k-sym{color:var(--primary)}
+
+/* ── Lockout panel ──────────────────────────────────── */
+.lockout{
+  display:none;
+  flex-direction:column;align-items:center;gap:6px;
+  padding:20px 24px;
+  background:rgba(252,165,165,0.04);
+  border:1px solid rgba(252,165,165,0.12);
+  border-radius:14px;
+  width:100%;max-width:296px;
+  margin-bottom:14px;text-align:center;
+}
+.lockout.show{display:flex}
+.lockout-icon{font-size:26px;margin-bottom:4px}
+.lockout-title{font-size:12px;font-weight:600;color:var(--red);letter-spacing:0.06em}
+.lockout-timer{
+  font-family:'Bodoni Moda',serif;
+  font-size:32px;font-weight:400;
+  color:var(--amber);letter-spacing:-0.03em;
+}
+.lockout-sub{font-size:11px;color:var(--muted)}
+
+/* ── Password mode ──────────────────────────────────── */
+.pw-wrap{
+  display:none;flex-direction:column;gap:10px;
+  width:100%;max-width:296px;margin-bottom:14px;
+}
+.pw-wrap.show{display:flex}
+.pw-input{
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:15px 18px;
+  font-size:18px;
+  font-family:'Geist',monospace;
+  letter-spacing:0.24em;
+  color:var(--text);outline:none;text-align:center;
+  transition:border-color 0.18s,background 0.18s;
+  min-height:54px;
+}
+.pw-input:focus{
+  border-color:rgba(173,198,255,0.28);
+  background:rgba(255,255,255,0.06);
+}
+.pw-input::placeholder{letter-spacing:0.06em;color:var(--muted);font-size:12px}
+.pw-btn{
+  width:100%;padding:14px;min-height:50px;
+  background:var(--primary-dim);
+  border:1px solid rgba(173,198,255,0.18);
+  border-radius:12px;
+  color:var(--primary);
+  font-family:'Geist',sans-serif;
+  font-size:12px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background 0.13s,transform 0.1s,box-shadow 0.13s;
+}
+.pw-btn:hover{background:rgba(173,198,255,0.14);box-shadow:0 4px 18px rgba(173,198,255,0.12)}
+.pw-btn:active{transform:scale(0.98)}
+
+/* ── Mode toggle ────────────────────────────────────── */
+.toggle{
+  font-size:11px;font-weight:500;
+  letter-spacing:0.07em;color:var(--muted);
+  cursor:pointer;padding:8px 12px;
+  border-radius:6px;
+  transition:color 0.13s,background 0.13s;
+  border:none;background:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.toggle:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+
+/* ── Loading overlay ────────────────────────────────── */
+.overlay-load{
+  display:none;position:fixed;inset:0;z-index:50;
+  background:rgba(9,9,9,0.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;
+}
+.overlay-load.show{display:flex}
+.spinner{
+  width:40px;height:40px;
+  border:2px solid rgba(173,198,255,0.14);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin 0.75s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-label{
+  font-size:11px;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── Success overlay ────────────────────────────────── */
+.overlay-ok{
+  display:none;position:fixed;inset:0;z-index:51;
+  background:var(--bg);
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  opacity:0;transition:opacity 0.35s ease;
+}
+.overlay-ok.show{display:flex}
+.overlay-ok.fade{opacity:1}
+.ok-ring{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(110,231,183,0.08);
+  border:1.5px solid rgba(110,231,183,0.28);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--green);
+  animation:pop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes pop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.ok-label{
+  font-size:11px;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--green);
+}
+
+/* ── Desktop card ───────────────────────────────────── */
+@media(min-width:600px){
+  .lock{
+    background:rgba(16,15,15,0.55);
+    border:1px solid var(--border);
+    border-top-color:rgba(255,255,255,0.09);
+    border-radius:24px;
+    padding:52px 48px 44px;
+    backdrop-filter:blur(48px);
+    -webkit-backdrop-filter:blur(48px);
+    box-shadow:
+      0 48px 96px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,255,255,0.025),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+}
+
+/* Reduce motion */
+@media(prefers-reduced-motion:reduce){
+  .orb,.grain{animation:none}
+  .spinner{animation:spin 1.5s linear infinite}
+}
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-mesh" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Loading overlay -->
+<div class="overlay-load" id="ov-load" role="status" aria-label="Verifying access code">
+  <div class="spinner"></div>
+  <div class="spinner-label">Verifying</div>
+</div>
+
+<!-- Success overlay -->
+<div class="overlay-ok" id="ov-ok" aria-label="Access granted">
+  <div class="ok-ring">✓</div>
+  <div class="ok-label">Access Granted</div>
+</div>
+
+<!-- Lock card -->
+<main class="lock" id="lock" role="main">
+
+  <!-- Clock -->
+  <div class="clock-time" id="clock-time" aria-label="Current time">--:--</div>
+  <div class="clock-date" id="clock-date" aria-label="Current date"></div>
+
+  <!-- Brand -->
+  <div class="brand-row">
+    <div class="brand-mark" aria-hidden="true">A</div>
+    <div class="brand-name">Ascendra Admin</div>
+  </div>
+  <div class="brand-sub">Secure Access</div>
+
+  <!-- PIN dots -->
+  <div class="pin-row" id="pin-row" role="img" aria-label="PIN entry indicator" aria-live="polite"></div>
+
+  <!-- Status message -->
+  <div class="msg" id="msg" role="alert" aria-live="assertive"></div>
+
+  <!-- Lockout state -->
+  <div class="lockout" id="lockout" aria-live="polite">
+    <div class="lockout-icon" aria-hidden="true">🔒</div>
+    <div class="lockout-title">Access Temporarily Locked</div>
+    <div class="lockout-timer" id="lockout-timer" aria-label="Time remaining">15:00</div>
+    <div class="lockout-sub">Too many failed attempts</div>
+  </div>
+
+  <!-- Number keypad -->
+  <div class="keypad" id="keypad" role="group" aria-label="PIN entry keypad">
+    <button class="k" data-k="1" aria-label="1">
+      <span class="k-n">1</span>
+    </button>
+    <button class="k" data-k="2" aria-label="2 ABC">
+      <span class="k-n">2</span><span class="k-a">ABC</span>
+    </button>
+    <button class="k" data-k="3" aria-label="3 DEF">
+      <span class="k-n">3</span><span class="k-a">DEF</span>
+    </button>
+    <button class="k" data-k="4" aria-label="4 GHI">
+      <span class="k-n">4</span><span class="k-a">GHI</span>
+    </button>
+    <button class="k" data-k="5" aria-label="5 JKL">
+      <span class="k-n">5</span><span class="k-a">JKL</span>
+    </button>
+    <button class="k" data-k="6" aria-label="6 MNO">
+      <span class="k-n">6</span><span class="k-a">MNO</span>
+    </button>
+    <button class="k" data-k="7" aria-label="7 PRS">
+      <span class="k-n">7</span><span class="k-a">PRS</span>
+    </button>
+    <button class="k" data-k="8" aria-label="8 TUV">
+      <span class="k-n">8</span><span class="k-a">TUV</span>
+    </button>
+    <button class="k" data-k="9" aria-label="9 WXY">
+      <span class="k-n">9</span><span class="k-a">WXY</span>
+    </button>
+    <button class="k k-del" id="k-del" aria-label="Delete last digit">
+      <span class="k-sym">⌫</span>
+    </button>
+    <button class="k" data-k="0" aria-label="0">
+      <span class="k-n">0</span>
+    </button>
+    <button class="k k-ok" id="k-ok" aria-label="Unlock">
+      <span class="k-sym">↵</span>
+    </button>
+  </div>
+
+  <!-- Password input (hidden by default) -->
+  <div class="pw-wrap" id="pw-wrap">
+    <input
+      type="password"
+      class="pw-input"
+      id="pw-input"
+      placeholder="Enter access code"
+      autocomplete="current-password"
+      maxlength="64"
+      aria-label="Access code password field"
+    >
+    <button class="pw-btn" id="pw-btn" aria-label="Unlock admin panel">Unlock Admin</button>
+  </div>
+
+  <!-- Toggle between keypad and password modes -->
+  <button class="toggle" id="mode-toggle" aria-label="Switch input method">
+    Use password instead ↗
+  </button>
+
+</main>
+
+<!-- PASSKEY_READY: WebAuthn / Passkey / Face ID integration point.
+     To add biometric auth in future: use navigator.credentials.get({ publicKey: ... })
+     after a successful WebAuthn registration flow. The session storage model here is
+     already compatible — just call storeSession(token) on successful WebAuthn assertion. -->
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Already authenticated? Skip lock screen ───────────
+  var s = sessionStorage.getItem('ascendra_session');
+  var a = parseInt(sessionStorage.getItem('ascendra_activity') || '0', 10);
+  if (s && Date.now() - a < 1800000) {
+    window.location.replace('/dashboard.html');
+    return;
+  }
+
+  // ── State ──────────────────────────────────────────────
+  var pin = '';
+  var pwMode = false;
+  var lockedUntil = 0;
+
+  // ── Clock ──────────────────────────────────────────────
+  function tickClock() {
+    var now = new Date();
+    var h = now.getHours().toString().padStart(2, '0');
+    var m = now.getMinutes().toString().padStart(2, '0');
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('clock-time').textContent = h + ':' + m;
+    document.getElementById('clock-date').textContent =
+      days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // ── Dots ───────────────────────────────────────────────
+  function renderDots() {
+    var row = document.getElementById('pin-row');
+    var len = Math.max(pin.length, 6);
+    row.innerHTML = '';
+    for (var i = 0; i < len; i++) {
+      var d = document.createElement('div');
+      d.className = 'dot' + (i < pin.length ? ' filled' : '');
+      row.appendChild(d);
+    }
+  }
+  renderDots();
+
+  // ── Message ────────────────────────────────────────────
+  function showMsg(text, type) {
+    var el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = 'msg' + (type ? ' ' + type : '');
+  }
+
+  // ── Shake animation ────────────────────────────────────
+  function shake(el) {
+    el.classList.remove('shaking');
+    void el.offsetWidth;
+    el.classList.add('shaking');
+    el.addEventListener('animationend', function () {
+      el.classList.remove('shaking');
+    }, { once: true });
+  }
+
+  // ── Lockout countdown ──────────────────────────────────
+  function startLockout(until) {
+    lockedUntil = until;
+    document.getElementById('lockout').classList.add('show');
+    document.getElementById('keypad').style.cssText = 'opacity:0.18;pointer-events:none';
+    document.getElementById('pw-wrap').classList.remove('show');
+    document.getElementById('mode-toggle').style.display = 'none';
+
+    (function tick() {
+      var remaining = Math.max(0, lockedUntil - Date.now());
+      if (remaining <= 0) {
+        document.getElementById('lockout').classList.remove('show');
+        document.getElementById('keypad').style.cssText = '';
+        document.getElementById('mode-toggle').style.display = '';
+        lockedUntil = 0;
+        pin = '';
+        renderDots();
+        showMsg('', '');
+        return;
+      }
+      var mm = Math.floor(remaining / 60000).toString().padStart(2, '0');
+      var ss = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
+      document.getElementById('lockout-timer').textContent = mm + ':' + ss;
+      setTimeout(tick, 500);
+    })();
+  }
+
+  // ── Store session after successful auth ────────────────
+  function storeSession(token) {
+    sessionStorage.setItem('ascendra_session', JSON.stringify({ token: token }));
+    sessionStorage.setItem('ascendra_activity', Date.now().toString());
+  }
+
+  // ── Show success and redirect ──────────────────────────
+  function onSuccess(token) {
+    storeSession(token);
+    var ov = document.getElementById('ov-ok');
+    ov.classList.add('show');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { ov.classList.add('fade'); });
+    });
+    setTimeout(function () { window.location.replace('/dashboard.html'); }, 750);
+  }
+
+  // ── Attempt unlock ─────────────────────────────────────
+  function tryUnlock(code) {
+    if (lockedUntil > Date.now()) return;
+    if (!code || code.length < 1) {
+      shake(document.getElementById('pin-row'));
+      showMsg('Enter your access code', 'info');
+      return;
+    }
+
+    document.getElementById('ov-load').classList.add('show');
+
+    fetch('/api/verify-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: code })
+    })
+      .then(function (r) {
+        return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+      })
+      .then(function (res) {
+        document.getElementById('ov-load').classList.remove('show');
+
+        if (res.status === 200 && res.data.token) {
+          onSuccess(res.data.token);
+          return;
+        }
+
+        if (res.status === 429) {
+          var until = res.data.lockedUntil || (Date.now() + 900000);
+          pin = ''; renderDots();
+          if (pwMode) document.getElementById('pw-input').value = '';
+          startLockout(until);
+          return;
+        }
+
+        // Wrong code
+        pin = ''; renderDots();
+        if (pwMode) document.getElementById('pw-input').value = '';
+
+        document.getElementById('pin-row').querySelectorAll('.dot').forEach(function (d) {
+          d.classList.add('err');
+        });
+        shake(document.getElementById('pin-row'));
+
+        var left = res.data && res.data.attemptsLeft;
+        if (typeof left === 'number' && left <= 2) {
+          showMsg('Incorrect. ' + left + (left === 1 ? ' attempt' : ' attempts') + ' remaining', 'error');
+        } else {
+          showMsg('Incorrect code', 'error');
+        }
+
+        setTimeout(function () {
+          document.getElementById('pin-row').querySelectorAll('.dot').forEach(function (d) {
+            d.classList.remove('err');
+          });
+        }, 640);
+      })
+      .catch(function () {
+        document.getElementById('ov-load').classList.remove('show');
+        pin = ''; renderDots();
+        if (pwMode) document.getElementById('pw-input').value = '';
+        showMsg('Network error. Please try again.', 'error');
+      });
+  }
+
+  // ── Keypad click handler ───────────────────────────────
+  document.getElementById('keypad').addEventListener('click', function (e) {
+    if (lockedUntil > Date.now()) return;
+    var btn = e.target.closest('[data-k]');
+    if (btn) {
+      if (pin.length >= 12) return;
+      pin += btn.dataset.k;
+      showMsg('', '');
+      renderDots();
+      if (navigator.vibrate) navigator.vibrate(6);
+      btn.classList.add('press');
+      setTimeout(function () { btn.classList.remove('press'); }, 110);
+    }
+    if (e.target.closest('#k-del')) {
+      if (pin.length > 0) { pin = pin.slice(0, -1); showMsg('', ''); renderDots(); }
+    }
+    if (e.target.closest('#k-ok')) {
+      tryUnlock(pin);
+    }
+  });
+
+  // ── Physical keyboard support ──────────────────────────
+  document.addEventListener('keydown', function (e) {
+    if (pwMode || lockedUntil > Date.now()) return;
+    if (e.key >= '0' && e.key <= '9' && pin.length < 12) {
+      pin += e.key; showMsg('', ''); renderDots();
+    } else if (e.key === 'Backspace') {
+      if (pin.length > 0) { pin = pin.slice(0, -1); showMsg('', ''); renderDots(); }
+    } else if (e.key === 'Enter') {
+      tryUnlock(pin);
+    }
+  });
+
+  // ── Password mode toggle ───────────────────────────────
+  document.getElementById('mode-toggle').addEventListener('click', function () {
+    pwMode = !pwMode;
+    pin = ''; renderDots(); showMsg('', '');
+    if (pwMode) {
+      document.getElementById('pw-wrap').classList.add('show');
+      document.getElementById('keypad').style.display = 'none';
+      document.getElementById('pin-row').style.display = 'none';
+      this.textContent = '← Use PIN keypad instead';
+      setTimeout(function () { document.getElementById('pw-input').focus(); }, 60);
+    } else {
+      document.getElementById('pw-wrap').classList.remove('show');
+      document.getElementById('keypad').style.display = '';
+      document.getElementById('pin-row').style.display = '';
+      this.textContent = 'Use password instead ↗';
+    }
+  });
+
+  document.getElementById('pw-btn').addEventListener('click', function () {
+    tryUnlock(document.getElementById('pw-input').value.trim());
+  });
+
+  document.getElementById('pw-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') tryUnlock(this.value.trim());
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"><script src="/auth.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#090909">
@@ -443,6 +443,9 @@ html,body { height:100%; background:var(--bg); color:var(--text); font-family:va
     <div class="tb-icon-btn">
       <span class="material-symbols-outlined">settings</span>
     </div>
+    <button class="tb-icon-btn" onclick="lockAdmin()" title="Lock admin" aria-label="Lock admin" style="cursor:pointer;border:none;background:rgba(255,255,255,0.04);color:var(--muted)">
+      <span class="material-symbols-outlined">lock</span>
+    </button>
     <div class="tb-avatar">DA</div>
   </div>
 </header>

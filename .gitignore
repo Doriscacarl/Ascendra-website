@@ -2,7 +2,9 @@ node_modules/
 temporary screenshots/
 admin/temporary screenshots/
 .env
+admin/config.js
 *.png
 stitch-screens/*.png
 
 .vercel
+supabase/.temp/

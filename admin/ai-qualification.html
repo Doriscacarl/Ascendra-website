@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"><script src="/auth.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#090909">
@@ -424,7 +424,7 @@ a { color:inherit; text-decoration:none }
     </button>
     <a href="notifications.html" class="tb-icon" id="notif-btn" title="Notifications" style="position:relative"><span class="ms">notifications</span><span id="notif-count" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--red);color:#fff;font-family:var(--fw-m);font-size:8px;font-weight:700;border-radius:99px;align-items:center;justify-content:center;padding:0 3px;line-height:1"></span></a>
     <div class="tb-icon" onclick="showToast('Settings coming soon','settings')"><span class="ms">tune</span></div>
-    <a href="settings.html" class="tb-av">DC</a>
+    <button class="tb-icon" onclick="lockAdmin()" title="Lock admin" aria-label="Lock admin" style="color:var(--muted)"><span class="ms">lock</span></button><a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
 
@@ -594,12 +594,13 @@ a { color:inherit; text-decoration:none }
 <div id="toast-container"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/config.js"></script>
 <script>
 /* ════════════════════════════════════════════════════════════
    AI QUALIFICATION CENTER — Supabase Integration
    ════════════════════════════════════════════════════════════ */
-const SB_URL = 'https://nfowsobglotbjrdqsiid.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+const SB_URL = window.SUPABASE_URL;
+const SB_KEY = window.SUPABASE_ANON_KEY;
 let sbClient;
 let scheduleLeadId = null;
 

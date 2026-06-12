@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"><script src="/auth.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#090909">
@@ -182,7 +182,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
       <span class="ms" style="font-size:15px">refresh</span> Refresh
     </button>
     <a href="dashboard.html" class="tb-icon" title="Dashboard"><span class="ms">space_dashboard</span></a>
-    <a href="settings.html" class="tb-av">DC</a>
+    <button class="tb-icon" onclick="lockAdmin()" title="Lock admin" aria-label="Lock admin" style="color:var(--muted)"><span class="ms">lock</span></button><a href="settings.html" class="tb-av">DC</a>
   </div>
 </header>
 
@@ -335,9 +335,10 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
 </div><!-- #app -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/config.js"></script>
 <script>
-const SUPABASE_URL = 'https://nfowsobglotbjrdqsiid.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4';
+const SUPABASE_URL = window.SUPABASE_URL;
+const SUPABASE_KEY = window.SUPABASE_ANON_KEY;
 
 let _sb;
 try {
