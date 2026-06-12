@@ -53,6 +53,15 @@ tailwind.config = {
 @keyframes archShimmer { 0%,100%{opacity:0.7} 50%{opacity:1} }
 .arch-container { animation:archFloat 8s ease-in-out infinite; }
 .arch-specular { animation:archShimmer 4s ease-in-out infinite; }
+/* Portfolio cards */
+.port-card { transition: transform 0.32s cubic-bezier(0.16,1,0.3,1), box-shadow 0.32s ease; }
+.port-card:hover { transform: translateY(-5px); box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(173,198,255,0.06); }
+.port-img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.port-card:hover .port-img { transform: scale(1.05); }
+.port-card:hover .port-arrow-icon { transform: rotate(-45deg) translate(2px,-2px); opacity: 0.65; }
+.port-arrow-icon { transition: transform 0.3s ease, opacity 0.3s ease; transform: rotate(-45deg); opacity: 0.3; }
+.port-card:hover .port-cta-lbl { color: rgba(173,198,255,0.8); }
+.port-cta-lbl { transition: color 0.3s ease; color: rgba(118,116,114,0.5); }
 </style>
 </head>
 <body>
@@ -233,6 +242,133 @@ tailwind.config = {
         <div class="eyebrow text-pewter/70">Avg. Response Time</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FEATURED PORTFOLIO ══════════════════════ -->
+<section id="portfolio" class="py-24 md:py-40 px-6 md:px-16 bg-void overflow-hidden">
+  <div class="max-w-[1200px] mx-auto">
+
+    <div class="reveal mb-16 md:mb-24">
+      <span class="eyebrow block mb-5">Proof of Work</span>
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="max-w-2xl">
+          <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.4rem,5.5vw,5rem);line-height:1.02;letter-spacing:-0.03em;">
+            Proven Results.<br><em class="italic font-normal text-platinum">Real Businesses.</em>
+          </h2>
+          <p class="text-silver/65 font-body text-base md:text-lg leading-relaxed font-light" style="max-width:520px;">
+            Every project is engineered to solve real business problems, generate measurable opportunities, and create lasting growth.
+          </p>
+        </div>
+        <a href="projects.html" class="btn-ghost flex-shrink-0" style="padding:12px 28px;font-size:0.62rem;">
+          View Full Portfolio <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="hp-portfolio-grid">
+
+      <!-- ── Djondjon Restaurant ───────────────────────────── -->
+      <a href="project-detail.html?slug=djondjon" class="port-card card reveal flex flex-col" style="text-decoration:none;padding:0;overflow:hidden;">
+        <div style="aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://placehold.co/800x450/0d0d0d/1a1a1a" alt="Djondjon Restaurant" loading="lazy" class="port-img" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.15) 55%,transparent 100%);"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-family:'Geist',monospace;font-size:0.56rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#b4b2b0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">
+              <span class="material-symbols-outlined" style="font-size:11px;">restaurant</span>Restaurant / Hospitality
+            </span>
+            <span class="material-symbols-outlined port-arrow-icon" style="font-size:17px;color:#b4b2b0;">open_in_new</span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-1 p-6 md:p-8">
+          <h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.25rem,2.2vw,1.55rem);letter-spacing:-0.02em;line-height:1.1;">Djondjon Restaurant</h3>
+          <p class="text-silver/60 font-body text-sm leading-relaxed mb-6 font-light">Luxury Haitian restaurant experience designed to elevate brand perception and simplify reservations.</p>
+          <div class="grid grid-cols-2 gap-4 mb-5 py-4 border-y border-white/5">
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">+65%</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Direct Reservations</div></div>
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">–80%</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Booking Admin Time</div></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Mobile-First Design</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Reservations</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Admin System</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">PWA</span>
+          </div>
+          <div class="flex items-center gap-2 mt-auto port-cta-lbl eyebrow" style="font-size:0.58rem;">
+            View Case Study <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- ── Prime Beauty ──────────────────────────────────── -->
+      <a href="project-detail.html?slug=prime-beauty" class="port-card card reveal flex flex-col" style="text-decoration:none;padding:0;overflow:hidden;transition-delay:80ms;">
+        <div style="aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://placehold.co/800x450/0d0d0d/1a1a1a" alt="Prime Beauty" loading="lazy" class="port-img" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.15) 55%,transparent 100%);"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-family:'Geist',monospace;font-size:0.56rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#b4b2b0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">
+              <span class="material-symbols-outlined" style="font-size:11px;">shopping_bag</span>Beauty / E-Commerce
+            </span>
+            <span class="material-symbols-outlined port-arrow-icon" style="font-size:17px;color:#b4b2b0;">open_in_new</span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-1 p-6 md:p-8">
+          <h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.25rem,2.2vw,1.55rem);letter-spacing:-0.02em;line-height:1.1;">Prime Beauty</h3>
+          <p class="text-silver/60 font-body text-sm leading-relaxed mb-6 font-light">Premium beauty brand platform focused on customer experience and modern online shopping.</p>
+          <div class="grid grid-cols-2 gap-4 mb-5 py-4 border-y border-white/5">
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">+193%</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Monthly Revenue</div></div>
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">4.1%</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Conversion Rate</div></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Product Management</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Mobile Shopping</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Stripe</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">Loyalty System</span>
+          </div>
+          <div class="flex items-center gap-2 mt-auto port-cta-lbl eyebrow" style="font-size:0.58rem;">
+            View Case Study <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- ── Ascendra ──────────────────────────────────────── -->
+      <a href="project-detail.html?slug=ascendra" class="port-card card reveal flex flex-col" style="text-decoration:none;padding:0;overflow:hidden;transition-delay:160ms;">
+        <div style="aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://placehold.co/800x450/0d0d0d/1a1a1a" alt="Ascendra" loading="lazy" class="port-img" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.15) 55%,transparent 100%);"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-family:'Geist',monospace;font-size:0.56rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#b4b2b0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">
+              <span class="material-symbols-outlined" style="font-size:11px;">rocket_launch</span>Agency / Technology
+            </span>
+            <span class="material-symbols-outlined port-arrow-icon" style="font-size:17px;color:#b4b2b0;">open_in_new</span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-1 p-6 md:p-8">
+          <h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.25rem,2.2vw,1.55rem);letter-spacing:-0.02em;line-height:1.1;">Ascendra</h3>
+          <p class="text-silver/60 font-body text-sm leading-relaxed mb-6 font-light">Growth-focused digital agency platform with lead generation, AI qualification, and full automation.</p>
+          <div class="grid grid-cols-2 gap-4 mb-5 py-4 border-y border-white/5">
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">100+</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Leads Generated</div></div>
+            <div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">24/7</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">Automation Uptime</div></div>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">CRM Pipeline</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">AI Qualification</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">PWA App</span>
+            <span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">n8n Automation</span>
+          </div>
+          <div class="flex items-center gap-2 mt-auto port-cta-lbl eyebrow" style="font-size:0.58rem;">
+            View Case Study <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+    </div><!-- /#hp-portfolio-grid -->
+
+    <div class="mt-14 md:mt-20 text-center reveal" style="transition-delay:200ms;">
+      <a href="projects.html" class="btn-ghost" style="padding:14px 44px;font-size:0.65rem;">
+        See All Projects &amp; Case Studies <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -611,7 +747,57 @@ tailwind.config = {
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ── Portfolio — load from Supabase ────────────────────────────
+(async function loadPortfolio() {
+  try {
+    const _sb = window.supabase.createClient(
+      'https://nfowsobglotbjrdqsiid.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
+    );
+    const {data} = await _sb
+      .from('portfolio_projects')
+      .select('slug,name,industry,category_label,short_description,hero_image,results,features,technologies,status,featured,display_order')
+      .eq('status','published')
+      .order('display_order',{ascending:true})
+      .limit(3);
+    if (!data || data.length === 0) return;
+    const ICONS = {restaurant:'restaurant',ecommerce:'shopping_bag',agency:'rocket_launch',law:'gavel',medical:'medical_services',realestate:'home_work',beauty:'spa',technology:'computer',other:'work'};
+    const grid = document.getElementById('hp-portfolio-grid');
+    const delays = [0,80,160];
+    grid.innerHTML = data.map((p,i) => {
+      const icon = ICONS[p.industry] || 'work';
+      const img = p.hero_image || 'https://placehold.co/800x450/0d0d0d/1a1a1a';
+      const results = (p.results||[]).slice(0,2);
+      const tags = (p.features||[]).slice(0,4);
+      const metricHTML = results.map(r=>`<div><div class="font-editorial font-bold platinum-text" style="font-size:1.35rem;letter-spacing:-0.02em;line-height:1;">${r.value||''}</div><div class="eyebrow text-pewter/55 mt-1" style="font-size:0.5rem;">${r.label||''}</div></div>`).join('');
+      const tagHTML = tags.map(t=>`<span style="font-family:'Geist',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">${t}</span>`).join('');
+      return `
+      <a href="project-detail.html?slug=${p.slug}" class="port-card card reveal flex flex-col" style="text-decoration:none;padding:0;overflow:hidden;transition-delay:${delays[i]||0}ms;">
+        <div style="aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="${img}" alt="${p.name}" loading="lazy" class="port-img" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.15) 55%,transparent 100%);"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-family:'Geist',monospace;font-size:0.56rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#b4b2b0;backdrop-filter:blur(8px);">
+              <span class="material-symbols-outlined" style="font-size:11px;">${icon}</span>${p.category_label||p.industry}
+            </span>
+            <span class="material-symbols-outlined port-arrow-icon" style="font-size:17px;color:#b4b2b0;">open_in_new</span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-1 p-6 md:p-8">
+          <h3 class="font-editorial font-bold text-platinum mb-3" style="font-size:clamp(1.25rem,2.2vw,1.55rem);letter-spacing:-0.02em;line-height:1.1;">${p.name}</h3>
+          <p class="text-silver/60 font-body text-sm leading-relaxed mb-6 font-light">${p.short_description||''}</p>
+          <div class="grid grid-cols-2 gap-4 mb-5 py-4 border-y border-white/5">${metricHTML}</div>
+          <div class="flex flex-wrap gap-1.5 mb-6">${tagHTML}</div>
+          <div class="flex items-center gap-2 mt-auto port-cta-lbl eyebrow" style="font-size:0.58rem;">View Case Study <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></div>
+        </div>
+      </a>`;
+    }).join('');
+    document.querySelectorAll('#hp-portfolio-grid .reveal').forEach(el=>observer.observe(el));
+  } catch(e) { /* keep static fallback */ }
+})();
+
 // Ticker duplication
 (function(){
   const track = document.getElementById('tickerTrack');

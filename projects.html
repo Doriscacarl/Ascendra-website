@@ -186,6 +186,25 @@
 <section class="py-20 md:py-32 px-6 md:px-16 bg-void">
   <div class="max-w-[1200px] mx-auto">
 
+    <!-- ── Real Portfolio Projects (Supabase) ─────────────── -->
+    <div id="portfolio-block" style="display:none;margin-bottom:72px;">
+      <div class="reveal mb-10">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-2">
+          <div>
+            <span class="eyebrow block mb-3">Real Projects</span>
+            <h2 class="font-editorial font-bold platinum-text" style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.05;letter-spacing:-0.03em;">Built. Launched. <em class="italic font-normal text-platinum">Delivering Results.</em></h2>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="portfolio-dynamic-grid"></div>
+    </div>
+
+    <!-- Concept Studies divider (shown only if portfolio projects exist) -->
+    <div id="concept-divider" class="flex items-center gap-5 mb-12" style="display:none!important;">
+      <span class="eyebrow text-pewter/40">Concept Studies</span>
+      <div class="flex-1 h-px bg-white/5"></div>
+    </div>
+
     <!-- Featured Project -->
     <div class="reveal mb-16" id="featured-block">
       <div class="card-elevated p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
@@ -603,6 +622,60 @@ function buildProjectCard(p, delay=0) {
   </div>`;
 }
 
+// ── Portfolio Projects (portfolio_projects table) ─────────────
+const PORT_ICONS = {restaurant:'restaurant',ecommerce:'shopping_bag',agency:'rocket_launch',law:'gavel',medical:'medical_services',realestate:'home_work',beauty:'spa',technology:'computer',other:'work'};
+
+async function loadPortfolioProjects() {
+  try {
+    const {data} = await _sb
+      .from('portfolio_projects')
+      .select('slug,name,industry,category_label,short_description,hero_image,results,features,technologies,status,featured,display_order')
+      .eq('status','published')
+      .order('display_order',{ascending:true});
+    if (!data || data.length === 0) return;
+    const grid = document.getElementById('portfolio-dynamic-grid');
+    const delays = [0,80,160,240,320,400];
+    grid.innerHTML = data.map((p,i) => {
+      const icon = PORT_ICONS[p.industry] || 'work';
+      const img = p.hero_image || 'https://placehold.co/800x450/0d0d0d/1a1a1a';
+      const results = (p.results||[]).slice(0,2);
+      const tags = (p.features||[]).slice(0,4);
+      const metricHTML = results.map(r=>`<div><div class="metric-val">${esc(r.value||'')}</div><div class="metric-lbl">${esc(r.label||'')}</div></div>`).join('');
+      const tagHTML = tags.map(t=>`<span style="font-family:'Geist',monospace;font-size:0.52rem;letter-spacing:0.1em;color:#767472;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:4px;">${esc(t)}</span>`).join('');
+      return `
+      <a href="project-detail.html?slug=${esc(p.slug)}" class="project-card reveal flex flex-col" style="text-decoration:none;padding:0;overflow:hidden;transition-delay:${delays[i]||0}ms;position:relative;">
+        <div style="aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);" class="port-pi">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.1) 55%,transparent 100%);"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-family:'Geist',monospace;font-size:0.54rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.12);color:#b4b2b0;backdrop-filter:blur(8px);">
+              <span style="font-family:'Material Symbols Outlined';font-size:11px;">${icon}</span>${esc(p.category_label||p.industry||'')}
+            </span>
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-family:'Geist',monospace;font-size:0.53rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(110,231,183,0.08);border:1px solid rgba(110,231,183,0.2);color:#6ee7b7;">
+              <span style="width:4px;height:4px;border-radius:50%;background:#6ee7b7;display:inline-block;"></span>Real Project
+            </span>
+          </div>
+        </div>
+        <div class="flex flex-col flex-1 p-6">
+          <h3 class="font-editorial font-bold text-platinum mb-2" style="font-size:1.25rem;letter-spacing:-0.02em;line-height:1.1;">${esc(p.name)}</h3>
+          <p class="text-silver/60 font-body text-sm leading-relaxed mb-5 font-light">${esc(p.short_description||'')}</p>
+          ${metricHTML ? `<div class="flex gap-6 mb-4 py-3 border-y border-white/5">${metricHTML}</div>` : ''}
+          ${tagHTML ? `<div class="flex flex-wrap gap-1.5 mb-5">${tagHTML}</div>` : ''}
+          <div class="flex items-center gap-2 mt-auto eyebrow text-pewter/50" style="font-size:0.57rem;">View Full Case Study <span style="font-family:'Material Symbols Outlined';font-size:14px;">arrow_forward</span></div>
+        </div>
+      </a>`;
+    }).join('');
+    document.getElementById('portfolio-block').style.display = '';
+    document.getElementById('concept-divider').style.display = 'flex';
+    document.querySelectorAll('#portfolio-dynamic-grid .reveal').forEach(el => obs.observe(el));
+    // Add hover zoom to portfolio images
+    document.querySelectorAll('.port-pi').forEach(img => {
+      img.closest('a').addEventListener('mouseenter',()=>{ img.style.transform='scale(1.05)'; });
+      img.closest('a').addEventListener('mouseleave',()=>{ img.style.transform='scale(1)'; });
+    });
+  } catch(e) { /* keep static content */ }
+}
+
 // ── Load from Supabase or fall back to static ─────────────────
 let activeFilter = 'all';
 
@@ -670,6 +743,7 @@ document.getElementById('closeMenu')?.addEventListener('click', () => { d.classL
 d?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { d.classList.remove('open'); document.body.style.overflow = ''; }));
 
 // ── Boot ──────────────────────────────────────────────────────
+loadPortfolioProjects();
 loadProjects();
 </script>
 </body>

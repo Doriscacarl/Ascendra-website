@@ -70,6 +70,14 @@ body{
   font-weight:400;letter-spacing:-0.05em;
   color:#fff;line-height:1;margin-bottom:6px;
   text-align:center;text-shadow:0 0 60px rgba(255,255,255,0.06);
+  display:flex;align-items:baseline;justify-content:center;gap:0.18em;
+}
+.clock-digits{font-family:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;color:inherit}
+.clock-ampm{
+  font-family:'Geist',sans-serif;
+  font-size:0.22em;font-weight:600;letter-spacing:0.18em;
+  color:rgba(255,255,255,0.42);align-self:flex-end;padding-bottom:0.15em;
+  text-transform:uppercase;
 }
 .clock-date{
   font-size:11px;font-weight:500;letter-spacing:0.18em;
@@ -88,6 +96,21 @@ body{
 }
 .brand-name{font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text)}
 .brand-sub{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;text-align:center}
+
+/* Security badge (desktop only, hidden on mobile) */
+.sec-badge{
+  display:none;
+  align-items:center;gap:6px;
+  padding:5px 12px;
+  background:rgba(110,231,183,0.05);
+  border:1px solid rgba(110,231,183,0.14);
+  border-radius:20px;
+  margin-bottom:20px;
+  margin-top:2px;
+}
+.sec-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(110,231,183,0.6);animation:pulse-dot 2.4s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
+.sec-text{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(110,231,183,0.7)}
 
 /* ── PIN dots (mobile only) ──────────────────────── */
 .pin-row{display:flex;gap:10px;margin-bottom:8px;justify-content:center;min-height:16px}
@@ -245,18 +268,19 @@ body{
 @media (min-width: 768px) {
   /* Glass card */
   .lock {
-    background: rgba(14,13,13,0.62);
-    border: 1px solid var(--border);
-    border-top-color: rgba(255,255,255,0.09);
-    border-radius: 26px;
-    padding: 48px 44px 40px;
-    max-width: 440px;
-    backdrop-filter: blur(48px);
-    -webkit-backdrop-filter: blur(48px);
+    background: rgba(12,11,12,0.72);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-top: 1px solid rgba(173,198,255,0.13);
+    border-radius: 28px;
+    padding: 52px 48px 44px;
+    max-width: 460px;
+    backdrop-filter: blur(56px);
+    -webkit-backdrop-filter: blur(56px);
     box-shadow:
-      0 56px 100px rgba(0,0,0,0.58),
-      0 0 0 1px rgba(255,255,255,0.025),
-      inset 0 1px 0 rgba(255,255,255,0.07);
+      0 64px 120px rgba(0,0,0,0.72),
+      0 0 0 1px rgba(255,255,255,0.02),
+      0 0 80px rgba(173,198,255,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.09);
   }
 
   /* Show desktop UI, hide mobile keypad */
@@ -264,12 +288,18 @@ body{
   .d-ui { display: flex !important; }
 
   /* Smaller clock on card */
-  .clock-time { font-size: clamp(44px,7vw,66px); margin-bottom: 4px; }
-  .clock-date { margin-bottom: 22px; }
-  .brand-sub { margin-bottom: 18px; }
+  .clock-time { font-size: clamp(42px,6vw,62px); margin-bottom: 4px; }
+  .clock-date { margin-bottom: 20px; }
+  .brand-sub { margin-bottom: 0; }
+
+  /* Tighter brand spacing on desktop */
+  .brand-row { margin-bottom: 4px; }
 
   /* Divider between brand and input */
   .desk-divider { display: block !important; }
+
+  /* Security badge (desktop only) */
+  .sec-badge { display: flex !important; }
 }
 
 /* ── Tablet specific ─────── */
@@ -281,6 +311,11 @@ body{
 /* ── Large desktop ──────── */
 @media (min-width: 1280px) {
   .lock { max-width: 460px; }
+}
+
+/* Hide mobile-only elements on desktop */
+@media (min-width: 768px) {
+  #m-recovery-link, #m-recovery-wrap { display: none !important; }
 }
 
 /* Horizontal divider (desktop only) */
@@ -325,7 +360,9 @@ body{
 <main class="lock" id="lock" role="main">
 
   <!-- Clock (all devices) -->
-  <div class="clock-time" id="clock-time" aria-label="Current time">--:--</div>
+  <div class="clock-time" aria-label="Current time">
+    <span class="clock-digits" id="clock-time">--:--</span><span class="clock-ampm" id="clock-ampm"></span>
+  </div>
   <div class="clock-date" id="clock-date" aria-label="Current date"></div>
 
   <!-- Brand (all devices) -->
@@ -333,7 +370,13 @@ body{
     <div class="brand-mark" aria-hidden="true">A</div>
     <div class="brand-name">Ascendra Admin</div>
   </div>
-  <div class="brand-sub">Secure Access</div>
+  <div class="brand-sub">Secure Admin Access</div>
+
+  <!-- Security status badge (desktop only) -->
+  <div class="sec-badge" aria-hidden="true">
+    <div class="sec-dot"></div>
+    <span class="sec-text">Connection Secured</span>
+  </div>
 
   <!-- Desktop divider -->
   <div class="desk-divider" aria-hidden="true"></div>
@@ -491,14 +534,16 @@ body{
     var m = date.getMinutes().toString().padStart(2, '0');
     var ampm = h >= 12 ? 'PM' : 'AM';
     h = h % 12 || 12;
-    return h + ':' + m + ' ' + ampm; // narrow non-break space before AM/PM
+    return { digits: h + ':' + m, ampm: ampm };
   }
 
   function tickClock() {
     var now = new Date();
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    document.getElementById('clock-time').textContent = formatTime12h(now);
+    var t = formatTime12h(now);
+    document.getElementById('clock-time').textContent = t.digits;
+    document.getElementById('clock-ampm').textContent = t.ampm;
     document.getElementById('clock-date').textContent =
       days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
   }
