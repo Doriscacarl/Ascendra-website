@@ -301,6 +301,41 @@ CREATE POLICY "anon_update_media_uploads"
 CREATE POLICY "anon_delete_media_uploads"
   ON media_uploads FOR DELETE USING (true);
 
+-- ── 8. push_subscriptions ────────────────────────────────────────
+-- Stores Web Push subscriptions for the admin PWA.
+-- One row per browser/device. endpoint is unique per subscription.
+-- Read/deleted by: Supabase Edge Function (notify-admin)
+-- Written by:      Admin notifications.html (push subscribe flow)
+
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id          uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  endpoint    text        UNIQUE NOT NULL,
+  p256dh      text        NOT NULL,
+  auth        text        NOT NULL,
+  user_agent  text,
+  created_at  timestamptz DEFAULT now()
+);
+
+ALTER TABLE push_subscriptions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "anon_select_push_subscriptions" ON push_subscriptions;
+DROP POLICY IF EXISTS "anon_insert_push_subscriptions" ON push_subscriptions;
+DROP POLICY IF EXISTS "anon_update_push_subscriptions" ON push_subscriptions;
+DROP POLICY IF EXISTS "anon_delete_push_subscriptions" ON push_subscriptions;
+
+CREATE POLICY "anon_select_push_subscriptions"
+  ON push_subscriptions FOR SELECT USING (true);
+
+CREATE POLICY "anon_insert_push_subscriptions"
+  ON push_subscriptions FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "anon_update_push_subscriptions"
+  ON push_subscriptions FOR UPDATE USING (true);
+
+CREATE POLICY "anon_delete_push_subscriptions"
+  ON push_subscriptions FOR DELETE USING (true);
+
+
 -- ── Supabase Storage bucket ───────────────────────────────────
 -- Create a public bucket named 'project-images' in the Supabase
 -- Storage dashboard (Storage → New bucket → Name: project-images → Public: ON).

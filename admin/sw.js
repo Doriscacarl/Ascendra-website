@@ -113,3 +113,36 @@ self.addEventListener('fetch', event => {
     return;
   }
 });
+
+// ── Push notification received (background / PWA closed) ──────────────
+self.addEventListener('push', event => {
+  let data = { title: 'Ascendra', body: 'New notification', url: '/notifications.html', tag: 'ascendra' };
+  if (event.data) {
+    try { data = { ...data, ...event.data.json() }; } catch { data.body = event.data.text(); }
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/icons/icon-192.png',
+      badge: '/icons/icon-192.png',
+      tag: data.tag,
+      renotify: true,
+      requireInteraction: false,
+      data: { url: data.url },
+    })
+  );
+});
+
+// ── Notification click → open correct admin page ───────────────────────
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = (event.notification.data && event.notification.data.url) || '/notifications.html';
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+      for (const c of list) {
+        if ('focus' in c) { c.navigate(target); return c.focus(); }
+      }
+      return clients.openWindow(target);
+    })
+  );
+});

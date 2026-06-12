@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -69,6 +69,23 @@ a{color:inherit;text-decoration:none}
 .b-gray{background:rgba(255,255,255,0.05);color:var(--muted)}
 .b-purple{background:rgba(196,181,253,0.09);color:var(--purple)}
 
+/* ── PUSH BANNER ────────────────────────────────── */
+#push-banner{flex-shrink:0;padding:10px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--s0)}
+#push-banner.hidden{display:none}
+.push-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.push-icon.off{background:rgba(255,255,255,0.04);color:var(--muted)}
+.push-icon.on{background:rgba(110,231,183,0.10);color:var(--green)}
+.push-icon.blocked{background:rgba(252,165,165,0.08);color:var(--red)}
+.push-text{flex:1;min-width:0}
+.push-label{font-family:var(--fw-m);font-size:10.5px;font-weight:600;letter-spacing:0.06em;color:var(--text2)}
+.push-sub{font-size:11px;color:var(--muted);line-height:1.4}
+.push-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r-sm);font-family:var(--fw-m);font-size:10.5px;font-weight:700;letter-spacing:0.04em;cursor:pointer;border:none;transition:background 0.13s,transform 0.1s;white-space:nowrap;min-height:32px}
+.push-btn:active{transform:scale(0.97)}
+.push-btn.enable{background:rgba(173,198,255,0.12);color:var(--primary);border:1px solid rgba(173,198,255,0.2)}
+.push-btn.enable:hover{background:rgba(173,198,255,0.2)}
+.push-btn.disable{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid var(--border)}
+.push-btn.disable:hover{background:rgba(255,255,255,0.08);color:var(--text2)}
+
 /* ── KPI ROW ────────────────────────────────────── */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 28px 0;flex-shrink:0}
 .kpi{padding:16px 18px 12px;cursor:default;transition:border-color 0.18s,transform 0.18s;position:relative;overflow:hidden}
@@ -83,8 +100,10 @@ a{color:inherit;text-decoration:none}
 .fchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;font-family:var(--fw-m);font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text2);transition:all 0.13s;user-select:none}
 .fchip:hover{background:rgba(255,255,255,0.06);border-color:var(--border2)}
 .fchip.on{background:var(--primary-dim);border-color:rgba(173,198,255,0.2);color:var(--primary)}
-.mark-all-btn{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:5px 8px;border-radius:var(--r-sm);transition:color 0.13s,background 0.13s}
-.mark-all-btn:hover{color:var(--text2);background:rgba(255,255,255,0.04)}
+.toolbar-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+.action-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:5px 8px;border-radius:var(--r-sm);transition:color 0.13s,background 0.13s}
+.action-btn:hover{color:var(--text2);background:rgba(255,255,255,0.04)}
+.action-btn.danger:hover{color:var(--red);background:rgba(252,165,165,0.05)}
 
 /* ── CONTENT ────────────────────────────────────── */
 #content{flex:1;overflow-y:auto;padding:14px 28px 32px}
@@ -94,12 +113,12 @@ a{color:inherit;text-decoration:none}
 /* ── SECTION LABELS ─────────────────────────────── */
 .day-label{font-family:var(--fw-m);font-size:9.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:18px 0 8px;opacity:0.55}
 
-/* ── NOTIFICATION ITEMS ─────────────────────────── */
+/* ── NOTIFICATION CARD ──────────────────────────── */
 .ncard{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border-radius:var(--r);background:rgba(14,14,14,0.7);border:1px solid var(--border);margin-bottom:4px;cursor:pointer;transition:background 0.11s,border-color 0.11s;position:relative;text-decoration:none;color:inherit}
 .ncard:hover{background:rgba(255,255,255,0.025);border-color:var(--border2)}
 .ncard.unread{background:rgba(173,198,255,0.022);border-color:rgba(173,198,255,0.07)}
 .ncard.unread:hover{background:rgba(173,198,255,0.04)}
-.n-dot{position:absolute;top:18px;right:16px;width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px var(--glow)}
+.n-dot{position:absolute;top:18px;right:40px;width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px var(--glow)}
 .n-ic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .n-ic .ms{font-size:20px}
 .n-ic.blue{background:rgba(173,198,255,0.09);color:var(--primary)}
@@ -108,11 +127,16 @@ a{color:inherit;text-decoration:none}
 .n-ic.red{background:rgba(252,165,165,0.09);color:var(--red)}
 .n-ic.purple{background:rgba(196,181,253,0.09);color:var(--purple)}
 .n-ic.gray{background:rgba(255,255,255,0.05);color:var(--muted)}
-.n-body{flex:1;min-width:0}
+.n-body{flex:1;min-width:0;padding-right:24px}
 .n-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.35}
 .n-desc{font-size:12px;color:var(--muted);line-height:1.5}
 .n-time{font-family:var(--fw-m);font-size:9.5px;color:var(--muted);margin-top:5px}
 .n-badge-row{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+/* Delete button — appears on card hover */
+.n-del{position:absolute;top:50%;right:12px;transform:translateY(-50%);width:26px;height:26px;border-radius:6px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:0;transition:opacity 0.13s,background 0.13s,color 0.13s;z-index:2;flex-shrink:0;padding:0}
+.n-del .ms{font-size:14px}
+.ncard:hover .n-del{opacity:1}
+.n-del:hover{background:rgba(252,165,165,0.12)!important;color:var(--red)!important}
 
 /* ── EMPTY STATE ────────────────────────────────── */
 .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px;min-height:380px}
@@ -143,11 +167,13 @@ a{color:inherit;text-decoration:none}
   #main,#topbar{grid-column:1}
   .tb-menu{display:flex!important}
   .kpi-row{grid-template-columns:repeat(2,1fr)}
+  #push-banner{padding:10px 16px}
 }
 @media(max-width:640px){
   .kpi-row{grid-template-columns:1fr 1fr;padding:16px 16px 0}
   #toolbar{padding:12px 16px 0}
   #content{padding:12px 16px 24px}
+  .push-sub{display:none}
 }
 @media(max-width:430px){
   .kpi-row{grid-template-columns:1fr}
@@ -219,6 +245,17 @@ a{color:inherit;text-decoration:none}
 </header>
 
 <main id="main">
+
+  <!-- ── Push Notification Banner ───────────────────── -->
+  <div id="push-banner" class="hidden">
+    <div class="push-icon off" id="push-icon"><span class="ms" style="font-size:16px">notifications_off</span></div>
+    <div class="push-text">
+      <div class="push-label" id="push-label">Push Notifications</div>
+      <div class="push-sub" id="push-sub">Enable to receive alerts on this device even when the app is closed.</div>
+    </div>
+    <button class="push-btn enable" id="push-btn" onclick="handlePushToggle()">Enable</button>
+  </div>
+
   <div class="kpi-row">
     <div class="gc kpi">
       <div class="kpi-lbl">Total</div>
@@ -248,7 +285,10 @@ a{color:inherit;text-decoration:none}
     <div class="fchip" data-filter="audit" onclick="setFilter(this,'audit')"><span class="ms" style="font-size:14px">pageview</span> Audits</div>
     <div class="fchip" data-filter="lead" onclick="setFilter(this,'lead')"><span class="ms" style="font-size:14px">person_search</span> Leads</div>
     <div class="fchip" data-filter="message" onclick="setFilter(this,'message')"><span class="ms" style="font-size:14px">chat_bubble</span> Messages</div>
-    <button class="mark-all-btn" onclick="markAllRead()" id="mark-all-btn"><span class="ms" style="font-size:14px">done_all</span> Mark all read</button>
+    <div class="toolbar-right">
+      <button class="action-btn" id="mark-all-btn" onclick="markAllRead()" style="display:none"><span class="ms" style="font-size:14px">done_all</span> Mark all read</button>
+      <button class="action-btn danger" id="clear-btn" onclick="clearVisible()" style="display:none"><span class="ms" style="font-size:14px">delete_sweep</span> Clear</button>
+    </div>
   </div>
 
   <div id="content"></div>
@@ -262,6 +302,8 @@ const _sb = window.supabase.createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mb3dzb2JnbG90YmpyZHFzaWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMjU5NDUsImV4cCI6MjA5NjYwMTk0NX0.9T-FhVRRSKQbG9Yp09Zevb1B9b8bv4jUy6DyiJIQCi4'
 );
 
+const VAPID_PUBLIC_KEY = 'BBqQay0SRAT53c7HhMACaTSPiEZw48Q1EIN2fpYINhUK4VMSJLy4yf53XhkM9z70AqFASfMHReuyDNlkJhW4IjA';
+
 /* ── TYPE CONFIG ─────────────────────────────────── */
 const TYPE_CFG = {
   new_lead:    { filter:'lead',    icon:'person_add',    color:'green',  link:'crm-leads.html',      label:'Lead' },
@@ -273,24 +315,29 @@ const TYPE_CFG = {
 let notifs = [];
 let activeFilter = 'all';
 
-/* ── LOAD & REALTIME ─────────────────────────────── */
+/* ── LOAD ────────────────────────────────────────── */
 async function loadNotifs() {
   const { data, error } = await _sb.from('notifications').select('*').order('created_at', { ascending: false });
-  if (error) { notifs = []; }
-  else { notifs = data || []; }
+  notifs = error ? [] : (data || []);
   render();
 }
 
+/* ── REALTIME ────────────────────────────────────── */
 function initRealtime() {
   _sb.channel('notifs_page')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications' }, payload => {
       notifs.unshift(payload.new);
       render();
       showToast('New: ' + (payload.new.title || 'notification'));
+      showBrowserNotification(payload.new);
     })
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'notifications' }, payload => {
       const idx = notifs.findIndex(n => n.id === payload.new.id);
       if (idx >= 0) notifs[idx] = payload.new;
+      render();
+    })
+    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'notifications' }, payload => {
+      notifs = notifs.filter(n => n.id !== payload.old.id);
       render();
     })
     .subscribe();
@@ -314,7 +361,28 @@ async function markAllRead() {
   await _sb.from('notifications').update({ status: 'read' }).in('id', unreadIds);
 }
 
-/* ── FILTER STATE ────────────────────────────────── */
+/* ── DELETE ──────────────────────────────────────── */
+async function deleteNotif(id) {
+  notifs = notifs.filter(n => n.id !== id);
+  render();
+  await _sb.from('notifications').delete().eq('id', id);
+}
+
+async function clearVisible() {
+  const filtered = getFiltered();
+  if (!filtered.length) return;
+  const ids = filtered.map(n => n.id);
+  notifs = notifs.filter(n => !ids.includes(n.id));
+  render();
+  await _sb.from('notifications').delete().in('id', ids);
+}
+
+/* ── FILTER ──────────────────────────────────────── */
+function getFiltered() {
+  if (activeFilter === 'all') return notifs;
+  return notifs.filter(n => { const c = TYPE_CFG[n.type]; return c && c.filter === activeFilter; });
+}
+
 function setFilter(el, f) {
   document.querySelectorAll('.fchip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
@@ -346,20 +414,18 @@ function isToday(iso) {
 function render() {
   const unreadCount = notifs.filter(n => n.status === 'unread').length;
   const urgentCount = notifs.filter(n => n.status === 'unread' && n.type === 'new_lead').length;
-  const todayCount = notifs.filter(n => isToday(n.created_at)).length;
+  const todayCount  = notifs.filter(n => isToday(n.created_at)).length;
 
-  document.getElementById('k-total').textContent = notifs.length;
+  document.getElementById('k-total').textContent  = notifs.length;
   document.getElementById('k-unread').textContent = unreadCount;
   document.getElementById('k-urgent').textContent = urgentCount;
-  document.getElementById('k-today').textContent = todayCount;
+  document.getElementById('k-today').textContent  = todayCount;
 
-  const hasUnread = notifs.some(n => n.status === 'unread');
-  document.getElementById('mark-all-btn').style.display = hasUnread && notifs.length ? 'inline-flex' : 'none';
-
-  let filtered = activeFilter === 'all' ? notifs : notifs.filter(n => {
-    const cfg = TYPE_CFG[n.type];
-    return cfg && cfg.filter === activeFilter;
-  });
+  const filtered = getFiltered();
+  const markBtn  = document.getElementById('mark-all-btn');
+  const clearBtn = document.getElementById('clear-btn');
+  markBtn.style.display  = notifs.some(n => n.status === 'unread') && notifs.length ? 'inline-flex' : 'none';
+  clearBtn.style.display = filtered.length ? 'inline-flex' : 'none';
 
   const container = document.getElementById('content');
   if (notifs.length === 0) { container.innerHTML = renderEmpty(); return; }
@@ -368,18 +434,18 @@ function render() {
     return;
   }
 
-  const todayItems = filtered.filter(n => isToday(n.created_at));
+  const todayItems   = filtered.filter(n =>  isToday(n.created_at));
   const earlierItems = filtered.filter(n => !isToday(n.created_at));
   let html = '';
-  if (todayItems.length) { html += `<div class="day-label">Today</div>` + todayItems.map(renderCard).join(''); }
-  if (earlierItems.length) { html += `<div class="day-label">${todayItems.length ? 'Earlier' : 'All Notifications'}</div>` + earlierItems.map(renderCard).join(''); }
+  if (todayItems.length)   html += `<div class="day-label">Today</div>`    + todayItems.map(renderCard).join('');
+  if (earlierItems.length) html += `<div class="day-label">${todayItems.length ? 'Earlier' : 'All Notifications'}</div>` + earlierItems.map(renderCard).join('');
   container.innerHTML = html;
 }
 
 function renderCard(n) {
   const cfg = TYPE_CFG[n.type] || { icon:'notifications', color:'gray', link:'dashboard.html', label:'System' };
   const isUnread = n.status === 'unread';
-  return `<a class="ncard${isUnread?' unread':''}" href="${esc(cfg.link)}" onclick="markRead('${esc(n.id)}');event.stopPropagation()">
+  return `<a class="ncard${isUnread?' unread':''}" href="${esc(cfg.link)}" onclick="markRead('${esc(n.id)}')">
     ${isUnread ? '<div class="n-dot"></div>' : ''}
     <div class="n-ic ${cfg.color}"><span class="ms">${esc(cfg.icon)}</span></div>
     <div class="n-body">
@@ -388,6 +454,9 @@ function renderCard(n) {
       <div class="n-badge-row"><span class="badge b-gray">${esc(cfg.label)}</span></div>
       <div class="n-time">${timeAgo(n.created_at)}</div>
     </div>
+    <button class="n-del" onclick="event.preventDefault();event.stopPropagation();deleteNotif('${esc(n.id)}')" title="Delete notification">
+      <span class="ms">close</span>
+    </button>
   </a>`;
 }
 
@@ -414,6 +483,136 @@ function showToast(msg) {
   setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3500);
 }
 
+/* ── BROWSER NOTIFICATIONS (foreground) ──────────── */
+function showBrowserNotification(n) {
+  if (Notification.permission !== 'granted') return;
+  const cfg = TYPE_CFG[n.type] || {};
+  const notif = new Notification(n.title || 'Ascendra', {
+    body: n.message || '',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-192.png',
+    tag: 'ascendra-' + (n.type || 'notif'),
+  });
+  const target = cfg.link || 'notifications.html';
+  notif.onclick = () => { window.focus(); window.location.href = target; };
+}
+
+/* ── PUSH SUBSCRIPTION ───────────────────────────── */
+function urlBase64ToUint8Array(b64) {
+  const pad = '='.repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g,'+').replace(/_/g,'/'));
+  return Uint8Array.from(raw, c => c.charCodeAt(0));
+}
+
+async function getPushState() {
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) return 'unsupported';
+  if (Notification.permission === 'denied') return 'blocked';
+  const reg = await navigator.serviceWorker.ready.catch(() => null);
+  if (!reg) return 'no-sw';
+  const sub = await reg.pushManager.getSubscription().catch(() => null);
+  return sub ? 'subscribed' : 'unsubscribed';
+}
+
+async function initPushBanner() {
+  const banner = document.getElementById('push-banner');
+  const state = await getPushState();
+  if (state === 'unsupported') return; // hide banner entirely
+  banner.classList.remove('hidden');
+
+  const icon  = document.getElementById('push-icon');
+  const label = document.getElementById('push-label');
+  const sub   = document.getElementById('push-sub');
+  const btn   = document.getElementById('push-btn');
+
+  if (state === 'subscribed') {
+    icon.className = 'push-icon on';
+    icon.innerHTML = '<span class="ms" style="font-size:16px">notifications_active</span>';
+    label.textContent = 'Push Notifications Active';
+    sub.textContent = 'You will receive alerts on this device when new submissions arrive.';
+    btn.className = 'push-btn disable';
+    btn.textContent = 'Disable';
+  } else if (state === 'blocked') {
+    icon.className = 'push-icon blocked';
+    icon.innerHTML = '<span class="ms" style="font-size:16px">notifications_off</span>';
+    label.textContent = 'Notifications Blocked';
+    sub.textContent = 'Allow notifications in your browser settings to enable push alerts.';
+    btn.className = 'push-btn disable';
+    btn.textContent = 'Blocked';
+    btn.disabled = true;
+  } else {
+    icon.className = 'push-icon off';
+    icon.innerHTML = '<span class="ms" style="font-size:16px">add_alert</span>';
+    label.textContent = 'Enable Push Notifications';
+    sub.textContent = 'Get alerted on this device instantly — even when this tab is closed.';
+    btn.className = 'push-btn enable';
+    btn.textContent = 'Enable';
+  }
+}
+
+async function handlePushToggle() {
+  const state = await getPushState();
+  if (state === 'subscribed') {
+    await disablePush();
+  } else if (state === 'unsubscribed') {
+    await enablePush();
+  }
+}
+
+async function enablePush() {
+  const btn = document.getElementById('push-btn');
+  btn.textContent = 'Subscribing…';
+  btn.disabled = true;
+
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+      showToast('Permission denied — check browser settings');
+      await initPushBanner();
+      return;
+    }
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+    });
+
+    const subObj = sub.toJSON();
+    const { error } = await _sb.from('push_subscriptions').upsert({
+      endpoint:   sub.endpoint,
+      p256dh:     subObj.keys.p256dh,
+      auth:       subObj.keys.auth,
+      user_agent: navigator.userAgent.slice(0, 200),
+      created_at: new Date().toISOString(),
+    }, { onConflict: 'endpoint' });
+
+    if (error) {
+      console.error('Push subscription save failed:', error);
+      showToast('Subscribed locally but could not save — check Supabase');
+    } else {
+      showToast('Push notifications enabled on this device');
+    }
+  } catch (e) {
+    console.error('enablePush error:', e);
+    showToast('Failed to enable: ' + e.message);
+  }
+  await initPushBanner();
+}
+
+async function disablePush() {
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (sub) {
+      await _sb.from('push_subscriptions').delete().eq('endpoint', sub.endpoint);
+      await sub.unsubscribe();
+    }
+    showToast('Push notifications disabled on this device');
+  } catch (e) {
+    console.error('disablePush error:', e);
+  }
+  await initPushBanner();
+}
+
 /* ── SIDEBAR ─────────────────────────────────────── */
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
@@ -422,7 +621,7 @@ window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 
 loadNotifs();
 initRealtime();
-
+initPushBanner();
 </script>
 <script>if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});</script>
 </body>
