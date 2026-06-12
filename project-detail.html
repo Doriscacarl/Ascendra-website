@@ -42,6 +42,14 @@
 /* Skeleton shimmer */
 @keyframes skShimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
 .sk { border-radius:4px;background:linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.07) 50%,rgba(255,255,255,0.04) 75%);background-size:800px 100%;animation:skShimmer 1.4s linear infinite; }
+/* Back link */
+#pd-back-link { color:rgba(255,255,255,0.62);transition:color 0.18s ease; }
+#pd-back-link:hover { color:rgba(255,255,255,0.92); }
+.pd-back-arrow { display:inline-block;transition:transform 0.18s ease; }
+#pd-back-link:hover .pd-back-arrow { transform:translateX(-2px); }
+/* Browser frame subtle lift */
+.pd-browser-frame { transition:box-shadow 0.3s ease; }
+.pd-browser-frame:hover { box-shadow:0 0 0 1px rgba(255,255,255,0.06),0 40px 100px rgba(0,0,0,0.75),0 12px 32px rgba(0,0,0,0.5)!important; }
 </style>
 </head>
 <body>
@@ -94,60 +102,72 @@
 <!-- ── PROJECT CONTENT (shown after load) ────────────────── -->
 <div id="project-content" style="display:none;">
 
-  <!-- Hero – full-view showcase -->
-  <section id="pd-hero" class="relative overflow-hidden" style="min-height:75vh;display:flex;flex-direction:column;padding-top:80px;">
-    <div id="pd-hero-bg" class="absolute inset-0" style="background:#0d0d0d;">
-      <img id="pd-hero-img" src="" alt="" loading="eager" style="width:100%;height:100%;object-fit:cover;opacity:0;display:none;transition:opacity 0.75s ease;">
-      <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to bottom,rgba(6,6,6,0.55) 0%,transparent 22%);"></div>
-      <div id="pd-hero-gradient" class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top,rgba(6,6,6,0.97) 0%,rgba(6,6,6,0.6) 16%,rgba(6,6,6,0.06) 52%,transparent 100%);"></div>
-    </div>
-    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 65% 30%,rgba(173,198,255,0.025),transparent 55%);"></div>
+  <!-- Hero – split showcase (info left, browser frame right) -->
+  <section id="pd-hero" class="bg-charcoal" style="padding-top:80px;border-bottom:1px solid rgba(255,255,255,0.05);">
+    <div class="max-w-[1200px] mx-auto px-6 md:px-16">
 
-    <!-- Back link -->
-    <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 pt-6 w-full flex-shrink-0">
-      <a href="projects.html" class="inline-flex items-center gap-2 hover:text-white/75 transition-colors group" style="color:rgba(255,255,255,0.4);font-family:'Geist',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;">
-        <span class="material-symbols-outlined group-hover:-translate-x-0.5 transition-transform" style="font-size:14px;">arrow_back</span> All Projects
-      </a>
-    </div>
+      <!-- Back link -->
+      <div class="pt-8 pb-8">
+        <a id="pd-back-link" href="projects.html" class="inline-flex items-center gap-2" style="font-family:'Geist',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;">
+          <span class="pd-back-arrow material-symbols-outlined" style="font-size:14px;">arrow_back</span>All Projects
+        </a>
+      </div>
 
-    <div class="flex-1"></div>
+      <!-- Two-column grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pb-16 md:pb-24">
 
-    <!-- Badge + name – bottom-left, compact -->
-    <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 pb-10 md:pb-14 w-full flex-shrink-0">
-      <div id="pd-industry-badge" class="mb-4"></div>
-      <h1 id="pd-name" class="font-editorial font-bold text-white" style="font-size:clamp(1.7rem,3.8vw,3rem);line-height:1.05;letter-spacing:-0.025em;max-width:620px;text-shadow:0 1px 18px rgba(0,0,0,0.65);"></h1>
+        <!-- Left: project info -->
+        <div class="flex flex-col gap-5">
+          <div id="pd-industry-badge"></div>
+          <h1 id="pd-name" class="font-editorial font-bold platinum-text" style="font-size:clamp(2.2rem,5vw,4rem);line-height:1;letter-spacing:-0.03em;max-width:560px;"></h1>
+          <p id="pd-short-desc" class="text-silver/65 font-body font-light" style="font-size:clamp(0.95rem,1.8vw,1.05rem);line-height:1.82;max-width:480px;"></p>
+          <div class="flex flex-col sm:flex-row gap-3 pt-1">
+            <a id="pd-live-btn" href="#" class="btn-primary" style="display:none;">
+              View Live Site <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+            </a>
+            <a href="quote.html" class="btn-ghost">Start a Similar Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+          </div>
+        </div>
+
+        <!-- Right: browser frame with screenshot -->
+        <div>
+          <div class="pd-browser-frame" style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 32px 80px rgba(0,0,0,0.7),0 8px 24px rgba(0,0,0,0.45);">
+            <!-- Browser chrome bar -->
+            <div style="height:36px;background:#141414;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;">
+              <span style="width:10px;height:10px;border-radius:50%;background:rgba(252,165,165,0.32);display:inline-block;flex-shrink:0;"></span>
+              <span style="width:10px;height:10px;border-radius:50%;background:rgba(252,211,77,0.32);display:inline-block;flex-shrink:0;"></span>
+              <span style="width:10px;height:10px;border-radius:50%;background:rgba(110,231,183,0.32);display:inline-block;flex-shrink:0;"></span>
+              <div style="flex:1;margin-left:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:5px;height:20px;display:flex;align-items:center;padding:0 8px;max-width:220px;overflow:hidden;gap:4px;">
+                <span class="material-symbols-outlined" style="font-size:10px;color:rgba(255,255,255,0.2);flex-shrink:0;">lock</span>
+                <span id="pd-browser-url" style="font-family:'Geist',monospace;font-size:9px;color:rgba(255,255,255,0.28);letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">project.com</span>
+              </div>
+            </div>
+            <!-- Screenshot — object-fit:contain so nothing is cropped -->
+            <div style="aspect-ratio:16/10;background:#080808;position:relative;overflow:hidden;">
+              <img id="pd-hero-img" src="" alt="" loading="eager"
+                style="width:100%;height:100%;object-fit:contain;object-position:center top;opacity:0;display:none;transition:opacity 0.6s ease;">
+              <div id="pd-hero-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                <span class="material-symbols-outlined" style="font-size:48px;color:rgba(255,255,255,0.07);">image</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- Info Panel + Overview -->
-  <section class="pt-14 pb-20 md:pt-16 md:pb-28 px-6 md:px-16 bg-void">
-    <div class="max-w-[1200px] mx-auto">
-
-      <!-- Short desc + CTAs + results at a glance -->
-      <div class="reveal pb-14 mb-14 border-b border-white/5">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
-          <div>
-            <p id="pd-short-desc" class="text-silver/70 font-body leading-relaxed font-light mb-8" style="font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.8;max-width:540px;"></p>
-            <div class="flex flex-col sm:flex-row gap-4">
-              <a id="pd-live-btn" href="#" class="btn-primary" style="display:none;">
-                View Live Site <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
-              </a>
-              <a href="quote.html" class="btn-ghost">Start a Similar Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
-            </div>
-          </div>
-          <div class="reveal lg:pl-6 lg:border-l lg:border-white/[0.06]" style="transition-delay:80ms;">
-            <span class="eyebrow block mb-6">Results at a Glance</span>
-            <div id="pd-results-sidebar" class="flex flex-col gap-5"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Long overview -->
-      <div class="reveal">
+  <!-- Overview + Results at a Glance -->
+  <section class="py-20 md:py-28 px-6 md:px-16 bg-void">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20">
+      <div class="lg:col-span-3 reveal">
         <span class="eyebrow block mb-5">Overview</span>
-        <p id="pd-long-desc" class="text-silver font-body leading-relaxed font-light" style="font-size:clamp(0.95rem,2vw,1.08rem);line-height:1.85;max-width:760px;"></p>
+        <p id="pd-long-desc" class="text-silver font-body leading-relaxed font-light" style="font-size:clamp(0.95rem,2vw,1.08rem);line-height:1.85;"></p>
       </div>
-
+      <div class="lg:col-span-2 reveal" style="transition-delay:100ms;">
+        <span class="eyebrow block mb-6">Results at a Glance</span>
+        <div id="pd-results-sidebar" class="flex flex-col gap-5"></div>
+      </div>
     </div>
   </section>
 
@@ -302,17 +322,21 @@ function renderProject(p) {
   // Update page title
   document.title = `${p.name} — Ascendra`;
 
-  // Hero image – fade in when loaded
+  // Hero image – fade in, hide placeholder when loaded
   if (p.hero_image) {
     const img = document.getElementById('pd-hero-img');
+    const ph = document.getElementById('pd-hero-placeholder');
     img.style.display = '';
     img.src = p.hero_image;
     img.alt = p.name;
-    if (img.complete && img.naturalWidth > 0) {
-      img.style.opacity = '0.9';
-    } else {
-      img.onload = () => { img.style.opacity = '0.9'; };
-    }
+    const showImg = () => { img.style.opacity = '1'; if (ph) ph.style.display = 'none'; };
+    if (img.complete && img.naturalWidth > 0) showImg();
+    else img.onload = showImg;
+  }
+  // Browser URL bar
+  const urlEl = document.getElementById('pd-browser-url');
+  if (urlEl && p.project_url) {
+    try { urlEl.textContent = new URL(p.project_url).hostname.replace(/^www\./,''); } catch(e) {}
   }
   document.getElementById('pd-name').textContent = p.name || '';
   document.getElementById('pd-short-desc').textContent = p.short_description || '';
