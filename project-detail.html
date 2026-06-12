@@ -332,14 +332,14 @@ function renderProject(p) {
       </div>`).join('');
   }
 
-  // Gallery
-  const gallery = p.gallery_images || [];
+  // Gallery — filter out any empty/invalid URLs before rendering
+  const gallery = (p.gallery_images || []).filter(img => typeof img === 'string' && img.trim().length > 0);
   if (gallery.length > 0) {
     document.getElementById('pd-gallery-section').style.display = '';
     document.getElementById('pd-gallery-grid').innerHTML = gallery.map(img=>`
-      <div class="gallery-img reveal">
+      <a href="${esc(img)}" target="_blank" rel="noopener noreferrer" class="gallery-img reveal" style="display:block;text-decoration:none;" title="View full image">
         <img src="${esc(img)}" alt="Project screenshot" loading="lazy">
-      </div>`).join('');
+      </a>`).join('');
   }
 
   // Results main

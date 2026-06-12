@@ -403,6 +403,7 @@ let editId = null;
 let deleteId = null;
 let currentFilter = 'all';
 let galleryUrls = []; // array of uploaded gallery image URLs
+let uploadSession = 0; // incremented on every modal open/close to discard stale async uploads
 
 const STATUS_COLOR = {published:'rgba(110,231,183,0.12)',draft:'rgba(252,211,77,0.1)'};
 const STATUS_TEXT = {published:'#6ee7b7',draft:'#fcd34d'};
@@ -507,6 +508,7 @@ async function toggleFeatured(id, val) {
 
 // ── Add modal ────────────────────────────────────────────────
 function openAdd() {
+  uploadSession++;      // discard any in-flight uploads from the previous session
   editId = null;
   galleryUrls = [];
   document.getElementById('modal-title-lbl').textContent = 'New Project';
@@ -519,8 +521,10 @@ function openAdd() {
 function openEdit(id) {
   const p = allProjects.find(x=>x.id===id);
   if (!p) return;
+  uploadSession++;      // discard any in-flight uploads from the previous session
   editId = id;
-  galleryUrls = p.gallery_images || [];
+  // Spread-copy so mutations (removeGalleryImg) don't corrupt the allProjects cache
+  galleryUrls = Array.isArray(p.gallery_images) ? p.gallery_images.filter(u => typeof u === 'string' && u.trim()) : [];
   document.getElementById('modal-title-lbl').textContent = 'Edit Project';
   document.getElementById('save-btn').textContent = 'Save Changes';
 
@@ -557,7 +561,10 @@ function openEdit(id) {
   document.getElementById('editModal').classList.add('open');
 }
 
-function closeModal() { document.getElementById('editModal').classList.remove('open'); }
+function closeModal() {
+  uploadSession++;    // discard any in-flight uploads attached to this session
+  document.getElementById('editModal').classList.remove('open');
+}
 
 function resetForm() {
   ['f-name','f-slug','f-order','f-cat','f-url','f-short','f-long','f-challenge','f-solution','f-hero-url','f-test-text','f-test-author','f-test-role'].forEach(id=>{
@@ -567,6 +574,11 @@ function resetForm() {
   document.getElementById('f-industry').value = 'restaurant';
   document.getElementById('f-published').checked = false;
   document.getElementById('f-featured').checked = false;
+  // Clear file inputs so stale file references can't trigger re-uploads
+  try { document.getElementById('hero-file').value = ''; } catch(e) {}
+  try { document.getElementById('gal-file').value = ''; } catch(e) {}
+  // Clear the preview image src so the old image doesn't flash if the wrap becomes visible
+  document.getElementById('hero-preview').src = '';
   document.getElementById('hero-preview-wrap').style.display = 'none';
   document.getElementById('features-list').innerHTML = '';
   document.getElementById('results-list').innerHTML = '';
@@ -595,6 +607,8 @@ async function saveProject() {
   const results = getResultsList();
   const technologies = getDynList('tech-list','tech');
   const heroUrl = document.getElementById('f-hero-url').value.trim();
+  // Filter out any empty, null, or non-string URLs before saving
+  const cleanGallery = galleryUrls.filter(u => typeof u === 'string' && u.trim().length > 0);
 
   const payload = {
     name, slug,
@@ -609,7 +623,7 @@ async function saveProject() {
     challenge: document.getElementById('f-challenge').value.trim() || null,
     solution: document.getElementById('f-solution').value.trim() || null,
     hero_image: heroUrl || null,
-    gallery_images: galleryUrls,
+    gallery_images: cleanGallery,
     features, results, technologies,
     testimonial_text: document.getElementById('f-test-text').value.trim() || null,
     testimonial_author: document.getElementById('f-test-author').value.trim() || null,
@@ -632,6 +646,7 @@ async function saveProject() {
     return;
   }
   toast(editId ? 'Project updated' : 'Project created','check_circle');
+  resetForm();    // clear all local state before closing so nothing leaks into the next session
   closeModal();
   await load();
 }
@@ -660,11 +675,14 @@ async function uploadToStorage(file) {
 }
 
 async function uploadHero(input) {
+  const sessionAtStart = uploadSession; // snapshot session ID before async work
   const file = input.files[0];
   if (!file) return;
   toast('Uploading hero image…','cloud_upload');
   try {
     const url = await uploadToStorage(file);
+    // Discard result if modal was closed/changed while upload was in flight
+    if (uploadSession !== sessionAtStart) return;
     document.getElementById('f-hero-url').value = url;
     document.getElementById('hero-preview').src = url;
     document.getElementById('hero-preview-wrap').style.display = '';
@@ -688,13 +706,16 @@ function clearHero() {
 }
 
 async function uploadGallery(input) {
+  const sessionAtStart = uploadSession; // snapshot session ID before async work
   const files = Array.from(input.files);
   if (!files.length) return;
   toast(`Uploading ${files.length} image${files.length>1?'s':''}…`,'cloud_upload');
   try {
     for (const file of files) {
       const url = await uploadToStorage(file);
-      galleryUrls.push(url);
+      // Discard result if modal was closed/changed while upload was in flight
+      if (uploadSession !== sessionAtStart) return;
+      if (typeof url === 'string' && url.trim()) galleryUrls.push(url);
     }
     renderGalleryThumbs();
     toast('Gallery images uploaded','check_circle');
