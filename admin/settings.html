@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><script src="/auth.js"></script>
@@ -56,15 +56,21 @@ a{color:inherit;text-decoration:none}
 .tb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--fw-d);font-size:11px;font-weight:700;color:#001a42;cursor:pointer}
 #main{grid-column:2;overflow-y:auto;background:var(--bg)}
 .gc{background:rgba(20,19,19,0.55);backdrop-filter:blur(20px);border:1px solid var(--border);border-top-color:var(--border2);border-radius:var(--r)}
-.inner{padding:28px;max-width:740px}
+.inner{padding:28px;max-width:760px}
 .pg-title{font-family:var(--fw-d);font-size:22px;font-weight:700;letter-spacing:-0.02em}
 .pg-sub{font-size:12px;color:var(--muted);margin-top:1px;margin-bottom:28px}
+
+/* Buttons */
 .btn-p{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);color:#001a42;font-weight:700;font-size:12px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:transform 0.13s,box-shadow 0.13s;box-shadow:0 4px 20px rgba(173,198,255,0.18)}
 .btn-p:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(173,198,255,0.32)}
 .btn-g{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:rgba(255,255,255,0.04);color:var(--text2);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,color 0.13s}
 .btn-g:hover{background:rgba(255,255,255,0.08);color:var(--text)}
 .btn-red{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:rgba(252,165,165,0.06);color:var(--red);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid rgba(252,165,165,0.15);cursor:pointer;transition:background 0.13s}
 .btn-red:hover{background:rgba(252,165,165,0.12)}
+.btn-amber{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:rgba(252,211,77,0.06);color:var(--amber);font-size:12px;font-weight:500;border-radius:var(--r-sm);border:1px solid rgba(252,211,77,0.15);cursor:pointer;transition:background 0.13s}
+.btn-amber:hover{background:rgba(252,211,77,0.12)}
+
+/* Settings layout */
 .set-section{margin-bottom:22px}
 .set-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .set-title{font-size:14.5px;font-weight:600}
@@ -85,12 +91,76 @@ a{color:inherit;text-decoration:none}
 .tog::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:var(--text2);top:2px;left:2px;transition:transform 0.2s,background 0.2s}
 .tog.on::after{transform:translateX(16px);background:#fff}
 .card-foot{display:flex;justify-content:flex-end;gap:8px;padding-top:18px;border-top:1px solid var(--border);margin-top:18px}
+
+/* Toast */
 .toast{position:fixed;bottom:24px;right:24px;z-index:600;display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:slideUp 0.3s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Security overview grid */
+.sec-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:0}
+.sec-stat{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.sec-stat-icon{font-size:18px;margin-bottom:4px}
+.sec-stat-val{font-size:18px;font-family:var(--fw-d);font-weight:700;letter-spacing:-0.02em}
+.sec-stat-lbl{font-family:var(--fw-m);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.sec-score-bar{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:99px;margin-top:8px;overflow:hidden}
+.sec-score-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
+
+/* Status badge */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+.badge-green{background:rgba(110,231,183,0.1);color:var(--green);border:1px solid rgba(110,231,183,0.2)}
+.badge-amber{background:rgba(252,211,77,0.1);color:var(--amber);border:1px solid rgba(252,211,77,0.2)}
+.badge-red{background:rgba(252,165,165,0.1);color:var(--red);border:1px solid rgba(252,165,165,0.2)}
+.badge-muted{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid var(--border)}
+
+/* Recovery code display */
+.recovery-code-box{font-family:var(--fw-m);font-size:13px;letter-spacing:0.12em;color:var(--primary);background:var(--primary-dim);border:1px solid rgba(173,198,255,0.18);border-radius:8px;padding:14px 18px;text-align:center;word-break:break-all;line-height:1.8;user-select:all}
+.recovery-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Session card */
+.session-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+.session-row:last-child{border-bottom:none;padding-bottom:0}
+.session-info{display:flex;flex-direction:column;gap:3px}
+.session-device{font-size:13px;font-weight:600;color:var(--text)}
+.session-meta{font-size:11px;color:var(--muted)}
+
+/* Auto-lock radio */
+.autolock-opts{display:flex;flex-direction:column;gap:8px}
+.al-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-sm);border:1px solid var(--border);cursor:pointer;transition:background 0.13s,border-color 0.13s}
+.al-opt:hover{background:rgba(255,255,255,0.03);border-color:var(--border2)}
+.al-opt.selected{border-color:rgba(173,198,255,0.24);background:rgba(173,198,255,0.05)}
+.al-opt input[type=radio]{accent-color:var(--primary);width:14px;height:14px;flex-shrink:0;cursor:pointer}
+.al-opt-lbl{font-size:13px;color:var(--text2)}
+
+/* Login history table */
+.lh-table{width:100%;border-collapse:collapse}
+.lh-table th{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.lh-table td{padding:9px 10px;font-size:12px;color:var(--text2);border-bottom:1px solid rgba(255,255,255,0.025)}
+.lh-table tr:last-child td{border-bottom:none}
+.lh-table tr:hover td{background:rgba(255,255,255,0.015)}
+.lh-empty{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+
+/* Show/hide password button */
+.pw-eye-wrap{position:relative}
+.pw-eye-wrap input{padding-right:40px}
+.pw-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;font-size:14px;transition:color 0.13s}
+.pw-eye:hover{color:var(--text)}
+
+/* PIN dots display */
+.pin-strength{font-size:11px;color:var(--muted);margin-top:6px}
+.pin-strength.weak{color:var(--red)}
+.pin-strength.ok{color:var(--green)}
+
+/* Info block */
+.info-block{display:flex;gap:10px;padding:12px 14px;background:rgba(173,198,255,0.04);border:1px solid rgba(173,198,255,0.12);border-radius:var(--r-sm);font-size:12px;color:var(--text2);line-height:1.5}
+.info-icon{color:var(--primary);flex-shrink:0;margin-top:1px}
+
+/* Sidebar overlay */
 #sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;backdrop-filter:blur(2px)}
 #sb-ov.show{display:block}
-@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}.fld-row{grid-template-columns:1fr}}
-@media(max-width:640px){.inner{padding:18px 16px}}
+
+@media(max-width:960px){:root{--sidebar:0px}#sidebar{position:fixed;left:0;top:0;height:100vh;width:268px;transform:translateX(-100%);z-index:200}#sidebar.open{transform:translateX(0)}#app{grid-template-columns:1fr;grid-template-rows:var(--topbar) 1fr}#main,#topbar{grid-column:1}.tb-menu{display:flex!important}.fld-row{grid-template-columns:1fr}.sec-overview{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.inner{padding:18px 16px}.sec-overview{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.sec-overview{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -144,14 +214,15 @@ a{color:inherit;text-decoration:none}
     <a href="settings.html" class="tb-av" id="tb-av">DC</a>
   </div>
 </header>
+
 <main id="main">
   <div class="inner">
     <div class="pg-title">Settings</div>
-    <div class="pg-sub">Manage your profile, notifications, and system preferences</div>
+    <div class="pg-sub">Manage your profile, security, and system preferences</div>
 
-    <!-- Profile -->
-    <div class="set-section">
-      <div class="set-hd"><div><div class="set-title">Profile</div><div class="set-sub">Your personal information and business details</div></div></div>
+    <!-- ── PROFILE ─────────────────────────────────────────── -->
+    <div class="set-section" id="sec-profile">
+      <div class="set-hd"><div><div class="set-title">Profile</div><div class="set-sub">Your personal information and display preferences</div></div></div>
       <div class="gc set-card">
         <div class="fld-row" style="margin-bottom:14px">
           <div class="fld"><label>Full Name</label><input id="p-name" value="Doris Cacarl"></div>
@@ -161,12 +232,25 @@ a{color:inherit;text-decoration:none}
           <div class="fld"><label>Role / Title</label><input id="p-role" value="Principal Director"></div>
           <div class="fld"><label>Phone</label><input id="p-phone" type="tel" placeholder="+1 (000) 000-0000"></div>
         </div>
-        <div class="fld" style="margin-bottom:0"><label>Business Name</label><input id="p-biz" value="Ascendra Agency"></div>
+        <div class="fld-row" style="margin-bottom:14px">
+          <div class="fld"><label>Business Name</label><input id="p-biz" value="Ascendra Agency"></div>
+          <div class="fld">
+            <label>Timezone</label>
+            <select id="p-tz">
+              <option value="America/New_York">Eastern Time (ET)</option>
+              <option value="America/Chicago">Central Time (CT)</option>
+              <option value="America/Denver">Mountain Time (MT)</option>
+              <option value="America/Los_Angeles">Pacific Time (PT)</option>
+              <option value="America/Anchorage">Alaska Time (AKT)</option>
+              <option value="Pacific/Honolulu">Hawaii Time (HT)</option>
+            </select>
+          </div>
+        </div>
         <div class="card-foot"><button class="btn-g" onclick="resetProfile()">Reset</button><button class="btn-p" onclick="saveProfile()">Save Profile</button></div>
       </div>
     </div>
 
-    <!-- Notifications -->
+    <!-- ── NOTIFICATIONS ───────────────────────────────────── -->
     <div class="set-section">
       <div class="set-hd"><div><div class="set-title">Notifications</div><div class="set-sub">Control which events trigger in-app alerts</div></div></div>
       <div class="gc set-card">
@@ -183,20 +267,281 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
 
-    <!-- Security -->
-    <div class="set-section">
-      <div class="set-hd"><div><div class="set-title">Security</div><div class="set-sub">Change your access credentials</div></div></div>
-      <div class="gc set-card">
-        <div class="fld" style="margin-bottom:14px"><label>Current Password</label><input id="s-cur" type="password" placeholder="Enter current password"></div>
-        <div class="fld-row">
-          <div class="fld"><label>New Password</label><input id="s-new" type="password" placeholder="New password"></div>
-          <div class="fld"><label>Confirm Password</label><input id="s-conf" type="password" placeholder="Confirm new password"></div>
-        </div>
-        <div class="card-foot"><button class="btn-p" onclick="changePassword()">Update Password</button></div>
-      </div>
-    </div>
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- SECURITY SECTION                                       -->
+    <!-- ══════════════════════════════════════════════════════ -->
 
-    <!-- Danger Zone -->
+    <div style="height:8px"></div>
+    <div style="height:1px;background:var(--border);margin-bottom:24px"></div>
+    <div id="sec-security" style="scroll-margin-top:80px">
+      <div style="margin-bottom:22px">
+        <div style="font-family:var(--fw-d);font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--text)">Security</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Authentication, access control, and session management</div>
+      </div>
+
+      <!-- Security Overview -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Security Overview</div><div class="set-sub">Your current protection status</div></div></div>
+        <div class="gc set-card">
+          <div class="sec-overview">
+            <div class="sec-stat">
+              <div class="sec-stat-icon">🔐</div>
+              <div class="sec-stat-val" id="sec-score-val">–</div>
+              <div class="sec-stat-lbl">Security Score</div>
+              <div class="sec-score-bar"><div class="sec-score-fill" id="sec-score-fill" style="width:0%;background:var(--primary)"></div></div>
+            </div>
+            <div class="sec-stat">
+              <div class="sec-stat-icon">👁</div>
+              <div class="sec-stat-val" id="sec-bio-status">—</div>
+              <div class="sec-stat-lbl">Biometric</div>
+            </div>
+            <div class="sec-stat">
+              <div class="sec-stat-icon">🔑</div>
+              <div class="sec-stat-val" id="sec-rec-status">—</div>
+              <div class="sec-stat-lbl">Recovery Code</div>
+            </div>
+            <div class="sec-stat">
+              <div class="sec-stat-icon">⏱</div>
+              <div class="sec-stat-val" id="sec-lock-status">—</div>
+              <div class="sec-stat-lbl">Auto-Lock</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--muted)">
+            <div>Last login: <span id="sec-last-login" style="color:var(--text2)">–</span></div>
+            <div>Failed attempts: <span id="sec-failed-count" style="color:var(--text2)">0</span></div>
+            <div>Session started: <span id="sec-session-start" style="color:var(--text2)">–</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Change PIN -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Change PIN</div><div class="set-sub">Update your numeric access code (4–12 digits)</div></div></div>
+        <div class="gc set-card">
+          <div class="fld" style="margin-bottom:14px">
+            <label>Current PIN / Access Code</label>
+            <div class="pw-eye-wrap">
+              <input type="password" id="pin-cur" placeholder="Enter your current PIN" maxlength="64" autocomplete="current-password">
+              <button class="pw-eye" type="button" onclick="togglePw('pin-cur',this)">👁</button>
+            </div>
+          </div>
+          <div class="fld-row" style="margin-bottom:8px">
+            <div class="fld">
+              <label>New PIN</label>
+              <div class="pw-eye-wrap">
+                <input type="password" id="pin-new" placeholder="4–12 digits" maxlength="12" oninput="checkPinStrength()" autocomplete="new-password">
+                <button class="pw-eye" type="button" onclick="togglePw('pin-new',this)">👁</button>
+              </div>
+              <div class="pin-strength" id="pin-strength-msg"></div>
+            </div>
+            <div class="fld">
+              <label>Confirm New PIN</label>
+              <div class="pw-eye-wrap">
+                <input type="password" id="pin-conf" placeholder="Repeat new PIN" maxlength="12" autocomplete="new-password">
+                <button class="pw-eye" type="button" onclick="togglePw('pin-conf',this)">👁</button>
+              </div>
+            </div>
+          </div>
+          <div class="info-block" style="margin-top:8px">
+            <span class="ms info-icon" style="font-size:15px">info</span>
+            <span>Weak PINs (1234, 0000, 1111, etc.) are rejected automatically. Use at least 6 digits for better security.</span>
+          </div>
+          <div id="pin-change-manual" style="display:none;margin-top:12px">
+            <div class="info-block" style="border-color:rgba(252,211,77,0.2);background:rgba(252,211,77,0.04)">
+              <span class="ms info-icon" style="font-size:15px;color:var(--amber)">warning</span>
+              <span style="color:var(--amber)">PIN stored in Vercel env var. To change: go to <strong>Vercel Dashboard → Your Project → Settings → Environment Variables</strong> and update <code style="font-family:var(--fw-m);font-size:11px">ADMIN_ACCESS_CODE</code> to your new PIN, then redeploy.</span>
+            </div>
+          </div>
+          <div class="card-foot"><button class="btn-p" onclick="changePin()">Update PIN</button></div>
+        </div>
+      </div>
+
+      <!-- Change Password -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Change Password</div><div class="set-sub">Switch to an alphanumeric access code for the password mode</div></div></div>
+        <div class="gc set-card">
+          <div class="fld" style="margin-bottom:14px">
+            <label>Current Password / Access Code</label>
+            <div class="pw-eye-wrap">
+              <input type="password" id="s-cur" placeholder="Current password" maxlength="64" autocomplete="current-password">
+              <button class="pw-eye" type="button" onclick="togglePw('s-cur',this)">👁</button>
+            </div>
+          </div>
+          <div class="fld-row">
+            <div class="fld">
+              <label>New Password</label>
+              <div class="pw-eye-wrap">
+                <input type="password" id="s-new" placeholder="Min 8 characters" maxlength="64" autocomplete="new-password">
+                <button class="pw-eye" type="button" onclick="togglePw('s-new',this)">👁</button>
+              </div>
+            </div>
+            <div class="fld">
+              <label>Confirm New Password</label>
+              <div class="pw-eye-wrap">
+                <input type="password" id="s-conf" placeholder="Repeat new password" maxlength="64" autocomplete="new-password">
+                <button class="pw-eye" type="button" onclick="togglePw('s-conf',this)">👁</button>
+              </div>
+            </div>
+          </div>
+          <div class="info-block" style="margin-top:14px">
+            <span class="ms info-icon" style="font-size:15px">info</span>
+            <span>The same <code style="font-family:var(--fw-m);font-size:11px">ADMIN_ACCESS_CODE</code> env var is used for both PIN and password modes. Changing it here updates the same credential.</span>
+          </div>
+          <div class="card-foot"><button class="btn-p" onclick="changePassword()">Update Password</button></div>
+        </div>
+      </div>
+
+      <!-- Biometric Authentication -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Biometric Authentication</div><div class="set-sub">Face ID, Touch ID, Windows Hello, or device biometrics</div></div></div>
+        <div class="gc set-card">
+          <div id="bio-not-supported" style="display:none">
+            <div class="info-block" style="border-color:rgba(252,165,165,0.2);background:rgba(252,165,165,0.04)">
+              <span class="ms info-icon" style="font-size:15px;color:var(--red)">block</span>
+              <span style="color:var(--red)">Your current browser or device does not support platform biometric authentication (WebAuthn). Try Chrome, Safari, Edge, or Firefox on a device with Face ID, Touch ID, Windows Hello, or a fingerprint reader.</span>
+            </div>
+          </div>
+          <div id="bio-supported">
+            <div class="toggle-row" style="margin-bottom:16px">
+              <div>
+                <div class="toggle-lbl">Enable Biometric Login</div>
+                <div class="toggle-sub" id="bio-status-sub">Not set up — register your device below</div>
+              </div>
+              <span class="badge" id="bio-badge">Not registered</span>
+            </div>
+            <div id="bio-register-section">
+              <div class="fld" style="margin-bottom:12px">
+                <label>Verify Current Access Code</label>
+                <div class="pw-eye-wrap">
+                  <input type="password" id="bio-pin" placeholder="Enter your PIN or password to enable" maxlength="64" autocomplete="current-password">
+                  <button class="pw-eye" type="button" onclick="togglePw('bio-pin',this)">👁</button>
+                </div>
+              </div>
+              <button class="btn-p" id="bio-register-btn" onclick="registerBiometric()">
+                <span class="ms" style="font-size:15px">fingerprint</span> Register Biometric
+              </button>
+            </div>
+            <div id="bio-registered-section" style="display:none">
+              <div class="info-block" style="border-color:rgba(110,231,183,0.2);background:rgba(110,231,183,0.04);margin-bottom:14px">
+                <span class="ms info-icon" style="font-size:15px;color:var(--green)">verified</span>
+                <span style="color:var(--green)">Biometric login is active. Your device's authenticator will be used on the lock screen.</span>
+              </div>
+              <button class="btn-red" onclick="removeBiometric()">
+                <span class="ms" style="font-size:15px">no_encryption</span> Remove Biometric
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Management -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Session Management</div><div class="set-sub">Active sessions and access control</div></div></div>
+        <div class="gc set-card">
+          <div class="session-row">
+            <div class="session-info">
+              <div class="session-device" id="sess-device">Current Device</div>
+              <div class="session-meta" id="sess-browser">–</div>
+              <div class="session-meta" id="sess-started">Session started –</div>
+            </div>
+            <span class="badge badge-green">● Active</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+            <button class="btn-amber" onclick="lockAdmin()">
+              <span class="ms" style="font-size:15px">lock</span> Lock Admin Now
+            </button>
+            <button class="btn-red" onclick="if(confirm('Sign out of all sessions?'))lockAdmin()">
+              <span class="ms" style="font-size:15px">logout</span> Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-Lock Settings -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Auto-Lock</div><div class="set-sub">Automatically return to lock screen after inactivity</div></div></div>
+        <div class="gc set-card">
+          <div class="autolock-opts" id="autolock-opts">
+            <label class="al-opt" data-val="5"><input type="radio" name="autolock" value="5"> <span class="al-opt-lbl">5 minutes</span></label>
+            <label class="al-opt" data-val="15"><input type="radio" name="autolock" value="15"> <span class="al-opt-lbl">15 minutes</span></label>
+            <label class="al-opt selected" data-val="30"><input type="radio" name="autolock" value="30" checked> <span class="al-opt-lbl">30 minutes <span style="font-size:10px;color:var(--muted)">(default)</span></span></label>
+            <label class="al-opt" data-val="60"><input type="radio" name="autolock" value="60"> <span class="al-opt-lbl">1 hour</span></label>
+            <label class="al-opt" data-val="0"><input type="radio" name="autolock" value="0"> <span class="al-opt-lbl">Never <span style="font-size:10px;color:var(--muted)">(not recommended)</span></span></label>
+          </div>
+          <div class="card-foot"><button class="btn-p" onclick="saveAutoLock()">Save Auto-Lock Setting</button></div>
+        </div>
+      </div>
+
+      <!-- Recovery Access Code -->
+      <div class="set-section">
+        <div class="set-hd"><div><div class="set-title">Recovery Access Code</div><div class="set-sub">Emergency backup if you forget your PIN</div></div></div>
+        <div class="gc set-card">
+          <div id="rec-locked">
+            <div style="margin-bottom:14px;font-size:13px;color:var(--text2)">Enter your current access code to view or regenerate your recovery code.</div>
+            <div class="fld" style="margin-bottom:12px">
+              <label>Current PIN / Password</label>
+              <div class="pw-eye-wrap">
+                <input type="password" id="rec-pin" placeholder="Verify your identity" maxlength="64" autocomplete="current-password">
+                <button class="pw-eye" type="button" onclick="togglePw('rec-pin',this)">👁</button>
+              </div>
+            </div>
+            <button class="btn-p" onclick="generateRecovery()">
+              <span class="ms" style="font-size:15px">key</span> Generate Recovery Code
+            </button>
+          </div>
+          <div id="rec-unlocked" style="display:none">
+            <div style="margin-bottom:12px;font-size:13px;color:var(--text2)">Store this code somewhere safe. It provides emergency access if you forget your PIN.</div>
+            <div class="recovery-code-box" id="rec-code-display">Loading...</div>
+            <div class="recovery-actions" style="margin-top:12px">
+              <button class="btn-g" onclick="copyRecoveryCode()">
+                <span class="ms" style="font-size:15px">content_copy</span> Copy Code
+              </button>
+              <button class="btn-g" onclick="downloadRecoveryCode()">
+                <span class="ms" style="font-size:15px">download</span> Download
+              </button>
+              <button class="btn-red" onclick="regenerateRecovery()">
+                <span class="ms" style="font-size:15px">refresh</span> Regenerate
+              </button>
+            </div>
+            <div class="info-block" style="margin-top:14px;border-color:rgba(252,211,77,0.2);background:rgba(252,211,77,0.04)">
+              <span class="ms info-icon" style="font-size:15px;color:var(--amber)">warning</span>
+              <span style="color:var(--amber)">Keep this code secret. Anyone with it can access your admin panel. If compromised, regenerate immediately.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login History -->
+      <div class="set-section">
+        <div class="set-hd">
+          <div><div class="set-title">Login History</div><div class="set-sub">Recent access attempts on this device</div></div>
+          <button class="btn-red" onclick="clearLoginHistory()" style="font-size:11px;padding:6px 12px">Clear History</button>
+        </div>
+        <div class="gc">
+          <div id="login-history-wrap" style="overflow-x:auto">
+            <table class="lh-table">
+              <thead>
+                <tr>
+                  <th>Date &amp; Time</th>
+                  <th>Method</th>
+                  <th>Result</th>
+                  <th>Device</th>
+                </tr>
+              </thead>
+              <tbody id="login-history-body">
+                <tr><td colspan="4" class="lh-empty">No login history recorded yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sec-security -->
+
+    <!-- ── DANGER ZONE ──────────────────────────────────────── -->
+    <div style="height:8px"></div>
+    <div style="height:1px;background:var(--border);margin-bottom:24px"></div>
     <div class="set-section">
       <div class="set-hd"><div><div class="set-title" style="color:var(--red)">Danger Zone</div><div class="set-sub">Irreversible actions — proceed with caution</div></div></div>
       <div class="gc set-card" style="border-color:rgba(252,165,165,0.12)">
@@ -206,52 +551,532 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
     </div>
+
+    <div style="height:48px"></div>
   </div>
 </main>
+</div><!-- /app -->
+
 <script>
-const PROFILE_KEY='ascendra_profile_v1';
-const DEFAULT={name:'Doris Cacarl',email:'doriscacarlm40@gmail.com',role:'Principal Director',phone:'',biz:'Ascendra Agency'};
-function load(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY))||DEFAULT}catch{return DEFAULT}}
-function initials(n){return(n||'DC').split(' ').map(w=>w[0]||'').slice(0,2).join('').toUpperCase()}
-function toast(msg,col='var(--green)',icon='check_circle'){const t=document.createElement('div');t.className='toast';t.innerHTML=`<span class="ms" style="color:${col}">${icon}</span>${msg}`;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3000)}
-function applyProfile(p){
-  document.getElementById('p-name').value=p.name||'';
-  document.getElementById('p-email').value=p.email||'';
-  document.getElementById('p-role').value=p.role||'';
-  document.getElementById('p-phone').value=p.phone||'';
-  document.getElementById('p-biz').value=p.biz||'';
-  const av=initials(p.name);
-  document.getElementById('sb-av').textContent=av;
-  document.getElementById('tb-av').textContent=av;
-  document.getElementById('sb-name').textContent=p.name||'';
-  document.getElementById('sb-role').textContent=p.role||'';
+// ═══════════════════════════════════════════════════════════════
+// Profile
+// ═══════════════════════════════════════════════════════════════
+const PROFILE_KEY = 'ascendra_profile_v1';
+const DEFAULT = { name:'Doris Cacarl', email:'doriscacarlm40@gmail.com', role:'Principal Director', phone:'', biz:'Ascendra Agency', tz:'America/New_York' };
+
+function load() { try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || DEFAULT; } catch { return DEFAULT; } }
+function initials(n) { return (n||'DC').split(' ').map(w=>w[0]||'').slice(0,2).join('').toUpperCase(); }
+
+function toast(msg, col='var(--green)', icon='check_circle') {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="ms" style="color:${col}">${icon}</span>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateY(8px)'; t.style.transition='all 0.3s'; setTimeout(()=>t.remove(), 300); }, 3000);
 }
-function saveProfile(){
-  const p={name:document.getElementById('p-name').value.trim(),email:document.getElementById('p-email').value.trim(),role:document.getElementById('p-role').value.trim(),phone:document.getElementById('p-phone').value.trim(),biz:document.getElementById('p-biz').value.trim()};
-  localStorage.setItem(PROFILE_KEY,JSON.stringify(p));applyProfile(p);toast('Profile saved');
+
+function applyProfile(p) {
+  document.getElementById('p-name').value = p.name||'';
+  document.getElementById('p-email').value = p.email||'';
+  document.getElementById('p-role').value = p.role||'';
+  document.getElementById('p-phone').value = p.phone||'';
+  document.getElementById('p-biz').value = p.biz||'';
+  const tzSel = document.getElementById('p-tz');
+  if (tzSel && p.tz) tzSel.value = p.tz;
+  const av = initials(p.name);
+  document.getElementById('sb-av').textContent = av;
+  document.getElementById('tb-av').textContent = av;
+  document.getElementById('sb-name').textContent = p.name||'';
+  document.getElementById('sb-role').textContent = p.role||'';
 }
-function resetProfile(){applyProfile(DEFAULT);localStorage.removeItem(PROFILE_KEY);toast('Profile reset to defaults')}
-function saveNotifications(){toast('Notification preferences saved')}
-function changePassword(){
-  const c=document.getElementById('s-cur').value,n=document.getElementById('s-new').value,cf=document.getElementById('s-conf').value;
-  if(!c||!n){toast('Fill in all password fields','var(--amber)','warning');return}
-  if(n!==cf){toast('Passwords do not match','var(--red)','error');return}
-  document.getElementById('s-cur').value='';document.getElementById('s-new').value='';document.getElementById('s-conf').value='';
-  toast('Password updated');
+
+function saveProfile() {
+  const p = { name:document.getElementById('p-name').value.trim(), email:document.getElementById('p-email').value.trim(), role:document.getElementById('p-role').value.trim(), phone:document.getElementById('p-phone').value.trim(), biz:document.getElementById('p-biz').value.trim(), tz:document.getElementById('p-tz').value };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+  applyProfile(p);
+  toast('Profile saved');
 }
-function clearAllData(){
-  if(!confirm('This will permanently delete ALL data stored in this browser for Ascendra. This cannot be undone. Continue?'))return;
-  const keys=['ascendra_quotes_v1','ascendra_audits_v1','ascendra_crm_leads','ascendra_clients_v1','ascendra_projects_v1','ascendra_tasks_v1','ascendra_invoices_v1','ascendra_messages_v1','ascendra_profile_v1'];
-  keys.forEach(k=>localStorage.removeItem(k));
-  toast('All data cleared','var(--red)','delete_forever');
-  setTimeout(()=>location.reload(),1200);
+function resetProfile() { applyProfile(DEFAULT); localStorage.removeItem(PROFILE_KEY); toast('Profile reset to defaults'); }
+function saveNotifications() { toast('Notification preferences saved'); }
+
+// ═══════════════════════════════════════════════════════════════
+// Utility: show/hide password fields
+// ═══════════════════════════════════════════════════════════════
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.type = el.type === 'password' ? 'text' : 'password';
+  btn.textContent = el.type === 'password' ? '👁' : '🙈';
 }
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
-window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
+
+// ═══════════════════════════════════════════════════════════════
+// PIN strength checker
+// ═══════════════════════════════════════════════════════════════
+const WEAK_PINS = new Set(['0000','1111','2222','3333','4444','5555','6666','7777','8888','9999','1234','2345','3456','4567','5678','6789','0123','9876','8765','7654','6543','5432','4321','3210','1230','0987','1357','2580','1212','1313','1414','1515','1122','2211','000000','111111','222222','333333','444444','555555','666666','777777','888888','999999','123456','234567','345678','456789','012345','987654','654321','112233','121212','123123']);
+
+function isWeakPin(pin) {
+  if (WEAK_PINS.has(pin)) return true;
+  if (/^(\d)\1+$/.test(pin)) return true;
+  return false;
+}
+
+function checkPinStrength() {
+  const val = document.getElementById('pin-new').value;
+  const msg = document.getElementById('pin-strength-msg');
+  if (!val) { msg.textContent = ''; msg.className = 'pin-strength'; return; }
+  if (val.length < 4) { msg.textContent = 'Too short (min 4 digits)'; msg.className = 'pin-strength weak'; return; }
+  if (isWeakPin(val)) { msg.textContent = 'Too predictable — choose a stronger PIN'; msg.className = 'pin-strength weak'; return; }
+  if (val.length >= 6) { msg.textContent = '✓ Strong PIN'; msg.className = 'pin-strength ok'; return; }
+  msg.textContent = '✓ Accepted (6+ digits recommended)'; msg.className = 'pin-strength ok';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Change PIN
+// ═══════════════════════════════════════════════════════════════
+async function changePin() {
+  const cur = document.getElementById('pin-cur').value.trim();
+  const nw = document.getElementById('pin-new').value.trim();
+  const cf = document.getElementById('pin-conf').value.trim();
+  if (!cur || !nw) { toast('Fill in all PIN fields', 'var(--amber)', 'warning'); return; }
+  if (nw !== cf) { toast('PINs do not match', 'var(--red)', 'error'); return; }
+  if (nw.length < 4) { toast('New PIN must be at least 4 digits', 'var(--amber)', 'warning'); return; }
+  if (isWeakPin(nw)) { toast('PIN is too predictable — choose a stronger one', 'var(--red)', 'error'); return; }
+
+  try {
+    const r = await fetch('/api/admin-security', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'change-pin', currentPin: cur, newPin: nw })
+    });
+    const d = await r.json();
+    if (r.ok && d.success) {
+      document.getElementById('pin-cur').value = '';
+      document.getElementById('pin-new').value = '';
+      document.getElementById('pin-conf').value = '';
+      document.getElementById('pin-strength-msg').textContent = '';
+      toast('PIN updated successfully — your new PIN is now active');
+    } else if (d.requiresManualUpdate) {
+      document.getElementById('pin-change-manual').style.display = '';
+      toast('PIN change requires manual Vercel update — see instructions below', 'var(--amber)', 'warning');
+    } else {
+      toast(d.error || 'Failed to update PIN', 'var(--red)', 'error');
+    }
+  } catch(e) {
+    toast('Network error — please try again', 'var(--red)', 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Change Password
+// ═══════════════════════════════════════════════════════════════
+async function changePassword() {
+  const cur = document.getElementById('s-cur').value.trim();
+  const nw = document.getElementById('s-new').value.trim();
+  const cf = document.getElementById('s-conf').value.trim();
+  if (!cur || !nw) { toast('Fill in all password fields', 'var(--amber)', 'warning'); return; }
+  if (nw !== cf) { toast('Passwords do not match', 'var(--red)', 'error'); return; }
+  if (nw.length < 8) { toast('New password must be at least 8 characters', 'var(--amber)', 'warning'); return; }
+
+  try {
+    const r = await fetch('/api/admin-security', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'change-pin', currentPin: cur, newPin: nw })
+    });
+    const d = await r.json();
+    if (r.ok && d.success) {
+      document.getElementById('s-cur').value = '';
+      document.getElementById('s-new').value = '';
+      document.getElementById('s-conf').value = '';
+      toast('Password updated successfully');
+    } else if (d.requiresManualUpdate) {
+      toast('Update ADMIN_ACCESS_CODE in Vercel Dashboard to change password', 'var(--amber)', 'warning');
+    } else {
+      toast(d.error || 'Failed to update password', 'var(--red)', 'error');
+    }
+  } catch(e) {
+    toast('Network error — please try again', 'var(--red)', 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Biometric
+// ═══════════════════════════════════════════════════════════════
+async function initBiometricSection() {
+  const isSupported = window.PublicKeyCredential && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function';
+  if (!isSupported) {
+    document.getElementById('bio-not-supported').style.display = '';
+    document.getElementById('bio-supported').style.display = 'none';
+    return;
+  }
+  const avail = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().catch(() => false);
+  if (!avail) {
+    document.getElementById('bio-not-supported').style.display = '';
+    document.getElementById('bio-supported').style.display = 'none';
+    return;
+  }
+  const hasCred = !!localStorage.getItem('ascendra_biometric_credential');
+  const hasTok = !!localStorage.getItem('ascendra_biometric_token');
+  const active = hasCred && hasTok;
+  updateBioUI(active);
+}
+
+function updateBioUI(active) {
+  const badge = document.getElementById('bio-badge');
+  const sub = document.getElementById('bio-status-sub');
+  const regSec = document.getElementById('bio-register-section');
+  const regdSec = document.getElementById('bio-registered-section');
+  if (active) {
+    badge.textContent = 'Enabled'; badge.className = 'badge badge-green';
+    sub.textContent = 'Biometric login is active on this device';
+    regSec.style.display = 'none'; regdSec.style.display = '';
+  } else {
+    badge.textContent = 'Not Registered'; badge.className = 'badge badge-muted';
+    sub.textContent = 'Set up biometric login for faster, secure access';
+    regSec.style.display = ''; regdSec.style.display = 'none';
+  }
+}
+
+async function registerBiometric() {
+  const pin = document.getElementById('bio-pin').value.trim();
+  if (!pin) { toast('Enter your current access code first', 'var(--amber)', 'warning'); return; }
+
+  // Step 1: Create a WebAuthn credential on the device
+  try {
+    const challenge = crypto.getRandomValues(new Uint8Array(32));
+    const credential = await navigator.credentials.create({
+      publicKey: {
+        challenge,
+        rp: { name: 'Ascendra Admin', id: location.hostname },
+        user: { id: new TextEncoder().encode('ascendra-admin-v1'), name: 'ascendra-admin', displayName: 'Ascendra Admin' },
+        pubKeyCredParams: [{ alg: -7, type: 'public-key' }, { alg: -257, type: 'public-key' }],
+        authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+        timeout: 60000
+      }
+    });
+
+    // Step 2: Verify PIN with server and get biometric token
+    const r = await fetch('/api/admin-security', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'register-biometric', pin })
+    });
+    const d = await r.json();
+    if (!r.ok || !d.bioToken) {
+      toast(d.error || 'Incorrect access code', 'var(--red)', 'error');
+      return;
+    }
+
+    // Step 3: Store credential ID and token locally
+    const credIdB64 = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+    localStorage.setItem('ascendra_biometric_credential', credIdB64);
+    localStorage.setItem('ascendra_biometric_token', d.bioToken);
+    localStorage.setItem('ascendra_biometric_registered', new Date().toISOString());
+
+    document.getElementById('bio-pin').value = '';
+    updateBioUI(true);
+    updateSecurityScore();
+    toast('Biometric authentication enabled');
+  } catch(e) {
+    if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
+      toast('Biometric registration cancelled', 'var(--muted)', 'info');
+    } else if (e && e.name === 'InvalidStateError') {
+      toast('A biometric credential is already registered for this device', 'var(--amber)', 'warning');
+    } else {
+      toast('Biometric registration failed: ' + (e && e.message ? e.message : 'Unknown error'), 'var(--red)', 'error');
+    }
+  }
+}
+
+function removeBiometric() {
+  if (!confirm('Remove biometric authentication? You will need to use your PIN to log in.')) return;
+  localStorage.removeItem('ascendra_biometric_credential');
+  localStorage.removeItem('ascendra_biometric_token');
+  localStorage.removeItem('ascendra_biometric_registered');
+  updateBioUI(false);
+  updateSecurityScore();
+  toast('Biometric authentication removed');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Auto-lock
+// ═══════════════════════════════════════════════════════════════
+function loadAutoLockSetting() {
+  const saved = localStorage.getItem('ascendra_autolock_minutes');
+  const val = saved !== null ? String(parseInt(saved, 10)) : '30';
+  const opts = document.querySelectorAll('.al-opt');
+  opts.forEach(opt => {
+    const v = opt.getAttribute('data-val');
+    const radio = opt.querySelector('input[type=radio]');
+    const selected = v === val;
+    opt.classList.toggle('selected', selected);
+    if (radio) radio.checked = selected;
+  });
+  document.querySelectorAll('input[name=autolock]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.querySelectorAll('.al-opt').forEach(o => {
+        o.classList.toggle('selected', o.getAttribute('data-val') === r.value);
+      });
+    });
+  });
+}
+
+function saveAutoLock() {
+  const sel = document.querySelector('input[name=autolock]:checked');
+  if (!sel) return;
+  localStorage.setItem('ascendra_autolock_minutes', sel.value);
+  updateSecurityScore();
+  toast('Auto-lock setting saved');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Recovery code
+// ═══════════════════════════════════════════════════════════════
+let recoveryCode = null;
+
+async function generateRecovery() {
+  const pin = document.getElementById('rec-pin').value.trim();
+  if (!pin) { toast('Enter your access code first', 'var(--amber)', 'warning'); return; }
+
+  try {
+    const r = await fetch('/api/admin-security', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'get-recovery-token', pin })
+    });
+    const d = await r.json();
+    if (!r.ok || !d.formatted) {
+      toast(d.error || 'Incorrect access code', 'var(--red)', 'error');
+      return;
+    }
+    recoveryCode = d.formatted;
+    localStorage.setItem('ascendra_recovery_generated', new Date().toISOString());
+    document.getElementById('rec-code-display').textContent = d.formatted;
+    document.getElementById('rec-locked').style.display = 'none';
+    document.getElementById('rec-unlocked').style.display = '';
+    updateSecurityScore();
+    toast('Recovery code generated — save it somewhere safe');
+  } catch(e) {
+    toast('Network error', 'var(--red)', 'error');
+  }
+}
+
+async function regenerateRecovery() {
+  if (!confirm('Generate a new recovery code? Your old code will be invalidated.')) return;
+  document.getElementById('rec-unlocked').style.display = 'none';
+  document.getElementById('rec-locked').style.display = '';
+  document.getElementById('rec-pin').value = '';
+  recoveryCode = null;
+  toast('Enter your access code to generate a new recovery code', 'var(--muted)', 'info');
+}
+
+function copyRecoveryCode() {
+  const code = document.getElementById('rec-code-display').textContent;
+  if (!code || code === 'Loading...') return;
+  navigator.clipboard.writeText(code).then(() => toast('Recovery code copied to clipboard'));
+}
+
+function downloadRecoveryCode() {
+  const code = document.getElementById('rec-code-display').textContent;
+  if (!code || code === 'Loading...') return;
+  const content = `Ascendra Admin — Recovery Access Code
+Generated: ${new Date().toLocaleString('en-US')}
+
+RECOVERY CODE:
+${code}
+
+Keep this code safe and secret. Anyone with it can access your Ascendra Admin panel.
+Store it in a password manager or print it and keep it in a secure location.
+
+To use: On the lock screen, click "Forgot access code?" and enter this code.
+`;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ascendra-recovery-code.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Recovery code downloaded');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Session info
+// ═══════════════════════════════════════════════════════════════
+function loadSessionInfo() {
+  const info = typeof window.getSessionInfo === 'function' ? window.getSessionInfo() : {};
+  const ua = navigator.userAgent || '';
+
+  // Detect browser
+  let browser = 'Unknown Browser';
+  if (/Chrome\//.test(ua) && !/Edg\//.test(ua)) browser = 'Chrome';
+  else if (/Edg\//.test(ua)) browser = 'Edge';
+  else if (/Firefox\//.test(ua)) browser = 'Firefox';
+  else if (/Safari\//.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+
+  // Detect OS
+  let os = 'Unknown OS';
+  if (/Windows/.test(ua)) os = 'Windows';
+  else if (/Mac/.test(ua)) os = 'macOS';
+  else if (/iPhone|iPad/.test(ua)) os = /iPad/.test(ua) ? 'iPadOS' : 'iOS';
+  else if (/Android/.test(ua)) os = 'Android';
+  else if (/Linux/.test(ua)) os = 'Linux';
+
+  document.getElementById('sess-device').textContent = os + ' — ' + browser;
+  document.getElementById('sess-browser').textContent = ua.slice(0, 80);
+
+  if (info.sessionStart) {
+    document.getElementById('sess-started').textContent = 'Session started: ' + formatTime(info.sessionStart);
+  }
+}
+
+function formatTime(ts) {
+  if (!ts) return '–';
+  const d = new Date(ts);
+  const h = d.getHours(), m = d.getMinutes().toString().padStart(2,'0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h12}:${m} ${ampm}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Login History
+// ═══════════════════════════════════════════════════════════════
+function loadLoginHistory() {
+  try {
+    const h = JSON.parse(localStorage.getItem('ascendra_login_history') || '[]');
+    const body = document.getElementById('login-history-body');
+    if (!h.length) {
+      body.innerHTML = '<tr><td colspan="4" class="lh-empty">No login history recorded yet</td></tr>';
+      return;
+    }
+    const methodLabels = { pin: 'PIN', password: 'Password', biometric: 'Biometric', recovery: 'Recovery Code' };
+    body.innerHTML = h.slice(0, 50).map(e => {
+      const d = new Date(e.ts);
+      const timeStr = formatTime(e.ts);
+      const success = e.success;
+      const method = methodLabels[e.method] || e.method || 'Unknown';
+      const ua = e.ua || '';
+      let device = 'Unknown';
+      if (/Windows/.test(ua)) device = 'Windows';
+      else if (/iPhone/.test(ua)) device = 'iPhone';
+      else if (/iPad/.test(ua)) device = 'iPad';
+      else if (/Mac/.test(ua)) device = 'Mac';
+      else if (/Android/.test(ua)) device = 'Android';
+      return `<tr>
+        <td style="white-space:nowrap">${timeStr}</td>
+        <td>${method}</td>
+        <td><span class="badge ${success ? 'badge-green' : 'badge-red'}">${success ? '✓ Success' : '✗ Failed'}</span></td>
+        <td style="color:var(--muted)">${device}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('login-history-body').innerHTML = '<tr><td colspan="4" class="lh-empty">Unable to load history</td></tr>';
+  }
+}
+
+function clearLoginHistory() {
+  if (!confirm('Clear all login history from this device?')) return;
+  localStorage.removeItem('ascendra_login_history');
+  loadLoginHistory();
+  toast('Login history cleared');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Security Score
+// ═══════════════════════════════════════════════════════════════
+function updateSecurityScore() {
+  let score = 40; // base (has a PIN)
+  const biometricOn = !!localStorage.getItem('ascendra_biometric_credential') && !!localStorage.getItem('ascendra_biometric_token');
+  const recoveryGenerated = !!localStorage.getItem('ascendra_recovery_generated');
+  const autolockMin = parseInt(localStorage.getItem('ascendra_autolock_minutes') || '30', 10);
+  const autolockOk = autolockMin > 0 && autolockMin <= 30;
+
+  if (biometricOn) score += 25;
+  if (recoveryGenerated) score += 20;
+  if (autolockOk) score += 15;
+
+  score = Math.min(100, score);
+
+  document.getElementById('sec-score-val').textContent = score + '/100';
+  const fill = document.getElementById('sec-score-fill');
+  fill.style.width = score + '%';
+  fill.style.background = score >= 80 ? 'var(--green)' : score >= 60 ? 'var(--amber)' : 'var(--red)';
+
+  // Bio status
+  const bioBadge = document.getElementById('sec-bio-status');
+  bioBadge.textContent = biometricOn ? 'Enabled' : 'Off';
+  bioBadge.style.color = biometricOn ? 'var(--green)' : 'var(--muted)';
+
+  // Recovery status
+  const recBadge = document.getElementById('sec-rec-status');
+  recBadge.textContent = recoveryGenerated ? 'Ready' : 'Not set';
+  recBadge.style.color = recoveryGenerated ? 'var(--green)' : 'var(--muted)';
+
+  // Auto-lock display
+  const lockBadge = document.getElementById('sec-lock-status');
+  if (autolockMin <= 0) { lockBadge.textContent = 'Never'; lockBadge.style.color = 'var(--red)'; }
+  else if (autolockMin <= 15) { lockBadge.textContent = autolockMin + ' min'; lockBadge.style.color = 'var(--green)'; }
+  else { lockBadge.textContent = autolockMin + ' min'; lockBadge.style.color = 'var(--amber)'; }
+
+  // Last login
+  try {
+    const h = JSON.parse(localStorage.getItem('ascendra_login_history') || '[]');
+    const last = h.find(e => e.success);
+    document.getElementById('sec-last-login').textContent = last ? formatTime(last.ts) : '–';
+  } catch(e) {}
+
+  // Failed attempts (last 24h)
+  try {
+    const h = JSON.parse(localStorage.getItem('ascendra_login_history') || '[]');
+    const since = Date.now() - 86400000;
+    const failed = h.filter(e => !e.success && e.ts > since).length;
+    document.getElementById('sec-failed-count').textContent = String(failed);
+    document.getElementById('sec-failed-count').style.color = failed > 0 ? 'var(--red)' : 'var(--green)';
+  } catch(e) {}
+
+  // Session start
+  try {
+    const start = parseInt(sessionStorage.getItem('ascendra_session_start') || '0', 10);
+    document.getElementById('sec-session-start').textContent = start ? formatTime(start) : '–';
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Danger Zone
+// ═══════════════════════════════════════════════════════════════
+function clearAllData() {
+  if (!confirm('Permanently delete ALL data stored in this browser for Ascendra? This cannot be undone.')) return;
+  const keys = ['ascendra_quotes_v1','ascendra_audits_v1','ascendra_crm_leads','ascendra_clients_v1','ascendra_projects_v1','ascendra_tasks_v1','ascendra_invoices_v1','ascendra_messages_v1','ascendra_profile_v1','ascendra_login_history','ascendra_autolock_minutes','ascendra_biometric_credential','ascendra_biometric_token','ascendra_biometric_registered','ascendra_recovery_generated'];
+  keys.forEach(k => localStorage.removeItem(k));
+  toast('All data cleared', 'var(--red)', 'delete_forever');
+  setTimeout(() => location.reload(), 1200);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Sidebar
+// ═══════════════════════════════════════════════════════════════
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-ov').classList.toggle('show'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-ov').classList.remove('show'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+window.addEventListener('resize', () => { if (window.innerWidth > 960) closeSidebar(); });
+
+// ═══════════════════════════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════════════════════════
 applyProfile(load());
+loadAutoLockSetting();
+loadLoginHistory();
+loadSessionInfo();
+updateSecurityScore();
+initBiometricSection();
+
+// Scroll to security section if hash is #security
+if (location.hash === '#security') {
+  setTimeout(() => { const el = document.getElementById('sec-security'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 200);
+}
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/config.js"></script>
 <script>

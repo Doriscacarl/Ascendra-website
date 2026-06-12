@@ -6,10 +6,18 @@
 (function () {
   'use strict';
 
-  var SESSION_KEY = 'ascendra_session';
-  var ACTIVITY_KEY = 'ascendra_activity';
-  var LOCK_URL = '/lock.html';
-  var INACTIVITY_MS = 30 * 60 * 1000; // 30 minutes
+  var SESSION_KEY   = 'ascendra_session';
+  var ACTIVITY_KEY  = 'ascendra_activity';
+  var AUTOLOCK_KEY  = 'ascendra_autolock_minutes';
+  var LOCK_URL      = '/lock.html';
+
+  // Read auto-lock duration from settings (default 30 min, 0 = never)
+  function getInactivityMs() {
+    var raw = localStorage.getItem(AUTOLOCK_KEY);
+    var minutes = raw !== null ? parseInt(raw, 10) : 30;
+    if (!isFinite(minutes) || minutes <= 0) return Infinity; // never
+    return minutes * 60 * 1000;
+  }
 
   function getToken() {
     try {
@@ -27,6 +35,7 @@
   function clearSession() {
     sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(ACTIVITY_KEY);
+    sessionStorage.removeItem('ascendra_session_start');
   }
 
   function redirectToLock() {
@@ -37,21 +46,19 @@
   var token = getToken();
   if (!token) {
     redirectToLock();
-  } else if (lastActivityAge() > INACTIVITY_MS) {
+  } else if (lastActivityAge() > getInactivityMs()) {
     clearSession();
     redirectToLock();
   }
 
   // ── Background server validation (non-blocking) ──────────────────
-  // Silently verifies the token hasn't been invalidated server-side.
-  // On network error we keep the session (don't lock on API failure).
   if (token) {
     fetch('/api/verify-pin?token=' + encodeURIComponent(token))
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d.valid) { clearSession(); redirectToLock(); }
       })
-      .catch(function () { /* keep session — network issue */ });
+      .catch(function () { /* keep session on network error */ });
   }
 
   // ── Activity tracking ─────────────────────────────────────────────
@@ -65,13 +72,28 @@
 
   // Periodic inactivity check (every 60s)
   setInterval(function () {
-    if (lastActivityAge() > INACTIVITY_MS) { clearSession(); redirectToLock(); }
+    if (lastActivityAge() > getInactivityMs()) { clearSession(); redirectToLock(); }
   }, 60000);
 
-  // ── Global lock function (called by lock button in topbar) ────────
+  // ── Global lock function ──────────────────────────────────────────
   window.lockAdmin = function () {
     clearSession();
     redirectToLock();
+  };
+
+  // ── Session info helper (used by settings page) ───────────────────
+  window.getSessionInfo = function () {
+    var start = parseInt(sessionStorage.getItem('ascendra_session_start') || '0', 10);
+    var activity = parseInt(sessionStorage.getItem(ACTIVITY_KEY) || '0', 10);
+    var autolockMin = localStorage.getItem(AUTOLOCK_KEY);
+    var minutes = autolockMin !== null ? parseInt(autolockMin, 10) : 30;
+    return {
+      sessionStart: start || null,
+      lastActivity: activity || null,
+      autolockMinutes: isFinite(minutes) && minutes > 0 ? minutes : 0,
+      userAgent: navigator.userAgent,
+      hasSession: !!getToken()
+    };
   };
 
   // Stamp initial activity

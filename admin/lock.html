@@ -38,349 +38,264 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'Geist',system-ui,sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100dvh;
-  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;position:relative;
 }
 
-/* ── Background mesh ───────────────────────────────── */
-.bg-mesh{
-  position:fixed;inset:0;
-  pointer-events:none;z-index:0;overflow:hidden;
-}
-.orb{
-  position:absolute;border-radius:50%;
-  filter:blur(90px);opacity:0.6;
-}
-.orb-1{
-  width:700px;height:700px;
-  background:radial-gradient(circle,rgba(173,198,255,0.065) 0%,transparent 65%);
-  top:-280px;left:-160px;
-  animation:drift1 28s ease-in-out infinite alternate;
-}
-.orb-2{
-  width:550px;height:550px;
-  background:radial-gradient(circle,rgba(100,70,210,0.048) 0%,transparent 65%);
-  bottom:-180px;right:-120px;
-  animation:drift2 34s ease-in-out infinite alternate;
-}
-.orb-3{
-  width:300px;height:300px;
-  background:radial-gradient(circle,rgba(173,198,255,0.035) 0%,transparent 70%);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  animation:drift3 20s ease-in-out infinite alternate;
-}
+/* ── Background mesh ─────────────────────────────── */
+.bg-mesh{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:0.6}
+.orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(173,198,255,0.065) 0%,transparent 65%);top:-280px;left:-160px;animation:drift1 28s ease-in-out infinite alternate}
+.orb-2{width:550px;height:550px;background:radial-gradient(circle,rgba(100,70,210,0.048) 0%,transparent 65%);bottom:-180px;right:-120px;animation:drift2 34s ease-in-out infinite alternate}
+.orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(173,198,255,0.035) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:drift3 20s ease-in-out infinite alternate}
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(70px,50px) scale(1.12)}}
 @keyframes drift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-50px,-40px) scale(1.08)}}
 @keyframes drift3{0%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1.25) rotate(15deg)}}
 
-/* Grain overlay */
-.grain{
-  position:fixed;inset:-50%;
-  width:200%;height:200%;
-  pointer-events:none;z-index:2;
-  opacity:0.018;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:256px;
-  animation:grain 0.5s steps(1) infinite;
-}
-@keyframes grain{
-  0%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}
-  20%{transform:translate(2%,1%)}30%{transform:translate(-1%,3%)}
-  40%{transform:translate(3%,-2%)}50%{transform:translate(-2%,2%)}
-  60%{transform:translate(1%,-3%)}70%{transform:translate(-3%,1%)}
-  80%{transform:translate(2%,3%)}90%{transform:translate(-1%,-1%)}
-  100%{transform:translate(0,0)}
-}
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:2;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px;animation:grain 0.5s steps(1) infinite}
+@keyframes grain{0%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(2%,1%)}30%{transform:translate(-1%,3%)}40%{transform:translate(3%,-2%)}50%{transform:translate(-2%,2%)}60%{transform:translate(1%,-3%)}70%{transform:translate(-3%,1%)}80%{transform:translate(2%,3%)}90%{transform:translate(-1%,-1%)}100%{transform:translate(0,0)}}
 
-/* ── Main lock container ────────────────────────────── */
+/* ── Lock container ──────────────────────────────── */
 .lock{
   position:relative;z-index:3;
   width:100%;max-width:380px;
   padding:0 24px 32px;
-  display:flex;flex-direction:column;
-  align-items:center;
+  display:flex;flex-direction:column;align-items:center;
 }
 
-/* ── Clock ──────────────────────────────────────────── */
+/* ── Clock ───────────────────────────────────────── */
 .clock-time{
   font-family:'Bodoni Moda',Georgia,serif;
   font-size:clamp(72px,18vw,96px);
-  font-weight:400;
-  letter-spacing:-0.05em;
-  color:#fff;
-  line-height:1;
-  margin-bottom:6px;
-  text-align:center;
-  text-shadow:0 0 60px rgba(255,255,255,0.06);
+  font-weight:400;letter-spacing:-0.05em;
+  color:#fff;line-height:1;margin-bottom:6px;
+  text-align:center;text-shadow:0 0 60px rgba(255,255,255,0.06);
 }
 .clock-date{
-  font-size:11px;font-weight:500;
-  letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:36px;text-align:center;
+  font-size:11px;font-weight:500;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:32px;text-align:center;
 }
 
-/* ── Brand ──────────────────────────────────────────── */
-.brand-row{
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:5px;
-}
+/* ── Brand ───────────────────────────────────────── */
+.brand-row{display:flex;align-items:center;gap:10px;margin-bottom:5px}
 .brand-mark{
   width:30px;height:30px;border-radius:8px;
   background:linear-gradient(135deg,var(--primary) 0%,var(--primary-b) 100%);
   display:flex;align-items:center;justify-content:center;
   font-family:'Bodoni Moda',serif;font-size:14px;font-weight:700;
-  color:#001a42;flex-shrink:0;
-  box-shadow:0 2px 12px rgba(173,198,255,0.25);
+  color:#001a42;flex-shrink:0;box-shadow:0 2px 12px rgba(173,198,255,0.25);
 }
-.brand-name{
-  font-size:12px;font-weight:700;
-  letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--text);
-}
-.brand-sub{
-  font-size:9px;font-weight:500;
-  letter-spacing:0.22em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:28px;text-align:center;
-}
+.brand-name{font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text)}
+.brand-sub{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;text-align:center}
 
-/* ── PIN dots ────────────────────────────────────────── */
-.pin-row{
-  display:flex;gap:10px;
-  margin-bottom:8px;justify-content:center;
-  min-height:16px;
-}
-.dot{
-  width:11px;height:11px;border-radius:50%;
-  border:1.5px solid rgba(255,255,255,0.14);
-  background:transparent;
-  transition:background 0.14s,border-color 0.14s,box-shadow 0.14s,transform 0.14s;
-}
-.dot.filled{
-  background:var(--primary);
-  border-color:var(--primary);
-  box-shadow:0 0 10px rgba(173,198,255,0.55);
-  transform:scale(1.1);
-}
-.dot.err{
-  background:var(--red);
-  border-color:var(--red);
-  box-shadow:0 0 10px rgba(252,165,165,0.55);
-}
+/* ── PIN dots (mobile only) ──────────────────────── */
+.pin-row{display:flex;gap:10px;margin-bottom:8px;justify-content:center;min-height:16px}
+.dot{width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.14);background:transparent;transition:background 0.14s,border-color 0.14s,box-shadow 0.14s,transform 0.14s}
+.dot.filled{background:var(--primary);border-color:var(--primary);box-shadow:0 0 10px rgba(173,198,255,0.55);transform:scale(1.1)}
+.dot.err{background:var(--red);border-color:var(--red);box-shadow:0 0 10px rgba(252,165,165,0.55)}
 
-/* ── Message ────────────────────────────────────────── */
-.msg{
-  font-size:11.5px;font-weight:500;letter-spacing:0.04em;
-  color:transparent;min-height:17px;
-  text-align:center;margin-bottom:18px;
-  transition:color 0.18s;
-}
+/* ── Message ─────────────────────────────────────── */
+.msg{font-size:11.5px;font-weight:500;letter-spacing:0.04em;color:transparent;min-height:17px;text-align:center;margin-bottom:16px;transition:color 0.18s}
 .msg.error{color:var(--red)}
 .msg.warn{color:var(--amber)}
 .msg.info{color:var(--muted)}
 
-/* ── Shake ──────────────────────────────────────────── */
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  15%{transform:translateX(-9px)}30%{transform:translateX(8px)}
-  45%{transform:translateX(-5px)}60%{transform:translateX(5px)}
-  75%{transform:translateX(-2px)}90%{transform:translateX(2px)}
-}
+/* ── Shake ───────────────────────────────────────── */
+@keyframes shake{0%,100%{transform:translateX(0)}15%{transform:translateX(-9px)}30%{transform:translateX(8px)}45%{transform:translateX(-5px)}60%{transform:translateX(5px)}75%{transform:translateX(-2px)}90%{transform:translateX(2px)}}
 .shaking{animation:shake 0.42s cubic-bezier(0.36,0.07,0.19,0.97)}
 
-/* ── Keypad ─────────────────────────────────────────── */
-.keypad{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:12px;width:100%;max-width:296px;
-  margin-bottom:14px;
-}
-.k{
-  border-radius:50%;
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  cursor:pointer;
-  user-select:none;
-  -webkit-tap-highlight-color:transparent;
-  position:relative;overflow:hidden;
-  transition:background 0.1s,border-color 0.1s,transform 0.09s;
-  gap:2px;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  aspect-ratio:1;
-  min-height:72px;
-  touch-action:manipulation;
-}
-.k:hover{background:rgba(255,255,255,0.07);border-color:var(--border2)}
-.k:active,.k.press{
-  background:rgba(173,198,255,0.10);
-  border-color:rgba(173,198,255,0.22);
-  transform:scale(0.91);
-}
-.k.k-empty{pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
-.k-n{
-  font-family:'Bodoni Moda',serif;
-  font-size:26px;font-weight:400;line-height:1;
-  color:#fff;
-}
-.k-a{
-  font-size:7.5px;font-weight:600;
-  letter-spacing:0.18em;color:var(--muted);
-  text-align:center;
-}
-
-/* special bottom-row keys */
-.k-del .k-sym,.k-ok .k-sym{font-size:18px;color:var(--text)}
-.k-ok{
-  background:var(--primary-dim);
-  border-color:rgba(173,198,255,0.16);
-}
-.k-ok:not(:disabled):hover{background:rgba(173,198,255,0.13)}
-.k-ok .k-sym{color:var(--primary)}
-
-/* ── Lockout panel ──────────────────────────────────── */
-.lockout{
-  display:none;
-  flex-direction:column;align-items:center;gap:6px;
-  padding:20px 24px;
-  background:rgba(252,165,165,0.04);
-  border:1px solid rgba(252,165,165,0.12);
-  border-radius:14px;
-  width:100%;max-width:296px;
-  margin-bottom:14px;text-align:center;
-}
+/* ── Lockout panel ───────────────────────────────── */
+.lockout{display:none;flex-direction:column;align-items:center;gap:6px;padding:20px 24px;background:rgba(252,165,165,0.04);border:1px solid rgba(252,165,165,0.12);border-radius:14px;width:100%;max-width:296px;margin-bottom:14px;text-align:center}
 .lockout.show{display:flex}
 .lockout-icon{font-size:26px;margin-bottom:4px}
 .lockout-title{font-size:12px;font-weight:600;color:var(--red);letter-spacing:0.06em}
-.lockout-timer{
-  font-family:'Bodoni Moda',serif;
-  font-size:32px;font-weight:400;
-  color:var(--amber);letter-spacing:-0.03em;
-}
+.lockout-timer{font-family:'Bodoni Moda',serif;font-size:32px;font-weight:400;color:var(--amber);letter-spacing:-0.03em}
 .lockout-sub{font-size:11px;color:var(--muted)}
 
-/* ── Password mode ──────────────────────────────────── */
-.pw-wrap{
-  display:none;flex-direction:column;gap:10px;
-  width:100%;max-width:296px;margin-bottom:14px;
-}
+/* ── MOBILE UI ───────────────────────────────────── */
+.m-ui{display:contents}
+
+/* Keypad */
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:296px;margin-bottom:14px}
+.k{border-radius:50%;background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;transition:background 0.1s,border-color 0.1s,transform 0.09s;gap:2px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);aspect-ratio:1;min-height:72px;touch-action:manipulation}
+.k:hover{background:rgba(255,255,255,0.07);border-color:var(--border2)}
+.k:active,.k.press{background:rgba(173,198,255,0.10);border-color:rgba(173,198,255,0.22);transform:scale(0.91)}
+.k.k-empty{pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
+.k-n{font-family:'Bodoni Moda',serif;font-size:26px;font-weight:400;line-height:1;color:#fff}
+.k-a{font-size:7.5px;font-weight:600;letter-spacing:0.18em;color:var(--muted);text-align:center}
+.k-del .k-sym,.k-ok .k-sym{font-size:18px;color:var(--text)}
+.k-ok{background:var(--primary-dim);border-color:rgba(173,198,255,0.16)}
+.k-ok:not(:disabled):hover{background:rgba(173,198,255,0.13)}
+.k-ok .k-sym{color:var(--primary)}
+
+/* Mobile password input */
+.pw-wrap{display:none;flex-direction:column;gap:10px;width:100%;max-width:296px;margin-bottom:14px}
 .pw-wrap.show{display:flex}
-.pw-input{
-  width:100%;
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:15px 18px;
-  font-size:18px;
-  font-family:'Geist',monospace;
-  letter-spacing:0.24em;
-  color:var(--text);outline:none;text-align:center;
-  transition:border-color 0.18s,background 0.18s;
-  min-height:54px;
-}
-.pw-input:focus{
-  border-color:rgba(173,198,255,0.28);
-  background:rgba(255,255,255,0.06);
-}
+.pw-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:15px 18px;font-size:18px;font-family:'Geist',monospace;letter-spacing:0.24em;color:var(--text);outline:none;text-align:center;transition:border-color 0.18s,background 0.18s;min-height:54px}
+.pw-input:focus{border-color:rgba(173,198,255,0.28);background:rgba(255,255,255,0.06)}
 .pw-input::placeholder{letter-spacing:0.06em;color:var(--muted);font-size:12px}
-.pw-btn{
-  width:100%;padding:14px;min-height:50px;
-  background:var(--primary-dim);
-  border:1px solid rgba(173,198,255,0.18);
-  border-radius:12px;
-  color:var(--primary);
-  font-family:'Geist',sans-serif;
-  font-size:12px;font-weight:700;
-  letter-spacing:0.14em;text-transform:uppercase;
-  cursor:pointer;
-  transition:background 0.13s,transform 0.1s,box-shadow 0.13s;
-}
+.pw-btn{width:100%;padding:14px;min-height:50px;background:var(--primary-dim);border:1px solid rgba(173,198,255,0.18);border-radius:12px;color:var(--primary);font-family:'Geist',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:background 0.13s,transform 0.1s,box-shadow 0.13s}
 .pw-btn:hover{background:rgba(173,198,255,0.14);box-shadow:0 4px 18px rgba(173,198,255,0.12)}
 .pw-btn:active{transform:scale(0.98)}
 
-/* ── Mode toggle ────────────────────────────────────── */
-.toggle{
-  font-size:11px;font-weight:500;
-  letter-spacing:0.07em;color:var(--muted);
-  cursor:pointer;padding:8px 12px;
-  border-radius:6px;
-  transition:color 0.13s,background 0.13s;
-  border:none;background:none;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-}
+/* Mobile mode toggle */
+.toggle{font-size:11px;font-weight:500;letter-spacing:0.07em;color:var(--muted);cursor:pointer;padding:8px 12px;border-radius:6px;transition:color 0.13s,background 0.13s;border:none;background:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .toggle:hover{color:var(--text);background:rgba(255,255,255,0.03)}
 
-/* ── Loading overlay ────────────────────────────────── */
-.overlay-load{
-  display:none;position:fixed;inset:0;z-index:50;
-  background:rgba(9,9,9,0.82);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  align-items:center;justify-content:center;flex-direction:column;gap:14px;
-}
-.overlay-load.show{display:flex}
-.spinner{
-  width:40px;height:40px;
-  border:2px solid rgba(173,198,255,0.14);
-  border-top-color:var(--primary);
-  border-radius:50%;
-  animation:spin 0.75s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spinner-label{
-  font-size:11px;font-weight:500;
-  letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--muted);
-}
+/* ── DESKTOP / TABLET UI ─────────────────────────── */
+.d-ui{display:none;flex-direction:column;gap:10px;width:100%}
 
-/* ── Success overlay ────────────────────────────────── */
-.overlay-ok{
-  display:none;position:fixed;inset:0;z-index:51;
-  background:var(--bg);
-  align-items:center;justify-content:center;flex-direction:column;gap:14px;
-  opacity:0;transition:opacity 0.35s ease;
+/* Desktop text input */
+.d-input-field{position:relative;width:100%}
+.d-input{
+  width:100%;background:rgba(255,255,255,0.04);
+  border:1px solid var(--border2);border-radius:12px;
+  padding:15px 52px 15px 18px;font-size:16px;
+  font-family:'Geist',monospace;letter-spacing:0.1em;
+  color:var(--text);outline:none;
+  transition:border-color 0.18s,background 0.18s;min-height:54px;
 }
+.d-input:focus{border-color:rgba(173,198,255,0.30);background:rgba(255,255,255,0.06)}
+.d-input::placeholder{letter-spacing:0.04em;color:var(--muted);font-size:13px;font-family:'Geist',sans-serif}
+.d-eye{
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--muted);cursor:pointer;
+  font-size:16px;line-height:1;padding:4px;
+  transition:color 0.13s;-webkit-tap-highlight-color:transparent;
+}
+.d-eye:hover{color:var(--text)}
+
+/* Desktop unlock button */
+.d-unlock-btn{
+  width:100%;padding:15px;min-height:54px;
+  background:linear-gradient(135deg,rgba(173,198,255,0.11) 0%,rgba(77,142,255,0.07) 100%);
+  border:1px solid rgba(173,198,255,0.22);border-radius:12px;
+  color:var(--primary);font-family:'Geist',sans-serif;
+  font-size:11.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+  cursor:pointer;transition:background 0.13s,transform 0.1s,box-shadow 0.13s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.d-unlock-btn:hover{background:linear-gradient(135deg,rgba(173,198,255,0.18) 0%,rgba(77,142,255,0.14) 100%);box-shadow:0 4px 24px rgba(173,198,255,0.15)}
+.d-unlock-btn:active{transform:scale(0.985)}
+
+/* Separator */
+.sep-row{display:flex;align-items:center;gap:10px;width:100%;margin:2px 0}
+.sep-line{flex:1;height:1px;background:var(--border)}
+.sep-lbl{font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+
+/* Biometric button */
+.bio-btn{
+  display:none;width:100%;padding:13px;min-height:48px;
+  background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:12px;
+  color:var(--muted);font-family:'Geist',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;transition:background 0.13s,color 0.13s,border-color 0.13s;
+  align-items:center;justify-content:center;gap:8px;
+}
+.bio-btn.show{display:flex}
+.bio-btn:hover{background:rgba(255,255,255,0.055);color:var(--text);border-color:var(--border2)}
+.bio-btn:active{transform:scale(0.985)}
+.bio-icon{font-size:17px;line-height:1}
+
+/* Recovery link */
+.recovery-link{font-size:11px;color:var(--muted);cursor:pointer;background:none;border:none;letter-spacing:0.06em;padding:4px 8px;border-radius:4px;transition:color 0.13s;margin-top:2px;align-self:center}
+.recovery-link:hover{color:var(--text)}
+
+/* Recovery input panel */
+.recovery-wrap{display:none;flex-direction:column;gap:10px;width:100%;padding:16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;margin-top:4px}
+.recovery-wrap.show{display:flex}
+.recovery-title{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.recovery-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:8px;padding:12px 14px;font-size:13px;font-family:'Geist',monospace;letter-spacing:0.12em;color:var(--text);outline:none;transition:border-color 0.18s}
+.recovery-input:focus{border-color:rgba(173,198,255,0.28)}
+.recovery-input::placeholder{color:var(--muted);font-size:11px;letter-spacing:0.08em}
+.recovery-btns{display:flex;gap:8px}
+.recovery-sub-btn{flex:1;padding:10px;background:var(--primary-dim);border:1px solid rgba(173,198,255,0.18);border-radius:8px;color:var(--primary);font-family:'Geist',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.13s}
+.recovery-sub-btn:hover{background:rgba(173,198,255,0.14)}
+.recovery-cancel-btn{flex:0;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'Geist',sans-serif;font-size:11px;cursor:pointer;transition:background 0.13s}
+.recovery-cancel-btn:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+
+/* ── Loading / Success overlays ──────────────────── */
+.overlay-load{display:none;position:fixed;inset:0;z-index:50;background:rgba(9,9,9,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.overlay-load.show{display:flex}
+.spinner{width:40px;height:40px;border:2px solid rgba(173,198,255,0.14);border-top-color:var(--primary);border-radius:50%;animation:spin 0.75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.overlay-ok{display:none;position:fixed;inset:0;z-index:51;background:var(--bg);align-items:center;justify-content:center;flex-direction:column;gap:14px;opacity:0;transition:opacity 0.35s ease}
 .overlay-ok.show{display:flex}
 .overlay-ok.fade{opacity:1}
-.ok-ring{
-  width:52px;height:52px;border-radius:50%;
-  background:rgba(110,231,183,0.08);
-  border:1.5px solid rgba(110,231,183,0.28);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;color:var(--green);
-  animation:pop 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
-}
+.ok-ring{width:52px;height:52px;border-radius:50%;background:rgba(110,231,183,0.08);border:1.5px solid rgba(110,231,183,0.28);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--green);animation:pop 0.3s cubic-bezier(0.34,1.56,0.64,1) both}
 @keyframes pop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
-.ok-label{
-  font-size:11px;font-weight:600;
-  letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--green);
+.ok-label{font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--green)}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE LAYOUT
+   Mobile (<768px)  : full-screen phone lock screen
+   Tablet/Desktop (≥768px) : professional login card
+   ═══════════════════════════════════════════════════ */
+
+/* ── Mobile default ─────── */
+@media (max-width: 767px) {
+  .d-ui { display: none !important; }
+  .m-ui { display: contents !important; }
+  .clock-time { font-size: clamp(72px,18vw,96px); }
 }
 
-/* ── Desktop card ───────────────────────────────────── */
-@media(min-width:600px){
-  .lock{
-    background:rgba(16,15,15,0.55);
-    border:1px solid var(--border);
-    border-top-color:rgba(255,255,255,0.09);
-    border-radius:24px;
-    padding:52px 48px 44px;
-    backdrop-filter:blur(48px);
-    -webkit-backdrop-filter:blur(48px);
+/* ── Tablet + Desktop ───── */
+@media (min-width: 768px) {
+  /* Glass card */
+  .lock {
+    background: rgba(14,13,13,0.62);
+    border: 1px solid var(--border);
+    border-top-color: rgba(255,255,255,0.09);
+    border-radius: 26px;
+    padding: 48px 44px 40px;
+    max-width: 440px;
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
     box-shadow:
-      0 48px 96px rgba(0,0,0,0.55),
+      0 56px 100px rgba(0,0,0,0.58),
       0 0 0 1px rgba(255,255,255,0.025),
-      inset 0 1px 0 rgba(255,255,255,0.06);
+      inset 0 1px 0 rgba(255,255,255,0.07);
   }
+
+  /* Show desktop UI, hide mobile keypad */
+  .m-ui { display: none !important; }
+  .d-ui { display: flex !important; }
+
+  /* Smaller clock on card */
+  .clock-time { font-size: clamp(44px,7vw,66px); margin-bottom: 4px; }
+  .clock-date { margin-bottom: 22px; }
+  .brand-sub { margin-bottom: 18px; }
+
+  /* Divider between brand and input */
+  .desk-divider { display: block !important; }
+}
+
+/* ── Tablet specific ─────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .lock { max-width: 400px; padding: 44px 40px 36px; }
+  .clock-time { font-size: clamp(40px,6vw,58px); }
+}
+
+/* ── Large desktop ──────── */
+@media (min-width: 1280px) {
+  .lock { max-width: 460px; }
+}
+
+/* Horizontal divider (desktop only) */
+.desk-divider {
+  display: none;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0 20px;
 }
 
 /* Reduce motion */
-@media(prefers-reduced-motion:reduce){
-  .orb,.grain{animation:none}
-  .spinner{animation:spin 1.5s linear infinite}
+@media (prefers-reduced-motion: reduce) {
+  .orb,.grain { animation: none }
+  .spinner { animation: spin 1.5s linear infinite }
 }
 </style>
 </head>
@@ -395,9 +310,9 @@ body{
 <div class="grain" aria-hidden="true"></div>
 
 <!-- Loading overlay -->
-<div class="overlay-load" id="ov-load" role="status" aria-label="Verifying access code">
+<div class="overlay-load" id="ov-load" role="status" aria-label="Verifying access">
   <div class="spinner"></div>
-  <div class="spinner-label">Verifying</div>
+  <div class="spinner-label" id="ov-load-label">Verifying</div>
 </div>
 
 <!-- Success overlay -->
@@ -409,24 +324,24 @@ body{
 <!-- Lock card -->
 <main class="lock" id="lock" role="main">
 
-  <!-- Clock -->
+  <!-- Clock (all devices) -->
   <div class="clock-time" id="clock-time" aria-label="Current time">--:--</div>
   <div class="clock-date" id="clock-date" aria-label="Current date"></div>
 
-  <!-- Brand -->
+  <!-- Brand (all devices) -->
   <div class="brand-row">
     <div class="brand-mark" aria-hidden="true">A</div>
     <div class="brand-name">Ascendra Admin</div>
   </div>
   <div class="brand-sub">Secure Access</div>
 
-  <!-- PIN dots -->
-  <div class="pin-row" id="pin-row" role="img" aria-label="PIN entry indicator" aria-live="polite"></div>
+  <!-- Desktop divider -->
+  <div class="desk-divider" aria-hidden="true"></div>
 
-  <!-- Status message -->
+  <!-- Status message (all devices) -->
   <div class="msg" id="msg" role="alert" aria-live="assertive"></div>
 
-  <!-- Lockout state -->
+  <!-- Lockout state (all devices) -->
   <div class="lockout" id="lockout" aria-live="polite">
     <div class="lockout-icon" aria-hidden="true">🔒</div>
     <div class="lockout-title">Access Temporarily Locked</div>
@@ -434,77 +349,128 @@ body{
     <div class="lockout-sub">Too many failed attempts</div>
   </div>
 
-  <!-- Number keypad -->
-  <div class="keypad" id="keypad" role="group" aria-label="PIN entry keypad">
-    <button class="k" data-k="1" aria-label="1">
-      <span class="k-n">1</span>
-    </button>
-    <button class="k" data-k="2" aria-label="2 ABC">
-      <span class="k-n">2</span><span class="k-a">ABC</span>
-    </button>
-    <button class="k" data-k="3" aria-label="3 DEF">
-      <span class="k-n">3</span><span class="k-a">DEF</span>
-    </button>
-    <button class="k" data-k="4" aria-label="4 GHI">
-      <span class="k-n">4</span><span class="k-a">GHI</span>
-    </button>
-    <button class="k" data-k="5" aria-label="5 JKL">
-      <span class="k-n">5</span><span class="k-a">JKL</span>
-    </button>
-    <button class="k" data-k="6" aria-label="6 MNO">
-      <span class="k-n">6</span><span class="k-a">MNO</span>
-    </button>
-    <button class="k" data-k="7" aria-label="7 PRS">
-      <span class="k-n">7</span><span class="k-a">PRS</span>
-    </button>
-    <button class="k" data-k="8" aria-label="8 TUV">
-      <span class="k-n">8</span><span class="k-a">TUV</span>
-    </button>
-    <button class="k" data-k="9" aria-label="9 WXY">
-      <span class="k-n">9</span><span class="k-a">WXY</span>
-    </button>
-    <button class="k k-del" id="k-del" aria-label="Delete last digit">
-      <span class="k-sym">⌫</span>
-    </button>
-    <button class="k" data-k="0" aria-label="0">
-      <span class="k-n">0</span>
-    </button>
-    <button class="k k-ok" id="k-ok" aria-label="Unlock">
-      <span class="k-sym">↵</span>
-    </button>
-  </div>
+  <!-- ──────────────────────────────────────────── -->
+  <!-- MOBILE UI: PIN dots + keypad + password mode -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="m-ui" id="m-ui">
 
-  <!-- Password input (hidden by default) -->
-  <div class="pw-wrap" id="pw-wrap">
-    <input
-      type="password"
-      class="pw-input"
-      id="pw-input"
-      placeholder="Enter access code"
-      autocomplete="current-password"
-      maxlength="64"
-      aria-label="Access code password field"
-    >
-    <button class="pw-btn" id="pw-btn" aria-label="Unlock admin panel">Unlock Admin</button>
-  </div>
+    <!-- PIN dots -->
+    <div class="pin-row" id="pin-row" role="img" aria-label="PIN entry indicator" aria-live="polite"></div>
 
-  <!-- Toggle between keypad and password modes -->
-  <button class="toggle" id="mode-toggle" aria-label="Switch input method">
-    Use password instead ↗
-  </button>
+    <!-- Number keypad -->
+    <div class="keypad" id="keypad" role="group" aria-label="PIN entry keypad">
+      <button class="k" data-k="1" aria-label="1"><span class="k-n">1</span></button>
+      <button class="k" data-k="2" aria-label="2 ABC"><span class="k-n">2</span><span class="k-a">ABC</span></button>
+      <button class="k" data-k="3" aria-label="3 DEF"><span class="k-n">3</span><span class="k-a">DEF</span></button>
+      <button class="k" data-k="4" aria-label="4 GHI"><span class="k-n">4</span><span class="k-a">GHI</span></button>
+      <button class="k" data-k="5" aria-label="5 JKL"><span class="k-n">5</span><span class="k-a">JKL</span></button>
+      <button class="k" data-k="6" aria-label="6 MNO"><span class="k-n">6</span><span class="k-a">MNO</span></button>
+      <button class="k" data-k="7" aria-label="7 PRS"><span class="k-n">7</span><span class="k-a">PRS</span></button>
+      <button class="k" data-k="8" aria-label="8 TUV"><span class="k-n">8</span><span class="k-a">TUV</span></button>
+      <button class="k" data-k="9" aria-label="9 WXY"><span class="k-n">9</span><span class="k-a">WXY</span></button>
+      <button class="k k-del" id="k-del" aria-label="Delete last digit"><span class="k-sym">⌫</span></button>
+      <button class="k" data-k="0" aria-label="0"><span class="k-n">0</span></button>
+      <button class="k k-ok" id="k-ok" aria-label="Unlock"><span class="k-sym">↵</span></button>
+    </div>
+
+    <!-- Mobile password mode input -->
+    <div class="pw-wrap" id="pw-wrap">
+      <input type="password" class="pw-input" id="pw-input" placeholder="Enter access code" autocomplete="current-password" maxlength="64" aria-label="Access code">
+      <button class="pw-btn" id="pw-btn">Unlock Admin</button>
+    </div>
+
+    <!-- Mobile: biometric button (shown if registered) -->
+    <button class="bio-btn" id="m-bio-btn" aria-label="Use biometric authentication">
+      <span class="bio-icon" id="m-bio-icon">◈</span>
+      <span id="m-bio-label">Use Biometric</span>
+    </button>
+
+    <!-- Mode toggle -->
+    <button class="toggle" id="mode-toggle" aria-label="Switch input method">Use password instead ↗</button>
+
+  </div><!-- /m-ui -->
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- DESKTOP / TABLET UI: text input + buttons   -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="d-ui" id="d-ui">
+
+    <!-- Text input with show/hide -->
+    <div class="d-input-field">
+      <input
+        type="password"
+        class="d-input"
+        id="d-input"
+        placeholder="Enter PIN or access code"
+        autocomplete="current-password"
+        maxlength="64"
+        aria-label="Access code"
+        autofocus
+      >
+      <button class="d-eye" id="d-eye" type="button" aria-label="Show / hide access code" title="Show / hide">
+        <svg id="eye-show" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg id="eye-hide" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+      </button>
+    </div>
+
+    <!-- Unlock button -->
+    <button class="d-unlock-btn" id="d-unlock-btn" aria-label="Unlock admin panel">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+      Unlock Admin Panel
+    </button>
+
+    <!-- Biometric button (shown if registered + supported) -->
+    <button class="bio-btn" id="d-bio-btn" aria-label="Use biometric authentication">
+      <span class="bio-icon" id="d-bio-icon">◈</span>
+      <span id="d-bio-label">Use Biometric</span>
+    </button>
+
+    <!-- Recovery option -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:4px">
+      <div class="sep-row">
+        <div class="sep-line"></div>
+        <div class="sep-lbl">or</div>
+        <div class="sep-line"></div>
+      </div>
+      <button class="recovery-link" id="d-recovery-link" type="button">Forgot access code?</button>
+    </div>
+
+    <!-- Recovery code panel -->
+    <div class="recovery-wrap" id="d-recovery-wrap" aria-live="polite">
+      <div class="recovery-title">Recovery Access Code</div>
+      <input type="text" class="recovery-input" id="d-recovery-input" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Recovery code">
+      <div class="recovery-btns">
+        <button class="recovery-sub-btn" id="d-recovery-btn">Use Recovery Code</button>
+        <button class="recovery-cancel-btn" id="d-recovery-cancel">Cancel</button>
+      </div>
+    </div>
+
+  </div><!-- /d-ui -->
+
+  <!-- Mobile: recovery link (shown below keypad) -->
+  <button class="toggle" id="m-recovery-link" style="display:none;margin-top:4px" type="button">Forgot code?</button>
+  <!-- Mobile recovery panel (below keypad) -->
+  <div class="recovery-wrap" id="m-recovery-wrap" style="max-width:296px">
+    <div class="recovery-title">Recovery Access Code</div>
+    <input type="text" class="recovery-input" id="m-recovery-input" placeholder="Enter recovery code" autocomplete="off" spellcheck="false">
+    <div class="recovery-btns">
+      <button class="recovery-sub-btn" id="m-recovery-btn">Verify</button>
+      <button class="recovery-cancel-btn" id="m-recovery-cancel">Cancel</button>
+    </div>
+  </div>
 
 </main>
 
 <!-- PASSKEY_READY: WebAuthn / Passkey / Face ID integration point.
-     To add biometric auth in future: use navigator.credentials.get({ publicKey: ... })
-     after a successful WebAuthn registration flow. The session storage model here is
-     already compatible — just call storeSession(token) on successful WebAuthn assertion. -->
+     Biometric registration happens in Settings → Security.
+     Credentials are stored in localStorage as 'ascendra_biometric_credential'.
+     Session token flow uses /api/verify-pin with action='biometric'. -->
 
 <script>
 (function () {
   'use strict';
 
-  // ── Already authenticated? Skip lock screen ───────────
+  // ── Already authenticated? Skip lock screen ──────────────────
   var s = sessionStorage.getItem('ascendra_session');
   var a = parseInt(sessionStorage.getItem('ascendra_activity') || '0', 10);
   if (s && Date.now() - a < 1800000) {
@@ -512,28 +478,52 @@ body{
     return;
   }
 
-  // ── State ──────────────────────────────────────────────
+  // ── State ────────────────────────────────────────────────────
   var pin = '';
   var pwMode = false;
   var lockedUntil = 0;
+  var recoveryOpenDesktop = false;
+  var recoveryOpenMobile = false;
 
-  // ── Clock ──────────────────────────────────────────────
+  // ── 12-hour US clock ─────────────────────────────────────────
+  function formatTime12h(date) {
+    var h = date.getHours();
+    var m = date.getMinutes().toString().padStart(2, '0');
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return h + ':' + m + ' ' + ampm; // narrow non-break space before AM/PM
+  }
+
   function tickClock() {
     var now = new Date();
-    var h = now.getHours().toString().padStart(2, '0');
-    var m = now.getMinutes().toString().padStart(2, '0');
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    document.getElementById('clock-time').textContent = h + ':' + m;
+    document.getElementById('clock-time').textContent = formatTime12h(now);
     document.getElementById('clock-date').textContent =
       days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
   }
   tickClock();
   setInterval(tickClock, 1000);
 
-  // ── Dots ───────────────────────────────────────────────
+  // ── Login history recording ──────────────────────────────────
+  function recordLogin(success, method) {
+    try {
+      var h = JSON.parse(localStorage.getItem('ascendra_login_history') || '[]');
+      h.unshift({
+        ts: Date.now(),
+        success: success,
+        method: method || 'pin',
+        ua: (navigator.userAgent || '').slice(0, 120)
+      });
+      if (h.length > 200) h = h.slice(0, 200);
+      localStorage.setItem('ascendra_login_history', JSON.stringify(h));
+    } catch(e) {}
+  }
+
+  // ── PIN dots (mobile) ────────────────────────────────────────
   function renderDots() {
     var row = document.getElementById('pin-row');
+    if (!row) return;
     var len = Math.max(pin.length, 6);
     row.innerHTML = '';
     for (var i = 0; i < len; i++) {
@@ -544,39 +534,42 @@ body{
   }
   renderDots();
 
-  // ── Message ────────────────────────────────────────────
+  // ── Message ──────────────────────────────────────────────────
   function showMsg(text, type) {
     var el = document.getElementById('msg');
     el.textContent = text;
     el.className = 'msg' + (type ? ' ' + type : '');
   }
 
-  // ── Shake animation ────────────────────────────────────
+  // ── Shake ────────────────────────────────────────────────────
   function shake(el) {
+    if (!el) return;
     el.classList.remove('shaking');
     void el.offsetWidth;
     el.classList.add('shaking');
-    el.addEventListener('animationend', function () {
-      el.classList.remove('shaking');
-    }, { once: true });
+    el.addEventListener('animationend', function() { el.classList.remove('shaking'); }, { once: true });
   }
 
-  // ── Lockout countdown ──────────────────────────────────
+  // ── Lockout countdown ────────────────────────────────────────
   function startLockout(until) {
     lockedUntil = until;
     document.getElementById('lockout').classList.add('show');
-    document.getElementById('keypad').style.cssText = 'opacity:0.18;pointer-events:none';
-    document.getElementById('pw-wrap').classList.remove('show');
-    document.getElementById('mode-toggle').style.display = 'none';
+    var kp = document.getElementById('keypad');
+    if (kp) kp.style.cssText = 'opacity:0.18;pointer-events:none';
+    var pw = document.getElementById('pw-wrap');
+    if (pw) pw.classList.remove('show');
+    var dui = document.getElementById('d-ui');
+    if (dui) dui.style.cssText = 'opacity:0.18;pointer-events:none';
 
     (function tick() {
       var remaining = Math.max(0, lockedUntil - Date.now());
       if (remaining <= 0) {
         document.getElementById('lockout').classList.remove('show');
-        document.getElementById('keypad').style.cssText = '';
-        document.getElementById('mode-toggle').style.display = '';
-        lockedUntil = 0;
-        pin = '';
+        var _kp = document.getElementById('keypad');
+        if (_kp) _kp.style.cssText = '';
+        var _dui = document.getElementById('d-ui');
+        if (_dui) _dui.style.cssText = '';
+        lockedUntil = 0; pin = '';
         renderDots();
         showMsg('', '');
         return;
@@ -588,32 +581,36 @@ body{
     })();
   }
 
-  // ── Store session after successful auth ────────────────
+  // ── Session storage ──────────────────────────────────────────
   function storeSession(token) {
     sessionStorage.setItem('ascendra_session', JSON.stringify({ token: token }));
     sessionStorage.setItem('ascendra_activity', Date.now().toString());
+    sessionStorage.setItem('ascendra_session_start', Date.now().toString());
   }
 
-  // ── Show success and redirect ──────────────────────────
-  function onSuccess(token) {
+  // ── Success and redirect ─────────────────────────────────────
+  function onSuccess(token, method) {
+    recordLogin(true, method || 'pin');
     storeSession(token);
     var ov = document.getElementById('ov-ok');
     ov.classList.add('show');
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { ov.classList.add('fade'); });
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { ov.classList.add('fade'); });
     });
-    setTimeout(function () { window.location.replace('/dashboard.html'); }, 750);
+    setTimeout(function() { window.location.replace('/dashboard.html'); }, 750);
   }
 
-  // ── Attempt unlock ─────────────────────────────────────
-  function tryUnlock(code) {
+  // ── Attempt unlock ───────────────────────────────────────────
+  var currentMethod = 'pin';
+  function tryUnlock(code, method) {
     if (lockedUntil > Date.now()) return;
     if (!code || code.length < 1) {
-      shake(document.getElementById('pin-row'));
+      shake(document.getElementById('pin-row') || document.getElementById('d-input'));
       showMsg('Enter your access code', 'info');
       return;
     }
-
+    currentMethod = method || 'pin';
+    document.getElementById('ov-load-label').textContent = 'Verifying';
     document.getElementById('ov-load').classList.add('show');
 
     fetch('/api/verify-pin', {
@@ -621,57 +618,263 @@ body{
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ pin: code })
     })
-      .then(function (r) {
-        return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
-      })
-      .then(function (res) {
-        document.getElementById('ov-load').classList.remove('show');
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
+    .then(function(res) {
+      document.getElementById('ov-load').classList.remove('show');
 
-        if (res.status === 200 && res.data.token) {
-          onSuccess(res.data.token);
-          return;
-        }
+      if (res.status === 200 && res.data.token) {
+        onSuccess(res.data.token, currentMethod);
+        return;
+      }
 
-        if (res.status === 429) {
-          var until = res.data.lockedUntil || (Date.now() + 900000);
-          pin = ''; renderDots();
-          if (pwMode) document.getElementById('pw-input').value = '';
-          startLockout(until);
-          return;
-        }
-
-        // Wrong code
+      if (res.status === 429) {
+        var until = res.data.lockedUntil || (Date.now() + 900000);
         pin = ''; renderDots();
-        if (pwMode) document.getElementById('pw-input').value = '';
+        if (pwMode) { var pwi = document.getElementById('pw-input'); if (pwi) pwi.value = ''; }
+        var di = document.getElementById('d-input'); if (di) di.value = '';
+        recordLogin(false, currentMethod);
+        startLockout(until);
+        return;
+      }
 
-        document.getElementById('pin-row').querySelectorAll('.dot').forEach(function (d) {
-          d.classList.add('err');
-        });
-        shake(document.getElementById('pin-row'));
+      // Wrong code
+      recordLogin(false, currentMethod);
+      pin = ''; renderDots();
+      if (pwMode) { var _pwi = document.getElementById('pw-input'); if (_pwi) _pwi.value = ''; }
+      var _di = document.getElementById('d-input'); if (_di) _di.value = '';
 
-        var left = res.data && res.data.attemptsLeft;
-        if (typeof left === 'number' && left <= 2) {
-          showMsg('Incorrect. ' + left + (left === 1 ? ' attempt' : ' attempts') + ' remaining', 'error');
-        } else {
-          showMsg('Incorrect code', 'error');
-        }
+      var pinRow = document.getElementById('pin-row');
+      if (pinRow) {
+        pinRow.querySelectorAll('.dot').forEach(function(d) { d.classList.add('err'); });
+      }
+      shake(pinRow || _di);
 
-        setTimeout(function () {
-          document.getElementById('pin-row').querySelectorAll('.dot').forEach(function (d) {
-            d.classList.remove('err');
-          });
-        }, 640);
-      })
-      .catch(function () {
-        document.getElementById('ov-load').classList.remove('show');
-        pin = ''; renderDots();
-        if (pwMode) document.getElementById('pw-input').value = '';
-        showMsg('Network error. Please try again.', 'error');
-      });
+      var left = res.data && res.data.attemptsLeft;
+      if (typeof left === 'number' && left <= 2) {
+        showMsg('Incorrect. ' + left + (left === 1 ? ' attempt' : ' attempts') + ' remaining', 'error');
+      } else {
+        showMsg('Incorrect access code', 'error');
+      }
+
+      setTimeout(function() {
+        if (pinRow) pinRow.querySelectorAll('.dot').forEach(function(d) { d.classList.remove('err'); });
+      }, 640);
+    })
+    .catch(function() {
+      document.getElementById('ov-load').classList.remove('show');
+      pin = ''; renderDots();
+      showMsg('Network error — please try again', 'error');
+    });
   }
 
-  // ── Keypad click handler ───────────────────────────────
-  document.getElementById('keypad').addEventListener('click', function (e) {
+  // ── Biometric ────────────────────────────────────────────────
+  function getBiometricLabel() {
+    var ua = navigator.userAgent || '';
+    if (/iPhone|iPad/.test(ua)) return 'Use Face ID';
+    if (/Mac/.test(ua)) return 'Use Touch ID';
+    if (/Android/.test(ua)) return 'Use Biometric';
+    if (/Windows/.test(ua)) return 'Use Windows Hello';
+    return 'Use Biometric';
+  }
+
+  function getBiometricIcon() {
+    var ua = navigator.userAgent || '';
+    if (/iPhone|iPad|Mac/.test(ua)) return '⬡'; // stylized
+    if (/Windows/.test(ua)) return '⊞';
+    return '◈';
+  }
+
+  function initBiometric() {
+    var credStr = localStorage.getItem('ascendra_biometric_credential');
+    var bioToken = localStorage.getItem('ascendra_biometric_token');
+    if (!credStr || !bioToken) return;
+    if (!window.PublicKeyCredential) return;
+
+    var label = getBiometricLabel();
+    var icon = getBiometricIcon();
+
+    var mBtn = document.getElementById('m-bio-btn');
+    var dBtn = document.getElementById('d-bio-btn');
+
+    PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(function(avail) {
+      if (!avail) return;
+      if (mBtn) {
+        document.getElementById('m-bio-icon').textContent = icon;
+        document.getElementById('m-bio-label').textContent = label;
+        mBtn.classList.add('show');
+        mBtn.addEventListener('click', handleBiometric);
+      }
+      if (dBtn) {
+        document.getElementById('d-bio-icon').textContent = icon;
+        document.getElementById('d-bio-label').textContent = label;
+        dBtn.classList.add('show');
+        dBtn.addEventListener('click', handleBiometric);
+      }
+    }).catch(function() {});
+  }
+
+  function handleBiometric() {
+    var credStr = localStorage.getItem('ascendra_biometric_credential');
+    var bioToken = localStorage.getItem('ascendra_biometric_token');
+    if (!credStr || !bioToken) { showMsg('Biometric not registered', 'error'); return; }
+
+    var credId;
+    try { credId = Uint8Array.from(atob(credStr), function(c) { return c.charCodeAt(0); }); }
+    catch(e) { showMsg('Invalid biometric credential', 'error'); return; }
+
+    var challenge = crypto.getRandomValues(new Uint8Array(32));
+
+    document.getElementById('ov-load-label').textContent = 'Authenticating';
+    document.getElementById('ov-load').classList.add('show');
+
+    navigator.credentials.get({
+      publicKey: {
+        challenge: challenge,
+        allowCredentials: [{ id: credId, type: 'public-key', transports: ['internal'] }],
+        userVerification: 'required',
+        timeout: 60000
+      }
+    }).then(function(assertion) {
+      if (!assertion) throw new Error('No assertion');
+      // Platform authenticator confirmed user identity — verify bio token with server
+      return fetch('/api/verify-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'biometric', bioToken: bioToken })
+      });
+    }).then(function(r) {
+      return r.json().then(function(d) { return { status: r.status, data: d }; });
+    }).then(function(res) {
+      document.getElementById('ov-load').classList.remove('show');
+      if (res.status === 200 && res.data.token) {
+        onSuccess(res.data.token, 'biometric');
+      } else {
+        showMsg('Biometric verification failed', 'error');
+        recordLogin(false, 'biometric');
+      }
+    }).catch(function(e) {
+      document.getElementById('ov-load').classList.remove('show');
+      if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
+        showMsg('Biometric cancelled', 'info');
+      } else {
+        showMsg('Biometric failed — use PIN', 'error');
+      }
+    });
+  }
+
+  // ── Recovery code ────────────────────────────────────────────
+  function tryRecovery(code) {
+    var clean = (code || '').replace(/[-\s]/g, '').toLowerCase();
+    if (!clean || clean.length < 8) { showMsg('Enter a valid recovery code', 'error'); return; }
+
+    document.getElementById('ov-load-label').textContent = 'Verifying';
+    document.getElementById('ov-load').classList.add('show');
+
+    fetch('/api/verify-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'recovery', recoveryToken: clean })
+    })
+    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
+    .then(function(res) {
+      document.getElementById('ov-load').classList.remove('show');
+      if (res.status === 200 && res.data.token) {
+        onSuccess(res.data.token, 'recovery');
+      } else {
+        showMsg('Invalid recovery code', 'error');
+        recordLogin(false, 'recovery');
+      }
+    })
+    .catch(function() {
+      document.getElementById('ov-load').classList.remove('show');
+      showMsg('Network error', 'error');
+    });
+  }
+
+  // ── Recovery panel toggles ───────────────────────────────────
+  // Desktop
+  var dRecLink = document.getElementById('d-recovery-link');
+  var dRecWrap = document.getElementById('d-recovery-wrap');
+  var dRecBtn = document.getElementById('d-recovery-btn');
+  var dRecCancel = document.getElementById('d-recovery-cancel');
+  var dRecInput = document.getElementById('d-recovery-input');
+  var dUnlockBtn = document.getElementById('d-unlock-btn');
+  var dBioBtn = document.getElementById('d-bio-btn');
+
+  if (dRecLink) dRecLink.addEventListener('click', function() {
+    recoveryOpenDesktop = !recoveryOpenDesktop;
+    if (dRecWrap) dRecWrap.classList.toggle('show', recoveryOpenDesktop);
+    if (recoveryOpenDesktop && dRecInput) setTimeout(function() { dRecInput.focus(); }, 60);
+  });
+  if (dRecCancel) dRecCancel.addEventListener('click', function() {
+    recoveryOpenDesktop = false;
+    if (dRecWrap) dRecWrap.classList.remove('show');
+    if (dRecInput) dRecInput.value = '';
+    showMsg('', '');
+  });
+  if (dRecBtn) dRecBtn.addEventListener('click', function() {
+    tryRecovery(dRecInput ? dRecInput.value.trim() : '');
+  });
+  if (dRecInput) dRecInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryRecovery(this.value.trim());
+  });
+
+  // Mobile
+  var mRecLink = document.getElementById('m-recovery-link');
+  var mRecWrap = document.getElementById('m-recovery-wrap');
+  var mRecBtn = document.getElementById('m-recovery-btn');
+  var mRecCancel = document.getElementById('m-recovery-cancel');
+  var mRecInput = document.getElementById('m-recovery-input');
+
+  if (mRecLink) mRecLink.addEventListener('click', function() {
+    recoveryOpenMobile = !recoveryOpenMobile;
+    if (mRecWrap) mRecWrap.classList.toggle('show', recoveryOpenMobile);
+    if (recoveryOpenMobile && mRecInput) setTimeout(function() { mRecInput.focus(); }, 60);
+    this.style.display = recoveryOpenMobile ? 'none' : '';
+  });
+  if (mRecCancel) mRecCancel.addEventListener('click', function() {
+    recoveryOpenMobile = false;
+    if (mRecWrap) mRecWrap.classList.remove('show');
+    if (mRecInput) mRecInput.value = '';
+    if (mRecLink) mRecLink.style.display = '';
+    showMsg('', '');
+  });
+  if (mRecBtn) mRecBtn.addEventListener('click', function() {
+    tryRecovery(mRecInput ? mRecInput.value.trim() : '');
+  });
+  if (mRecInput) mRecInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryRecovery(this.value.trim());
+  });
+
+  // ── Show recovery link on mobile (below keypad) ─────────────
+  function initMobileRecoveryLink() {
+    var el = document.getElementById('m-recovery-link');
+    if (el) el.style.display = '';
+  }
+  initMobileRecoveryLink();
+
+  // ── Desktop input handlers ───────────────────────────────────
+  var dInput = document.getElementById('d-input');
+  if (dUnlockBtn) dUnlockBtn.addEventListener('click', function() {
+    tryUnlock(dInput ? dInput.value.trim() : '', 'password');
+  });
+  if (dInput) dInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock(this.value.trim(), 'password');
+  });
+
+  // Show/hide password toggle
+  var dEye = document.getElementById('d-eye');
+  if (dEye) dEye.addEventListener('click', function() {
+    if (!dInput) return;
+    var hidden = dInput.type === 'password';
+    dInput.type = hidden ? 'text' : 'password';
+    document.getElementById('eye-show').style.display = hidden ? 'none' : '';
+    document.getElementById('eye-hide').style.display = hidden ? '' : 'none';
+  });
+
+  // ── Mobile keypad handler ────────────────────────────────────
+  var keypad = document.getElementById('keypad');
+  if (keypad) keypad.addEventListener('click', function(e) {
     if (lockedUntil > Date.now()) return;
     var btn = e.target.closest('[data-k]');
     if (btn) {
@@ -681,53 +884,72 @@ body{
       renderDots();
       if (navigator.vibrate) navigator.vibrate(6);
       btn.classList.add('press');
-      setTimeout(function () { btn.classList.remove('press'); }, 110);
+      setTimeout(function() { btn.classList.remove('press'); }, 110);
     }
     if (e.target.closest('#k-del')) {
       if (pin.length > 0) { pin = pin.slice(0, -1); showMsg('', ''); renderDots(); }
     }
     if (e.target.closest('#k-ok')) {
-      tryUnlock(pin);
+      tryUnlock(pin, 'pin');
     }
   });
 
-  // ── Physical keyboard support ──────────────────────────
-  document.addEventListener('keydown', function (e) {
+  // ── Physical keyboard ────────────────────────────────────────
+  document.addEventListener('keydown', function(e) {
+    // Always handle for desktop input — it has native focus handling
+    var isDesktop = window.innerWidth >= 768;
+    if (isDesktop) return; // desktop input handles its own keydown natively
+
     if (pwMode || lockedUntil > Date.now()) return;
     if (e.key >= '0' && e.key <= '9' && pin.length < 12) {
       pin += e.key; showMsg('', ''); renderDots();
     } else if (e.key === 'Backspace') {
       if (pin.length > 0) { pin = pin.slice(0, -1); showMsg('', ''); renderDots(); }
     } else if (e.key === 'Enter') {
-      tryUnlock(pin);
+      tryUnlock(pin, 'pin');
     }
   });
 
-  // ── Password mode toggle ───────────────────────────────
-  document.getElementById('mode-toggle').addEventListener('click', function () {
+  // ── Mobile password mode toggle ──────────────────────────────
+  var modeToggle = document.getElementById('mode-toggle');
+  if (modeToggle) modeToggle.addEventListener('click', function() {
     pwMode = !pwMode;
     pin = ''; renderDots(); showMsg('', '');
+    var pwWrap = document.getElementById('pw-wrap');
+    var kp = document.getElementById('keypad');
+    var pinR = document.getElementById('pin-row');
     if (pwMode) {
-      document.getElementById('pw-wrap').classList.add('show');
-      document.getElementById('keypad').style.display = 'none';
-      document.getElementById('pin-row').style.display = 'none';
+      if (pwWrap) pwWrap.classList.add('show');
+      if (kp) kp.style.display = 'none';
+      if (pinR) pinR.style.display = 'none';
       this.textContent = '← Use PIN keypad instead';
-      setTimeout(function () { document.getElementById('pw-input').focus(); }, 60);
+      setTimeout(function() {
+        var pwi = document.getElementById('pw-input');
+        if (pwi) pwi.focus();
+      }, 60);
     } else {
-      document.getElementById('pw-wrap').classList.remove('show');
-      document.getElementById('keypad').style.display = '';
-      document.getElementById('pin-row').style.display = '';
+      if (pwWrap) pwWrap.classList.remove('show');
+      if (kp) kp.style.display = '';
+      if (pinR) pinR.style.display = '';
       this.textContent = 'Use password instead ↗';
     }
   });
 
-  document.getElementById('pw-btn').addEventListener('click', function () {
-    tryUnlock(document.getElementById('pw-input').value.trim());
+  var pwBtn = document.getElementById('pw-btn');
+  if (pwBtn) pwBtn.addEventListener('click', function() {
+    var pwi = document.getElementById('pw-input');
+    tryUnlock(pwi ? pwi.value.trim() : '', 'password');
   });
 
-  document.getElementById('pw-input').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') tryUnlock(this.value.trim());
+  var pwInput = document.getElementById('pw-input');
+  if (pwInput) pwInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock(this.value.trim(), 'password');
   });
+
+  // ── Init biometric ───────────────────────────────────────────
+  if (window.PublicKeyCredential && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function') {
+    initBiometric();
+  }
 
 })();
 </script>
