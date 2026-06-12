@@ -94,40 +94,60 @@
 <!-- ── PROJECT CONTENT (shown after load) ────────────────── -->
 <div id="project-content" style="display:none;">
 
-  <!-- Hero -->
-  <section id="pd-hero" class="relative bg-charcoal overflow-hidden" style="min-height:70vh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:80px;">
+  <!-- Hero – full-view showcase -->
+  <section id="pd-hero" class="relative overflow-hidden" style="min-height:75vh;display:flex;flex-direction:column;padding-top:80px;">
     <div id="pd-hero-bg" class="absolute inset-0" style="background:#0d0d0d;">
-      <img id="pd-hero-img" src="" alt="" loading="eager" style="width:100%;height:100%;object-fit:cover;opacity:0.45;display:none;">
-      <div id="pd-hero-gradient" class="absolute inset-0" style="background:linear-gradient(to top,rgba(6,6,6,1) 0%,rgba(6,6,6,0.7) 40%,rgba(6,6,6,0.2) 100%);"></div>
+      <img id="pd-hero-img" src="" alt="" loading="eager" style="width:100%;height:100%;object-fit:cover;opacity:0;display:none;transition:opacity 0.75s ease;">
+      <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to bottom,rgba(6,6,6,0.55) 0%,transparent 22%);"></div>
+      <div id="pd-hero-gradient" class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top,rgba(6,6,6,0.97) 0%,rgba(6,6,6,0.6) 16%,rgba(6,6,6,0.06) 52%,transparent 100%);"></div>
     </div>
-    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 60% 20%,rgba(173,198,255,0.04),transparent 60%);"></div>
-    <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 pb-16 md:pb-24 w-full">
-      <a href="projects.html" class="inline-flex items-center gap-2 text-pewter/50 hover:text-silver transition-colors mb-8 group" style="font-family:'Geist',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 65% 30%,rgba(173,198,255,0.025),transparent 55%);"></div>
+
+    <!-- Back link -->
+    <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 pt-6 w-full flex-shrink-0">
+      <a href="projects.html" class="inline-flex items-center gap-2 hover:text-white/75 transition-colors group" style="color:rgba(255,255,255,0.4);font-family:'Geist',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;">
         <span class="material-symbols-outlined group-hover:-translate-x-0.5 transition-transform" style="font-size:14px;">arrow_back</span> All Projects
       </a>
-      <div id="pd-industry-badge" class="mb-5"></div>
-      <h1 id="pd-name" class="font-editorial font-bold platinum-text mb-5" style="font-size:clamp(2.6rem,7vw,6.5rem);line-height:0.96;letter-spacing:-0.03em;max-width:800px;"></h1>
-      <p id="pd-short-desc" class="text-silver/70 font-body text-lg leading-relaxed font-light mb-10" style="max-width:600px;"></p>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a id="pd-live-btn" href="#" class="btn-primary" style="display:none;">
-          View Live Site <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
-        </a>
-        <a href="quote.html" class="btn-ghost">Start a Similar Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
-      </div>
+    </div>
+
+    <div class="flex-1"></div>
+
+    <!-- Badge + name – bottom-left, compact -->
+    <div class="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 pb-10 md:pb-14 w-full flex-shrink-0">
+      <div id="pd-industry-badge" class="mb-4"></div>
+      <h1 id="pd-name" class="font-editorial font-bold text-white" style="font-size:clamp(1.7rem,3.8vw,3rem);line-height:1.05;letter-spacing:-0.025em;max-width:620px;text-shadow:0 1px 18px rgba(0,0,0,0.65);"></h1>
     </div>
   </section>
 
-  <!-- Overview + Quick Stats -->
-  <section class="py-20 md:py-32 px-6 md:px-16 bg-void">
-    <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20">
-      <div class="lg:col-span-3 reveal">
+  <!-- Info Panel + Overview -->
+  <section class="pt-14 pb-20 md:pt-16 md:pb-28 px-6 md:px-16 bg-void">
+    <div class="max-w-[1200px] mx-auto">
+
+      <!-- Short desc + CTAs + results at a glance -->
+      <div class="reveal pb-14 mb-14 border-b border-white/5">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+          <div>
+            <p id="pd-short-desc" class="text-silver/70 font-body leading-relaxed font-light mb-8" style="font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.8;max-width:540px;"></p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a id="pd-live-btn" href="#" class="btn-primary" style="display:none;">
+                View Live Site <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+              </a>
+              <a href="quote.html" class="btn-ghost">Start a Similar Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
+            </div>
+          </div>
+          <div class="reveal lg:pl-6 lg:border-l lg:border-white/[0.06]" style="transition-delay:80ms;">
+            <span class="eyebrow block mb-6">Results at a Glance</span>
+            <div id="pd-results-sidebar" class="flex flex-col gap-5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Long overview -->
+      <div class="reveal">
         <span class="eyebrow block mb-5">Overview</span>
-        <p id="pd-long-desc" class="text-silver font-body text-base md:text-lg leading-relaxed font-light" style="line-height:1.8;"></p>
+        <p id="pd-long-desc" class="text-silver font-body leading-relaxed font-light" style="font-size:clamp(0.95rem,2vw,1.08rem);line-height:1.85;max-width:760px;"></p>
       </div>
-      <div class="lg:col-span-2 reveal" style="transition-delay:100ms;">
-        <span class="eyebrow block mb-6">Results at a Glance</span>
-        <div id="pd-results-sidebar" class="flex flex-col gap-5"></div>
-      </div>
+
     </div>
   </section>
 
@@ -282,10 +302,17 @@ function renderProject(p) {
   // Update page title
   document.title = `${p.name} — Ascendra`;
 
-  // Hero
+  // Hero image – fade in when loaded
   if (p.hero_image) {
     const img = document.getElementById('pd-hero-img');
-    img.src = p.hero_image; img.alt = p.name; img.style.display = '';
+    img.style.display = '';
+    img.src = p.hero_image;
+    img.alt = p.name;
+    if (img.complete && img.naturalWidth > 0) {
+      img.style.opacity = '0.9';
+    } else {
+      img.onload = () => { img.style.opacity = '0.9'; };
+    }
   }
   document.getElementById('pd-name').textContent = p.name || '';
   document.getElementById('pd-short-desc').textContent = p.short_description || '';

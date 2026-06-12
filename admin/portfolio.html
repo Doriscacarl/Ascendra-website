@@ -668,7 +668,8 @@ async function confirmDelete() {
 // ── Image uploads ─────────────────────────────────────────────
 async function uploadToStorage(file) {
   const ext = file.name.split('.').pop().toLowerCase();
-  const path = `${Date.now()}-${Math.random().toString(36).substr(2,6)}.${ext}`;
+  const slugVal = (document.getElementById('f-slug').value || '').trim().toLowerCase().replace(/[^a-z0-9-]/g,'') || 'uploads';
+  const path = `${slugVal}/${Date.now()}-${Math.random().toString(36).substr(2,6)}.${ext}`;
   const {data, error} = await _sb.storage.from('portfolio-images').upload(path, file, {contentType: file.type, upsert: false});
   if (error) throw error;
   return _sb.storage.from('portfolio-images').getPublicUrl(path).data.publicUrl;
