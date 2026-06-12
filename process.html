@@ -58,11 +58,8 @@
 <!-- Hero -->
 <section class="px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden" style="min-height:clamp(600px,88vh,860px);padding-top:clamp(100px,10vw,160px);padding-bottom:clamp(64px,6vw,96px);">
 
-  <!-- Atmospheric gradients -->
-  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 18% 60%,rgba(173,198,255,0.055) 0%,transparent 52%),radial-gradient(ellipse at 82% 12%,rgba(200,196,190,0.035) 0%,transparent 45%);"></div>
-
-  <!-- Grain texture -->
-  <div class="absolute inset-0 pointer-events-none" style="opacity:0.018;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22pgn%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23pgn)%22/></svg>');background-size:200px 200px;"></div>
+  <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" style="z-index:0;"></canvas>
+  <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to bottom,rgba(13,13,13,0.3),transparent 40%,rgba(13,13,13,0.5));z-index:2;"></div>
 
   <!-- ══ ARCHITECTURAL TOWER (desktop only) ══ -->
   <div id="towerWrap" class="absolute hidden lg:block pointer-events-none" style="right:-40px;top:0;height:100%;width:500px;z-index:1;will-change:transform;">
@@ -567,6 +564,10 @@ const fc=document.getElementById('floatingCta'),mc=document.getElementById('mobi
 window.addEventListener('scroll',()=>{const s=window.scrollY>600;fc?.classList.toggle('show',s);mc?.classList.toggle('show',s);},{passive:true});
 // Architectural tower parallax
 (function(){var tw=document.getElementById('towerWrap');if(!tw)return;var lx=0,ly=0,tx=0,ty=0,sc=0;document.addEventListener('mousemove',function(e){tx=(e.clientX/window.innerWidth-0.5)*14;ty=(e.clientY/window.innerHeight-0.5)*9;},{passive:true});window.addEventListener('scroll',function(){sc=window.scrollY*0.04;},{passive:true});(function loop(){lx+=(tx-lx)*0.055;ly+=(ty+sc-ly)*0.055;tw.style.transform='translateX('+lx.toFixed(2)+'px) translateY('+ly.toFixed(2)+'px)';requestAnimationFrame(loop);})();})();
+</script>
+<script src="/animated-hero.js"></script>
+<script>
+  (function(){ var c=document.getElementById('heroCanvas'); if(c) new AnimatedHeroBackground(c,'process'); })();
 </script>
 </body>
 </html>

@@ -80,7 +80,8 @@ tailwind.config = {
 
 <!-- Page Hero -->
 <section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
-  <div class="absolute inset-0 pointer-events-none opacity-[0.04]" style="background:radial-gradient(ellipse at 70% 30%,#adc6ff,transparent 60%);"></div>
+  <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" style="z-index:1;"></canvas>
+  <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to bottom,rgba(13,13,13,0.3),transparent 40%,rgba(13,13,13,0.5));z-index:2;"></div>
   <div class="max-w-[1200px] mx-auto relative z-10">
     <div class="reveal">
       <span class="eyebrow text-pewter block mb-5">What We Build</span>
@@ -481,6 +482,10 @@ document.getElementById('closeMenu')?.addEventListener('click', () => { drawer.c
 drawer?.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => { drawer.classList.remove('open'); document.body.style.overflow=''; }));
 const fc = document.getElementById('floatingCta'), mc = document.getElementById('mobileCta');
 window.addEventListener('scroll', () => { const s=window.scrollY>600; fc?.classList.toggle('show',s); mc?.classList.toggle('show',s); }, {passive:true});
+</script>
+<script src="/animated-hero.js"></script>
+<script>
+  (function(){ var c=document.getElementById('heroCanvas'); if(c) new AnimatedHeroBackground(c,'services'); })();
 </script>
 </body>
 </html>

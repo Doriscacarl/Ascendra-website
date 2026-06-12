@@ -58,14 +58,8 @@
 
 <!-- Hero -->
 <section class="pt-40 pb-24 px-6 md:px-16 bg-charcoal border-b border-white/5 relative overflow-hidden">
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-0 opacity-[0.03]" style="background:radial-gradient(ellipse at 50% 30%,#adc6ff,transparent 60%);"></div>
-    <svg class="absolute left-0 bottom-0 opacity-[0.04] w-full" viewBox="0 0 1440 400" fill="none" preserveAspectRatio="xMidYMax slice">
-      <line x1="0" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
-      <line x1="180" y1="400" x2="900" y2="0" stroke="white" stroke-width="0.5"/>
-      <line x1="1440" y1="400" x2="720" y2="0" stroke="white" stroke-width="0.5"/>
-    </svg>
-  </div>
+  <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" style="z-index:1;"></canvas>
+  <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to bottom,rgba(13,13,13,0.3),transparent 40%,rgba(13,13,13,0.5));z-index:2;"></div>
   <div class="max-w-[1200px] mx-auto relative z-10">
     <div class="reveal max-w-3xl">
       <span class="eyebrow text-pewter block mb-5">Request a Private Consultation</span>
@@ -549,6 +543,10 @@ const d=document.getElementById('mobileDrawer');
 document.getElementById('openMenu')?.addEventListener('click',()=>{d.classList.add('open');document.body.style.overflow='hidden';});
 document.getElementById('closeMenu')?.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';});
 d?.querySelectorAll('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{d.classList.remove('open');document.body.style.overflow='';}));
+</script>
+<script src="/animated-hero.js"></script>
+<script>
+  (function(){ var c=document.getElementById('heroCanvas'); if(c) new AnimatedHeroBackground(c,'contact'); })();
 </script>
 </body>
 </html>
