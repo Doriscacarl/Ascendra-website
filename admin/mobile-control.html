@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
 .sb-nav::-webkit-scrollbar{display:none}
 .sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:44px}
 .ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
 .ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
 .ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
@@ -183,7 +183,7 @@ a{color:inherit;text-decoration:none}
         </div>
         <div class="status-row"><span class="status-lbl">Minimum Button Height</span><span class="status-val good">44px ✓</span></div>
         <div class="divider"></div>
-        <div class="status-row"><span class="status-lbl">Navigation Items</span><span class="status-val good">40px+ ✓</span></div>
+        <div class="status-row"><span class="status-lbl">Navigation Items</span><span class="status-val good">44px ✓</span></div>
         <div class="divider"></div>
         <div class="status-row"><span class="status-lbl">Form Inputs</span><span class="status-val good">44px ✓</span></div>
       </div>
@@ -203,15 +203,15 @@ a{color:inherit;text-decoration:none}
     <!-- Mobile Controls -->
     <div class="sec-lbl">Mobile Settings</div>
     <div class="gc" style="padding:20px 24px;margin-bottom:26px">
-      <div class="toggle-row"><div><div class="toggle-lbl">Mobile Optimizations</div><div class="toggle-sub">Reduce animations and effects on mobile for faster load</div></div><div class="tog on" onclick="this.classList.toggle('on');toast('Setting saved')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-lbl">Mobile Optimizations</div><div class="toggle-sub">Reduce animations and effects on mobile for faster load</div></div><div class="tog on" id="tog-optimize" onclick="toggleSetting('tog-optimize')"></div></div>
       <div class="divider"></div>
-      <div class="toggle-row"><div><div class="toggle-lbl">Lazy Load Images</div><div class="toggle-sub">Defer image loading until they enter the viewport</div></div><div class="tog on" onclick="this.classList.toggle('on');toast('Setting saved')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-lbl">Lazy Load Images</div><div class="toggle-sub">Defer image loading until they enter the viewport</div></div><div class="tog on" id="tog-lazy" onclick="toggleSetting('tog-lazy')"></div></div>
       <div class="divider"></div>
-      <div class="toggle-row"><div><div class="toggle-lbl">One-Hand Navigation Mode</div><div class="toggle-sub">Place CTA buttons in the bottom thumb zone</div></div><div class="tog on" onclick="this.classList.toggle('on');toast('Setting saved')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-lbl">One-Hand Navigation Mode</div><div class="toggle-sub">Place CTA buttons in the bottom thumb zone</div></div><div class="tog on" id="tog-onehand" onclick="toggleSetting('tog-onehand')"></div></div>
       <div class="divider"></div>
-      <div class="toggle-row"><div><div class="toggle-lbl">Mobile Phone CTA</div><div class="toggle-sub">Show floating click-to-call button on mobile</div></div><div class="tog" onclick="this.classList.toggle('on');toast('Setting saved')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-lbl">Mobile Phone CTA</div><div class="toggle-sub">Show floating click-to-call button on mobile</div></div><div class="tog" id="tog-cta" onclick="toggleSetting('tog-cta')"></div></div>
       <div style="display:flex;justify-content:flex-end;padding-top:14px;border-top:1px solid var(--border);margin-top:10px">
-        <button class="btn-p" onclick="toast('Mobile settings saved')">Save Settings</button>
+        <button class="btn-p" onclick="saveAllSettings()">Save Settings</button>
       </div>
     </div>
 
@@ -233,11 +233,67 @@ a{color:inherit;text-decoration:none}
   </div>
 </main>
 <script>
-function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='<span class="ms" style="color:var(--green)">check_circle</span>'+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300)},3000)}
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
+const STORAGE_KEY = 'ascendra_mobile_settings';
+const TOGGLE_IDS = ['tog-optimize','tog-lazy','tog-onehand','tog-cta'];
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    TOGGLE_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (id in saved) {
+        el.classList.toggle('on', saved[id]);
+      }
+    });
+  } catch(e) {}
+}
+
+function toggleSetting(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('on');
+  saveSetting(id, el.classList.contains('on'));
+  toast('Setting saved');
+}
+
+function saveSetting(id, value) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    saved[id] = value;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+  } catch(e) {}
+}
+
+function saveAllSettings() {
+  try {
+    const saved = {};
+    TOGGLE_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) saved[id] = el.classList.contains('on');
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    toast('Mobile settings saved');
+  } catch(e) {
+    toast('Could not save settings');
+  }
+}
+
+function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML='<span class="ms" style="color:var(--green)">check_circle</span>'+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='opacity 0.3s,transform 0.3s';setTimeout(()=>t.remove(),300)},3000)}
+
+function toggleSidebar(){
+  const open = document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sb-ov').classList.toggle('show', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-ov').classList.remove('show');
+  document.body.style.overflow = '';
+}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
+document.addEventListener('DOMContentLoaded', loadSettings);
 </script>
 <script>if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});</script>
 </body>

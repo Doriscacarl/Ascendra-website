@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><script src="/auth.js"></script>
@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto;overflow-x:hidden}
 .sb-nav::-webkit-scrollbar{display:none}
 .sb-sec{font-family:var(--fw-m);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:14px 12px 5px;opacity:0.45}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:40px}
+.ni{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:var(--r-sm);cursor:pointer;color:var(--muted);transition:background 0.13s,color 0.13s;user-select:none;position:relative;min-height:44px}
 .ni:hover{background:rgba(255,255,255,0.03);color:var(--text2)}
 .ni.active{background:rgba(173,198,255,0.065);color:var(--primary)}
 .ni.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:54%;background:var(--primary);border-radius:2px;box-shadow:0 0 10px var(--glow)}
@@ -174,8 +174,8 @@ function render(){
   }
   c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Description</th><th>Paid On</th></tr></thead><tbody>${payments.map(p=>`<tr><td style="font-family:var(--fw-m);font-size:11px;color:var(--muted)">${esc(p.num||'')}</td><td><div style="font-weight:500">${esc(p.client)}</div></td><td style="font-family:var(--fw-d);font-size:14px;font-weight:600;color:var(--green)">${fmtAmt(p.amount)}</td><td style="color:var(--muted);font-size:12px;max-width:220px">${p.desc?esc(p.desc):''}</td><td style="color:var(--muted);font-size:12px">${fmtDate(p.paidAt||p.created)}</td></tr>`).join('')}</tbody></table></div>`;
 }
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}
+function toggleSidebar(){const open=document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show',open);document.body.style.overflow=open?'hidden':''}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show');document.body.style.overflow=''}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
 window.addEventListener('resize',()=>{if(window.innerWidth>960)closeSidebar()});
 render();

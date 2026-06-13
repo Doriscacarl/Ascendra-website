@@ -143,14 +143,14 @@ a { color: inherit; text-decoration: none }
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 12px;
+  padding: 11px 12px;
   border-radius: var(--r-sm);
   cursor: pointer;
   color: var(--muted);
   transition: background 0.13s, color 0.13s;
   user-select: none;
   position: relative;
-  min-height: 40px;
+  min-height: 44px;
 }
 .ni:hover { background: rgba(255,255,255,0.03); color: var(--text2) }
 .ni.active { background: rgba(173,198,255,0.065); color: var(--primary) }
@@ -774,8 +774,8 @@ a { color: inherit; text-decoration: none }
   letter-spacing: -0.02em;
 }
 .np-close {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--r-sm);
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
@@ -1359,14 +1359,8 @@ a { color: inherit; text-decoration: none }
 <script src="/config.js"></script>
 <script>
 // ── SIDEBAR (mobile) ───────────────────────────────────
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sb-ov').classList.toggle('show');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sb-ov').classList.remove('show');
-}
+function toggleSidebar() { const open = document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-ov').classList.toggle('show', open); document.body.style.overflow = open ? 'hidden' : ''; }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-ov').classList.remove('show'); document.body.style.overflow = ''; }
 
 // ── NOTIFICATION PANEL ─────────────────────────────────
 let unreadCount = 0;

@@ -407,7 +407,7 @@ html,body { height:100%; background:var(--bg); color:var(--text); font-family:va
       <span class="material-symbols-outlined">palette</span>
       <span class="lbl">Design System</span>
     </div>
-    <a href="data-debug.html" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--muted);transition:background 0.13s,color 0.13s;text-decoration:none;min-height:40px;font-size:13px;font-weight:500" onmouseover="this.style.background='rgba(255,255,255,0.03)';this.style.color='var(--text2)'" onmouseout="this.style.background='';this.style.color='var(--muted)'">
+    <a href="data-debug.html" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:8px;color:var(--muted);transition:background 0.13s,color 0.13s;text-decoration:none;min-height:44px;font-size:13px;font-weight:500" onmouseover="this.style.background='rgba(255,255,255,0.03)';this.style.color='var(--text2)'" onmouseout="this.style.background='';this.style.color='var(--muted)'">
       <span class="material-symbols-outlined" style="font-size:18px">bug_report</span>
       <span>Data Debug</span>
     </a>
@@ -1775,7 +1775,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
+  const open = document.getElementById('sidebar').classList.toggle('open');
+  document.body.style.overflow = open ? 'hidden' : '';
 }
 
 // Handle mobile menu button visibility
