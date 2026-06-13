@@ -297,8 +297,10 @@
     var ctx = this.ctx, W = this.W, H = this.H;
     ctx.clearRect(0, 0, W, H);
 
-    // Shared layers
-    this._drawGrid(ctx, W, H, 80);
+    // Shared layers — home gets a slow-drifting grid for extra depth
+    var gridXOff = this.type === 'home' ? this.t * 3.5 : 0;
+    var gridYOff = this.type === 'home' ? this.t * 1.2 : 0;
+    this._drawGrid(ctx, W, H, 80, gridXOff, gridYOff);
     this._drawGlow(ctx, W, H);
     if (!this.isMobile) this._drawBeams(ctx, W, H);
     this._drawParticles(ctx, W, H, dt);
@@ -315,17 +317,21 @@
     }
   };
 
-  // ── Shared: Grid ───────────────────────────────────────────────────────
-  AnimatedHeroBackground.prototype._drawGrid = function (ctx, W, H, step) {
+  // ── Shared: Grid (supports slow drift offset) ─────────────────────────
+  AnimatedHeroBackground.prototype._drawGrid = function (ctx, W, H, step, xOff, yOff) {
+    xOff = xOff || 0;
+    yOff = yOff || 0;
+    var ox = ((xOff % step) + step) % step;
+    var oy = ((yOff % step) + step) % step;
     ctx.save();
     ctx.strokeStyle = 'rgba(255,255,255,0.028)';
     ctx.lineWidth   = 0.5;
     ctx.beginPath();
-    for (var x = 0; x <= W; x += step) {
+    for (var x = ox - step; x <= W + step; x += step) {
       ctx.moveTo(x, 0);
       ctx.lineTo(x, H);
     }
-    for (var y = 0; y <= H; y += step) {
+    for (var y = oy - step; y <= H + step; y += step) {
       ctx.moveTo(0, y);
       ctx.lineTo(W, y);
     }
@@ -424,11 +430,31 @@
   // HOME - Digital System Being Engineered
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._initHome = function () {
+    // Extra beams for homepage — override shared beams with 3
+    this.beams = [
+      { angleDeg: -22, period: 62, widthFrac: 0.13, offset: 0.0  },
+      { angleDeg: -31, period: 51, widthFrac: 0.09, offset: 0.42 },
+      { angleDeg: -16, period: 78, widthFrac: 0.07, offset: 0.72 },
+    ];
     this.homeState = {
-      panels:       [],
-      nextSpawnAt:  0.5,
-      lines:        [],
-      nextLineAt:   1.5,
+      panels:        [],
+      nextSpawnAt:   0.5,
+      lines:         [],
+      nextLineAt:    1.5,
+      // Glowing accent nodes
+      nodes: (function(){
+        var arr = [];
+        for (var i = 0; i < 6; i++) {
+          arr.push({
+            x: rand(0.55, 0.98), y: rand(0.08, 0.92),
+            r: rand(1.2, 2.8),
+            phase: rand(0, TWO_PI),
+            speed: rand(0.4, 0.9),
+            opacity: rand(0.3, 0.65),
+          });
+        }
+        return arr;
+      }()),
     };
   };
 
@@ -462,6 +488,35 @@
       }
     }
     state.lines = aliveLines;
+
+    // Glowing accent nodes (right-side region only, away from text)
+    if (state.nodes && !this.isMobile) {
+      ctx.save();
+      for (var k = 0; k < state.nodes.length; k++) {
+        var nd = state.nodes[k];
+        nd.phase += dt * nd.speed;
+        var pulse = 0.5 + 0.5 * Math.sin(nd.phase);
+        var alpha = nd.opacity * (0.3 + 0.7 * pulse);
+        var nx = nd.x * W, ny = nd.y * H;
+        // Outer glow ring
+        var gr = ctx.createRadialGradient(nx, ny, 0, nx, ny, nd.r * 6);
+        gr.addColorStop(0,   'rgba(173,198,255,' + (alpha * 0.55) + ')');
+        gr.addColorStop(0.4, 'rgba(173,198,255,' + (alpha * 0.18) + ')');
+        gr.addColorStop(1,   'rgba(173,198,255,0)');
+        ctx.fillStyle = gr;
+        ctx.beginPath();
+        ctx.arc(nx, ny, nd.r * 6, 0, TWO_PI);
+        ctx.fill();
+        // Core dot
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = 'rgba(173,198,255,0.85)';
+        ctx.beginPath();
+        ctx.arc(nx, ny, nd.r, 0, TWO_PI);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
   };
 
   AnimatedHeroBackground.prototype._spawnHomePanel = function (W, H) {
