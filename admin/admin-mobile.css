@@ -1,27 +1,114 @@
-/* ─────────────────────────────────────────────────────
-   ADMIN PANEL — UNIVERSAL MOBILE FIXES
-   Linked from every admin HTML page.
-   ───────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   ADMIN PANEL — UNIVERSAL MOBILE FIXES v3
+   Linked from every admin HTML page via <link rel="stylesheet">.
+   All rules are scoped to @media queries — desktop is untouched.
+   ═══════════════════════════════════════════════════════════════════ */
 
-/* ── CRITICAL: ios safari — html overflow:hidden kills all touch scroll ── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   1. ROOT iOS SCROLL FIX  (most critical bug)
+   ───────────────────────────────────────────────────────────────────
+   iOS Safari blocks ALL touch scrolling on every element when the
+   <html> root has overflow:hidden. Removing it from <html> only
+   (body stays hidden for the fixed-shell layout) unlocks all child
+   scroll containers — panels, modals, tables, main content, etc.
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
   html { overflow: visible !important }
-  #main {
-    -webkit-overflow-scrolling: touch !important;
-    overflow-y: auto !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. DYNAMIC VIEWPORT HEIGHT
+   ───────────────────────────────────────────────────────────────────
+   iOS Safari: 100vh includes the browser chrome (address bar) even
+   when it's visible, cutting off the bottom of fixed-height layouts.
+   100dvh = actual usable viewport height. Fallback: 100vh.
+   ═══════════════════════════════════════════════════════════════════ */
+@supports (height: 100dvh) {
+  @media (max-width: 960px) {
+    #app        { height: 100dvh !important }
+    #sidebar    { height: 100dvh !important }
+    #lead-panel { height: 100dvh !important }
   }
 }
 
-/* ── TOPBAR: tighter padding on mobile ─────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. MOMENTUM SCROLL — every scroll container
+   ───────────────────────────────────────────────────────────────────
+   -webkit-overflow-scrolling: touch enables iOS momentum (inertia)
+   scrolling on overflow:auto containers. Without it, scrolling
+   feels sluggish and snaps back immediately.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  #main,
+  #content,
+  .dp-body,
+  .lp-scroll,
+  .tbl-area,
+  .tbl-wrap,
+  .table-wrap,
+  .panel,
+  .k-cards,
+  .sb-nav,
+  .np-body,
+  .modal-body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. SAFE AREA INSETS  (home indicator / bottom bar)
+   ───────────────────────────────────────────────────────────────────
+   On PWA standalone mode and modern iOS, env(safe-area-inset-bottom)
+   returns the home indicator height (~34px on iPhone 15). Using
+   max() ensures a minimum clearance even without safe-area support.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+
+  /* Main scrollable area — last item clears home indicator */
+  #main {
+    padding-bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 40px)) !important;
+  }
+
+  /* Inner scroll containers on overflow:hidden pages */
+  #content {
+    padding-bottom: max(32px, calc(env(safe-area-inset-bottom, 0px) + 16px)) !important;
+  }
+
+  /* Detail panel body */
+  .dp-body {
+    padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px)) !important;
+  }
+
+  /* Modal footer stays above home indicator */
+  .modal-foot {
+    padding-bottom: max(22px, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
+  }
+
+  /* Panel footers */
+  .dp-foot,
+  .lp-actions {
+    padding-bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   5. TOPBAR
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
   #topbar {
-    padding: 0 14px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
     gap: 8px !important;
     overflow: hidden;
   }
 }
 
-/* ── TOPBAR: prevent page title from wrapping ──────── */
+/* Prevent page title wrapping / overflow */
 .tb-cur {
   white-space: nowrap;
   overflow: hidden;
@@ -33,33 +120,178 @@
   min-width: 0;
 }
 
-/* ── TOPBAR: hide root text on very small screens ──── */
+/* Hide "ASCENDRA ›" prefix on very small screens */
 @media (max-width: 520px) {
-  .tb-root,
-  .tb-sep {
-    display: none !important;
-  }
+  .tb-root, .tb-sep { display: none !important }
 }
 
-/* ── TOPBAR: reduce action gap on tiny screens ─────── */
+/* Tighten action buttons on tiny screens */
 @media (max-width: 400px) {
-  .tb-acts {
-    gap: 4px !important;
+  .tb-acts { gap: 4px !important }
+  .tb-menu  { width: 32px !important; height: 32px !important }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   6. MODALS  — scrollable body, flex layout, proper sizing
+   ───────────────────────────────────────────────────────────────────
+   Pattern across all pages:
+     .modal-bg  (position:fixed backdrop)
+       .modal   (container)
+         .modal-head  (stays at top)
+         .modal-body  (scrollable — this is where the form lives)
+         .modal-foot  (stays at bottom: Save/Cancel buttons)
+
+   Fix: Make .modal a flex column. Body gets flex:1 + overflow-y:auto.
+   Head and foot are flex-shrink:0 so they never scroll away.
+   Modal-bg gets overflow-y:auto as a fallback for very tall content.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Tablets and large phones (481px – 960px) ── */
+@media (min-width: 481px) and (max-width: 960px) {
+  .modal-bg {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    padding: max(20px, 5vh) 16px 16px !important;
   }
-  .tb-menu {
-    width: 32px !important;
-    height: 32px !important;
+
+  .modal {
+    width: 100% !important;
+    max-width: min(640px, calc(100vw - 32px)) !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    /* vh fallback, then dvh override below */
+    max-height: 90vh !important;
+  }
+
+  .modal-head { flex-shrink: 0 }
+  .modal-foot { flex-shrink: 0 }
+  .modal-body {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
-/* ── TABLES: always scrollable horizontally ────────── */
+@supports (height: 100dvh) {
+  @media (min-width: 481px) and (max-width: 960px) {
+    .modal { max-height: 90dvh !important }
+  }
+}
+
+/* ── Phones (≤ 480px): full-screen bottom sheet ── */
+@media (max-width: 480px) {
+  .modal-bg {
+    align-items: flex-end !important;
+    padding: 0 !important;
+    overflow-y: hidden !important;
+  }
+
+  .modal {
+    border-radius: var(--r-lg, 16px) var(--r-lg, 16px) 0 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: 92vh !important;
+  }
+
+  .modal-head { flex-shrink: 0 }
+  .modal-foot { flex-shrink: 0 }
+  .modal-body {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@supports (height: 100dvh) {
+  @media (max-width: 480px) {
+    .modal { max-height: 92dvh !important }
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   7. DETAIL PANELS  (CRM Leads, Clients, Quote Requests)
+   ───────────────────────────────────────────────────────────────────
+   On desktop: side panel slides in from the right (width: 380-480px).
+   On mobile: must go full-screen so content is not crushed.
+   dp-body is the inner scroll container.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+
+  /* Full-screen overlay when open */
+  #detail-panel.open,
+  #detail-panel.wide {
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;      /* fallback */
+    z-index: 300 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Inner body: the part that actually scrolls */
+  .dp-body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+}
+
+@supports (height: 100dvh) {
+  @media (max-width: 960px) {
+    #detail-panel.open,
+    #detail-panel.wide { height: 100dvh !important }
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   8. CRM PIPELINE — Lead panel
+   ───────────────────────────────────────────────────────────────────
+   On mobile the lead panel should fill the screen width.
+   lp-scroll is the inner scrollable area.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  #lead-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .lp-scroll {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   9. TABLES & TOOLBARS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Tables always scroll horizontally on any screen */
 .tbl-wrap,
-.table-wrap {
+.table-wrap,
+.tbl-area {
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── TOOLBARS: allow wrapping on mobile ─────────────── */
+/* Toolbars wrap on mobile */
 @media (max-width: 700px) {
   #crm-toolbar,
   #clients-toolbar,
@@ -71,7 +303,7 @@
   }
 }
 
-/* ── VIEW TOGGLE TABS: scrollable on mobile ─────────── */
+/* View toggle tabs: scroll when too many items */
 @media (max-width: 600px) {
   .view-toggle {
     overflow-x: auto;
@@ -81,7 +313,10 @@
   }
 }
 
-/* ── MAIN CONTENT: reduce side padding on mobile ────── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   10. CONTENT AREA PADDING
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   .inner {
     padding: 18px 16px 40px !important;
@@ -92,51 +327,50 @@
   }
 }
 
-/* ── MODALS: full-width bottom sheet on phones ──────── */
-@media (max-width: 480px) {
-  .modal-bg {
-    align-items: flex-end !important;
-    padding: 0 !important;
-  }
-  .modal {
-    border-radius: var(--r-lg, 16px) var(--r-lg, 16px) 0 0 !important;
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    max-width: 100% !important;
-    max-height: 92vh;
-  }
-}
 
-/* ── FORM ROWS: single column on mobile ─────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   11. FORM FIELDS — single column on mobile
+   ───────────────────────────────────────────────────────────────────
+   Two-column form grids collapse to one column. Covers all naming
+   variants used across pages: .fld-row, .fld-row-3, .form-row-2,
+   .fg2, .f-2
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 540px) {
   .form-row-2,
   .fg2,
-  .f-2 {
+  .f-2,
+  .fld-row,
+  .fld-row-3 {
     grid-template-columns: 1fr !important;
   }
 }
 
-/* ── KPI GRIDS: 2-up on mobile, 1-up on tiny ───────── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   12. KPI / STAT GRIDS
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 600px) {
-  .kpi-row {
-    grid-template-columns: 1fr 1fr !important;
-  }
+  .kpi-row { grid-template-columns: 1fr 1fr !important }
 }
 @media (max-width: 380px) {
-  .kpi-row {
-    grid-template-columns: 1fr !important;
-  }
+  .kpi-row { grid-template-columns: 1fr !important }
 }
 
-/* ── TOUCH: ensure all interactive elements are 44px── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   13. TOUCH TARGETS — 44px minimum for fingers
+   ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
-  .filter-chip {
-    min-height: 38px;
-  }
-  .vt-btn {
-    min-height: 38px;
-    padding: 8px 12px !important;
-  }
+  .btn-p,
+  .btn-g,
+  .btn-danger,
+  .btn-red,
+  .btn-amber  { min-height: 44px }
+
+  .filter-chip,
+  .fchip      { min-height: 38px; padding: 8px 14px }
+
+  .vt-btn     { min-height: 38px; padding: 8px 12px !important }
+
+  .ic-btn     { min-width: 44px; min-height: 44px }
 }
