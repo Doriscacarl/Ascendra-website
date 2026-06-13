@@ -81,6 +81,7 @@
       process:  [0.18, 0.60],
       about:    [0.30, 0.50],
       contact:  [0.50, 0.30],
+      insights: [0.78, 0.28],
     };
     var gp = glowPos[this.type] || [0.5, 0.5];
     this.glowCx = gp[0];
@@ -108,11 +109,12 @@
     ];
 
     switch (this.type) {
-      case 'services': this._initServices(); break;
-      case 'projects': this._initProjects(); break;
-      case 'process':  this._initProcess();  break;
-      case 'about':    this._initAbout();    break;
-      case 'contact':  this._initContact();  break;
+      case 'services':  this._initServices();  break;
+      case 'projects':  this._initProjects();  break;
+      case 'process':   this._initProcess();   break;
+      case 'about':     this._initAbout();     break;
+      case 'contact':   this._initContact();   break;
+      case 'insights':  this._initInsights();  break;
     }
   };
 
@@ -301,11 +303,12 @@
 
     // Page-specific layer
     switch (this.type) {
-      case 'services': this._drawServices(ctx, W, H, dt); break;
-      case 'projects': this._drawProjects(ctx, W, H, dt); break;
-      case 'process':  this._drawProcess (ctx, W, H, dt); break;
-      case 'about':    this._drawAbout   (ctx, W, H, dt); break;
-      case 'contact':  this._drawContact (ctx, W, H, dt); break;
+      case 'services':  this._drawServices(ctx, W, H, dt); break;
+      case 'projects':  this._drawProjects(ctx, W, H, dt); break;
+      case 'process':   this._drawProcess (ctx, W, H, dt); break;
+      case 'about':     this._drawAbout   (ctx, W, H, dt); break;
+      case 'contact':   this._drawContact (ctx, W, H, dt); break;
+      case 'insights':  this._drawInsights(ctx, W, H, dt); break;
     }
   };
 
@@ -954,6 +957,300 @@
         ctx.fillStyle   = 'rgba(255,255,255,1)';
         ctx.fillRect(f.nx * W, f.ny * H - 10, f.nw * W * 0.4, 1);
       }
+      ctx.restore();
+    }
+  };
+
+  // ────────────────────────────────────────────────────────────────────────
+  // INSIGHTS - Analytics Intelligence
+  // ────────────────────────────────────────────────────────────────────────
+  AnimatedHeroBackground.prototype._initInsights = function () {
+    var nodeCount = this.isMobile ? 7 : 13;
+    var nodes = [];
+    for (var i = 0; i < nodeCount; i++) {
+      nodes.push({
+        baseX:      rand(0.04, 0.96),
+        baseY:      rand(0.06, 0.94),
+        ampX:       rand(5, 15),
+        ampY:       rand(4, 11),
+        freqX:      rand(0.022, 0.065),
+        freqY:      rand(0.018, 0.055),
+        phaseX:     rand(0, TWO_PI),
+        phaseY:     rand(0, TWO_PI),
+        pulsePhase: rand(0, TWO_PI),
+        r:          rand(1.2, 2.8),
+        opacity:    rand(0.25, 0.60),
+      });
+    }
+
+    var edges = [];
+    var threshold = this.isMobile ? 0.52 : 0.42;
+    for (var ii = 0; ii < nodes.length; ii++) {
+      for (var jj = ii + 1; jj < nodes.length; jj++) {
+        var dx = nodes[ii].baseX - nodes[jj].baseX;
+        var dy = nodes[ii].baseY - nodes[jj].baseY;
+        if (Math.sqrt(dx * dx + dy * dy) < threshold) {
+          edges.push({ from: ii, to: jj, opacity: rand(0.035, 0.085) });
+        }
+      }
+    }
+
+    var hotspots = [];
+    var hCount = this.isMobile ? 2 : 3;
+    for (var h = 0; h < hCount; h++) {
+      hotspots.push({
+        x:       rand(0.15, 0.85),
+        y:       rand(0.15, 0.85),
+        r:       rand(0.18, 0.32),
+        opacity: rand(0.022, 0.048),
+        phase:   rand(0, TWO_PI),
+      });
+    }
+
+    var charts = [];
+    if (!this.isMobile) {
+      for (var c = 0; c < 2; c++) {
+        var bars = [];
+        for (var bb = 0; bb < 7; bb++) { bars.push(rand(0.25, 0.90)); }
+        charts.push({
+          x: rand(0.60, 0.84), y: rand(0.22, 0.50),
+          w: 0.14, h: 0.13, bars: bars,
+          opacity: rand(0.032, 0.060),
+          phase:   rand(0, TWO_PI),
+        });
+      }
+    }
+
+    this.insightsState = { nodes: nodes, edges: edges, hotspots: hotspots, charts: charts };
+  };
+
+  AnimatedHeroBackground.prototype._drawInsights = function (ctx, W, H, dt) {
+    var state = this.insightsState;
+
+    // Warm heatmap zones
+    this._drawInsightsHeatmap(ctx, W, H, state);
+
+    // Compute floating node positions
+    var positions = [];
+    for (var i = 0; i < state.nodes.length; i++) {
+      var n = state.nodes[i];
+      positions.push({
+        x:          n.baseX * W + Math.sin(this.t * n.freqX * TWO_PI + n.phaseX) * n.ampX,
+        y:          n.baseY * H + Math.sin(this.t * n.freqY * TWO_PI + n.phaseY) * n.ampY,
+        r:          n.r,
+        opacity:    n.opacity,
+        pulsePhase: n.pulsePhase,
+      });
+    }
+
+    // Network connection lines
+    ctx.save();
+    for (var ei = 0; ei < state.edges.length; ei++) {
+      var e    = state.edges[ei];
+      var from = positions[e.from];
+      var to   = positions[e.to];
+      ctx.globalAlpha = e.opacity;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth   = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // The hero graph line
+    this._drawInsightsGraph(ctx, W, H, state);
+
+    // Ghost bar charts (desktop only)
+    if (!this.isMobile && state.charts.length > 0) {
+      this._drawInsightsCharts(ctx, W, H, state);
+    }
+
+    // Intelligence nodes
+    for (var ni = 0; ni < positions.length; ni++) {
+      var pos   = positions[ni];
+      var pulse = 0.5 + 0.5 * Math.sin(this.t * 0.75 + pos.pulsePhase);
+
+      // Soft halo
+      ctx.save();
+      ctx.globalAlpha = pos.opacity * 0.18 * pulse;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth   = 0.5;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, pos.r + 5 + pulse * 7, 0, TWO_PI);
+      ctx.stroke();
+      ctx.restore();
+
+      // Core dot
+      ctx.save();
+      ctx.globalAlpha = pos.opacity * (0.55 + 0.45 * pulse);
+      ctx.fillStyle   = 'rgba(255,255,255,1)';
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, pos.r, 0, TWO_PI);
+      ctx.fill();
+      ctx.restore();
+    }
+  };
+
+  AnimatedHeroBackground.prototype._drawInsightsGraph = function (ctx, W, H, state) {
+    // Sits in the lower portion of the hero, away from the headline text
+    var graphTop    = H * 0.50;
+    var graphBottom = H * 0.88;
+    var graphH      = graphBottom - graphTop;
+    var nPts        = this.isMobile ? 50 : 90;
+
+    // Smooth organic waveform that scrolls from left to right
+    var tScroll = this.t * 0.055;
+    var pts = [];
+    for (var i = 0; i <= nPts; i++) {
+      var xFrac = i / nPts;
+      var ph    = xFrac - tScroll;
+      var y     = 0;
+      y += 0.30 * Math.sin(ph * TWO_PI * 1.10);
+      y += 0.18 * Math.sin(ph * TWO_PI * 2.30 + 1.20);
+      y += 0.10 * Math.sin(ph * TWO_PI * 4.70 + 2.50);
+      y += 0.06 * Math.sin(ph * TWO_PI * 8.00 + 0.70);
+      var yNorm = clamp(0.5 + y * 0.58, 0.04, 0.96);
+      pts.push({ x: xFrac * W, y: graphTop + yNorm * graphH });
+    }
+
+    var buildPath = function (context, points) {
+      context.beginPath();
+      context.moveTo(points[0].x, points[0].y);
+      for (var pi = 1; pi < points.length - 1; pi++) {
+        var mx = (points[pi].x + points[pi + 1].x) * 0.5;
+        var my = (points[pi].y + points[pi + 1].y) * 0.5;
+        context.quadraticCurveTo(points[pi].x, points[pi].y, mx, my);
+      }
+      context.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+    };
+
+    // Subtle area fill
+    ctx.save();
+    var fillGrad = ctx.createLinearGradient(0, graphTop, 0, graphBottom);
+    fillGrad.addColorStop(0, 'rgba(212,175,115,0.055)');
+    fillGrad.addColorStop(1, 'rgba(212,175,115,0)');
+    ctx.fillStyle = fillGrad;
+    buildPath(ctx, pts);
+    ctx.lineTo(W, graphBottom);
+    ctx.lineTo(0, graphBottom);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // Outer champagne glow
+    ctx.save();
+    ctx.strokeStyle = 'rgba(212,175,115,0.07)';
+    ctx.lineWidth   = 9;
+    ctx.lineJoin    = 'round';
+    ctx.lineCap     = 'round';
+    ctx.shadowBlur  = 18;
+    ctx.shadowColor = 'rgba(212,175,115,0.28)';
+    buildPath(ctx, pts);
+    ctx.stroke();
+    ctx.restore();
+
+    // Mid glow
+    ctx.save();
+    ctx.strokeStyle = 'rgba(232,210,168,0.11)';
+    ctx.lineWidth   = 3.5;
+    ctx.lineJoin    = 'round';
+    ctx.lineCap     = 'round';
+    ctx.shadowBlur  = 9;
+    ctx.shadowColor = 'rgba(212,175,115,0.40)';
+    buildPath(ctx, pts);
+    ctx.stroke();
+    ctx.restore();
+
+    // Core line
+    ctx.save();
+    ctx.strokeStyle = 'rgba(240,225,195,0.22)';
+    ctx.lineWidth   = 1.2;
+    ctx.lineJoin    = 'round';
+    ctx.lineCap     = 'round';
+    buildPath(ctx, pts);
+    ctx.stroke();
+    ctx.restore();
+
+    // Live data dot traveling along the wave
+    var dotFrac = ((this.t * 0.04) % 1.0);
+    var dotIdx  = Math.min(Math.round(dotFrac * nPts), pts.length - 1);
+    var dp      = pts[dotIdx];
+
+    ctx.save();
+    ctx.globalAlpha = 0.80;
+    ctx.fillStyle   = 'rgba(232,210,168,1)';
+    ctx.shadowBlur  = 14;
+    ctx.shadowColor = 'rgba(212,175,115,1)';
+    ctx.beginPath();
+    ctx.arc(dp.x, dp.y, 2.8, 0, TWO_PI);
+    ctx.fill();
+    ctx.restore();
+
+    // Faint vertical drop line from dot
+    ctx.save();
+    ctx.globalAlpha = 0.09;
+    ctx.strokeStyle = 'rgba(212,175,115,1)';
+    ctx.lineWidth   = 0.5;
+    ctx.setLineDash([2, 5]);
+    ctx.beginPath();
+    ctx.moveTo(dp.x, dp.y + 3);
+    ctx.lineTo(dp.x, graphBottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  };
+
+  AnimatedHeroBackground.prototype._drawInsightsHeatmap = function (ctx, W, H, state) {
+    for (var i = 0; i < state.hotspots.length; i++) {
+      var hs    = state.hotspots[i];
+      var pulse = 0.5 + 0.5 * Math.sin(this.t * 0.28 + hs.phase);
+      var r     = (hs.r + pulse * 0.04) * Math.max(W, H);
+      var cx    = hs.x * W;
+      var cy    = hs.y * H;
+      var a     = hs.opacity * (0.65 + 0.35 * pulse);
+
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      grad.addColorStop(0,    'rgba(190,155,90,' + a + ')');
+      grad.addColorStop(0.45, 'rgba(190,155,90,' + (a * 0.25) + ')');
+      grad.addColorStop(1,    'rgba(190,155,90,0)');
+
+      ctx.save();
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+    }
+  };
+
+  AnimatedHeroBackground.prototype._drawInsightsCharts = function (ctx, W, H, state) {
+    for (var i = 0; i < state.charts.length; i++) {
+      var ch    = state.charts[i];
+      var pulse = 0.5 + 0.5 * Math.sin(this.t * 0.28 + ch.phase);
+      var alpha = ch.opacity * (0.55 + 0.45 * pulse);
+      var cX    = ch.x * W;
+      var cY    = ch.y * H;
+      var cW    = ch.w * W;
+      var cH    = ch.h * H;
+      var gap   = cW / ch.bars.length;
+      var bW    = gap * 0.55;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      for (var b = 0; b < ch.bars.length; b++) {
+        var bH = ch.bars[b] * cH * (0.80 + 0.20 * Math.sin(this.t * 0.35 + b * 1.1 + ch.phase));
+        ctx.fillStyle = 'rgba(255,255,255,0.60)';
+        ctx.fillRect(cX + b * gap + gap * 0.22, cY + cH - bH, bW, bH);
+      }
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+      ctx.lineWidth   = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(cX, cY + cH);
+      ctx.lineTo(cX + cW, cY + cH);
+      ctx.stroke();
+
       ctx.restore();
     }
   };
