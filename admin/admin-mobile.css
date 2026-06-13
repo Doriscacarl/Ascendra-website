@@ -3,6 +3,15 @@
    Linked from every admin HTML page.
    ───────────────────────────────────────────────────── */
 
+/* ── CRITICAL: ios safari — html overflow:hidden kills all touch scroll ── */
+@media (max-width: 960px) {
+  html { overflow: visible !important }
+  #main {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+  }
+}
+
 /* ── TOPBAR: tighter padding on mobile ─────────────── */
 @media (max-width: 960px) {
   #topbar {
