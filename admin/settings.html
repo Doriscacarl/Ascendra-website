@@ -682,7 +682,7 @@ async function changePassword() {
     const r = await fetch('/api/admin-security', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'change-pin', currentPin: cur, newPin: nw })
+      body: JSON.stringify({ action: 'change-password', currentPassword: cur, newPassword: nw })
     });
     const d = await r.json();
     if (r.ok && d.success) {

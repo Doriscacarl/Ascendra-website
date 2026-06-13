@@ -191,7 +191,7 @@ function render(){
   document.getElementById('k-rev').textContent=fmtAmt(totalRev);
   const revChart=document.getElementById('rev-chart');
   const revLabel=document.getElementById('rev-label');
-  if(paidInvoices.length===0){revChart.innerHTML='';revChart.style.display='none';revLabel.textContent='Awaiting payment data';document.getElementById('rev-chart').parentElement.querySelector('.chart-bars') && (revChart.innerHTML=emptyChart('No revenue recorded yet'));}
+  if(paidInvoices.length===0){revChart.innerHTML=emptyChart('No revenue recorded yet');revChart.style.display='flex';revLabel.textContent='';}
   else{
     revChart.style.display='flex';revLabel.textContent='';
     const months={};paidInvoices.forEach(i=>{const d=new Date(i.paidAt||i.created);const k=d.toLocaleDateString('en-US',{month:'short'});months[k]=(months[k]||0)+i.amount});
