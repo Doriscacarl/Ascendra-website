@@ -1,0 +1,133 @@
+/* ─────────────────────────────────────────────────────
+   ADMIN PANEL — UNIVERSAL MOBILE FIXES
+   Linked from every admin HTML page.
+   ───────────────────────────────────────────────────── */
+
+/* ── TOPBAR: tighter padding on mobile ─────────────── */
+@media (max-width: 960px) {
+  #topbar {
+    padding: 0 14px !important;
+    gap: 8px !important;
+    overflow: hidden;
+  }
+}
+
+/* ── TOPBAR: prevent page title from wrapping ──────── */
+.tb-cur {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.tb-crumb {
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ── TOPBAR: hide root text on very small screens ──── */
+@media (max-width: 520px) {
+  .tb-root,
+  .tb-sep {
+    display: none !important;
+  }
+}
+
+/* ── TOPBAR: reduce action gap on tiny screens ─────── */
+@media (max-width: 400px) {
+  .tb-acts {
+    gap: 4px !important;
+  }
+  .tb-menu {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* ── TABLES: always scrollable horizontally ────────── */
+.tbl-wrap,
+.table-wrap {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── TOOLBARS: allow wrapping on mobile ─────────────── */
+@media (max-width: 700px) {
+  #crm-toolbar,
+  #clients-toolbar,
+  #toolbar,
+  .act-row {
+    flex-wrap: wrap !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* ── VIEW TOGGLE TABS: scrollable on mobile ─────────── */
+@media (max-width: 600px) {
+  .view-toggle {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: calc(100vw - 32px);
+    flex-shrink: 1;
+  }
+}
+
+/* ── MAIN CONTENT: reduce side padding on mobile ────── */
+@media (max-width: 640px) {
+  .inner {
+    padding: 18px 16px 40px !important;
+  }
+  .page-pad {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* ── MODALS: full-width bottom sheet on phones ──────── */
+@media (max-width: 480px) {
+  .modal-bg {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal {
+    border-radius: var(--r-lg, 16px) var(--r-lg, 16px) 0 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-width: 100% !important;
+    max-height: 92vh;
+  }
+}
+
+/* ── FORM ROWS: single column on mobile ─────────────── */
+@media (max-width: 540px) {
+  .form-row-2,
+  .fg2,
+  .f-2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── KPI GRIDS: 2-up on mobile, 1-up on tiny ───────── */
+@media (max-width: 600px) {
+  .kpi-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+@media (max-width: 380px) {
+  .kpi-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── TOUCH: ensure all interactive elements are 44px── */
+@media (max-width: 960px) {
+  .filter-chip {
+    min-height: 38px;
+  }
+  .vt-btn {
+    min-height: 38px;
+    padding: 8px 12px !important;
+  }
+}
