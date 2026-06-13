@@ -1,4 +1,4 @@
-/* AnimatedHeroBackground — Ascendra premium canvas hero animations
+﻿/* AnimatedHeroBackground - Ascendra premium canvas hero animations
    Usage: new AnimatedHeroBackground(canvasEl, 'services'|'projects'|'process'|'about'|'contact')
 */
 (function () {
@@ -394,7 +394,7 @@
   };
 
   // ────────────────────────────────────────────────────────────────────────
-  // SERVICES — Wireframe UI Panels Assembling
+  // SERVICES - Wireframe UI Panels Assembling
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._drawServices = function (ctx, W, H, dt) {
     var state     = this.serviceState;
@@ -418,7 +418,7 @@
     var w = rand(175, 275);
     var h = rand(115, 195);
 
-    // Pick position — avoid text region (left side on desktop)
+    // Pick position - avoid text region (left side on desktop)
     var x, y, attempts = 0;
     do {
       x = rand(16, W - w - 16);
@@ -541,7 +541,7 @@
   };
 
   // ────────────────────────────────────────────────────────────────────────
-  // PROJECTS — Floating Browser Frames
+  // PROJECTS - Floating Browser Frames
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._drawProjects = function (ctx, W, H, dt) {
     var frames = this.projectState.frames;
@@ -619,7 +619,7 @@
   };
 
   // ────────────────────────────────────────────────────────────────────────
-  // PROCESS — Timeline Flow
+  // PROCESS - Timeline Flow
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._drawProcess = function (ctx, W, H, dt) {
     var state = this.processState;
@@ -749,7 +749,7 @@
   };
 
   // ────────────────────────────────────────────────────────────────────────
-  // ABOUT — Design Studio Grid
+  // ABOUT - Design Studio Grid
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._drawAbout = function (ctx, W, H, dt) {
     // Fine 40px grid
@@ -836,7 +836,7 @@
   };
 
   // ────────────────────────────────────────────────────────────────────────
-  // CONTACT — Network Graph
+  // CONTACT - Network Graph
   // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._drawContact = function (ctx, W, H, dt) {
     var state = this.contactState;

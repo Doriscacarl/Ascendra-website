@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project — Ascendra</title>
-<meta name="description" content="Ascendra project case study — premium digital growth systems engineered for real business results.">
+<title>Project | Ascendra</title>
+<meta name="description" content="Ascendra project case study, premium digital growth systems engineered for real business results.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -142,7 +142,7 @@
                 <span id="pd-browser-url" style="font-family:'Geist',monospace;font-size:9px;color:rgba(255,255,255,0.28);letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">project.com</span>
               </div>
             </div>
-            <!-- Screenshot — object-fit:contain so nothing is cropped -->
+            <!-- Screenshot, object-fit:contain so nothing is cropped -->
             <div style="aspect-ratio:16/10;background:#080808;position:relative;overflow:hidden;">
               <img id="pd-hero-img" src="" alt="" loading="eager"
                 style="width:100%;height:100%;object-fit:contain;object-position:center top;opacity:0;display:none;transition:opacity 0.6s ease;">
@@ -266,7 +266,7 @@
       <h2 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.2rem,5.5vw,5rem);line-height:0.97;letter-spacing:-0.03em;">
         Your Business.<br><em class="italic font-normal text-platinum">Is Next.</em>
       </h2>
-      <p class="text-silver/65 font-body text-lg leading-relaxed max-w-lg mx-auto mb-10 font-light">Every engagement starts with a 30-minute discovery call. No pitch, no pressure — just an honest conversation about your business and what's possible.</p>
+      <p class="text-silver/65 font-body text-lg leading-relaxed max-w-lg mx-auto mb-10 font-light">Every engagement starts with a 30-minute discovery call. No pitch, no pressure, just an honest conversation about your business and what's possible.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="quote.html" class="btn-primary justify-center">Start My Project <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></a>
         <a href="contact.html" class="btn-ghost justify-center">Request Private Consultation</a>
@@ -320,7 +320,7 @@ function showNotFound() {
 
 function renderProject(p) {
   // Update page title
-  document.title = `${p.name} — Ascendra`;
+  document.title = `${p.name}, Ascendra`;
 
   // Hero image – fade in, hide placeholder when loaded
   if (p.hero_image) {
@@ -383,7 +383,7 @@ function renderProject(p) {
       </div>`).join('');
   }
 
-  // Gallery — filter out any empty/invalid URLs before rendering
+  // Gallery, filter out any empty/invalid URLs before rendering
   const gallery = (p.gallery_images || []).filter(img => typeof img === 'string' && img.trim().length > 0);
   if (gallery.length > 0) {
     document.getElementById('pd-gallery-section').style.display = '';

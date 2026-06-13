@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -708,7 +708,7 @@ body{
     .catch(function() {
       document.getElementById('ov-load').classList.remove('show');
       pin = ''; renderDots();
-      showMsg('Network error — please try again', 'error');
+      showMsg('Network error, please try again', 'error');
     });
   }
 
@@ -781,7 +781,7 @@ body{
       }
     }).then(function(assertion) {
       if (!assertion) throw new Error('No assertion');
-      // Platform authenticator confirmed user identity — verify bio token with server
+      // Platform authenticator confirmed user identity, verify bio token with server
       return fetch('/api/verify-pin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -802,7 +802,7 @@ body{
       if (e && (e.name === 'NotAllowedError' || e.name === 'AbortError')) {
         showMsg('Biometric cancelled', 'info');
       } else {
-        showMsg('Biometric failed — use PIN', 'error');
+        showMsg('Biometric failed, use PIN', 'error');
       }
     });
   }
@@ -941,7 +941,7 @@ body{
 
   // ── Physical keyboard ────────────────────────────────────────
   document.addEventListener('keydown', function(e) {
-    // Always handle for desktop input — it has native focus handling
+    // Always handle for desktop input, it has native focus handling
     var isDesktop = window.innerWidth >= 768;
     if (isDesktop) return; // desktop input handles its own keydown natively
 

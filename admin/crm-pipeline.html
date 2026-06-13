@@ -299,7 +299,7 @@ button,input,select,textarea{font-family:inherit}a{color:inherit;text-decoration
 <script src="/config.js"></script>
 <script>
 /* ════════════════════════════════════════════════════════════
-   ASCENDRA CRM PIPELINE — Automated Supabase Engine
+   ASCENDRA CRM PIPELINE, Automated Supabase Engine
    ════════════════════════════════════════════════════════════ */
 
 const SB_URL = window.SUPABASE_URL;
@@ -423,7 +423,7 @@ async function syncSourcesIntoCRM() {
         for (const l of toInsert) {
           await notify('new_lead',
             `New ${sourceLabel(l.source)} from ${l.business||l.name}`,
-            l.lead_score >= 50 ? `Qualified (score ${l.lead_score}) — moved to Lead stage.` : `Score ${l.lead_score} — needs review.`,
+            l.lead_score >= 50 ? `Qualified (score ${l.lead_score}), moved to Lead stage.` : `Score ${l.lead_score}, needs review.`,
             'crm_leads', null);
         }
       }
@@ -458,7 +458,7 @@ async function createCRMFromSource(source, row) {
     applyScoreToLead(lead);
     const { data: newLead } = await sb.from('crm_leads').insert(lead).select().single();
     await notify('new_lead', `New ${sourceLabel(source)} from ${lead.business||lead.name}`,
-      lead.lead_score >= 50 ? `Automatically qualified — score ${lead.lead_score}.` : `Score ${lead.lead_score} — flagged for review.`,
+      lead.lead_score >= 50 ? `Automatically qualified, score ${lead.lead_score}.` : `Score ${lead.lead_score}, flagged for review.`,
       'crm_leads', newLead?.id||null);
     showToast(`New submission: <strong>${lead.business||lead.name}</strong>`, 'person_add');
   } catch(e) { console.error('Create CRM lead error:', e); }
@@ -570,7 +570,7 @@ function buildCard(l, s) {
       ${l.priority_flag?'<span class="kc-pri">⚡ Priority</span>':''}
     </div>
     <div class="kc-name">${esc(l.name)}</div>
-    <div class="kc-biz">${esc(l.business||l.email||'—')}</div>
+    <div class="kc-biz">${esc(l.business||l.email||'')}</div>
     <div class="kc-meta">
       ${l.project_type?`<span class="kc-badge" style="background:${s.bg};color:${s.color}">${esc(l.project_type)}</span>`:''}
       ${l.budget?`<span class="kc-badge" style="background:rgba(110,231,183,0.07);color:var(--green)">${esc(l.budget)}</span>`:''}
@@ -721,7 +721,7 @@ async function moveTo(id, stage) {
       consultation: { title:`Consultation scheduled with ${l.business||l.name}`, msg:`Moving to Consultation stage.` },
       proposal_sent:{ title:`Proposal sent to ${l.business||l.name}`, msg:`Lead moved to Proposal Sent stage.` },
       negotiating:  { title:`${l.business||l.name} entered negotiation`, msg:`Revision or changes requested.` },
-      won:          { title:`New client won — ${l.business||l.name}`, msg:`Congratulations! Lead marked as Won.` },
+      won:          { title:`New client won, ${l.business||l.name}`, msg:`Congratulations! Lead marked as Won.` },
       active_client:{ title:`${l.business||l.name} is now active`, msg:`Client moved to active delivery.` }
     };
     if (msgs[stage]) await notify('pipeline_update', msgs[stage].title, msgs[stage].msg, 'crm_leads', id);

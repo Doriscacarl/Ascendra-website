@@ -598,7 +598,7 @@ a { color:inherit; text-decoration:none }
 <script src="/config.js"></script>
 <script>
 /* ════════════════════════════════════════════════════════════
-   AI QUALIFICATION CENTER — Supabase Integration
+   AI QUALIFICATION CENTER, Supabase Integration
    ════════════════════════════════════════════════════════════ */
 const SB_URL = window.SUPABASE_URL;
 const SB_KEY = window.SUPABASE_ANON_KEY;
@@ -929,7 +929,7 @@ async function acceptLead(id) {
   try {
     await sbClient.from('crm_leads').update({ pipeline_stage:'lead', qualification_status:'qualified', updated_at:new Date().toISOString() }).eq('id', id);
     await sbClient.from('notifications').insert({ type:'lead_qualified', title:`New qualified lead: ${l.name}`, message:'New qualified lead ready for review.', status:'unread', related_table:'crm_leads', related_id:String(id) });
-    showToast(`<strong>${l.name}</strong> accepted — moved to Pipeline`, 'check_circle');
+    showToast(`<strong>${l.name}</strong> accepted, moved to Pipeline`, 'check_circle');
     await reloadLeads();
   } catch(e) { showToast('Error accepting lead', 'error'); }
 }

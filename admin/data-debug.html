@@ -209,7 +209,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
         <div><div class="conn-label">contact_submissions</div><div class="conn-sub">Strategy call form → Leads</div></div>
         <div class="conn-icon"><span class="ms" style="font-size:16px;color:var(--primary)">person_search</span></div>
       </div>
-      <div class="conn-count loading loading-pulse" id="cnt-contact">—</div>
+      <div class="conn-count loading loading-pulse" id="cnt-contact">·</div>
       <div id="st-contact" style="display:flex;align-items:center;gap:6px;margin-top:8px">
         <span class="status-dot dot-gray"></span>
         <span style="font-size:12px;color:var(--muted)">Checking…</span>
@@ -221,7 +221,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
         <div><div class="conn-label">quote_leads</div><div class="conn-sub">Quote calculator → Quote Requests</div></div>
         <div class="conn-icon"><span class="ms" style="font-size:16px;color:var(--amber)">request_quote</span></div>
       </div>
-      <div class="conn-count loading loading-pulse" id="cnt-quotes">—</div>
+      <div class="conn-count loading loading-pulse" id="cnt-quotes">·</div>
       <div id="st-quotes" style="display:flex;align-items:center;gap:6px;margin-top:8px">
         <span class="status-dot dot-gray"></span>
         <span style="font-size:12px;color:var(--muted)">Checking…</span>
@@ -233,7 +233,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
         <div><div class="conn-label">website_audit_requests</div><div class="conn-sub">Audit form → Website Audits</div></div>
         <div class="conn-icon"><span class="ms" style="font-size:16px;color:var(--green)">pageview</span></div>
       </div>
-      <div class="conn-count loading loading-pulse" id="cnt-audits">—</div>
+      <div class="conn-count loading loading-pulse" id="cnt-audits">·</div>
       <div id="st-audits" style="display:flex;align-items:center;gap:6px;margin-top:8px">
         <span class="status-dot dot-gray"></span>
         <span style="font-size:12px;color:var(--muted)">Checking…</span>
@@ -245,7 +245,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
         <div><div class="conn-label">messages</div><div class="conn-sub">Contact message form → Messages</div></div>
         <div class="conn-icon"><span class="ms" style="font-size:16px;color:var(--purple)">chat_bubble</span></div>
       </div>
-      <div class="conn-count loading loading-pulse" id="cnt-messages">—</div>
+      <div class="conn-count loading loading-pulse" id="cnt-messages">·</div>
       <div id="st-messages" style="display:flex;align-items:center;gap:6px;margin-top:8px">
         <span class="status-dot dot-gray"></span>
         <span style="font-size:12px;color:var(--muted)">Checking…</span>
@@ -300,7 +300,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
   </div>
 
   <!-- ── Last 10 Records per Table ─────────────────── -->
-  <div class="sec-label">Last 10 Records — contact_submissions</div>
+  <div class="sec-label">Last 10 Records, contact_submissions</div>
   <div class="gc section-block" style="overflow:hidden">
     <div style="overflow-x:auto">
       <table class="dg" id="tbl-contact"><thead><tr><th>Name</th><th>Business</th><th>Email</th><th>Source</th><th>Status</th><th>Goals</th><th>Submitted</th></tr></thead>
@@ -308,7 +308,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
     </div>
   </div>
 
-  <div class="sec-label">Last 10 Records — quote_leads</div>
+  <div class="sec-label">Last 10 Records, quote_leads</div>
   <div class="gc section-block" style="overflow:hidden">
     <div style="overflow-x:auto">
       <table class="dg" id="tbl-quotes"><thead><tr><th>Name</th><th>Business</th><th>Email</th><th>Package</th><th>Est. Range</th><th>Status</th><th>Submitted</th></tr></thead>
@@ -316,7 +316,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
     </div>
   </div>
 
-  <div class="sec-label">Last 10 Records — website_audit_requests</div>
+  <div class="sec-label">Last 10 Records, website_audit_requests</div>
   <div class="gc section-block" style="overflow:hidden">
     <div style="overflow-x:auto">
       <table class="dg" id="tbl-audits"><thead><tr><th>Name</th><th>Business</th><th>Email</th><th>Website</th><th>Budget</th><th>Status</th><th>Submitted</th></tr></thead>
@@ -324,7 +324,7 @@ table.dg tr:hover td{background:rgba(255,255,255,0.018)}
     </div>
   </div>
 
-  <div class="sec-label">Last 10 Records — messages</div>
+  <div class="sec-label">Last 10 Records, messages</div>
   <div class="gc section-block" style="overflow:hidden">
     <div style="overflow-x:auto">
       <table class="dg" id="tbl-messages"><thead><tr><th>From</th><th>Subject</th><th>Email</th><th>Source</th><th>Read</th><th>Submitted</th></tr></thead>
@@ -438,8 +438,8 @@ CREATE POLICY "anon_select_messages"
 };
 
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-function fmtDate(d){ if(!d) return '—'; const dt=new Date(d); return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) }
-function timeAgo(d){ if(!d) return '—'; const ms=Date.now()-new Date(d).getTime(); const m=Math.floor(ms/60000); if(m<1) return 'Just now'; if(m<60) return m+'m ago'; const h=Math.floor(m/60); if(h<24) return h+'h ago'; return Math.floor(h/24)+'d ago' }
+function fmtDate(d){ if(!d) return ''; const dt=new Date(d); return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) }
+function timeAgo(d){ if(!d) return ''; const ms=Date.now()-new Date(d).getTime(); const m=Math.floor(ms/60000); if(m<1) return 'Just now'; if(m<60) return m+'m ago'; const h=Math.floor(m/60); if(h<24) return h+'h ago'; return Math.floor(h/24)+'d ago' }
 function truncate(s, n){ return (s||'').length>n ? s.slice(0,n)+'…' : (s||'') }
 
 function setConnStatus(id, state, count, errMsg) {
@@ -450,17 +450,17 @@ function setConnStatus(id, state, count, errMsg) {
   if (state === 'ok') {
     cntEl.textContent = count;
     cntEl.classList.add('ok');
-    stEl.innerHTML = '<span class="status-dot dot-green"></span><span style="font-size:12px;color:var(--green)">Connected — '+count+' record'+(count!==1?'s':'')+'</span>';
+    stEl.innerHTML = '<span class="status-dot dot-green"></span><span style="font-size:12px;color:var(--green)">Connected, '+count+' record'+(count!==1?'s':'')+'</span>';
     errEl.innerHTML = '';
   } else if (state === 'warn') {
     cntEl.textContent = '0';
     cntEl.classList.add('warn');
-    stEl.innerHTML = '<span class="status-dot dot-amber"></span><span style="font-size:12px;color:var(--amber)">Table exists — 0 records (check RLS policy below)</span>';
+    stEl.innerHTML = '<span class="status-dot dot-amber"></span><span style="font-size:12px;color:var(--amber)">Table exists, 0 records (check RLS policy below)</span>';
     errEl.innerHTML = '';
   } else {
     cntEl.textContent = '!';
     cntEl.classList.add('err');
-    stEl.innerHTML = '<span class="status-dot dot-red"></span><span style="font-size:12px;color:var(--red)">Error — table may not exist</span>';
+    stEl.innerHTML = '<span class="status-dot dot-red"></span><span style="font-size:12px;color:var(--red)">Error, table may not exist</span>';
     if (errMsg) errEl.innerHTML = `<div class="err-box">Error: ${esc(errMsg)}</div>`;
   }
 }
@@ -476,7 +476,7 @@ function renderRecentRecord(containerId, data, fields) {
   el.innerHTML = fields.map(([label, val]) => `
     <div style="display:flex;align-items:flex-start;gap:10px;padding:9px 20px;border-bottom:1px solid rgba(255,255,255,0.025)">
       <span style="font-family:var(--fw-m);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);width:100px;flex-shrink:0;padding-top:1px">${label}</span>
-      <span style="font-size:12.5px;color:var(--text2);flex:1;word-break:break-word">${esc(val||'—')}</span>
+      <span style="font-size:12.5px;color:var(--text2);flex:1;word-break:break-word">${esc(val||'')}</span>
     </div>
   `).join('');
 }
@@ -568,7 +568,7 @@ async function runAudit() {
 
   // ── contact_submissions ───────────────────────────
   if (rContact.error) {
-    setConnStatus('contact', 'error', null, `${rContact.error.code} — ${rContact.error.message}`);
+    setConnStatus('contact', 'error', null, `${rContact.error.code}, ${rContact.error.message}`);
     issues.push({ table: 'contact_submissions', type: 'error', sql: FIX_SQL.contact_submissions_create });
     renderRecentRecord('recent-contact', null, []);
     renderTable('tbody-contact', [], null);
@@ -593,7 +593,7 @@ async function runAudit() {
       <td title="${esc(r.name)}">${esc(truncate(r.name,22))}</td>
       <td title="${esc(r.business)}">${esc(truncate(r.business,22))}</td>
       <td title="${esc(r.email)}">${esc(truncate(r.email,26))}</td>
-      <td>${esc(r.source||'—')}</td>
+      <td>${esc(r.source||'')}</td>
       <td><span class="badge ${r.status==='new'?'b-gray':r.status==='won'?'b-green':'b-blue'}">${esc(r.status||'new')}</span></td>
       <td title="${esc(r.goals)}">${esc(truncate(r.goals,30))}</td>
       <td style="white-space:nowrap">${timeAgo(r.created_at)}</td>
@@ -602,7 +602,7 @@ async function runAudit() {
 
   // ── quote_leads ───────────────────────────────────
   if (rQuotes.error) {
-    setConnStatus('quotes', 'error', null, `${rQuotes.error.code} — ${rQuotes.error.message}`);
+    setConnStatus('quotes', 'error', null, `${rQuotes.error.code}, ${rQuotes.error.message}`);
     issues.push({ table: 'quote_leads', type: 'error', sql: FIX_SQL.quote_leads_create });
     renderRecentRecord('recent-quote', null, []);
     renderTable('tbody-quotes', [], null);
@@ -620,7 +620,7 @@ async function runAudit() {
       ['Business', rQuotes.data[0].business],
       ['Email', rQuotes.data[0].email],
       ['Package', rQuotes.data[0].package_selected],
-      ['Estimate', rQuotes.data[0].estimated_min && rQuotes.data[0].estimated_max ? `$${rQuotes.data[0].estimated_min.toLocaleString()} – $${rQuotes.data[0].estimated_max.toLocaleString()}` : '—'],
+      ['Estimate', rQuotes.data[0].estimated_min && rQuotes.data[0].estimated_max ? `$${rQuotes.data[0].estimated_min.toLocaleString()} – $${rQuotes.data[0].estimated_max.toLocaleString()}` : ''],
       ['Submitted', fmtDate(rQuotes.data[0].created_at)],
     ] : []);
     renderTable('tbody-quotes', rQuotes.data, r => `<tr>
@@ -628,7 +628,7 @@ async function runAudit() {
       <td title="${esc(r.business)}">${esc(truncate(r.business,22))}</td>
       <td title="${esc(r.email)}">${esc(truncate(r.email,26))}</td>
       <td title="${esc(r.package_selected)}">${esc(truncate(r.package_selected,24))}</td>
-      <td>${r.estimated_min?'$'+r.estimated_min.toLocaleString():'—'}${r.estimated_max?' – $'+r.estimated_max.toLocaleString():''}</td>
+      <td>${r.estimated_min?'$'+r.estimated_min.toLocaleString():''}${r.estimated_max?' – $'+r.estimated_max.toLocaleString():''}</td>
       <td><span class="badge ${r.status==='new'?'b-gray':r.status==='accepted'?'b-green':'b-blue'}">${esc(r.status||'new')}</span></td>
       <td style="white-space:nowrap">${timeAgo(r.created_at)}</td>
     </tr>`);
@@ -636,7 +636,7 @@ async function runAudit() {
 
   // ── website_audit_requests ────────────────────────
   if (rAudits.error) {
-    setConnStatus('audits', 'error', null, `${rAudits.error.code} — ${rAudits.error.message}`);
+    setConnStatus('audits', 'error', null, `${rAudits.error.code}, ${rAudits.error.message}`);
     issues.push({ table: 'website_audit_requests', type: 'error', sql: FIX_SQL.website_audit_requests_create });
     renderRecentRecord('recent-audit', null, []);
     renderTable('tbody-audits', [], null);
@@ -662,7 +662,7 @@ async function runAudit() {
       <td title="${esc(r.business_name)}">${esc(truncate(r.business_name,22))}</td>
       <td title="${esc(r.email)}">${esc(truncate(r.email,26))}</td>
       <td title="${esc(r.website_url)}">${esc(truncate((r.website_url||'').replace(/^https?:\/\//,''),26))}</td>
-      <td>${esc(r.budget||'—')}</td>
+      <td>${esc(r.budget||'')}</td>
       <td><span class="badge ${r.status==='new'?'b-gray':r.status==='won'?'b-green':'b-blue'}">${esc(r.status||'new')}</span></td>
       <td style="white-space:nowrap">${timeAgo(r.created_at)}</td>
     </tr>`);
@@ -670,7 +670,7 @@ async function runAudit() {
 
   // ── messages ─────────────────────────────────────
   if (rMessages.error) {
-    setConnStatus('messages', 'error', null, `${rMessages.error.code} — ${rMessages.error.message}`);
+    setConnStatus('messages', 'error', null, `${rMessages.error.code}, ${rMessages.error.message}`);
     issues.push({ table: 'messages', type: 'error', sql: FIX_SQL.messages_create });
     renderRecentRecord('recent-message', null, []);
     renderTable('tbody-messages', [], null);

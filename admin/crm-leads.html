@@ -438,22 +438,22 @@ select.form-inp option { background:var(--s2) }
   <div id="kpi-row">
     <div class="kpi gc">
       <div class="kpi-lbl">Total Leads</div>
-      <div id="kpi-total" class="kpi-ghost">—</div>
+      <div id="kpi-total" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-total-sub">No leads yet</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Qualified</div>
-      <div id="kpi-qualified" class="kpi-ghost">—</div>
+      <div id="kpi-qualified" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-qual-sub">Awaiting pipeline</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Pipeline Value</div>
-      <div id="kpi-value" class="kpi-ghost">—</div>
+      <div id="kpi-value" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-value-sub">Active leads only</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Close Rate</div>
-      <div id="kpi-rate" class="kpi-ghost">—</div>
+      <div id="kpi-rate" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-rate-sub">Won ÷ total closed</div>
     </div>
   </div>
@@ -564,8 +564,8 @@ select.form-inp option { background:var(--s2) }
     <div id="detail-panel">
       <div class="dp-head">
         <div>
-          <div class="dp-company" id="dp-company">—</div>
-          <div class="dp-contact" id="dp-contact">—</div>
+          <div class="dp-company" id="dp-company">·</div>
+          <div class="dp-contact" id="dp-contact">·</div>
         </div>
         <div class="dp-close" onclick="closeDetail()"><span class="ms">close</span></div>
       </div>
@@ -853,8 +853,8 @@ async function load() {
       const meta = getLeadMeta(r.id);
       return {
         id: r.id,
-        company: r.business || r.name || '—',
-        contact: r.name || '—',
+        company: r.business || r.name || '',
+        contact: r.name || '',
         role: r.role || '',
         email: r.email || '',
         phone: r.phone || '',
@@ -892,7 +892,7 @@ async function saveLeadFields_sb(id, fields) {
 async function deleteLeadRecord(id) {
   const { data: deleted, error } = await _sb.from('contact_submissions').delete().eq('id', id).select();
   if (error) return error;
-  if (!deleted || deleted.length === 0) return { message: 'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.' };
+  if (!deleted || deleted.length === 0) return { message: 'Nothing deleted, RLS may be blocking this. Re-run supabase-tables.sql.' };
   return null;
 }
 async function quickDeleteLead(id) {
@@ -930,14 +930,14 @@ function avColor(str) {
 }
 function initials(s) { return (s||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function fmtVal(v) {
-  if (!v) return '—';
+  if (!v) return '';
   const n = parseInt(v);
   if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
   if (n >= 1000) return '$' + Math.round(n/1000) + 'K';
   return '$' + n.toLocaleString();
 }
 function fmtDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return '';
   const d = new Date(iso);
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
@@ -969,7 +969,7 @@ function updateKPIs() {
 
   if (leads.length === 0) {
     ['kpi-total','kpi-qualified','kpi-value','kpi-rate'].forEach(id=>{
-      kpiEl(id).className='kpi-ghost'; kpiEl(id).textContent='—';
+      kpiEl(id).className='kpi-ghost'; kpiEl(id).textContent='';
     });
     kpiEl('kpi-total-sub').textContent='No leads yet';
     kpiEl('kpi-qual-sub').textContent='Awaiting pipeline';
@@ -982,7 +982,7 @@ function updateKPIs() {
     kpiEl('kpi-qual-sub').textContent=qualified.length+' in pipeline';
     kpiEl('kpi-value').className='kpi-val'; kpiEl('kpi-value').textContent=pipelineValue?fmtVal(pipelineValue):'$0';
     kpiEl('kpi-value-sub').textContent='Across '+active.length+' leads';
-    kpiEl('kpi-rate').className='kpi-val'; kpiEl('kpi-rate').textContent=closeRate!==null?closeRate+'%':'—';
+    kpiEl('kpi-rate').className='kpi-val'; kpiEl('kpi-rate').textContent=closeRate!==null?closeRate+'%':'';
     kpiEl('kpi-rate-sub').textContent=closed.length ? won.length+' won of '+closed.length+' closed' : 'No closed deals';
   }
 
@@ -1086,9 +1086,9 @@ function renderTable(filtered) {
       </div></td>
       <td>${esc(l.contact)}${l.role?`<span style="color:var(--muted);font-size:11px"> · ${esc(l.role)}</span>`:''}</td>
       <td><span class="badge ${STATUS_BADGE[l.status]||'b-gray'}">${STATUS_LABELS[l.status]||l.status}</span></td>
-      <td>${esc(l.source||'—')}</td>
+      <td>${esc(l.source||'')}</td>
       <td class="p">${fmtVal(l.value)}</td>
-      <td>${fu?`<span style="font-size:12px;color:${fuOverdue?'var(--red)':'var(--text2)'}">${fuOverdue?'⚠ ':''}${fu.type} · ${fmtDate(fu.date)}</span>`:`<span style="color:var(--muted);font-size:12px">—</span>`}</td>
+      <td>${fu?`<span style="font-size:12px;color:${fuOverdue?'var(--red)':'var(--text2)'}">${fuOverdue?'⚠ ':''}${fu.type} · ${fmtDate(fu.date)}</span>`:`<span style="color:var(--muted);font-size:12px">·</span>`}</td>
       <td>${days===0?'Today':days===1?'Yesterday':days+' days ago'}</td>
       <td>
         <div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
@@ -1145,7 +1145,7 @@ function kanbanCard(l) {
     <div class="lc-contact">${esc(l.contact)}${l.role?` · ${esc(l.role)}`:''}</div>
     <div class="lc-val">${fmtVal(l.value)}</div>
     <div class="lc-row">
-      <span class="badge ${STATUS_BADGE[l.source]||'b-gray'}" style="font-size:9px">${esc(l.source||'—')}</span>
+      <span class="badge ${STATUS_BADGE[l.source]||'b-gray'}" style="font-size:9px">${esc(l.source||'')}</span>
       <span class="lc-age${fuOverdue?' lc-overdue':''}">${fuOverdue?'⚠ Follow-up':days+'d'}</span>
     </div>
   </div>`;
@@ -1285,10 +1285,10 @@ function buildDetailBody(l) {
     <!-- DETAILS -->
     <div class="dp-section">
       <div class="dp-sec-lbl">Details</div>
-      ${fieldRow('Source', l.source||'—')}
-      ${fieldRow('Industry', l.industry||'—')}
-      ${fieldRow('Email', l.email ? `<a href="mailto:${esc(l.email)}" style="color:var(--primary)">${esc(l.email)}</a>` : '—', true)}
-      ${fieldRow('Phone', l.phone||'—')}
+      ${fieldRow('Source', l.source||'')}
+      ${fieldRow('Industry', l.industry||'')}
+      ${fieldRow('Email', l.email ? `<a href="mailto:${esc(l.email)}" style="color:var(--primary)">${esc(l.email)}</a>` : '', true)}
+      ${fieldRow('Phone', l.phone||'')}
       ${fieldRow('Added', fmtDate(l.createdAt))}
       ${l.notes ? `<div class="dp-field"><div class="dp-field-lbl">Notes</div><div class="dp-field-val" style="white-space:pre-wrap;color:var(--text2)">${esc(l.notes)}</div></div>` : ''}
     </div>
@@ -1333,7 +1333,7 @@ async function saveLead() {
     notes: document.getElementById('f-notes').value.trim(),
   };
   const row = await insertNewLead(draft);
-  if (!row) { toast('Failed to save lead — try again','error'); return; }
+  if (!row) { toast('Failed to save lead, try again','error'); return; }
   const lead = {
     ...draft,
     id: row.id,
@@ -1435,7 +1435,7 @@ function confirmMove() {
   const prev = l.status;
   l.status = status;
   const entry = { text:`Moved to <strong>${STATUS_LABELS[status]}</strong>`, color:status==='won'?'green':status==='lost'?'red':'blue', date:new Date().toISOString() };
-  if (note) entry.text += ` — ${esc(note)}`;
+  if (note) entry.text += `, ${esc(note)}`;
   l.timeline.push(entry);
   setLeadMeta(id, { followUps: l.followUps, timeline: l.timeline });
   saveStatus_sb(id, status);
@@ -1535,7 +1535,7 @@ function toggleSidebar() {
   const el=document.getElementById('view-'+name);
   el.style.display = name==='table' ? 'flex' : 'none';
 });
-load(); // async — calls applyFilters() after data arrives
+load(); // async, calls applyFilters() after data arrives
 
 // Set today's date as default for follow-up
 const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
@@ -1558,7 +1558,7 @@ document.querySelectorAll('.modal-bg').forEach(bg=>{
 _sb.channel('lead_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'contact_submissions'},payload=>{
   const r=payload.new;
   const meta={followUps:[],timeline:[{text:'Lead submitted via <strong>'+(r.source||'Contact Form')+'</strong>',color:'blue',date:r.created_at}]};
-  leads.unshift({id:r.id,company:r.business||r.name||'—',contact:r.name||'—',role:r.role||'',email:r.email||'',phone:r.phone||'',value:r.value||0,status:r.status||'new',source:r.source||'Contact Form',industry:r.industry||'',notes:r.goals||r.notes||'',createdAt:r.created_at,followUps:meta.followUps,timeline:meta.timeline});
+  leads.unshift({id:r.id,company:r.business||r.name||'',contact:r.name||'',role:r.role||'',email:r.email||'',phone:r.phone||'',value:r.value||0,status:r.status||'new',source:r.source||'Contact Form',industry:r.industry||'',notes:r.goals||r.notes||'',createdAt:r.created_at,followUps:meta.followUps,timeline:meta.timeline});
   applyFilters();
   const sb=document.getElementById('sb-lead-count');if(sb)sb.textContent=leads.length;
   toast('New lead: '+(r.name||'Unknown')+(r.business?' from '+r.business:''),'info');

@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 // On Vercel, env vars are injected automatically.
@@ -30,11 +30,11 @@ const content = `window.SUPABASE_URL = '${supabaseUrl}';\nwindow.SUPABASE_ANON_K
 fs.writeFileSync(path.join(__dirname, 'config.js'), content);
 console.log('✓ config.js generated');
 
-// Warn if auth env vars are missing (non-fatal — API will return 500 until they are set)
+// Warn if auth env vars are missing (non-fatal - API will return 500 until they are set)
 if (!process.env.ADMIN_ACCESS_CODE) {
-  console.warn('⚠  ADMIN_ACCESS_CODE not set — lock screen will not work until this is added in Vercel environment variables.');
+  console.warn('⚠  ADMIN_ACCESS_CODE not set - lock screen will not work until this is added in Vercel environment variables.');
 }
 if (!process.env.ADMIN_SESSION_SECRET) {
-  console.warn('⚠  ADMIN_SESSION_SECRET not set — lock screen will not work until this is added in Vercel environment variables.');
+  console.warn('⚠  ADMIN_SESSION_SECRET not set - lock screen will not work until this is added in Vercel environment variables.');
   console.warn('   Generate one with: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"');
 }

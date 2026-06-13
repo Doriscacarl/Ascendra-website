@@ -1,6 +1,6 @@
-const crypto = require('crypto');
+﻿const crypto = require('crypto');
 
-// In-memory rate limit store (resets on cold start — acceptable for single-user private admin)
+// In-memory rate limit store (resets on cold start - acceptable for single-user private admin)
 const rateLimitStore = new Map();
 
 function hourWindow() {
@@ -146,7 +146,7 @@ module.exports = async function handler(req, res) {
       if (r.ok) {
         const data = await r.json();
         if (data && data[0] && data[0].value) {
-          // Supabase stores HMAC(secret, newPin) — compare directly
+          // Supabase stores HMAC(secret, newPin) - compare directly
           const storedHash = data[0].value;
           const pinHash = crypto.createHmac('sha256', secret).update(pin).digest('hex');
           try {
@@ -155,7 +155,7 @@ module.exports = async function handler(req, res) {
               return res.json({ token: makeToken(code, secret) });
             }
           } catch (_) {}
-          // Wrong PIN (against Supabase hash) — fall through to env var check
+          // Wrong PIN (against Supabase hash) - fall through to env var check
         }
       }
     } catch (_) { /* continue with env var */ }

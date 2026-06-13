@@ -197,7 +197,7 @@ async function loadMessages(){
   else{
     data=rows.map(r=>({
       id:r.id,
-      from:r.source==='internal'?'Doris Cacarl':r.name+(r.business_name?' — '+r.business_name:''),
+      from:r.source==='internal'?'Doris Cacarl':r.name+(r.business_name?', '+r.business_name:''),
       to:r.source==='internal'?r.name:null,
       subject:r.subject||'',
       body:r.message||r.body||'',
@@ -221,7 +221,7 @@ async function markRead(id){
 async function deleteMessage(id){
   if(!confirm('Delete this message? This cannot be undone.')) return;
   const{data:deleted,error}=await _sb.from('messages').delete().eq('id',id).select();
-  if(error||!deleted||deleted.length===0){toast('Delete failed — re-run supabase-tables.sql if this keeps happening');return;}
+  if(error||!deleted||deleted.length===0){toast('Delete failed, re-run supabase-tables.sql if this keeps happening');return;}
   data=data.filter(x=>x.id!==id);
   render(); toast('Message deleted');
 }
@@ -252,7 +252,7 @@ function render(){
     <div class="msg-av">${initials(m.sent?m.to:m.from)}</div>
     <div class="msg-body">
       <div class="msg-name">${esc(m.sent?('To: '+m.to):m.from)}</div>
-      <div class="msg-preview">${m.subject?`<strong style="color:var(--text2)">${esc(m.subject)}</strong> — `:''} ${esc(m.body)}</div>
+      <div class="msg-preview">${m.subject?`<strong style="color:var(--text2)">${esc(m.subject)}</strong>, `:''} ${esc(m.body)}</div>
     </div>
     <div class="msg-meta" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
       <div class="msg-time">${timeAgo(m.created)}</div>
@@ -273,7 +273,7 @@ loadMessages();
 _sb.channel('msg_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},payload=>{
   const r=payload.new;
   if(r.source==='internal') return;
-  data.unshift({id:r.id,from:r.name+(r.business_name?' — '+r.business_name:''),to:null,subject:r.subject||'',body:r.message||'',email:r.email||'',unread:true,sent:false,created:r.created_at});
+  data.unshift({id:r.id,from:r.name+(r.business_name?', '+r.business_name:''),to:null,subject:r.subject||'',body:r.message||'',email:r.email||'',unread:true,sent:false,created:r.created_at});
   render();
   toast('New message from '+(r.name||'visitor'));
 }).subscribe();

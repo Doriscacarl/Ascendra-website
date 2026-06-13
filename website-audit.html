@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Website Audit — Ascendra</title>
+<title>Free Website Audit | Ascendra</title>
 <meta name="description" content="Already have a website? Get a free expert audit and redesign brief from Ascendra. We'll review your design, performance, and conversions.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,7 +88,7 @@
       <h1 class="font-editorial font-bold platinum-text mb-6" style="font-size:clamp(2.8rem,7vw,7rem);line-height:0.95;letter-spacing:-0.04em;">
         Already Have a<br><em class="italic font-normal text-platinum">Website?</em>
       </h1>
-      <p class="text-silver font-body text-lg md:text-xl leading-relaxed font-light">Tell us about your existing site and what's holding you back. We'll review your design, performance, and conversions — and respond with a detailed audit within 48 hours. No cost, no obligation.</p>
+      <p class="text-silver font-body text-lg md:text-xl leading-relaxed font-light">Tell us about your existing site and what's holding you back. We'll review your design, performance, and conversions, and respond with a detailed audit within 48 hours. No cost, no obligation.</p>
     </div>
   </div>
 </section>
@@ -260,7 +260,7 @@
                 <input type="file" name="screenshot" id="screenshotInput" accept="image/*,.pdf" onchange="onFileSelect(this)">
                 <span class="material-symbols-outlined text-pewter block mb-2" style="font-size:24px;" id="fileIcon">upload_file</span>
                 <p class="text-silver text-sm font-body mb-1" id="fileLabel">Click or drag to upload</p>
-                <p class="text-pewter/60 text-xs font-body">PNG, JPG, PDF — max 10MB</p>
+                <p class="text-pewter/60 text-xs font-body">PNG, JPG, PDF, max 10MB</p>
               </div>
               <!-- Upload status indicator -->
               <div id="uploadStatus" style="display:none;margin-top:10px;display:flex;align-items:center;gap:8px;font-family:'Geist',monospace;font-size:0.7rem;letter-spacing:0.06em;"></div>
@@ -291,7 +291,7 @@
       <div class="text-center">
         <span class="material-symbols-outlined text-silver mb-3 block" style="font-size:28px;">volunteer_activism</span>
         <h4 class="font-body font-medium text-platinum text-sm mb-2">No Obligation</h4>
-        <p class="text-pewter text-xs font-body leading-relaxed">The audit is completely free. There's no pressure to proceed — only if it's the right fit.</p>
+        <p class="text-pewter text-xs font-body leading-relaxed">The audit is completely free. There's no pressure to proceed, only if it's the right fit.</p>
       </div>
       <div class="text-center">
         <span class="material-symbols-outlined text-silver mb-3 block" style="font-size:28px;">schedule</span>
@@ -380,11 +380,11 @@ async function handleAuditSubmit(e) {
         setUploadStatus('success', 'Screenshot uploaded successfully');
       } else {
         console.error('Upload error:', uploadError);
-        setUploadStatus('error', 'Upload failed — screenshot skipped');
+        setUploadStatus('error', 'Upload failed, screenshot skipped');
       }
     } catch (err) {
       console.error('Upload exception:', err);
-      setUploadStatus('error', 'Upload failed — screenshot skipped');
+      setUploadStatus('error', 'Upload failed, screenshot skipped');
     }
   }
 

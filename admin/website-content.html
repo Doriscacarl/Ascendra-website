@@ -425,7 +425,7 @@ select.form-inp{cursor:pointer;appearance:none;background-image:url("data:image/
       <div class="form-grid">
         <div class="form-row span-2">
           <div class="form-lbl">Project Title *</div>
-          <input class="form-inp" id="f-title" placeholder="Law Firm Growth System — Digital Intake & Automation" type="text">
+          <input class="form-inp" id="f-title" placeholder="Law Firm Growth System, Digital Intake & Automation" type="text">
         </div>
         <div class="form-row">
           <div class="form-lbl">Industry / Category *</div>
@@ -777,7 +777,7 @@ function handleImageSelect(e) {
     const prev = document.getElementById('upload-preview');
     prev.src = ev.target.result;
     prev.style.display = 'block';
-    document.getElementById('img-url-hint').textContent = file.name + ' — will upload on save';
+    document.getElementById('img-url-hint').textContent = file.name + ', will upload on save';
   };
   reader.readAsDataURL(file);
 }
@@ -857,7 +857,7 @@ async function saveProject() {
   if (error) {
     if (error.code === '42P01') {
       document.getElementById('db-alert').style.display = 'flex';
-      toastErr('Database table missing — run supabase-tables.sql first');
+      toastErr('Database table missing, run supabase-tables.sql first');
     } else {
       toastErr('Save failed: ' + error.message);
     }
@@ -893,7 +893,7 @@ const SECTIONS = [
   {key:'services_headline',   icon:'build',         title:'Services Headline',      desc:'The main headline on the Services page.', fields:[{id:'headline',label:'Headline',type:'text',placeholder:'Every System We Build Is Designed to Grow Your Business'}]},
   {key:'cta_primary',         icon:'ads_click',     title:'Primary CTA',            desc:'The main call-to-action text and button label.', fields:[{id:'heading',label:'CTA Heading',type:'text',placeholder:"Let's Build Your Digital Legacy."},{id:'button',label:'Button Text',type:'text',placeholder:'Get My Project Quote'}]},
   {key:'footer_tagline',      icon:'info',          title:'Footer Tagline',         desc:'The tagline or copyright note in the footer.', fields:[{id:'tagline',label:'Tagline',type:'text',placeholder:'© 2026 ASCENDRA. ALL RIGHTS RESERVED.'}]},
-  {key:'contact_info',        icon:'contact_phone', title:'Contact Information',    desc:'Email, phone, and address shown on the site.', fields:[{id:'email',label:'Email',type:'text',placeholder:'hello@ascendra.co'},{id:'phone',label:'Phone',type:'text',placeholder:'+1 000 000 0000'},{id:'location',label:'Location',type:'text',placeholder:'Remote — Serving clients worldwide'}]},
+  {key:'contact_info',        icon:'contact_phone', title:'Contact Information',    desc:'Email, phone, and address shown on the site.', fields:[{id:'email',label:'Email',type:'text',placeholder:'hello@ascendra.co'},{id:'phone',label:'Phone',type:'text',placeholder:'+1 000 000 0000'},{id:'location',label:'Location',type:'text',placeholder:'Remote, Serving clients worldwide'}]},
   {key:'testimonials',        icon:'format_quote',  title:'Testimonials',           desc:'Manage the testimonial quotes shown on the homepage.', fields:[{id:'t1',label:'Testimonial 1',type:'textarea',placeholder:'Quote text…'},{id:'t1_name',label:'Person Name',type:'text',placeholder:'Jane Smith'},{id:'t1_role',label:'Role / Company',type:'text',placeholder:'Managing Partner, Law Firm'}]},
 ];
 
@@ -914,7 +914,7 @@ async function openSectionEditor(key) {
   sectionKey = key;
   const section = SECTIONS.find(s=>s.key===key);
   if (!section) return;
-  document.getElementById('section-modal-title').textContent = 'Edit — ' + section.title;
+  document.getElementById('section-modal-title').textContent = 'Edit, ' + section.title;
 
   // Load current value from Supabase
   let currentData = {};
@@ -948,7 +948,7 @@ async function saveSectionContent() {
   });
 
   if (!dbAvailable) {
-    toastErr('Database not set up — run supabase-tables.sql first');
+    toastErr('Database not set up, run supabase-tables.sql first');
     return;
   }
 

@@ -1,11 +1,11 @@
-/**
- * Ascendra Admin — Security Operations API
+﻿/**
+ * Ascendra Admin - Security Operations API
  *
  * POST /api/admin-security
  * Actions:
- *   register-biometric  — verify current PIN, return biometric token to store in localStorage
- *   get-recovery-token  — verify current PIN, return formatted recovery code
- *   change-pin          — verify current PIN, store new PIN hash in Supabase (requires SUPABASE_SERVICE_ROLE_KEY)
+ *   register-biometric  - verify current PIN, return biometric token to store in localStorage
+ *   get-recovery-token  - verify current PIN, return formatted recovery code
+ *   change-pin          - verify current PIN, store new PIN hash in Supabase (requires SUPABASE_SERVICE_ROLE_KEY)
  *
  * All actions require ADMIN_ACCESS_CODE + ADMIN_SESSION_SECRET env vars.
  * PIN change requires SUPABASE_SERVICE_ROLE_KEY + the admin_config table in Supabase.
@@ -76,7 +76,7 @@ module.exports = async function handler(req, res) {
   // Returns the biometric token to store in localStorage for future lock screen use.
   if (action === 'register-biometric') {
     if (!verifyPin(body.pin, code)) {
-      return res.status(401).json({ error: 'Incorrect access code — verify your current PIN first' });
+      return res.status(401).json({ error: 'Incorrect access code - verify your current PIN first' });
     }
     const bioToken = crypto.createHmac('sha256', secret)
       .update('biometric-auth-token-v1')

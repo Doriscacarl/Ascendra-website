@@ -389,22 +389,22 @@ select.form-inp option { background:var(--s2) }
   <div id="kpi-row">
     <div class="kpi gc">
       <div class="kpi-lbl">Total Clients</div>
-      <div id="kpi-total" class="kpi-ghost">—</div>
+      <div id="kpi-total" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-total-sub">No clients yet</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Active</div>
-      <div id="kpi-active" class="kpi-ghost">—</div>
+      <div id="kpi-active" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-active-sub">Onboarding included</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Monthly Recurring</div>
-      <div id="kpi-mrr" class="kpi-ghost">—</div>
+      <div id="kpi-mrr" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-mrr-sub">Active clients only</div>
     </div>
     <div class="kpi gc">
       <div class="kpi-lbl">Avg. Monthly</div>
-      <div id="kpi-avg" class="kpi-ghost">—</div>
+      <div id="kpi-avg" class="kpi-ghost">·</div>
       <div class="kpi-sub" id="kpi-avg-sub">Per active client</div>
     </div>
   </div>
@@ -516,8 +516,8 @@ select.form-inp option { background:var(--s2) }
     <div id="detail-panel">
       <div class="dp-head">
         <div style="flex:1;min-width:0">
-          <div class="dp-company" id="dp-company">—</div>
-          <div class="dp-sub" id="dp-sub">—</div>
+          <div class="dp-company" id="dp-company">·</div>
+          <div class="dp-sub" id="dp-sub">·</div>
         </div>
         <div class="dp-close" onclick="closeDetail()"><span class="ms">close</span></div>
       </div>
@@ -676,13 +676,13 @@ function avColor(s)  { let h=0; for(const c of s) h=(h*31+c.charCodeAt(0))|0; re
 function initials(s) { return (s||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 
 function fmtMRR(v) {
-  if (!v) return '—';
+  if (!v) return '';
   const n = parseInt(v);
   if (n >= 1000) return '$'+(n/1000).toFixed(n%1000===0?0:1)+'K';
   return '$'+n.toLocaleString();
 }
 function fmtDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return '';
   return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
 function monthsSince(iso) {
@@ -710,7 +710,7 @@ function updateKPIs() {
   const g = id => document.getElementById(id);
 
   if (clients.length === 0) {
-    ['kpi-total','kpi-active','kpi-mrr','kpi-avg'].forEach(id=>{ g(id).className='kpi-ghost'; g(id).textContent='—'; });
+    ['kpi-total','kpi-active','kpi-mrr','kpi-avg'].forEach(id=>{ g(id).className='kpi-ghost'; g(id).textContent=''; });
     g('kpi-total-sub').textContent='No clients yet';
     g('kpi-active-sub').textContent='Onboarding included';
     g('kpi-mrr-sub').textContent='Active clients only';
@@ -722,7 +722,7 @@ function updateKPIs() {
     g('kpi-active-sub').textContent=clients.filter(c=>c.status==='onboarding').length+' onboarding';
     g('kpi-mrr').className='kpi-val'; g('kpi-mrr').textContent=totalMRR ? fmtMRR(totalMRR) : '$0';
     g('kpi-mrr-sub').textContent='From '+active.length+' active';
-    g('kpi-avg').className='kpi-val'; g('kpi-avg').textContent=avgMRR ? fmtMRR(avgMRR) : '—';
+    g('kpi-avg').className='kpi-val'; g('kpi-avg').textContent=avgMRR ? fmtMRR(avgMRR) : '';
     g('kpi-avg-sub').textContent=active.length ? 'Across '+active.length+' active' : 'No active clients';
   }
   document.getElementById('sb-count').textContent = clients.length;
@@ -809,7 +809,7 @@ function renderTable(filtered) {
       <td>${esc(c.contact)}${c.role?`<span style="color:var(--muted);font-size:11px"> · ${esc(c.role)}</span>`:''}</td>
       <td><span class="badge ${STATUS_BADGE[c.status]||'b-gray'}">${STATUS_LABELS[c.status]||c.status}</span></td>
       <td><span class="badge ${PLAN_BADGE[c.plan]||'b-gray'}">${PLAN_LABELS[c.plan]||c.plan}</span></td>
-      <td class="p">${c.mrr?'$'+parseInt(c.mrr).toLocaleString()+'/mo':'—'}</td>
+      <td class="p">${c.mrr?'$'+parseInt(c.mrr).toLocaleString()+'/mo':''}</td>
       <td>${fmtDate(c.startedAt)}${mo?`<span style="color:var(--muted);font-size:11px"> · ${mo}mo</span>`:''}</td>
       <td><span style="color:var(--text2)">${c.projectCount||0} project${(c.projectCount||0)!==1?'s':''}</span></td>
       <td>
@@ -846,7 +846,7 @@ function renderGrid(filtered) {
         <span class="badge ${PLAN_BADGE[c.plan]||'b-gray'}">${PLAN_LABELS[c.plan]||c.plan}</span>
       </div>
       <div class="cc-mrr-row">
-        <span class="cc-mrr-val">${c.mrr?fmtMRR(c.mrr):'—'}</span>
+        <span class="cc-mrr-val">${c.mrr?fmtMRR(c.mrr):''}</span>
         ${c.mrr?'<span class="cc-mrr-unit">/mo</span>':''}
       </div>
       <div class="cc-foot">

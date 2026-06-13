@@ -218,10 +218,10 @@ select.f-inp option{background:var(--s2)}
 
 <main id="main">
   <div id="kpi-row">
-    <div class="kpi gc"><div class="kpi-lbl">Total Requests</div><div id="k-total" class="kpi-ghost">—</div><div class="kpi-sub" id="k-total-s">No requests yet</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">New</div><div id="k-new" class="kpi-ghost">—</div><div class="kpi-sub" id="k-new-s">Awaiting review</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">In Pipeline</div><div id="k-pipe" class="kpi-ghost">—</div><div class="kpi-sub" id="k-pipe-s">Active conversations</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">Accepted</div><div id="k-won" class="kpi-ghost">—</div><div class="kpi-sub" id="k-won-s">Converted to clients</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">Total Requests</div><div id="k-total" class="kpi-ghost">·</div><div class="kpi-sub" id="k-total-s">No requests yet</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">New</div><div id="k-new" class="kpi-ghost">·</div><div class="kpi-sub" id="k-new-s">Awaiting review</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">In Pipeline</div><div id="k-pipe" class="kpi-ghost">·</div><div class="kpi-sub" id="k-pipe-s">Active conversations</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">Accepted</div><div id="k-won" class="kpi-ghost">·</div><div class="kpi-sub" id="k-won-s">Converted to clients</div></div>
   </div>
 
   <div id="toolbar">
@@ -273,8 +273,8 @@ select.f-inp option{background:var(--s2)}
     <div id="detail-panel">
       <div class="dp-head">
         <div>
-          <div style="font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em" id="dp-name">—</div>
-          <div style="font-size:12px;color:var(--muted)" id="dp-biz">—</div>
+          <div style="font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em" id="dp-name">·</div>
+          <div style="font-size:12px;color:var(--muted)" id="dp-biz">·</div>
         </div>
         <div class="dp-close" onclick="closeDetail()"><span class="ms" style="font-size:16px">close</span></div>
       </div>
@@ -317,7 +317,7 @@ select.f-inp option{background:var(--s2)}
         </div>
         <div><div class="f-lbl">Recommended Package</div>
           <select class="f-inp" id="a-package">
-            <option value="">— Not Selected —</option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option>
+            <option value=""> Not Selected </option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option>
           </select>
         </div>
       </div>
@@ -356,7 +356,7 @@ select.f-inp option{background:var(--s2)}
       </div>
       <div class="f-2">
         <div><div class="f-lbl">Timeline</div><select class="f-inp" id="e-timeline"><option>ASAP</option><option>1 Month</option><option>2–3 Months</option><option>3–6 Months</option><option>Flexible</option></select></div>
-        <div><div class="f-lbl">Package</div><select class="f-inp" id="e-package"><option value="">— Not Selected —</option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option></select></div>
+        <div><div class="f-lbl">Package</div><select class="f-inp" id="e-package"><option value=""> Not Selected </option><option>Foundation</option><option>Growth</option><option>Authority</option><option>Enterprise</option></select></div>
       </div>
       <div class="f-row"><div class="f-lbl">Features</div><input class="f-inp" id="e-features" type="text"></div>
       <div class="f-row"><div class="f-lbl">Status</div><select class="f-inp" id="e-status"><option value="new">New</option><option value="reviewed">Reviewed</option><option value="contacted">Contacted</option><option value="proposal">Proposal Sent</option><option value="accepted">Accepted</option><option value="declined">Declined</option></select></div>
@@ -389,7 +389,7 @@ const SB = {new:'b-gray',reviewed:'b-blue',contacted:'b-purple',proposal:'b-ambe
 
 async function load(){
   const {data:rows,error}=await _sb.from('quote_leads').select('*').order('created_at',{ascending:false});
-  if(error){console.error('Load error:',error);data=[];toast('Could not load quote requests — check Supabase setup');}
+  if(error){console.error('Load error:',error);data=[];toast('Could not load quote requests, check Supabase setup');}
   else{
     data=rows.map(r=>({
       id:r.id,
@@ -398,7 +398,7 @@ async function load(){
       phone:r.phone||'',
       biz:r.business||'',
       type:r.project_type||r.industry||'Quote Calculator',
-      budget:r.estimated_min&&r.estimated_max?`$${Number(r.estimated_min).toLocaleString()} – $${Number(r.estimated_max).toLocaleString()}`:(r.budget||'—'),
+      budget:r.estimated_min&&r.estimated_max?`$${Number(r.estimated_min).toLocaleString()} – $${Number(r.estimated_max).toLocaleString()}`:(r.budget||''),
       package:r.package_selected||'',
       features:r.features||'',
       notes:r.notes||'',
@@ -418,7 +418,7 @@ async function saveEdit_sb(id,fields){
 async function deleteRecord(id){
   const{data:deleted,error}=await _sb.from('quote_leads').delete().eq('id',id).select();
   if(error) return error;
-  if(!deleted||deleted.length===0) return {message:'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.'};
+  if(!deleted||deleted.length===0) return {message:'Nothing deleted, RLS may be blocking this. Re-run supabase-tables.sql.'};
   return null;
 }
 async function quickDelete(id){
@@ -434,7 +434,7 @@ async function insertNew(q){
     name:q.name,email:q.email,phone:q.phone,business:q.biz,
     project_type:q.type,package_selected:q.package,notes:q.notes,status:q.status
   }]).select().single();
-  if(error){console.error(error);toast('Failed to save — check Supabase columns');return null;}
+  if(error){console.error(error);toast('Failed to save, check Supabase columns');return null;}
   return row;
 }
 
@@ -449,7 +449,7 @@ function updateKPIs(){
   const won=data.filter(q=>q.status==='accepted').length;
   document.getElementById('sb-count').textContent=total||'0';
   if(!total){
-    ['k-total','k-new','k-pipe','k-won'].forEach(id=>{ document.getElementById(id).className='kpi-ghost'; document.getElementById(id).textContent='—' });
+    ['k-total','k-new','k-pipe','k-won'].forEach(id=>{ document.getElementById(id).className='kpi-ghost'; document.getElementById(id).textContent='' });
     document.getElementById('k-total-s').textContent='No requests yet';
     document.getElementById('k-new-s').textContent='Awaiting review';
     document.getElementById('k-pipe-s').textContent='Active conversations';
@@ -489,10 +489,10 @@ function render(){
     const tr=document.createElement('tr');
     tr.onclick=()=>openDetail(q.id);
     tr.innerHTML=`<td class="p">${esc(q.name)}</td>
-      <td>${esc(q.biz||'—')}</td>
+      <td>${esc(q.biz||'')}</td>
       <td>${esc(q.type)}</td>
       <td>${esc(q.budget)}</td>
-      <td>${q.package?`<span class="badge b-blue">${esc(q.package)}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td>${q.package?`<span class="badge b-blue">${esc(q.package)}</span>`:'<span style="color:var(--muted)">·</span>'}</td>
       <td><span class="badge ${SB[q.status]||'b-gray'}">${SL[q.status]||q.status}</span></td>
       <td style="white-space:nowrap">${d===0?'Today':d===1?'Yesterday':d+' days ago'}</td>
       <td><div style="display:flex;gap:4px;justify-content:flex-end" onclick="event.stopPropagation()">
@@ -522,20 +522,20 @@ function clearFilters(){
 function openDetail(id){
   selId=id;
   const q=data.find(x=>x.id===id); if(!q) return;
-  document.getElementById('dp-name').textContent=q.name||'—';
+  document.getElementById('dp-name').textContent=q.name||'';
   document.getElementById('dp-biz').textContent=q.biz||'No business name';
   const body=document.getElementById('dp-body');
   body.innerHTML=`
     <div style="margin-bottom:4px"><span class="badge ${SB[q.status]||'b-gray'}">${SL[q.status]||q.status}</span></div>
     <div class="dp-sec-lbl" style="margin-top:14px">Contact</div>
-    <div class="dp-field"><span class="dp-fl">Email</span><span class="dp-fv">${esc(q.email||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(q.phone||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Email</span><span class="dp-fv">${esc(q.email||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(q.phone||'')}</span></div>
     <div class="dp-sec-lbl">Project Details</div>
-    <div class="dp-field"><span class="dp-fl">Type</span><span class="dp-fv">${esc(q.type||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(q.budget||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(q.timeline||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Type</span><span class="dp-fv">${esc(q.type||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(q.budget||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(q.timeline||'')}</span></div>
     <div class="dp-field"><span class="dp-fl">Package</span><span class="dp-fv">${esc(q.package||'Not selected')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(q.features||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(q.features||'')}</span></div>
     <div class="dp-sec-lbl">Notes</div>
     <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px">${esc(q.notes||'No notes added.')}</div>
     <div class="dp-sec-lbl">Submission</div>
@@ -650,8 +650,8 @@ async function toLeadConvert(id){
     }]);
     q.status='contacted'; saveStatus(id,'contacted'); render();
     if(selId===id) openDetail(id);
-    toast('Converted to lead — view in Leads');
-  } catch(e){ toast('Could not convert — try again','warn') }
+    toast('Converted to lead, view in Leads');
+  } catch(e){ toast('Could not convert, try again','warn') }
 }
 
 function closeModal(id){ document.getElementById(id).classList.remove('open') }
@@ -676,7 +676,7 @@ load();
 // Real-time: new quote requests from public website
 _sb.channel('qr_rt').on('postgres_changes',{event:'INSERT',schema:'public',table:'quote_leads'},async payload=>{
   const r=payload.new;
-  const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business||'',type:r.project_type||r.industry||'Quote Calculator',budget:r.estimated_min&&r.estimated_max?'$'+Number(r.estimated_min).toLocaleString()+' – $'+Number(r.estimated_max).toLocaleString():(r.budget||'—'),package:r.package_selected||'',features:r.features||'',notes:r.notes||'',timeline:r.timeline||'',status:r.status||'new',createdAt:r.created_at};
+  const item={id:r.id,name:r.name||'',email:r.email||'',phone:r.phone||'',biz:r.business||'',type:r.project_type||r.industry||'Quote Calculator',budget:r.estimated_min&&r.estimated_max?'$'+Number(r.estimated_min).toLocaleString()+' – $'+Number(r.estimated_max).toLocaleString():(r.budget||''),package:r.package_selected||'',features:r.features||'',notes:r.notes||'',timeline:r.timeline||'',status:r.status||'new',createdAt:r.created_at};
   data.unshift(item); render(); toast('New quote request from '+(r.name||'visitor'));
   // Auto-create CRM lead record
   try{

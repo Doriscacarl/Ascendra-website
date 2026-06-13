@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Quote Calculator — Ascendra</title>
+<title>Project Quote Calculator | Ascendra</title>
 <meta name="description" content="Get an instant estimate for your digital project. Calculate your website, app, or automation investment in under 3 minutes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -116,7 +116,7 @@ tailwind.config = {
     <h1 class="font-editorial font-bold platinum-text mb-5" style="font-size:clamp(2.4rem,6vw,5rem);line-height:0.95;letter-spacing:-0.04em;">
       Calculate Your<br><em class="italic font-normal text-platinum">Project Quote</em>
     </h1>
-    <p class="text-silver font-body text-base md:text-lg leading-relaxed font-light max-w-xl mx-auto">Answer 7 simple questions about your project and get an instant estimated investment range — no sales call required.</p>
+    <p class="text-silver font-body text-base md:text-lg leading-relaxed font-light max-w-xl mx-auto">Answer 7 simple questions about your project and get an instant estimated investment range, no sales call required.</p>
   </div>
 </div>
 
@@ -430,7 +430,7 @@ tailwind.config = {
         <button class="q-option" data-value="standard" data-mult="1.0" onclick="selectSingle(this,'timelineGrid')">
           <div class="q-radio mt-1"></div>
           <div>
-            <p class="font-mono text-platinum text-sm tracking-wide">Standard Timeline — 4–8 Weeks</p>
+            <p class="font-mono text-platinum text-sm tracking-wide">Standard Timeline, 4–8 Weeks</p>
             <p class="text-pewter text-xs font-body mt-0.5">Full discovery, design, development, and testing cycle</p>
           </div>
           <div class="ml-auto flex-shrink-0"><span class="outcome-pill">Standard</span></div>
@@ -438,7 +438,7 @@ tailwind.config = {
         <button class="q-option" data-value="priority" data-mult="1.25" onclick="selectSingle(this,'timelineGrid')">
           <div class="q-radio mt-1"></div>
           <div>
-            <p class="font-mono text-platinum text-sm tracking-wide">Priority Timeline — 2–4 Weeks</p>
+            <p class="font-mono text-platinum text-sm tracking-wide">Priority Timeline, 2–4 Weeks</p>
             <p class="text-pewter text-xs font-body mt-0.5">Accelerated build with dedicated team focus</p>
           </div>
           <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+25%</span></div>
@@ -446,7 +446,7 @@ tailwind.config = {
         <button class="q-option" data-value="rush" data-mult="1.5" onclick="selectSingle(this,'timelineGrid')">
           <div class="q-radio mt-1"></div>
           <div>
-            <p class="font-mono text-platinum text-sm tracking-wide">Rush Timeline — 1–2 Weeks</p>
+            <p class="font-mono text-platinum text-sm tracking-wide">Rush Timeline, 1–2 Weeks</p>
             <p class="text-pewter text-xs font-body mt-0.5">Maximum priority, all hands on deck</p>
           </div>
           <div class="ml-auto flex-shrink-0"><span class="outcome-pill">+50%</span></div>
@@ -519,7 +519,7 @@ tailwind.config = {
     <div class="quote-step" id="step-7">
       <div class="result-glass rounded-none p-8 md:p-12 mb-8 text-center">
         <span class="eyebrow text-pewter block mb-4">Your Estimated Investment</span>
-        <h2 class="font-editorial font-bold platinum-text mb-3 result-enter" style="font-size:clamp(2.8rem,8vw,7rem);line-height:0.9;letter-spacing:-0.04em;" id="resultRange">—</h2>
+        <h2 class="font-editorial font-bold platinum-text mb-3 result-enter" style="font-size:clamp(2.8rem,8vw,7rem);line-height:0.9;letter-spacing:-0.04em;" id="resultRange">·</h2>
         <p class="text-silver font-body text-base" id="resultMonthly"></p>
       </div>
 
@@ -527,26 +527,26 @@ tailwind.config = {
         <!-- Package -->
         <div class="card glass-shimmer p-6 md:p-8 text-center">
           <p class="eyebrow text-pewter mb-3">Recommended Package</p>
-          <div class="pkg-badge justify-center mb-2" id="resultPackage">—</div>
-          <p class="text-silver text-xs font-body leading-relaxed mt-3" id="resultPackageDesc">—</p>
+          <div class="pkg-badge justify-center mb-2" id="resultPackage">·</div>
+          <p class="text-silver text-xs font-body leading-relaxed mt-3" id="resultPackageDesc">·</p>
         </div>
         <!-- Timeline -->
         <div class="card glass-shimmer p-6 md:p-8 text-center">
           <p class="eyebrow text-pewter mb-3">Estimated Timeline</p>
-          <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2rem;letter-spacing:-0.02em;" id="resultTimeline">—</div>
-          <p class="text-silver text-xs font-body leading-relaxed" id="resultTimelineDesc">—</p>
+          <div class="font-editorial font-bold platinum-text mb-2" style="font-size:2rem;letter-spacing:-0.02em;" id="resultTimeline">·</div>
+          <p class="text-silver text-xs font-body leading-relaxed" id="resultTimelineDesc">·</p>
         </div>
         <!-- Why this fits -->
         <div class="card glass-shimmer p-6 md:p-8 text-center">
           <p class="eyebrow text-pewter mb-3">Why This Package Fits</p>
-          <p class="text-silver text-sm font-body leading-relaxed" id="resultWhy">—</p>
+          <p class="text-silver text-sm font-body leading-relaxed" id="resultWhy">·</p>
         </div>
       </div>
 
       <!-- Included features summary -->
       <div class="card glass-shimmer p-6 md:p-8 mb-10">
         <p class="eyebrow text-pewter mb-5">What's Included</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="resultFeatures">—</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="resultFeatures">·</div>
       </div>
 
       <!-- Next steps -->
@@ -615,7 +615,7 @@ tailwind.config = {
         <span class="material-symbols-outlined text-glow flex-shrink-0 mt-0.5 sm:mt-0" style="font-size:22px;">pageview</span>
         <div>
           <p class="font-body font-medium text-platinum text-sm mb-0.5">Already have a website?</p>
-          <p class="text-silver text-xs font-body leading-relaxed">Get a free redesign audit instead — we'll review your existing site and tell you exactly what to improve.</p>
+          <p class="text-silver text-xs font-body leading-relaxed">Get a free redesign audit instead, we'll review your existing site and tell you exactly what to improve.</p>
         </div>
       </div>
       <span class="eyebrow text-glow text-xs flex-shrink-0 group-hover:text-platinum transition-colors" style="white-space:nowrap;">Free Audit <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">arrow_forward</span></span>
@@ -749,7 +749,7 @@ function calculateQuote() {
   if (avgVal < 7000) {
     pkg = 'FOUNDATION';
     pkgDesc = 'Premium online presence and core lead generation';
-    why = 'Your project scope is a strong fit for the Foundation package — focused, effective, and built for conversion.';
+    why = 'Your project scope is a strong fit for the Foundation package, focused, effective, and built for conversion.';
   } else if (avgVal < 14000) {
     pkg = 'GROWTH';
     pkgDesc = 'Website + automation + CRM integration';
@@ -768,7 +768,7 @@ function calculateQuote() {
   let timeline, timelineDesc;
   if (state.timelineMultiplier === 1.0) { timeline = '4–8 Weeks'; timelineDesc = 'Standard build cycle with full discovery and testing'; }
   else if (state.timelineMultiplier === 1.25) { timeline = '2–4 Weeks'; timelineDesc = 'Priority build with accelerated delivery'; }
-  else { timeline = '1–2 Weeks'; timelineDesc = 'Rush build — maximum priority resourcing'; }
+  else { timeline = '1–2 Weeks'; timelineDesc = 'Rush build, maximum priority resourcing'; }
 
   // Features list
   const coreFeatures = [
@@ -796,7 +796,7 @@ function calculateQuote() {
   document.getElementById('resultTimelineDesc').textContent = timelineDesc;
   document.getElementById('resultWhy').textContent = why;
   document.getElementById('resultFeatures').innerHTML = allFeatures.map(f =>
-    `<div class="flex items-start gap-3"><span class="text-platinum mt-0.5 flex-shrink-0" style="font-family:'Geist',monospace;font-size:0.75rem;">—</span><span class="text-silver text-sm font-body">${f}</span></div>`
+    `<div class="flex items-start gap-3"><span class="text-platinum mt-0.5 flex-shrink-0" style="font-family:'Geist',monospace;font-size:0.75rem;">·</span><span class="text-silver text-sm font-body">${f}</span></div>`
   ).join('');
 
   goToStep(7);
@@ -857,7 +857,7 @@ document.getElementById('estimateForm')?.addEventListener('submit', async functi
 function emailEstimate() {
   const range = document.getElementById('resultRange').textContent;
   const pkg = document.getElementById('resultPackage').textContent;
-  const subject = encodeURIComponent('My Ascendra Project Estimate — ' + range);
+  const subject = encodeURIComponent('My Ascendra Project Estimate, ' + range);
   const body = encodeURIComponent('Hi,\n\nI just completed the Ascendra quote calculator.\n\nEstimated Range: ' + range + '\nRecommended Package: ' + pkg + '\n\nI\'d love to discuss next steps.\n\nBest regards');
   window.location.href = `mailto:doriscacarlm40@gmail.com?subject=${subject}&body=${body}`;
 }

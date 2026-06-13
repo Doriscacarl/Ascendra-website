@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><script src="/auth.js"></script>
@@ -293,17 +293,17 @@ a{color:inherit;text-decoration:none}
             </div>
             <div class="sec-stat">
               <div class="sec-stat-icon">👁</div>
-              <div class="sec-stat-val" id="sec-bio-status">—</div>
+              <div class="sec-stat-val" id="sec-bio-status">·</div>
               <div class="sec-stat-lbl">Biometric</div>
             </div>
             <div class="sec-stat">
               <div class="sec-stat-icon">🔑</div>
-              <div class="sec-stat-val" id="sec-rec-status">—</div>
+              <div class="sec-stat-val" id="sec-rec-status">·</div>
               <div class="sec-stat-lbl">Recovery Code</div>
             </div>
             <div class="sec-stat">
               <div class="sec-stat-icon">⏱</div>
-              <div class="sec-stat-val" id="sec-lock-status">—</div>
+              <div class="sec-stat-val" id="sec-lock-status">·</div>
               <div class="sec-stat-lbl">Auto-Lock</div>
             </div>
           </div>
@@ -407,7 +407,7 @@ a{color:inherit;text-decoration:none}
             <div class="toggle-row" style="margin-bottom:16px">
               <div>
                 <div class="toggle-lbl">Enable Biometric Login</div>
-                <div class="toggle-sub" id="bio-status-sub">Not set up — register your device below</div>
+                <div class="toggle-sub" id="bio-status-sub">Not set up, register your device below</div>
               </div>
               <span class="badge" id="bio-badge">Not registered</span>
             </div>
@@ -544,7 +544,7 @@ a{color:inherit;text-decoration:none}
     <div style="height:8px"></div>
     <div style="height:1px;background:var(--border);margin-bottom:24px"></div>
     <div class="set-section">
-      <div class="set-hd"><div><div class="set-title" style="color:var(--red)">Danger Zone</div><div class="set-sub">Irreversible actions — proceed with caution</div></div></div>
+      <div class="set-hd"><div><div class="set-title" style="color:var(--red)">Danger Zone</div><div class="set-sub">Irreversible actions, proceed with caution</div></div></div>
       <div class="gc set-card" style="border-color:rgba(252,165,165,0.12)">
         <div class="toggle-row" style="flex-wrap:wrap;gap:12px">
           <div><div class="toggle-lbl">Clear All Data</div><div class="toggle-sub">Permanently delete all stored data from this browser</div></div>
@@ -626,7 +626,7 @@ function checkPinStrength() {
   const msg = document.getElementById('pin-strength-msg');
   if (!val) { msg.textContent = ''; msg.className = 'pin-strength'; return; }
   if (val.length < 4) { msg.textContent = 'Too short (min 4 digits)'; msg.className = 'pin-strength weak'; return; }
-  if (isWeakPin(val)) { msg.textContent = 'Too predictable — choose a stronger PIN'; msg.className = 'pin-strength weak'; return; }
+  if (isWeakPin(val)) { msg.textContent = 'Too predictable, choose a stronger PIN'; msg.className = 'pin-strength weak'; return; }
   if (val.length >= 6) { msg.textContent = '✓ Strong PIN'; msg.className = 'pin-strength ok'; return; }
   msg.textContent = '✓ Accepted (6+ digits recommended)'; msg.className = 'pin-strength ok';
 }
@@ -641,7 +641,7 @@ async function changePin() {
   if (!cur || !nw) { toast('Fill in all PIN fields', 'var(--amber)', 'warning'); return; }
   if (nw !== cf) { toast('PINs do not match', 'var(--red)', 'error'); return; }
   if (nw.length < 4) { toast('New PIN must be at least 4 digits', 'var(--amber)', 'warning'); return; }
-  if (isWeakPin(nw)) { toast('PIN is too predictable — choose a stronger one', 'var(--red)', 'error'); return; }
+  if (isWeakPin(nw)) { toast('PIN is too predictable, choose a stronger one', 'var(--red)', 'error'); return; }
 
   try {
     const r = await fetch('/api/admin-security', {
@@ -655,15 +655,15 @@ async function changePin() {
       document.getElementById('pin-new').value = '';
       document.getElementById('pin-conf').value = '';
       document.getElementById('pin-strength-msg').textContent = '';
-      toast('PIN updated successfully — your new PIN is now active');
+      toast('PIN updated successfully, your new PIN is now active');
     } else if (d.requiresManualUpdate) {
       document.getElementById('pin-change-manual').style.display = '';
-      toast('PIN change requires manual Vercel update — see instructions below', 'var(--amber)', 'warning');
+      toast('PIN change requires manual Vercel update, see instructions below', 'var(--amber)', 'warning');
     } else {
       toast(d.error || 'Failed to update PIN', 'var(--red)', 'error');
     }
   } catch(e) {
-    toast('Network error — please try again', 'var(--red)', 'error');
+    toast('Network error, please try again', 'var(--red)', 'error');
   }
 }
 
@@ -696,7 +696,7 @@ async function changePassword() {
       toast(d.error || 'Failed to update password', 'var(--red)', 'error');
     }
   } catch(e) {
-    toast('Network error — please try again', 'var(--red)', 'error');
+    toast('Network error, please try again', 'var(--red)', 'error');
   }
 }
 
@@ -856,7 +856,7 @@ async function generateRecovery() {
     document.getElementById('rec-locked').style.display = 'none';
     document.getElementById('rec-unlocked').style.display = '';
     updateSecurityScore();
-    toast('Recovery code generated — save it somewhere safe');
+    toast('Recovery code generated, save it somewhere safe');
   } catch(e) {
     toast('Network error', 'var(--red)', 'error');
   }
@@ -880,7 +880,7 @@ function copyRecoveryCode() {
 function downloadRecoveryCode() {
   const code = document.getElementById('rec-code-display').textContent;
   if (!code || code === 'Loading...') return;
-  const content = `Ascendra Admin — Recovery Access Code
+  const content = `Ascendra Admin, Recovery Access Code
 Generated: ${new Date().toLocaleString('en-US')}
 
 RECOVERY CODE:
@@ -922,7 +922,7 @@ function loadSessionInfo() {
   else if (/Android/.test(ua)) os = 'Android';
   else if (/Linux/.test(ua)) os = 'Linux';
 
-  document.getElementById('sess-device').textContent = os + ' — ' + browser;
+  document.getElementById('sess-device').textContent = os + ', ' + browser;
   document.getElementById('sess-browser').textContent = ua.slice(0, 80);
 
   if (info.sessionStart) {

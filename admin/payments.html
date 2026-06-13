@@ -158,7 +158,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
 <script>
 function load(){let data=[];try{data=JSON.parse(localStorage.getItem('ascendra_invoices_v1'))||[];}catch{}return data.filter(i=>i.status==='paid');}
 function fmtAmt(v){const n=parseFloat(v)||0;return'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return d}}
+function fmtDate(d){if(!d)return'';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return d}}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function render(){
   const payments=load().sort((a,b)=>new Date(b.paidAt||b.created)-new Date(a.paidAt||a.created));
@@ -172,7 +172,7 @@ function render(){
     c.innerHTML=`<div class="gc empty-state"><div class="empty-icon"><span class="ms" style="font-size:26px;color:var(--primary)">payments</span></div><div class="empty-title">No Payments Recorded Yet</div><div class="empty-sub">Payments appear here automatically when you mark an invoice as paid. Create invoices first, then mark them as collected.</div><a href="invoices.html" class="btn-p"><span class="ms" style="font-size:15px">receipt_long</span> Go to Invoices</a></div>`;
     return;
   }
-  c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Description</th><th>Paid On</th></tr></thead><tbody>${payments.map(p=>`<tr><td style="font-family:var(--fw-m);font-size:11px;color:var(--muted)">${esc(p.num||'—')}</td><td><div style="font-weight:500">${esc(p.client)}</div></td><td style="font-family:var(--fw-d);font-size:14px;font-weight:600;color:var(--green)">${fmtAmt(p.amount)}</td><td style="color:var(--muted);font-size:12px;max-width:220px">${p.desc?esc(p.desc):'—'}</td><td style="color:var(--muted);font-size:12px">${fmtDate(p.paidAt||p.created)}</td></tr>`).join('')}</tbody></table></div>`;
+  c.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Description</th><th>Paid On</th></tr></thead><tbody>${payments.map(p=>`<tr><td style="font-family:var(--fw-m);font-size:11px;color:var(--muted)">${esc(p.num||'')}</td><td><div style="font-weight:500">${esc(p.client)}</div></td><td style="font-family:var(--fw-d);font-size:14px;font-weight:600;color:var(--green)">${fmtAmt(p.amount)}</td><td style="color:var(--muted);font-size:12px;max-width:220px">${p.desc?esc(p.desc):''}</td><td style="color:var(--muted);font-size:12px">${fmtDate(p.paidAt||p.created)}</td></tr>`).join('')}</tbody></table></div>`;
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('show')}

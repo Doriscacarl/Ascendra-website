@@ -216,7 +216,7 @@ a{color:inherit;text-decoration:none}
       <div class="fld"><label>Notes</label><textarea id="f-notes" placeholder="Brief scope or description..."></textarea></div>
       <div class="fld">
         <label>Link to Won CRM Lead (optional)</label>
-        <select id="f-lead"><option value="">— None —</option></select>
+        <select id="f-lead"><option value=""> None </option></select>
         <div class="crm-hint"><span class="ms" style="font-size:13px;color:var(--green)">bolt</span> Creating this project moves the linked lead to <strong style="color:var(--green)">Active Client</strong></div>
       </div>
     </div>
@@ -270,14 +270,14 @@ function toast(msg,icon='check_circle',color='var(--green)'){
 
 async function loadLeadOptions(){
   const sel=document.getElementById('f-lead');
-  sel.innerHTML='<option value="">— None —</option>';
+  sel.innerHTML='<option value=""> None </option>';
   try{
     const {data:leads}=await sb.from('crm_leads').select('id,name,business,pipeline_stage')
       .eq('status','active').eq('pipeline_stage','won').order('created_at',{ascending:false});
     (leads||[]).forEach(l=>{
       const opt=document.createElement('option');
       opt.value=l.id;
-      opt.textContent=`${l.name||'Unknown'}${l.business?' — '+l.business:''}`;
+      opt.textContent=`${l.name||'Unknown'}${l.business?', '+l.business:''}`;
       sel.appendChild(opt);
     });
   }catch(e){console.warn('Could not load CRM leads:',e)}
@@ -304,7 +304,7 @@ async function saveProject(){
     closeModal('addModal');
     ['f-name','f-client','f-prog','f-start','f-due','f-val','f-notes'].forEach(id=>{document.getElementById(id).value='';});
     document.getElementById('f-status').value='planning';document.getElementById('f-lead').value='';
-    toast('Project created'+(crm_lead_id?' — CRM moved to Active Client':''));
+    toast('Project created'+(crm_lead_id?', CRM moved to Active Client':''));
   }catch(e){toast('Error: '+e.message,'error','var(--red)')}
 }
 
@@ -318,7 +318,7 @@ async function triggerActiveClient(leadId, projectName, clientName){
     }).eq('id',leadId);
     await sb.from('notifications').insert({
       type:'stage_change',
-      title:'New Active Client — '+(clientName||projectName),
+      title:'New Active Client, '+(clientName||projectName),
       message:'Project "'+projectName+'" created. Lead moved to Active Client.',
       status:'unread',related_table:'crm_leads',related_id:leadId
     });

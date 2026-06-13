@@ -216,10 +216,10 @@ select.f-inp option{background:var(--s2)}
 
 <main id="main">
   <div id="kpi-row">
-    <div class="kpi gc"><div class="kpi-lbl">Total Audits</div><div id="k-total" class="kpi-ghost">—</div><div class="kpi-sub" id="k-ts">No audits yet</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">New</div><div id="k-new" class="kpi-ghost">—</div><div class="kpi-sub" id="k-ns">Awaiting review</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">In Review</div><div id="k-rev" class="kpi-ghost">—</div><div class="kpi-sub" id="k-rs">Being evaluated</div></div>
-    <div class="kpi gc"><div class="kpi-lbl">Won</div><div id="k-won" class="kpi-ghost">—</div><div class="kpi-sub" id="k-ws">Converted to project</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">Total Audits</div><div id="k-total" class="kpi-ghost">·</div><div class="kpi-sub" id="k-ts">No audits yet</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">New</div><div id="k-new" class="kpi-ghost">·</div><div class="kpi-sub" id="k-ns">Awaiting review</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">In Review</div><div id="k-rev" class="kpi-ghost">·</div><div class="kpi-sub" id="k-rs">Being evaluated</div></div>
+    <div class="kpi gc"><div class="kpi-lbl">Won</div><div id="k-won" class="kpi-ghost">·</div><div class="kpi-sub" id="k-ws">Converted to project</div></div>
   </div>
 
   <div id="toolbar">
@@ -271,8 +271,8 @@ select.f-inp option{background:var(--s2)}
     <div id="detail-panel">
       <div class="dp-head">
         <div>
-          <div style="font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em" id="dp-name">—</div>
-          <div style="font-size:12px;color:var(--muted)" id="dp-url">—</div>
+          <div style="font-family:var(--fw-d);font-size:18px;font-weight:700;letter-spacing:-0.02em" id="dp-name">·</div>
+          <div style="font-size:12px;color:var(--muted)" id="dp-url">·</div>
         </div>
         <div class="dp-close" onclick="closeDetail()"><span class="ms" style="font-size:16px">close</span></div>
       </div>
@@ -416,7 +416,7 @@ async function deleteRecord(id){
   }
   const{data:deleted,error}=await _sb.from('website_audit_requests').delete().eq('id',id).select();
   if(error) return error;
-  if(!deleted||deleted.length===0) return {message:'Nothing deleted — RLS may be blocking this. Re-run supabase-tables.sql.'};
+  if(!deleted||deleted.length===0) return {message:'Nothing deleted, RLS may be blocking this. Re-run supabase-tables.sql.'};
   return null;
 }
 async function quickDelete(id){
@@ -447,7 +447,7 @@ function updateKPIs(){
   const rev=data.filter(x=>x.status==='reviewing').length;
   const won=data.filter(x=>x.status==='won').length;
   document.getElementById('sb-count').textContent=total||'0';
-  if(!total){['k-total','k-new','k-rev','k-won'].forEach(id=>{document.getElementById(id).className='kpi-ghost';document.getElementById(id).textContent='—'});return;}
+  if(!total){['k-total','k-new','k-rev','k-won'].forEach(id=>{document.getElementById(id).className='kpi-ghost';document.getElementById(id).textContent=''});return;}
   document.getElementById('k-total').className='kpi-val'; document.getElementById('k-total').textContent=total;
   document.getElementById('k-ts').textContent=total+' total';
   document.getElementById('k-new').className='kpi-val'; document.getElementById('k-new').textContent=nw;
@@ -480,12 +480,12 @@ function render(){
     const shortUrl=(a.url||'').replace(/^https?:\/\//,'').replace(/\/.*$/,'').slice(0,30);
     const thumbCell=a.screenshotUrl
       ?`<td onclick="event.stopPropagation()"><img src="${esc(a.screenshotUrl)}" alt="screenshot" style="width:48px;height:34px;object-fit:cover;border-radius:4px;border:1px solid rgba(255,255,255,0.08);cursor:zoom-in;transition:opacity 0.15s" onclick="openScreenshot('${esc(a.screenshotUrl)}')" title="Click to enlarge"></td>`
-      :`<td><span style="font-size:11px;color:var(--muted)">—</span></td>`;
+      :`<td><span style="font-size:11px;color:var(--muted)">·</span></td>`;
     tr.innerHTML=`<td class="p">${esc(a.name)}</td>
-      <td>${esc(a.biz||'—')}</td>
-      <td><a href="${esc(a.url||'#')}" target="_blank" onclick="event.stopPropagation()" style="color:var(--primary);text-decoration:underline;text-underline-offset:3px">${esc(shortUrl||'—')}</a></td>
-      <td>${esc(a.budget||'—')}</td>
-      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.goals||'—')}</td>
+      <td>${esc(a.biz||'')}</td>
+      <td><a href="${esc(a.url||'#')}" target="_blank" onclick="event.stopPropagation()" style="color:var(--primary);text-decoration:underline;text-underline-offset:3px">${esc(shortUrl||'')}</a></td>
+      <td>${esc(a.budget||'')}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.goals||'')}</td>
       ${thumbCell}
       <td><span class="badge ${SB[a.status]||'b-gray'}">${SL[a.status]||a.status}</span></td>
       <td style="white-space:nowrap">${d===0?'Today':d===1?'Yesterday':d+' days ago'}</td>
@@ -510,16 +510,16 @@ function clearFilters(){ activeStatus=[]; document.querySelectorAll('.fchip.on')
 function openDetail(id){
   selId=id;
   const a=data.find(x=>x.id===id); if(!a) return;
-  document.getElementById('dp-name').textContent=a.biz||a.name||'—';
+  document.getElementById('dp-name').textContent=a.biz||a.name||'';
   document.getElementById('dp-url').textContent=a.url||'No URL';
   document.getElementById('dp-body').innerHTML=`
     <div style="margin-bottom:4px"><span class="badge ${SB[a.status]||'b-gray'}">${SL[a.status]||a.status}</span></div>
     <div class="dp-sec-lbl" style="margin-top:14px">Contact</div>
-    <div class="dp-field"><span class="dp-fl">Name</span><span class="dp-fv">${esc(a.name||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Email</span><span class="dp-fv">${esc(a.email||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(a.phone||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Name</span><span class="dp-fv">${esc(a.name||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Email</span><span class="dp-fv">${esc(a.email||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Phone</span><span class="dp-fv">${esc(a.phone||'')}</span></div>
     <div class="dp-sec-lbl">Current Site</div>
-    <div class="dp-field"><span class="dp-fl">URL</span><span class="dp-fv"><a href="${esc(a.url||'#')}" target="_blank" style="color:var(--primary)">${esc(a.url||'—')}</a></span></div>
+    <div class="dp-field"><span class="dp-fl">URL</span><span class="dp-fv"><a href="${esc(a.url||'#')}" target="_blank" style="color:var(--primary)">${esc(a.url||'')}</a></span></div>
     ${a.screenshotUrl?`
     <div class="dp-sec-lbl">Screenshot</div>
     <div style="margin-bottom:10px">
@@ -530,12 +530,12 @@ function openDetail(id){
       </div>
     </div>`:''}
     <div class="dp-sec-lbl">Redesign Brief</div>
-    <div class="dp-field"><span class="dp-fl">Dislikes</span><span class="dp-fv">${esc(a.goals||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(a.features||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(a.budget||'—')}</span></div>
-    <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(a.timeline||'—')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Dislikes</span><span class="dp-fv">${esc(a.goals||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Features</span><span class="dp-fv">${esc(a.features||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Budget</span><span class="dp-fv">${esc(a.budget||'')}</span></div>
+    <div class="dp-field"><span class="dp-fl">Timeline</span><span class="dp-fv">${esc(a.timeline||'')}</span></div>
     <div class="dp-sec-lbl">Desired Improvements / Notes</div>
-    <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;white-space:pre-wrap;">${esc(a.notes||'—')}</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.7;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;white-space:pre-wrap;">${esc(a.notes||'')}</div>
     <div class="dp-sec-lbl">Submission</div>
     <div class="dp-field"><span class="dp-fl">Date</span><span class="dp-fv">${fmtDate(a.createdAt)}</span></div>
   `;
@@ -614,7 +614,7 @@ async function toLead(id){
       project_type:'Website Redesign',source:'Website Audit',
       goals:`Audit: ${a.goals||''}. Budget: ${a.budget||''}`,status:'new'
     }]);
-    a.status='reviewing'; saveStatus_sb(id,'reviewing'); render(); if(selId===id) openDetail(id); toast('Converted to lead — view in Leads');
+    a.status='reviewing'; saveStatus_sb(id,'reviewing'); render(); if(selId===id) openDetail(id); toast('Converted to lead, view in Leads');
   } catch(e){ toast('Could not convert','warn') }
 }
 function closeModal(id){ document.getElementById(id).classList.remove('open') }

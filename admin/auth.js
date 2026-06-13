@@ -1,5 +1,5 @@
-/**
- * Ascendra Admin — Auth Guard
+﻿/**
+ * Ascendra Admin - Auth Guard
  * Included in every admin page <head> to enforce lock screen before access.
  * Does NOT belong in lock.html itself.
  */
@@ -42,7 +42,7 @@
     window.location.replace(LOCK_URL);
   }
 
-  // ── Immediate sync check (blocks render — no flash of content) ──
+  // ── Immediate sync check (blocks render - no flash of content) ──
   var token = getToken();
   if (!token) {
     redirectToLock();
