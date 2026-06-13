@@ -82,6 +82,7 @@
       about:    [0.30, 0.50],
       contact:  [0.50, 0.30],
       insights: [0.78, 0.28],
+      home:     [0.72, 0.25],
     };
     var gp = glowPos[this.type] || [0.5, 0.5];
     this.glowCx = gp[0];
@@ -115,6 +116,7 @@
       case 'about':     this._initAbout();     break;
       case 'contact':   this._initContact();   break;
       case 'insights':  this._initInsights();  break;
+      case 'home':      this._initHome();      break;
     }
   };
 
@@ -309,6 +311,7 @@
       case 'about':     this._drawAbout   (ctx, W, H, dt); break;
       case 'contact':   this._drawContact (ctx, W, H, dt); break;
       case 'insights':  this._drawInsights(ctx, W, H, dt); break;
+      case 'home':      this._drawHome    (ctx, W, H, dt); break;
     }
   };
 
@@ -417,6 +420,278 @@
     state.panels = alive;
   };
 
+  // ────────────────────────────────────────────────────────────────────────
+  // HOME - Digital System Being Engineered
+  // ────────────────────────────────────────────────────────────────────────
+  AnimatedHeroBackground.prototype._initHome = function () {
+    this.homeState = {
+      panels:       [],
+      nextSpawnAt:  0.5,
+      lines:        [],
+      nextLineAt:   1.5,
+    };
+  };
+
+  AnimatedHeroBackground.prototype._drawHome = function (ctx, W, H, dt) {
+    var state     = this.homeState;
+    var maxPanels = this.isMobile ? 3 : 7;
+    var maxLines  = this.isMobile ? 0 : 5;
+
+    if (this.t >= state.nextSpawnAt && state.panels.length < maxPanels) {
+      state.panels.push(this._spawnHomePanel(W, H));
+      state.nextSpawnAt = this.t + rand(3.5, 6.0);
+    }
+
+    if (!this.isMobile && this.t >= state.nextLineAt && state.lines.length < maxLines) {
+      state.lines.push(this._spawnHomeLine(W, H));
+      state.nextLineAt = this.t + rand(4.0, 7.0);
+    }
+
+    var alivePanels = [];
+    for (var i = 0; i < state.panels.length; i++) {
+      if (this._drawHomePanel(ctx, W, H, state.panels[i])) {
+        alivePanels.push(state.panels[i]);
+      }
+    }
+    state.panels = alivePanels;
+
+    var aliveLines = [];
+    for (var j = 0; j < state.lines.length; j++) {
+      if (this._drawHomeLine(ctx, W, H, state.lines[j])) {
+        aliveLines.push(state.lines[j]);
+      }
+    }
+    state.lines = aliveLines;
+  };
+
+  AnimatedHeroBackground.prototype._spawnHomePanel = function (W, H) {
+    var types = ['card', 'nav', 'stat', 'bracket'];
+    var type  = types[Math.floor(rand(0, types.length))];
+    var w, h;
+    if (type === 'nav')     { w = rand(200, 320); h = rand(36, 52); }
+    else if (type === 'stat')    { w = rand(100, 160); h = rand(80, 120); }
+    else if (type === 'bracket') { w = rand(140, 220); h = rand(100, 160); }
+    else                         { w = rand(160, 260); h = rand(110, 180); }
+
+    var x, y, attempts = 0;
+    do {
+      x = rand(16, W - w - 16);
+      y = rand(16, H - h - 16);
+      attempts++;
+    } while (!this.isMobile && x < W * 0.46 && y < H * 0.65 && attempts < 12);
+
+    var edge = Math.floor(rand(0, 4));
+    var slideX = 0, slideY = 0;
+    if (edge === 0)      slideX = -24;
+    else if (edge === 1) slideX =  24;
+    else if (edge === 2) slideY = -18;
+    else                 slideY =  18;
+
+    return {
+      x: x, y: y, w: w, h: h, type: type,
+      bornAt:     this.t,
+      fadeInDur:  rand(1.8, 2.8),
+      visibleDur: rand(10, 18),
+      fadeOutDur: rand(1.4, 2.2),
+      slideX: slideX, slideY: slideY,
+      isGold: Math.random() < 0.22,
+    };
+  };
+
+  AnimatedHeroBackground.prototype._drawHomePanel = function (ctx, W, H, p) {
+    var age       = this.t - p.bornAt;
+    var totalLife = p.fadeInDur + p.visibleDur + p.fadeOutDur;
+    if (age > totalLife) return false;
+
+    var alpha;
+    if (age < p.fadeInDur) {
+      alpha = easeOut3(age / p.fadeInDur);
+    } else if (age < p.fadeInDur + p.visibleDur) {
+      alpha = 1;
+    } else {
+      alpha = 1 - easeOut3((age - p.fadeInDur - p.visibleDur) / p.fadeOutDur);
+    }
+    if (alpha <= 0) return false;
+
+    var slideT = age < p.fadeInDur ? easeOut3(age / p.fadeInDur) : 1;
+    var px = p.x + p.slideX * (1 - slideT);
+    var py = p.y + p.slideY * (1 - slideT);
+    var pw = p.w, ph = p.h;
+
+    var base = alpha * 0.10;
+    // Accent color RGB components
+    var ar = p.isGold ? 196 : 173;
+    var ag = p.isGold ? 165 : 198;
+    var ab = p.isGold ? 100 : 255;
+
+    ctx.save();
+
+    if (p.type === 'card') {
+      // Outer border
+      ctx.globalAlpha = base;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(px, py, pw, ph);
+      // Header fill
+      ctx.globalAlpha = base * 0.6;
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.fillRect(px + 0.5, py + 0.5, pw - 1, 20);
+      // Header separator
+      ctx.globalAlpha = base;
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth = 0.3;
+      ctx.beginPath(); ctx.moveTo(px, py + 20); ctx.lineTo(px + pw, py + 20); ctx.stroke();
+      // Data rows
+      ctx.globalAlpha = base * 0.85;
+      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+      ctx.lineWidth = 0.7;
+      ctx.beginPath(); ctx.moveTo(px + 10, py + 34); ctx.lineTo(px + 10 + pw * 0.62, py + 34); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px + 10, py + 48); ctx.lineTo(px + 10 + pw * 0.46, py + 48); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px + 10, py + 62); ctx.lineTo(px + 10 + pw * 0.71, py + 62); ctx.stroke();
+    } else if (p.type === 'nav') {
+      // Full border
+      ctx.globalAlpha = base;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(px, py, pw, ph);
+      // Dot indicators
+      for (var d = 0; d < 4; d++) {
+        ctx.globalAlpha = base * 1.1;
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.beginPath();
+        ctx.arc(px + 12 + d * (pw - 24) / 3, py + ph * 0.5, 2, 0, TWO_PI);
+        ctx.fill();
+      }
+    } else if (p.type === 'stat') {
+      // Corner brackets
+      var bLen = 12;
+      ctx.globalAlpha = base * 1.2;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(px + bLen, py); ctx.lineTo(px, py); ctx.lineTo(px, py + bLen);
+      ctx.moveTo(px + pw - bLen, py); ctx.lineTo(px + pw, py); ctx.lineTo(px + pw, py + bLen);
+      ctx.moveTo(px, py + ph - bLen); ctx.lineTo(px, py + ph); ctx.lineTo(px + bLen, py + ph);
+      ctx.moveTo(px + pw - bLen, py + ph); ctx.lineTo(px + pw, py + ph); ctx.lineTo(px + pw, py + ph - bLen);
+      ctx.stroke();
+      // Number block + label line
+      ctx.globalAlpha = base * 0.85;
+      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+      ctx.lineWidth = 0.7;
+      ctx.beginPath(); ctx.moveTo(px + 16, py + 26); ctx.lineTo(px + 16 + pw * 0.55, py + 26); ctx.stroke();
+      ctx.globalAlpha = base * 0.5;
+      ctx.beginPath(); ctx.moveTo(px + 16, py + 44); ctx.lineTo(px + 16 + pw * 0.35, py + 44); ctx.stroke();
+    } else {
+      // Side bracket outlines
+      var bLen2 = 14;
+      ctx.globalAlpha = base;
+      ctx.strokeStyle = 'rgba(255,255,255,1)';
+      ctx.lineWidth = 0.7;
+      ctx.beginPath();
+      ctx.moveTo(px + bLen2, py);  ctx.lineTo(px, py);  ctx.lineTo(px, py + ph);  ctx.lineTo(px + bLen2, py + ph);
+      ctx.moveTo(px + pw - bLen2, py); ctx.lineTo(px + pw, py); ctx.lineTo(px + pw, py + ph); ctx.lineTo(px + pw - bLen2, py + ph);
+      ctx.stroke();
+      // Content lines
+      ctx.lineWidth = 0.7;
+      var rows = Math.floor(ph / 18);
+      for (var row = 0; row < Math.min(rows, 5); row++) {
+        ctx.globalAlpha = base * (0.5 + 0.4 * Math.abs(Math.sin(row * 1.3 + p.bornAt)));
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.beginPath();
+        ctx.moveTo(px + 20, py + 16 + row * 16);
+        ctx.lineTo(px + 20 + pw * (0.30 + Math.abs(Math.sin(row * 1.3 + p.bornAt)) * 0.35), py + 16 + row * 16);
+        ctx.stroke();
+      }
+    }
+
+    // Accent corner mark (top-right) using page accent color
+    ctx.globalAlpha = base * 0.7;
+    ctx.strokeStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',1)';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.moveTo(px + pw - 12, py + 1); ctx.lineTo(px + pw - 1, py + 1); ctx.lineTo(px + pw - 1, py + 12);
+    ctx.stroke();
+
+    // Pulsing accent dot — top-right corner
+    var pulse = 0.5 + 0.5 * Math.sin(this.t * 1.8 + p.bornAt);
+    ctx.globalAlpha = alpha * 0.5 * pulse;
+    ctx.fillStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',1)';
+    ctx.beginPath();
+    ctx.arc(px + pw - 5, py + 5, 1.5, 0, TWO_PI);
+    ctx.fill();
+
+    ctx.restore();
+    return true;
+  };
+
+  AnimatedHeroBackground.prototype._spawnHomeLine = function (W, H) {
+    var x1, y1, attempts = 0;
+    do {
+      x1 = rand(W * 0.25, W * 0.95);
+      y1 = rand(H * 0.05, H * 0.95);
+      attempts++;
+    } while (x1 < W * 0.46 && y1 < H * 0.65 && attempts < 10);
+
+    var x2 = clamp(x1 + rand(-200, 200), 10, W - 10);
+    var y2 = clamp(y1 + rand(-120, 120), 10, H - 10);
+
+    return {
+      x1: x1, y1: y1, x2: x2, y2: y2,
+      bornAt:   this.t,
+      traceDur: rand(2.0, 3.5),
+      holdDur:  rand(4.0, 8.0),
+      fadeDur:  rand(1.2, 2.0),
+      isGold:   Math.random() < 0.25,
+    };
+  };
+
+  AnimatedHeroBackground.prototype._drawHomeLine = function (ctx, W, H, ln) {
+    var age       = this.t - ln.bornAt;
+    var totalLife = ln.traceDur + ln.holdDur + ln.fadeDur;
+    if (age > totalLife) return false;
+
+    var alpha;
+    if (age < ln.traceDur) {
+      alpha = easeOut3(age / ln.traceDur);
+    } else if (age < ln.traceDur + ln.holdDur) {
+      alpha = 1;
+    } else {
+      alpha = 1 - easeOut3((age - ln.traceDur - ln.holdDur) / ln.fadeDur);
+    }
+    if (alpha <= 0) return false;
+
+    var traceP = age < ln.traceDur ? easeOut3(age / ln.traceDur) : 1;
+    var ex = ln.x1 + (ln.x2 - ln.x1) * traceP;
+    var ey = ln.y1 + (ln.y2 - ln.y1) * traceP;
+
+    var ar = ln.isGold ? 196 : 173;
+    var ag = ln.isGold ? 165 : 198;
+    var ab = ln.isGold ? 100 : 255;
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.7;
+    ctx.strokeStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',0.35)';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.moveTo(ln.x1, ln.y1);
+    ctx.lineTo(ex, ey);
+    ctx.stroke();
+
+    ctx.globalAlpha = alpha * 0.75;
+    ctx.fillStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',0.65)';
+    ctx.beginPath(); ctx.arc(ex, ey, 1.5, 0, TWO_PI); ctx.fill();
+
+    ctx.globalAlpha = alpha * 0.35;
+    ctx.fillStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',0.35)';
+    ctx.beginPath(); ctx.arc(ln.x1, ln.y1, 1.0, 0, TWO_PI); ctx.fill();
+
+    ctx.restore();
+    return true;
+  };
+
+  // ────────────────────────────────────────────────────────────────────────
+  // SERVICES - Wireframe UI Panels Assembling (original)
+  // ────────────────────────────────────────────────────────────────────────
   AnimatedHeroBackground.prototype._spawnServicePanel = function (W, H) {
     var w = rand(175, 275);
     var h = rand(115, 195);

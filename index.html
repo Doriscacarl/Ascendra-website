@@ -62,6 +62,23 @@ tailwind.config = {
 .port-arrow-icon { transition: transform 0.3s ease, opacity 0.3s ease; transform: rotate(-45deg); opacity: 0.3; }
 .port-card:hover .port-cta-lbl { color: rgba(173,198,255,0.8); }
 .port-cta-lbl { transition: color 0.3s ease; color: rgba(118,116,114,0.5); }
+/* Scroll indicator */
+@keyframes scrollDrop {
+  0%   { top: -16px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 0.7; }
+  100% { top: 100%; opacity: 0; }
+}
+.scroll-indicator-track { position:relative; width:1px; height:40px; background:rgba(255,255,255,0.07); overflow:hidden; }
+.scroll-indicator-drop  { position:absolute; left:0; width:1px; height:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0.05));
+  animation:scrollDrop 2.2s cubic-bezier(0.45,0,0.55,1) infinite; }
+/* Reduced-motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator-drop { animation:none; opacity:0.35; top:40%; }
+  .arch-container, .arch-specular { animation:none !important; }
+  .reveal { transition:none !important; }
+}
 </style>
 </head>
 <body>
@@ -124,6 +141,7 @@ tailwind.config = {
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section class="relative min-h-screen flex flex-col justify-center pt-20 pb-32 md:pb-28 px-6 md:px-16 overflow-hidden">
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" style="z-index:0;"></canvas>
     <div class="absolute top-0 right-0 w-[70%] h-full opacity-[0.06]" style="background:radial-gradient(ellipse at 80% 20%,#adc6ff 0%,transparent 65%);"></div>
     <svg class="absolute inset-0 w-full h-full opacity-[0.018]" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
       <defs><pattern id="archgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs>
@@ -193,7 +211,7 @@ tailwind.config = {
       <a href="services.html" class="btn-ghost">See How It Works</a>
     </div>
     <div class="reveal hidden md:flex items-center gap-3 mt-16" style="transition-delay:400ms;">
-      <div class="w-px h-10 bg-white/10"></div>
+      <div class="scroll-indicator-track"><div class="scroll-indicator-drop"></div></div>
       <span class="eyebrow text-pewter/60">Scroll to explore</span>
     </div>
   </div>
@@ -386,38 +404,38 @@ tailwind.config = {
         </a>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal" style="transition-delay:100ms;">
-      <div class="service-card hover-lift">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="service-card hover-lift reveal">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">language</span>
         <h3 class="font-body font-medium text-platinum text-base">Premium Websites</h3>
         <p class="text-silver text-sm leading-relaxed font-body">Bespoke digital presences engineered to convert visitors into clients from the first impression.</p>
         <a href="services.html#websites" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
       </div>
-      <div class="service-card hover-lift">
+      <div class="service-card hover-lift reveal" style="transition-delay:80ms;">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">smart_toy</span>
         <h3 class="font-body font-medium text-platinum text-base">AI Assistants</h3>
         <p class="text-silver text-sm leading-relaxed font-body">Intelligent concierges that qualify leads, answer questions, and book appointments 24/7.</p>
         <a href="services.html#ai" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
       </div>
-      <div class="service-card hover-lift">
+      <div class="service-card hover-lift reveal" style="transition-delay:160ms;">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">bolt</span>
         <h3 class="font-body font-medium text-platinum text-base">Business Automation</h3>
         <p class="text-silver text-sm leading-relaxed font-body">Automated workflows that run your business even when you're focused on delivering great work.</p>
         <a href="services.html#automation" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
       </div>
-      <div class="service-card hover-lift">
+      <div class="service-card hover-lift reveal" style="transition-delay:240ms;">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">dns</span>
         <h3 class="font-body font-medium text-platinum text-base">CRM Integration</h3>
         <p class="text-silver text-sm leading-relaxed font-body">Connect every touchpoint into one unified system for leads, clients, and revenue tracking.</p>
         <a href="services.html#crm" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
       </div>
-      <div class="service-card hover-lift">
+      <div class="service-card hover-lift reveal" style="transition-delay:320ms;">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">phone_iphone</span>
         <h3 class="font-body font-medium text-platinum text-base">Mobile Apps</h3>
         <p class="text-silver text-sm leading-relaxed font-body">Native mobile experiences that put your brand in customers' hands and keep them engaged.</p>
         <a href="services.html#mobile" class="eyebrow text-pewter hover:text-platinum transition-colors duration-300 mt-auto pt-4">Learn More →</a>
       </div>
-      <div class="service-card hover-lift" style="background:rgba(232,230,228,0.03);border-color:rgba(232,230,228,0.1);">
+      <div class="service-card hover-lift reveal" style="background:rgba(232,230,228,0.03);border-color:rgba(232,230,228,0.1);transition-delay:400ms;">
         <span class="material-symbols-outlined text-silver" style="font-size:28px;">arrow_forward</span>
         <h3 class="font-body font-medium text-platinum text-base">See Full Service List</h3>
         <p class="text-silver text-sm leading-relaxed font-body">E-commerce, booking systems, admin dashboards, web apps, SEO, analytics, and more.</p>
@@ -563,20 +581,20 @@ tailwind.config = {
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 reveal" style="transition-delay:80ms;">
-      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col reveal">
         <span class="eyebrow text-pewter block mb-6">Foundation</span>
         <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Premium Website Experience</h3>
         <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">A world-class digital presence that positions your brand as the authority in your market. Crafted to convert visitors into clients from the first interaction.</p>
         <a href="quote.html" class="btn-ghost w-full justify-center">Start With Foundation</a>
       </div>
-      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col reveal" style="transition-delay:80ms;">
         <span class="eyebrow text-pewter block mb-6">Growth</span>
         <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Website + Automation</h3>
         <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">Your website becomes the front door to a fully automated business system. Lead capture, CRM sync, and automated follow-up, running 24/7.</p>
         <a href="quote.html" class="btn-ghost w-full justify-center">Start With Growth</a>
       </div>
-      <div class="card pkg-featured p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+      <div class="card pkg-featured p-8 md:p-10 hover-lift glass-shimmer flex flex-col reveal" style="transition-delay:160ms;">
         <div class="flex items-center justify-between mb-6">
           <span class="eyebrow text-pewter">Authority</span>
           <span class="eyebrow text-platinum/80 border border-platinum/20 px-3 py-1">Most Popular</span>
@@ -587,7 +605,7 @@ tailwind.config = {
           Start With Authority <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
         </a>
       </div>
-      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col">
+      <div class="card p-8 md:p-10 hover-lift glass-shimmer flex flex-col reveal" style="transition-delay:240ms;">
         <span class="eyebrow text-pewter block mb-6">Enterprise</span>
         <h3 class="font-editorial font-bold text-platinum text-2xl md:text-3xl mb-4 leading-tight">Custom Growth Ecosystem</h3>
         <p class="text-silver text-sm leading-relaxed font-body mb-8 flex-1">For established businesses ready for complete digital transformation. Custom scope, bespoke architecture, dedicated partnership.</p>
@@ -747,6 +765,7 @@ tailwind.config = {
   </div>
 </footer>
 
+<script src="animated-hero.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ── Portfolio, load from Supabase ────────────────────────────
@@ -851,6 +870,27 @@ window.addEventListener('scroll', () => {
   floatingCta?.classList.toggle('show', s);
   mobileCta?.classList.toggle('show', s);
 }, { passive: true });
+</script>
+<script>
+// Hero canvas animation
+(function(){ var c = document.getElementById('heroCanvas'); if(c) new AnimatedHeroBackground(c,'home'); })();
+
+// Portfolio image parallax (object-position, no conflict with hover transform)
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var imgs = document.querySelectorAll('.port-img');
+  if (!imgs.length) return;
+  function tick() {
+    imgs.forEach(function(img) {
+      var card = img.closest('.port-card') || img.parentElement.parentElement;
+      var top  = card.getBoundingClientRect().top;
+      var pct  = (top / window.innerHeight - 0.5) * 16;
+      img.style.objectPosition = 'center ' + (50 + pct) + '%';
+    });
+  }
+  window.addEventListener('scroll', tick, { passive: true });
+  tick();
+})();
 </script>
 </body>
 </html>
